@@ -2043,7 +2043,7 @@ textarea.w-input, textarea.w-select {
   --color-scheme-1--background: var(--_primitives---colors--18a6db-lightest);
   --_typography---font-styles--body: var(--_typography---font-styles--heading);
   --color-scheme-1--text: var(--_primitives---colors--neutral-darkest);
-  --_typography---font-styles--heading: Montserrat, sans-serif;
+  --_typography---font-styles--heading: "Geist", Montserrat, sans-serif;
   --_primitives---colors--white: #fff;
   --_primitives---colors--neutral-darkest: #000608;
   --_primitives---opacity--transparent: transparent;

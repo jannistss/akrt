@@ -33,6 +33,10 @@ export function HeadInjector({ headHtml }: HeadInjectorProps) {
       let node: HTMLElement | null = null;
 
       if (tag === "link") {
+        // Skip Google Fonts links – we load Geist via next/font instead
+        const href = el.getAttribute("href") || "";
+        if (href.includes("fonts.googleapis.com") || href.includes("fonts.gstatic.com")) return;
+
         const link = document.createElement("link");
         Array.from(el.attributes).forEach((attr) => {
           // Remove integrity to avoid SRI blocking on local assets

@@ -1,4 +1,11 @@
 import "./globals.css";
+import { Geist } from "next/font/google";
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
+  display: "swap",
+});
 
 export const metadata = {
   title: "Autoklinik Reutlingen",
@@ -8,7 +15,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de">
+    <html lang="de" className={geist.variable}>
       <body>{children}</body>
     </html>
   );
