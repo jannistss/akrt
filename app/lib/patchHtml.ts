@@ -7,38 +7,40 @@ const LOCAL_CDN_BASE = `../cdn.prod.website-files.com/${SITE_ID}`;
 const GSAP_CDN = "https://cdn.prod.website-files.com/gsap/3.15.0";
 const LOCAL_GSAP = "../cdn.prod.website-files.com/gsap/3.15.0";
 
-// Map of original CDN filenames to local /assets paths
+// Map of original CDN filenames → local /assets paths (safe, no spaces/umlauts)
+// Keys are the original filenames as they appear in the HTML (URL-decoded)
 const IMAGE_MAP: Record<string, string> = {
   "6937ded51fbb0d4d0e15a3c8_Webflow Background.svg": "/assets/webflow-bg.svg",
+  "6937e76d5753525e801ff711_logo autoklinik2.png": "/assets/images/6937e76d5753525e801ff711_logo-autoklinik2.png",
   "6937e0b4dab32eb0ce0c7f70_relume-460083.png": "/assets/images/6937e0b4dab32eb0ce0c7f70_relume-460083.png",
-  "6937e715063be152c1cb3309_icon reperatur.png": "/assets/images/6937e715063be152c1cb3309_icon reperatur.png",
-  "6937e7151cc0063ec7b71870_Icon Smiley.png": "/assets/images/6937e7151cc0063ec7b71870_Icon Smiley.png",
-  "6937e71540070edab121f3aa_icon mercedes.png": "/assets/images/6937e71540070edab121f3aa_icon mercedes.png",
-  "6937e7158532daae3933f12c_icon bmw.png": "/assets/images/6937e7158532daae3933f12c_icon bmw.png",
-  "6937e7158bad018e0f304332_icon audi.png": "/assets/images/6937e7158bad018e0f304332_icon audi.png",
-  "6937e7159229bbc42b6c8632_icon tüv.png": "/assets/images/6937e7159229bbc42b6c8632_icon tüv.png",
-  "6937e715970dcf9d4e71dc89_icon mini.png": "/assets/images/6937e715970dcf9d4e71dc89_icon mini.png",
-  "6937e715ad67a7e8c6f8f320_icon hebebühne.png": "/assets/images/6937e715ad67a7e8c6f8f320_icon hebebühne.png",
-  "6937e715ee8aa2907def19f0_Icon Checkmark.png": "/assets/images/6937e715ee8aa2907def19f0_Icon Checkmark.png",
-  "6937e715f0e031aca92d26f6_icon renault.png": "/assets/images/6937e715f0e031aca92d26f6_icon renault.png",
-  "6937e7163e052d298653ff55_reperatur mann -p-1080.png": "/assets/images/6937e7163e052d298653ff55_reperatur mann -p-1080.png",
-  "6937e7163e052d298653ff55_reperatur mann -p-1600.png": "/assets/images/6937e7163e052d298653ff55_reperatur mann -p-1600.png",
-  "6937e7163e052d298653ff55_reperatur mann -p-2000.png": "/assets/images/6937e7163e052d298653ff55_reperatur mann -p-2000.png",
-  "6937e7163e052d298653ff55_reperatur mann -p-500.png": "/assets/images/6937e7163e052d298653ff55_reperatur mann -p-500.png",
-  "6937e7163e052d298653ff55_reperatur mann -p-800.png": "/assets/images/6937e7163e052d298653ff55_reperatur mann -p-800.png",
-  "6937e7163e052d298653ff55_reperatur mann .png": "/assets/images/6937e7163e052d298653ff55_reperatur mann .png",
-  "6937e7167a27ffa77e40aa08_Hero Image-p-1080.png": "/assets/images/6937e7167a27ffa77e40aa08_Hero Image-p-1080.png",
-  "6937e7167a27ffa77e40aa08_Hero Image-p-500.png": "/assets/images/6937e7167a27ffa77e40aa08_Hero Image-p-500.png",
-  "6937e7167a27ffa77e40aa08_Hero Image-p-800.png": "/assets/images/6937e7167a27ffa77e40aa08_Hero Image-p-800.png",
-  "6937e7167a27ffa77e40aa08_Hero Image.png": "/assets/images/6937e7167a27ffa77e40aa08_Hero Image.png",
-  "6937e7168920287b24bafc7c_icon reifen.png": "/assets/images/6937e7168920287b24bafc7c_icon reifen.png",
+  "6937e715063be152c1cb3309_icon reperatur.png": "/assets/images/6937e715063be152c1cb3309_icon-reperatur.png",
+  "6937e7151cc0063ec7b71870_Icon Smiley.png": "/assets/images/6937e7151cc0063ec7b71870_Icon-Smiley.png",
+  "6937e71540070edab121f3aa_icon mercedes.png": "/assets/images/6937e71540070edab121f3aa_icon-mercedes.png",
+  "6937e7158532daae3933f12c_icon bmw.png": "/assets/images/6937e7158532daae3933f12c_icon-bmw.png",
+  "6937e7158bad018e0f304332_icon audi.png": "/assets/images/6937e7158bad018e0f304332_icon-audi.png",
+  "6937e7159229bbc42b6c8632_icon tüv.png": "/assets/images/6937e7159229bbc42b6c8632_icon-tuev.png",
+  "6937e715970dcf9d4e71dc89_icon mini.png": "/assets/images/6937e715970dcf9d4e71dc89_icon-mini.png",
+  "6937e715ad67a7e8c6f8f320_icon hebebühne.png": "/assets/images/6937e715ad67a7e8c6f8f320_icon-hebebuehne.png",
+  "6937e715ee8aa2907def19f0_Icon Checkmark.png": "/assets/images/6937e715ee8aa2907def19f0_Icon-Checkmark.png",
+  "6937e715f0e031aca92d26f6_icon renault.png": "/assets/images/6937e715f0e031aca92d26f6_icon-renault.png",
+  "6937e7163e052d298653ff55_reperatur mann -p-1080.png": "/assets/images/6937e7163e052d298653ff55_reperatur-mann--p-1080.png",
+  "6937e7163e052d298653ff55_reperatur mann -p-1600.png": "/assets/images/6937e7163e052d298653ff55_reperatur-mann--p-1600.png",
+  "6937e7163e052d298653ff55_reperatur mann -p-2000.png": "/assets/images/6937e7163e052d298653ff55_reperatur-mann--p-2000.png",
+  "6937e7163e052d298653ff55_reperatur mann -p-500.png": "/assets/images/6937e7163e052d298653ff55_reperatur-mann--p-500.png",
+  "6937e7163e052d298653ff55_reperatur mann -p-800.png": "/assets/images/6937e7163e052d298653ff55_reperatur-mann--p-800.png",
+  "6937e7163e052d298653ff55_reperatur mann .png": "/assets/images/6937e7163e052d298653ff55_reperatur-mann-.png",
+  "6937e7167a27ffa77e40aa08_Hero Image-p-1080.png": "/assets/images/6937e7167a27ffa77e40aa08_Hero-Image-p-1080.png",
+  "6937e7167a27ffa77e40aa08_Hero Image-p-500.png": "/assets/images/6937e7167a27ffa77e40aa08_Hero-Image-p-500.png",
+  "6937e7167a27ffa77e40aa08_Hero Image-p-800.png": "/assets/images/6937e7167a27ffa77e40aa08_Hero-Image-p-800.png",
+  "6937e7167a27ffa77e40aa08_Hero Image.png": "/assets/images/6937e7167a27ffa77e40aa08_Hero-Image.png",
+  "6937e7168920287b24bafc7c_icon reifen.png": "/assets/images/6937e7168920287b24bafc7c_icon-reifen.png",
   "6985c4ce9b76f043ec5d6390_faviauto.png": "/assets/images/6985c4ce9b76f043ec5d6390_faviauto.png",
   "6985c4d38cf52f31e3481ad8_webclipauto.png": "/assets/images/6985c4d38cf52f31e3481ad8_webclipauto.png",
-  "698dccd20f3ec8ce449ef838_Icon Glas.png": "/assets/images/698dccd20f3ec8ce449ef838_Icon Glas.png",
-  "6a3d363154202915571e860a_Design ohne Titel (46)-p-1080.png": "/assets/images/6a3d363154202915571e860a_Design ohne Titel (46)-p-1080.png",
-  "6a3d363154202915571e860a_Design ohne Titel (46)-p-500.png": "/assets/images/6a3d363154202915571e860a_Design ohne Titel (46)-p-500.png",
-  "6a3d363154202915571e860a_Design ohne Titel (46)-p-800.png": "/assets/images/6a3d363154202915571e860a_Design ohne Titel (46)-p-800.png",
-  "6a3d363154202915571e860a_Design ohne Titel (46).png": "/assets/images/6a3d363154202915571e860a_Design ohne Titel (46).png",
+  "698dccd20f3ec8ce449ef838_Icon Glas.png": "/assets/images/698dccd20f3ec8ce449ef838_Icon-Glas.png",
+  "6a3d363154202915571e860a_Design ohne Titel (46)-p-1080.png": "/assets/images/6a3d363154202915571e860a_Design-ohne-Titel-46-p-1080.png",
+  "6a3d363154202915571e860a_Design ohne Titel (46)-p-500.png": "/assets/images/6a3d363154202915571e860a_Design-ohne-Titel-46-p-500.png",
+  "6a3d363154202915571e860a_Design ohne Titel (46)-p-800.png": "/assets/images/6a3d363154202915571e860a_Design-ohne-Titel-46-p-800.png",
+  "6a3d363154202915571e860a_Design ohne Titel (46).png": "/assets/images/6a3d363154202915571e860a_Design-ohne-Titel-46.png",
 };
 
 const JS_MAP: Record<string, string> = {
@@ -104,6 +106,12 @@ function rewriteAssets(html: string): string {
     "/assets/js/ScrollTrigger.min.js"
   );
 
+  // jQuery (hosted on Webflow's Cloudfront CDN)
+  html = html.replace(
+    /https:\/\/d3e54v103j8qbb\.cloudfront\.net\/js\/jquery-3\.5\.1\.min\.dc5e7f18c8\.js[^"]*/g,
+    "/assets/js/jquery-3.5.1.min.js"
+  );
+
   // Images - replace URL-encoded paths from local CDN mirror
   // Pattern: ../cdn.prod.website-files.com/SITE_ID/FILENAME (may be URL-encoded)
   for (const [filename, localPath] of Object.entries(IMAGE_MAP)) {
@@ -128,25 +136,12 @@ function rewriteAssets(html: string): string {
     );
   }
 
-  // Video files
-  html = html.replace(
-    /https:\/\/cdn\.prod\.website-files\.com\/6937ded41fbb0d4d0e15a31e%2F6937e4e4e0cf1553ecb4976f_031_mp4\.mp4/g,
-    "/assets/hero.mp4"
-  );
-  html = html.replace(
-    /https:\/\/cdn\.prod\.website-files\.com\/6937ded41fbb0d4d0e15a31e%2F6937e4e4e0cf1553ecb4976f_031_webm\.webm/g,
-    "/assets/hero.webm"
-  );
-
-  // Favicon / webclip
-  html = html.replace(
-    new RegExp(`\\.\\./cdn\\.prod\\.website-files\\.com/${SITE_ID}/6985c4ce9b76f043ec5d6390_faviauto\\.png`, "g"),
-    "/assets/images/6985c4ce9b76f043ec5d6390_faviauto.png"
-  );
-  html = html.replace(
-    new RegExp(`\\.\\./cdn\\.prod\\.website-files\\.com/${SITE_ID}/6985c4d38cf52f31e3481ad8_webclipauto\\.png`, "g"),
-    "/assets/images/6985c4d38cf52f31e3481ad8_webclipauto.png"
-  );
+  // Video files – handle both %2F (literal slash encoded) and %252F (double-encoded)
+  // The HTML uses the CDN URL with %2F as a path separator before the filename
+  const videoBase = "cdn\\.prod\\.website-files\\.com\\/6937ded41fbb0d4d0e15a31e(?:%2F|%252F)6937e4e4e0cf1553ecb4976f_031";
+  html = html.replace(new RegExp(`https?:\\/\\/${videoBase}_mp4\\.mp4`, "g"), "/assets/hero.mp4");
+  html = html.replace(new RegExp(`https?:\\/\\/${videoBase}_webm\\.webm`, "g"), "/assets/hero.webm");
+  html = html.replace(new RegExp(`https?:\\/\\/${videoBase}_poster\\.0000000\\.jpg`, "g"), "/assets/hero-poster.jpg");
 
   return html;
 }

@@ -42,13 +42,12 @@ export function AutoklinikNavbar() {
       {/* Desktop */}
       <NavBody>
         <NavbarLogo
-          src="/assets/images/6a3d363154202915571e860a_Design ohne Titel (46).png"
+          src="/assets/images/6937e76d5753525e801ff711_logo-autoklinik2.png"
           alt="Autoklinik Reutlingen"
           href="/"
         />
         <NavItems items={navItems} />
-        {/* TODO: replace href with correct booking link when available */}
-        <NavbarButton href="#kontakt" variant="primary">
+        <NavbarButton href="/terminbuchung" variant="primary">
           Termin buchen
         </NavbarButton>
       </NavBody>
@@ -57,7 +56,7 @@ export function AutoklinikNavbar() {
       <MobileNav>
         <MobileNavHeader>
           <NavbarLogo
-            src="/assets/images/6a3d363154202915571e860a_Design ohne Titel (46).png"
+            src="/assets/images/6937e76d5753525e801ff711_logo-autoklinik2.png"
             alt="Autoklinik Reutlingen"
             href="/"
           />
@@ -154,8 +153,7 @@ export function AutoklinikNavbar() {
             transition={{ delay: 0.26, duration: 0.18 }}
             className="pt-2 border-t border-[rgba(26,111,207,0.12)] mt-1"
           >
-            {/* TODO: replace href with correct booking link when available */}
-            <NavbarButton href="#kontakt" variant="primary" className="w-full justify-center">
+            <NavbarButton href="/terminbuchung" variant="primary" className="w-full justify-center">
               Termin buchen
             </NavbarButton>
           </motion.div>

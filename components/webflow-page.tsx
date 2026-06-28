@@ -16,7 +16,10 @@ export function WebflowPage({ html }: WebflowPageProps) {
   return (
     <>
       <AutoklinikNavbar />
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      {/* suppressHydrationWarning: Webflow JS mutates the DOM at runtime
+          (adds w-mod-js classes, inline styles) causing unavoidable SSR/client
+          mismatches. The content is functionally correct on both sides. */}
+      <div dangerouslySetInnerHTML={{ __html: html }} suppressHydrationWarning />
     </>
   );
 }
