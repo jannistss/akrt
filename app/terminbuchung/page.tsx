@@ -1,4 +1,6 @@
-import { readAndPatchHtml } from "../lib/patchHtml";
+import { getBodyContent, getExtraHeadContent } from "../lib/patchHtml";
+import { HeadInjector } from "@/components/head-injector";
+import { WebflowPage } from "@/components/webflow-page";
 
 export const metadata = {
   title: "Terminbuchung | Autoklinik Reutlingen",
@@ -7,10 +9,12 @@ export const metadata = {
 };
 
 export default function TerminbuchungPage() {
-  const html = readAndPatchHtml("terminbuchung.html");
+  const bodyContent = getBodyContent("terminbuchung.html");
+  const headContent = getExtraHeadContent("terminbuchung.html");
   return (
-    <html
-      dangerouslySetInnerHTML={{ __html: html.replace(/^<!DOCTYPE html>/, "") }}
-    />
+    <>
+      <HeadInjector headHtml={headContent} />
+      <WebflowPage html={bodyContent} />
+    </>
   );
 }

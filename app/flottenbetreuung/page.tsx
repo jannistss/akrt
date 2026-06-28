@@ -1,4 +1,6 @@
-import { readAndPatchHtml } from "../lib/patchHtml";
+import { getBodyContent, getExtraHeadContent } from "../lib/patchHtml";
+import { HeadInjector } from "@/components/head-injector";
+import { WebflowPage } from "@/components/webflow-page";
 
 export const metadata = {
   title: "Flottenbetreuung | Autoklinik Reutlingen",
@@ -7,10 +9,12 @@ export const metadata = {
 };
 
 export default function FottenbetreuungPage() {
-  const html = readAndPatchHtml("flottenbetreuung.html");
+  const bodyContent = getBodyContent("flottenbetreuung.html");
+  const headContent = getExtraHeadContent("flottenbetreuung.html");
   return (
-    <html
-      dangerouslySetInnerHTML={{ __html: html.replace(/^<!DOCTYPE html>/, "") }}
-    />
+    <>
+      <HeadInjector headHtml={headContent} />
+      <WebflowPage html={bodyContent} />
+    </>
   );
 }

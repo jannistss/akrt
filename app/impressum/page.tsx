@@ -1,4 +1,6 @@
-import { readAndPatchHtml } from "../lib/patchHtml";
+import { getBodyContent, getExtraHeadContent } from "../lib/patchHtml";
+import { HeadInjector } from "@/components/head-injector";
+import { WebflowPage } from "@/components/webflow-page";
 
 export const metadata = {
   title: "Impressum | Autoklinik Reutlingen",
@@ -6,10 +8,12 @@ export const metadata = {
 };
 
 export default function ImpressumPage() {
-  const html = readAndPatchHtml("impressum.html");
+  const bodyContent = getBodyContent("impressum.html");
+  const headContent = getExtraHeadContent("impressum.html");
   return (
-    <html
-      dangerouslySetInnerHTML={{ __html: html.replace(/^<!DOCTYPE html>/, "") }}
-    />
+    <>
+      <HeadInjector headHtml={headContent} />
+      <WebflowPage html={bodyContent} />
+    </>
   );
 }

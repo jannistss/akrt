@@ -1,4 +1,6 @@
-import { readAndPatchHtml } from "../lib/patchHtml";
+import { getBodyContent, getExtraHeadContent } from "../lib/patchHtml";
+import { HeadInjector } from "@/components/head-injector";
+import { WebflowPage } from "@/components/webflow-page";
 
 export const metadata = {
   title: "Unfallservice | Autoklinik Reutlingen",
@@ -7,10 +9,12 @@ export const metadata = {
 };
 
 export default function UnfallPage() {
-  const html = readAndPatchHtml("unfall.html");
+  const bodyContent = getBodyContent("unfall.html");
+  const headContent = getExtraHeadContent("unfall.html");
   return (
-    <html
-      dangerouslySetInnerHTML={{ __html: html.replace(/^<!DOCTYPE html>/, "") }}
-    />
+    <>
+      <HeadInjector headHtml={headContent} />
+      <WebflowPage html={bodyContent} />
+    </>
   );
 }

@@ -1,4 +1,6 @@
-import { readAndPatchHtml } from "../lib/patchHtml";
+import { getBodyContent, getExtraHeadContent } from "../lib/patchHtml";
+import { HeadInjector } from "@/components/head-injector";
+import { WebflowPage } from "@/components/webflow-page";
 
 export const metadata = {
   title: "Klimaservice in Reutlingen | Autoklinik Reutlingen",
@@ -7,10 +9,12 @@ export const metadata = {
 };
 
 export default function KlimaservicePage() {
-  const html = readAndPatchHtml("klimaservice.html");
+  const bodyContent = getBodyContent("klimaservice.html");
+  const headContent = getExtraHeadContent("klimaservice.html");
   return (
-    <html
-      dangerouslySetInnerHTML={{ __html: html.replace(/^<!DOCTYPE html>/, "") }}
-    />
+    <>
+      <HeadInjector headHtml={headContent} />
+      <WebflowPage html={bodyContent} />
+    </>
   );
 }

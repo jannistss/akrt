@@ -158,3 +158,36 @@ export function readAndPatchHtml(filename: string): string {
   html = rewritePageLinks(html);
   return html;
 }
+
+/**
+ * Returns just the inner body content (without <body> tags) from the patched
+ * Webflow HTML, with the Webflow navbar stripped so the React AutoklinikNavbar
+ * can be injected in its place.
+ */
+export function getBodyContent(filename: string): string {
+  let html = readAndPatchHtml(filename);
+
+  // Extract content between <body> and </body>
+  const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+  let body = bodyMatch ? bodyMatch[1] : html;
+
+  // Remove the Webflow navbar: the <div role="banner" ... class="...w-nav..."> element
+  // It is a nested structure; we strip from the opening tag through its closing pair
+  body = body.replace(
+    /<div[^>]+role="banner"[^>]+class="[^"]*w-nav[^"]*"[^>]*>[\s\S]*?<\/div>\s*<\/div>/,
+    ""
+  );
+
+  return body;
+}
+
+/**
+ * Returns additional <head> tags extracted from the Webflow HTML (styles,
+ * fonts, meta) so they can be re-injected via Next.js metadata / head.
+ * Returns an array of raw tag strings.
+ */
+export function getExtraHeadContent(filename: string): string {
+  let html = readAndPatchHtml(filename);
+  const headMatch = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
+  return headMatch ? headMatch[1] : "";
+}

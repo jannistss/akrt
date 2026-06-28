@@ -1,10 +1,15 @@
-import { readAndPatchHtml } from "./lib/patchHtml";
+import { getBodyContent, getExtraHeadContent } from "./lib/patchHtml";
+import { HeadInjector } from "@/components/head-injector";
+import { WebflowPage } from "@/components/webflow-page";
 
 export default function HomePage() {
-  const html = readAndPatchHtml("index.html");
+  const bodyContent = getBodyContent("index.html");
+  const headContent = getExtraHeadContent("index.html");
+
   return (
-    <html
-      dangerouslySetInnerHTML={{ __html: html.replace(/^<!DOCTYPE html>/, "") }}
-    />
+    <>
+      <HeadInjector headHtml={headContent} />
+      <WebflowPage html={bodyContent} />
+    </>
   );
 }
