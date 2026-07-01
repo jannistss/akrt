@@ -42,7 +42,7 @@ export default function KampagnenPage() {
                 <td className="px-5 py-4 text-white/70">{c.empfaenger ?? "-"}</td>
                 <td className="px-5 py-4 text-white/70">{c.geoeffnet != null ? `${Math.round((c.geoeffnet / (c.empfaenger ?? 1)) * 100)}%` : "-"}</td>
                 <td className="px-5 py-4 text-white/50">
-                  {format(new Date(c.geplantFuer), "dd. MMM yyyy", { locale: de })}
+                  {c.geplantFuer ? format(new Date(c.geplantFuer), "dd. MMM yyyy", { locale: de }) : "-"}
                 </td>
                 <td className="px-5 py-4">
                   <StatusBadge status={c.status} />
