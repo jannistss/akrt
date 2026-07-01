@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 /* ─── Types ─────────────────────────────────────────────── */
 type Message = { role: "bot" | "user"; text: string };
@@ -248,6 +248,15 @@ const FLOWS: Record<
     message: "Hinterlasse deinen Namen und deine Telefonnummer - wir rufen dich zurück.",
     options: [],
   },
+  termin_help: {
+    message: "Was kann ich für dich tun?",
+    options: [
+      { label: "Welche Leistung soll ich wählen?", flow: "preise" },
+      { label: "Lieber anrufen", action: "call" },
+      { label: "WhatsApp schreiben", action: "whatsapp" },
+      { label: "Alles klar, danke!", flow: "root" },
+    ],
+  },
 };
 
 /* ─── Callback form ─────────────────────────────────────── */
@@ -344,6 +353,7 @@ function CallbackForm({ onBack }: { onBack: () => void }) {
 
 /* ─── Main widget ───────────────────────────────────────── */
 export function ChatWidget() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [flow, setFlow] = useState<Flow>("root");
   const [messages, setMessages] = useState<Message[]>([]);
@@ -359,6 +369,45 @@ export function ChatWidget() {
     const t = setTimeout(() => setShowProactive(true), 4000);
     return () => clearTimeout(t);
   }, []);
+
+  /* on /terminbuchung: open chat after 3s with booking-specific message */
+  useEffect(() => {
+    if (pathname !== "/terminbuchung") return;
+    const alreadyShown = sessionStorage.getItem("ak_termin_chat");
+    if (alreadyShown) return;
+    const t = setTimeout(() => {
+      sessionStorage.setItem("ak_termin_chat", "1");
+      setShowProactive(false);
+      setOpen(true);
+      setMessages([]);
+      setTyping(true);
+      setTimeout(() => {
+        setTyping(false);
+        setMessages([
+          {
+            role: "bot",
+            text: "Brauchst du Hilfe bei der Terminbuchung? Ich bin gleich da - einfach fragen! 👋",
+          },
+        ]);
+        // follow-up after 2s
+        setTimeout(() => {
+          setTyping(true);
+          setTimeout(() => {
+            setTyping(false);
+            setMessages((prev) => [
+              ...prev,
+              {
+                role: "bot",
+                text: "Falls du unsicher bist welche Leistung du buchen sollst, oder lieber direkt anrufen möchtest - ich helfe dir weiter.",
+              },
+            ]);
+            setFlow("termin_help");
+          }, 800);
+        }, 2000);
+      }, 700);
+    }, 3000);
+    return () => clearTimeout(t);
+  }, [pathname]);
 
   /* scroll to bottom */
   useEffect(() => {
