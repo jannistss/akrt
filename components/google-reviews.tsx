@@ -166,7 +166,9 @@ export default function GoogleReviews() {
     { revalidateOnFocus: false }
   );
 
-  const reviews = data?.reviews ?? [];
+  // Treat API-level errors (e.g. unknown slug) the same as network errors
+  const hasApiError = !isLoading && (!data || "error" in (data as object));
+  const reviews = (!hasApiError && data?.reviews) ? data.reviews : [];
   const count = data?.count ?? 0;
   const hasReviews = reviews.length > 0;
 
@@ -206,7 +208,7 @@ export default function GoogleReviews() {
                 <span className="text-2xl font-bold text-white">5.0</span>
                 <StarRow rating={5} size={14} />
               </div>
-              {!isLoading && hasReviews && (
+        {!isLoading && !hasApiError && hasReviews && (
                 <p className="text-xs text-white/50">{count} Bewertungen</p>
               )}
             </div>
@@ -235,13 +237,13 @@ export default function GoogleReviews() {
           </div>
         )}
 
-        {error && !isLoading && (
+        {(error || hasApiError) && !isLoading && (
           <div className="text-center py-16 text-white/40 text-sm">
             Bewertungen konnten nicht geladen werden.
           </div>
         )}
 
-        {!isLoading && !error && !hasReviews && (
+        {!isLoading && !error && !hasApiError && !hasReviews && (
           <div className="text-center py-16 text-white/40 text-sm">
             Noch keine Bewertungen vorhanden.
           </div>
