@@ -9,9 +9,25 @@ export function ContactSection() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 800));
-    setStatus("success");
-    setLoading(false);
+    setStatus("idle");
+    try {
+      const form = e.currentTarget;
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: (form.elements.namedItem("name") as HTMLInputElement)?.value,
+          phone: (form.elements.namedItem("phone") as HTMLInputElement)?.value,
+          message: (form.elements.namedItem("message") as HTMLTextAreaElement)?.value,
+        }),
+      });
+      if (!res.ok) throw new Error("Fehler");
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
