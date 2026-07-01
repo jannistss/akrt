@@ -75,38 +75,7 @@ export function HeroSection() {
         />
       </motion.div>
 
-      {/* ── Floating trust badges (desktop) ── */}
-      {[
-        { label: "TÜV", delay: 0.9, top: "30%", right: "380px" },
-        { label: "Faire Preise", delay: 1.05, top: "50%", right: "260px" },
-        { label: "Alle Fahrzeugtypen", delay: 1.2, top: "68%", right: "200px" },
-      ].map(({ label, delay, top, right }) => (
-        <motion.div
-          key={label}
-          className="absolute z-25 hidden lg:flex items-center gap-2 rounded-xl px-4 py-2.5 pointer-events-none select-none"
-          style={{
-            top,
-            right,
-            background: "rgba(255,255,255,0.92)",
-            backdropFilter: "blur(12px)",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.14)",
-          }}
-          initial={{ opacity: 0, x: 24, y: -8 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay }}
-        >
-          <span
-            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
-            style={{ backgroundColor: "#0074a2" }}
-            aria-hidden="true"
-          >
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-              <path d="M2 5l2.2 2.2L8 3" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </span>
-          <span className="text-xs font-semibold" style={{ color: "#002e40" }}>{label}</span>
-        </motion.div>
-      ))}
+
 
       {/* ── Main content — vertically centered ── */}
       <div className="relative z-30 flex items-center" style={{ minHeight: "100svh" }}>
