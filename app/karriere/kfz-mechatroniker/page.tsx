@@ -521,7 +521,7 @@ export default function KfzMechatronikerPage() {
             {[
               { icon: "M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 10m-3 0a3 3 0 1 0 6 0 3 3 0 1 0-6 0", label: "Reutlingen" },
               { icon: "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z", label: "Meisterbetrieb" },
-              { icon: "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75", label: "5–10 Mitarbeiter" },
+
             ].map((item) => (
               <div key={item.label} className="flex items-center gap-2 text-sm" style={{ color: "rgba(255,255,255,0.65)" }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60c8f0" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
