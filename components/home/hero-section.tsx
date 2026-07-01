@@ -64,7 +64,7 @@ export function HeroSection() {
       {/* ── Mechanic image — slides in from right, bottom-anchored ── */}
       <motion.div
         className="absolute bottom-0 right-0 z-20 hidden lg:block pointer-events-none select-none"
-        style={{ width: 520, height: "92%" }}
+        style={{ width: 380, height: "78%" }}
         {...slideRight(0.4)}
       >
         <Image
@@ -81,7 +81,7 @@ export function HeroSection() {
 
       {/* ── Main content — vertically centered ── */}
       <div className="relative z-30 flex items-center" style={{ minHeight: "100svh" }}>
-        <div className="max-w-7xl mx-auto w-full px-6 sm:px-10 lg:px-16 py-32">
+          <div className="max-w-7xl mx-auto w-full px-6 sm:px-10 lg:px-16" style={{ paddingTop: "22vh", paddingBottom: "8vh" }}>
           <div className="max-w-[600px]">
 
             {/* Eyebrow */}
