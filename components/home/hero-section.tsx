@@ -68,7 +68,7 @@ export function HeroSection() {
         {...slideRight(0.4)}
       >
         <Image
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Design%20ohne%20Titel%20%2848%29-B4R8XkaJN4UNXxQUWMVO3kb8wlECzL.png"
+          src="/assets/images/6937e7167a27ffa77e40aa08_Hero-Image.png"
           alt="Lächelnder Mechaniker der Autoklinik Reutlingen mit Klemmbrett."
           fill
           priority

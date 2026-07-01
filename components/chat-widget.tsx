@@ -29,7 +29,9 @@ type Flow =
   | "karriere"
   | "oeffnungszeiten"
   | "notfall"
-  | "rueckruf";
+  | "rueckruf"
+  | "preise_mehr"
+  | "termin_help";
 
 interface Option {
   label: string;
@@ -80,7 +82,7 @@ const FLOWS: Record<
     message:
       "Inspektion nach Herstellervorgaben ab 150,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
-      { label: "Termin buchen", action: "call" },
+      { label: "Termin buchen", flow: "termin" },
       { label: "Weitere Preise", flow: "preise" },
       { label: "Zurück", flow: "root" },
     ],
@@ -89,7 +91,7 @@ const FLOWS: Record<
     message:
       "Ölwechsel nach Herstellervorgaben, Motoröl nach freigegebener Spezifikation ab 90,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
-      { label: "Termin buchen", action: "call" },
+      { label: "Termin buchen", flow: "termin" },
       { label: "Weitere Preise", flow: "preise" },
       { label: "Zurück", flow: "root" },
     ],
@@ -107,7 +109,7 @@ const FLOWS: Record<
     message:
       "HU/TÜV Durchsicht (Vorcheck) ab 30,00 €. Haupt-/Abgasuntersuchung inkl. Abgasuntersuchung ab 165,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
-      { label: "Termin buchen", action: "call" },
+      { label: "Termin buchen", flow: "termin" },
       { label: "Weitere Preise", flow: "preise" },
       { label: "Zurück", flow: "root" },
     ],
@@ -116,7 +118,7 @@ const FLOWS: Record<
     message:
       "Räderwechsel / Umstecken pro Satz ohne Wuchten ab 20,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
-      { label: "Termin buchen", action: "call" },
+      { label: "Termin buchen", flow: "termin" },
       { label: "Weitere Preise", flow: "preise" },
       { label: "Zurück", flow: "root" },
     ],
@@ -125,7 +127,7 @@ const FLOWS: Record<
     message:
       "Klima-Service (Sicherheitsprüfung & Befüllen) ab 115,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
-      { label: "Termin buchen", action: "call" },
+      { label: "Termin buchen", flow: "termin" },
       { label: "Weitere Preise", flow: "preise" },
       { label: "Zurück", flow: "root" },
     ],
@@ -134,7 +136,7 @@ const FLOWS: Record<
     message:
       "Weitere Preise im Überblick (alle Bruttopreise exkl. MwSt.):\n- Getriebespülung ab 350,00 €\n- Achsvermessung ab 110,00 €\n- Fehlerdiagnose ab 20,00 €\n- Lichttest ab 20,00 €",
     options: [
-      { label: "Termin buchen", action: "call" },
+      { label: "Termin buchen", flow: "termin" },
       { label: "Zurück zu Preisen", flow: "preise" },
       { label: "Zurück", flow: "root" },
     ],
@@ -178,7 +180,7 @@ const FLOWS: Record<
     message:
       "Räderwechsel / Umstecken pro Satz ohne Wuchten ab 20,00 €. Einlagerung auf Anfrage. Alle Preise exkl. MwSt.",
     options: [
-      { label: "Termin buchen", action: "call" },
+      { label: "Termin buchen", flow: "termin" },
       { label: "WhatsApp", action: "whatsapp" },
       { label: "Zurück", flow: "root" },
     ],
@@ -187,7 +189,7 @@ const FLOWS: Record<
     message:
       "Ölwechsel nach Herstellervorgaben, Motoröl nach freigegebener Spezifikation ab 90,00 €. Alle Preise exkl. MwSt.",
     options: [
-      { label: "Termin buchen", action: "call" },
+      { label: "Termin buchen", flow: "termin" },
       { label: "Zurück", flow: "root" },
     ],
   },
@@ -195,7 +197,7 @@ const FLOWS: Record<
     message:
       "Klima-Service (Sicherheitsprüfung & Befüllen) ab 115,00 €. Alle Preise exkl. MwSt.",
     options: [
-      { label: "Termin buchen", action: "call" },
+      { label: "Termin buchen", flow: "termin" },
       { label: "Zurück", flow: "root" },
     ],
   },
@@ -203,7 +205,7 @@ const FLOWS: Record<
     message:
       "Für Bremsarbeiten bitte direkt anfragen - wir kalkulieren je nach Fahrzeug und Umfang. Kostenloser Bremscheck jederzeit möglich.",
     options: [
-      { label: "Termin buchen", action: "call" },
+      { label: "Termin buchen", flow: "termin" },
       { label: "Zurück", flow: "root" },
     ],
   },
