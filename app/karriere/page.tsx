@@ -8,33 +8,33 @@ import { fadeUp, staggerContainer, staggerItem, EASE } from "@/lib/animation";
 const perks = [
   {
     num: "01",
-    title: "Faires Gehalt",
-    body: "Leistungsgerecht, pünktlich, verhandelbar. Kein Tarifdschungel, sondern ein klares Gespräch auf Augenhöhe.",
+    title: "Faires Gehalt — ohne Verhandlungspoker",
+    body: "Wir zahlen leistungsgerecht und pünktlich. Kein Tarifdschungel, kein Kleingedrucktes. Was wir sagen, gilt.",
   },
   {
     num: "02",
-    title: "Geregelte Arbeitszeiten",
-    body: "Montag bis Freitag. Kein Wochenende, kein Schichtchaos. Du hast ein Leben außerhalb der Werkstatt — das respektieren wir.",
+    title: "Montag bis Freitag. Fertig.",
+    body: "Kein Wochenende, kein Schichtchaos, kein Bereitschaftsdienst. Deine Freizeit gehört dir — und das meinen wir ernst.",
   },
   {
     num: "03",
-    title: "Modernes Equipment",
-    body: "Aktuelle Diagnosetechnik, saubere Arbeitsplätze, professionelles Werkzeug. Du arbeitest nicht mit Steinzeitwerkzeug.",
+    title: "Werkzeug, das funktioniert",
+    body: "Aktuelle Diagnosetechnik, saubere Hebebühnen, professionelles Werkzeug. Du arbeitest konzentriert — nicht gegen dein Equipment.",
   },
   {
     num: "04",
-    title: "Kurze Entscheidungswege",
-    body: "Kein Konzern, kein Vorgesetzter drei Ebenen über dir. Deine Meinung zählt — direkt, ohne Umwege.",
+    title: "Kein Chef über dem Chef über dem Chef",
+    body: "Wir sind klein. Das heißt: kurze Wege, schnelle Entscheidungen, deine Meinung zählt. Direkt. Sofort.",
   },
   {
     num: "05",
-    title: "Alle Marken & Modelle",
-    body: "Kein Hersteller-Einheitsbrei. Du siehst täglich unterschiedliche Fahrzeuge, Probleme und Technologien.",
+    title: "Jeden Tag ein anderes Auto",
+    body: "BMW, Mercedes, VW, Opel — alle Marken, alle Baujahre. Du löst echte Probleme statt immer denselben Ölwechsel zu machen.",
   },
   {
     num: "06",
-    title: "Weiterbildung",
-    body: "Wir investieren in dich. Zertifizierungen, Schulungen, neue Technologien — wir fördern, wer wachsen will.",
+    title: "Ein Team, das zusammenhält",
+    body: "Wir lachen auch mal. Wir helfen uns gegenseitig. Du wirst hier nicht allein gelassen — weder bei kniffligen Fehlern noch im Alltag.",
   },
 ];
 
@@ -45,67 +45,76 @@ export default function KarrierePage() {
       {/* ── HERO ── */}
       <section
         className="relative overflow-hidden"
-        style={{
-          minHeight: "100svh",
-          background: "#001826",
-        }}
+        style={{ minHeight: "100svh", backgroundColor: "#001826" }}
       >
-        {/* Subtle grid lines */}
+        {/* Real workshop image as background */}
+        <div className="absolute inset-0">
+          <img
+            src="/assets/images/6937e7163e052d298653ff55_reperatur-mann-.png"
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover object-center"
+            style={{ opacity: 0.18 }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(115deg, #001826 45%, rgba(0,24,38,0.65) 100%)",
+            }}
+          />
+        </div>
+
+        {/* Blue accent line top */}
         <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(0,116,162,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,116,162,0.08) 1px, transparent 1px)",
-            backgroundSize: "80px 80px",
-          }}
-        />
-        {/* Accent glow */}
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            top: "-10%",
-            right: "-5%",
-            width: 700,
-            height: 700,
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(0,116,162,0.18) 0%, transparent 65%)",
-          }}
+          className="absolute top-0 left-0 right-0 h-1"
+          style={{ background: "linear-gradient(90deg, #0074a2 0%, #002e40 100%)" }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 flex flex-col justify-center" style={{ minHeight: "100svh", paddingTop: "10vh", paddingBottom: "8vh" }}>
-
-          {/* Eyebrow */}
-          <motion.div
-            className="flex items-center gap-3 mb-8"
-            {...fadeUp(0)}
-          >
+        <div
+          className="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 flex flex-col justify-center"
+          style={{ minHeight: "100svh", paddingTop: "120px", paddingBottom: "80px" }}
+        >
+          {/* Logo + label */}
+          <motion.div className="flex items-center gap-4 mb-10" {...fadeUp(0)}>
             <Image
               src="/assets/images/6937e76d5753525e801ff711_logo-autoklinik2.png"
               alt="Autoklinik Reutlingen"
-              width={120}
-              height={36}
-              className="h-8 w-auto object-contain brightness-0 invert"
+              width={130}
+              height={40}
+              className="h-9 w-auto object-contain brightness-0 invert"
             />
-            <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#60c8f0" }}>
+            <div className="h-5 w-px" style={{ backgroundColor: "rgba(255,255,255,0.2)" }} />
+            <span
+              className="text-xs font-bold uppercase tracking-[0.25em]"
+              style={{ color: "#60c8f0" }}
+            >
               Karriere
             </span>
           </motion.div>
 
-          {/* Main headline */}
+          {/* Headline */}
           <motion.h1
             className="font-extrabold text-white text-balance"
-            style={{ fontSize: "clamp(2.6rem, 6vw, 5.5rem)", lineHeight: 1.05, letterSpacing: "-0.02em", maxWidth: 900 }}
+            style={{
+              fontSize: "clamp(2.8rem, 6.5vw, 5.8rem)",
+              lineHeight: 1.02,
+              letterSpacing: "-0.025em",
+              maxWidth: 860,
+            }}
             {...fadeUp(0.1)}
           >
-            Wir suchen jemanden, der mit Leidenschaft schraubt.
+            Wir suchen jemanden,
+            <br />
+            <span style={{ color: "#60c8f0" }}>der wirklich schrauben kann.</span>
           </motion.h1>
 
           <motion.p
-            className="mt-6 text-lg leading-relaxed max-w-2xl"
-            style={{ color: "rgba(255,255,255,0.55)" }}
+            className="mt-7 text-lg leading-relaxed max-w-xl"
+            style={{ color: "rgba(255,255,255,0.6)" }}
             {...fadeUp(0.2)}
           >
-            Autoklinik Reutlingen ist kein Konzern. Wir sind eine kleine, frische Werkstatt mit echten Werten — und suchen einen Kfz-Mechatroniker, der das genauso sieht wie wir.
+            Autoklinik Reutlingen ist kein Konzern. Wir sind eine frische, ehrliche Werkstatt — und wir brauchen genau eine Person, die das genauso sieht wie wir.
           </motion.p>
 
           <motion.div className="flex flex-wrap gap-4 mt-10" {...fadeUp(0.3)}>
@@ -122,97 +131,150 @@ export default function KarrierePage() {
             <Link
               href="/karriere/kfz-mechatroniker#bewerben"
               className="inline-flex items-center gap-2.5 rounded-full border px-8 py-4 text-sm font-semibold transition-all hover:bg-white/10"
-              style={{ borderColor: "rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.8)" }}
+              style={{ borderColor: "rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.75)" }}
             >
               Direkt bewerben
             </Link>
           </motion.div>
 
-          {/* Stat strip */}
+          {/* Stats strip */}
           <motion.div
-            className="flex flex-wrap gap-x-10 gap-y-4 mt-16 pt-10"
+            className="flex flex-wrap gap-x-10 gap-y-5 mt-16 pt-10"
             style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
             {...fadeUp(0.4)}
           >
             {[
-              { val: "5 Sterne", label: "auf Google" },
-              { val: "Alle Marken", label: "& Modelle" },
+              { val: "5,0★", label: "Google Bewertung" },
               { val: "37+", label: "Kundenbewertungen" },
-              { val: "Mo–Fr", label: "Geregelte Zeiten" },
+              { val: "Alle Marken", label: "& Modelle" },
+              { val: "Mo – Fr", label: "Geregelte Arbeitszeiten" },
             ].map((s) => (
               <div key={s.val}>
                 <p className="text-xl font-extrabold text-white">{s.val}</p>
-                <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>{s.label}</p>
+                <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.38)" }}>
+                  {s.label}
+                </p>
               </div>
             ))}
           </motion.div>
         </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+        >
+          <span className="text-xs uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.3)" }}>Scroll</span>
+          <motion.div
+            className="w-px h-8"
+            style={{ backgroundColor: "rgba(0,116,162,0.6)" }}
+            animate={{ scaleY: [0, 1, 0] }}
+            transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+          />
+        </motion.div>
       </section>
 
-      {/* ── ÜBER UNS — persönliche Ansprache ── */}
+      {/* ── WER WIR SIND ── */}
       <section style={{ backgroundColor: "#ffffff" }}>
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <div>
-              <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>
+              <motion.p
+                className="text-xs font-bold uppercase tracking-[0.22em] mb-5"
+                style={{ color: "#0074a2" }}
+                {...fadeUp(0)}
+              >
                 Wer wir sind
               </motion.p>
               <motion.h2
-                className="font-extrabold text-balance mb-6"
-                style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)", lineHeight: 1.15, color: "#001826", letterSpacing: "-0.02em" }}
+                className="font-extrabold text-balance mb-7"
+                style={{
+                  fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
+                  lineHeight: 1.1,
+                  color: "#001826",
+                  letterSpacing: "-0.02em",
+                }}
                 {...fadeUp(0.1)}
               >
-                Wir sind neu — und genau das ist unsere Stärke.
+                Keine eingerosteten Strukturen. Kein Konzernblödsinn.
               </motion.h2>
-              <motion.p className="text-base leading-relaxed mb-4" style={{ color: "#475569" }} {...fadeUp(0.2)}>
-                Autoklinik Reutlingen gibt es erst seit wenigen Monaten. Das bedeutet: keine eingerosteten Strukturen, keine veralteten Gewohnheiten. Wir bauen gerade etwas auf — und du kannst von Anfang an dabei sein.
-              </motion.p>
-              <motion.p className="text-base leading-relaxed" style={{ color: "#475569" }} {...fadeUp(0.25)}>
-                Wir sind ein Meisterbetrieb mit klarer Ausrichtung: Qualität, Transparenz, Fairness — gegenüber unseren Kunden und gegenüber unserem Team. Du wirst hier nicht eine Nummer sein.
-              </motion.p>
+              <motion.div
+                className="space-y-4 text-base leading-relaxed"
+                style={{ color: "#475569" }}
+                {...fadeUp(0.2)}
+              >
+                <p>
+                  Autoklinik Reutlingen gibt es noch nicht lange. Und das ist kein Nachteil — das ist eine Chance. Für dich. Wir bauen gerade etwas auf, und du kannst von Anfang an mitgestalten.
+                </p>
+                <p>
+                  Wir reparieren alles — BMW, Mercedes, VW, Exoten. Ehrlich, fair und direkt. Kein Aufschlag für Unwissenheit, kein Umsatzziel, das auf deinem Rücken ausgetragen wird.
+                </p>
+                <p>
+                  Das Arbeitsklima? Respektvoll. Direkt. Mit Humor. Wir sind kein anonymes Team, sondern Kollegen, die sich gegenseitig vertrauen.
+                </p>
+              </motion.div>
             </div>
+
             <motion.div
               className="relative rounded-3xl overflow-hidden"
-              style={{ height: 400, background: "#f0f7ff", border: "1px solid #d5e8f0" }}
-              initial={{ opacity: 0, x: 40 }}
+              style={{ height: 440 }}
+              initial={{ opacity: 0, x: 48 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: EASE, delay: 0.15 }}
+              transition={{ duration: 0.85, ease: EASE, delay: 0.15 }}
             >
               <img
-                src="/assets/images/6937e7163e052d298653ff55_reperatur-mann-.png"
-                alt="Kfz-Mechatroniker bei der Arbeit in der Autoklinik Reutlingen"
+                src="/assets/images/6937e7167a27ffa77e40aa08_Hero-Image.png"
+                alt="Werkstatt der Autoklinik Reutlingen"
                 className="w-full h-full object-cover object-center"
               />
               <div
-                className="absolute bottom-0 left-0 right-0 p-6"
-                style={{ background: "linear-gradient(0deg, rgba(0,24,38,0.85) 0%, transparent 100%)" }}
+                className="absolute bottom-0 left-0 right-0 px-7 py-6 flex items-end gap-4"
+                style={{
+                  background: "linear-gradient(0deg, rgba(0,18,30,0.9) 0%, transparent 100%)",
+                  minHeight: 120,
+                }}
               >
-                <p className="text-white font-bold text-lg">Autoklinik Reutlingen</p>
-                <p className="text-sm" style={{ color: "rgba(255,255,255,0.65)" }}>Haldenhaustraße 3 · 72770 Reutlingen</p>
+                <div>
+                  <p className="font-bold text-white text-sm">Autoklinik Reutlingen</p>
+                  <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>
+                    Haldenhaustraße 3 · 72770 Reutlingen
+                  </p>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ── VORTEILE ── */}
+      {/* ── VORTEILE DARK ── */}
       <section style={{ backgroundColor: "#001826" }}>
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
-          <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#60c8f0" }} {...fadeUp(0)}>
+          <motion.p
+            className="text-xs font-bold uppercase tracking-[0.22em] mb-5"
+            style={{ color: "#60c8f0" }}
+            {...fadeUp(0)}
+          >
             Was dich erwartet
           </motion.p>
           <motion.h2
             className="font-extrabold text-white text-balance mb-16"
-            style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)", lineHeight: 1.15, letterSpacing: "-0.02em", maxWidth: 600 }}
+            style={{
+              fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
+              maxWidth: 640,
+            }}
             {...fadeUp(0.1)}
           >
-            6 Gründe, warum Autoklinik der richtige Schritt ist.
+            6 Dinge, die andere Werkstätten nicht bieten.
           </motion.h2>
 
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px"
-            style={{ border: "1px solid rgba(255,255,255,0.07)", borderRadius: 24, overflow: "hidden" }}
+            style={{ backgroundColor: "rgba(255,255,255,0.06)", borderRadius: 24, overflow: "hidden" }}
             variants={staggerContainer}
             initial="hidden"
             whileInView="show"
@@ -223,103 +285,106 @@ export default function KarrierePage() {
                 key={p.num}
                 variants={staggerItem}
                 className="flex flex-col p-8"
-                style={{
-                  backgroundColor: i % 2 === 0 ? "#001e30" : "#001826",
-                  borderRight: "1px solid rgba(255,255,255,0.05)",
-                  borderBottom: "1px solid rgba(255,255,255,0.05)",
-                }}
+                style={{ backgroundColor: "#001826" }}
               >
-                <span className="text-4xl font-black mb-6" style={{ color: "rgba(0,116,162,0.4)", letterSpacing: "-0.03em" }}>
+                <span
+                  className="text-5xl font-black mb-5 block"
+                  style={{ color: "rgba(0,116,162,0.35)", letterSpacing: "-0.04em", lineHeight: 1 }}
+                >
                   {p.num}
                 </span>
-                <p className="font-bold text-white mb-3">{p.title}</p>
-                <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.45)" }}>{p.body}</p>
+                <p className="font-bold text-white mb-3 leading-snug">{p.title}</p>
+                <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.42)" }}>
+                  {p.body}
+                </p>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* ── JOB CARD ── */}
+      {/* ── STELLE ── */}
       <section id="stelle" style={{ backgroundColor: "#f0f7ff" }}>
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
-          <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>
+          <motion.p
+            className="text-xs font-bold uppercase tracking-[0.22em] mb-5"
+            style={{ color: "#0074a2" }}
+            {...fadeUp(0)}
+          >
             Offene Stelle
           </motion.p>
           <motion.h2
             className="font-extrabold text-balance mb-12"
-            style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)", lineHeight: 1.15, color: "#001826", letterSpacing: "-0.02em" }}
+            style={{
+              fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
+              lineHeight: 1.1,
+              color: "#001826",
+              letterSpacing: "-0.02em",
+            }}
             {...fadeUp(0.1)}
           >
-            Genau eine Stelle. Genau die Richtige.
+            Genau eine Stelle. Genau die Richtige für dich.
           </motion.h2>
 
           <motion.div
             className="rounded-3xl overflow-hidden"
-            style={{ backgroundColor: "#ffffff", border: "1px solid #d5e8f0", boxShadow: "0 8px 48px rgba(0,46,64,0.10)" }}
-            initial={{ opacity: 0, y: 32 }}
+            style={{
+              backgroundColor: "#ffffff",
+              border: "1px solid #d5e8f0",
+              boxShadow: "0 12px 48px rgba(0,46,64,0.10)",
+            }}
+            initial={{ opacity: 0, y: 36 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.15 }}
           >
-            {/* Top accent */}
-            <div className="h-1" style={{ background: "linear-gradient(90deg, #0074a2 0%, #002e40 100%)" }} />
-
-            <div className="p-8 sm:p-10">
-              <div className="flex flex-wrap items-center gap-3 mb-5">
-                <span className="text-xs font-bold uppercase tracking-wider rounded-full px-3 py-1.5" style={{ backgroundColor: "#dbeafe", color: "#1d4ed8" }}>
-                  Vollzeit
-                </span>
-                <span className="text-xs font-bold uppercase tracking-wider rounded-full px-3 py-1.5" style={{ backgroundColor: "#dcfce7", color: "#16a34a" }}>
-                  Sofort verfugbar
-                </span>
-                <span className="text-xs font-medium rounded-full px-3 py-1.5" style={{ backgroundColor: "#fef9c3", color: "#92400e" }}>
-                  Reutlingen
-                </span>
+            <div className="h-1.5" style={{ background: "linear-gradient(90deg, #0074a2, #002e40)" }} />
+            <div className="p-8 sm:p-12">
+              <div className="flex flex-wrap gap-2.5 mb-6">
+                {["Vollzeit", "Sofort verfügbar", "Reutlingen", "Alle Marken"].map((tag, i) => (
+                  <span
+                    key={tag}
+                    className="text-xs font-bold uppercase tracking-wide rounded-full px-3.5 py-1.5"
+                    style={{
+                      backgroundColor: i === 0 ? "#dbeafe" : i === 1 ? "#dcfce7" : "#f1f5f9",
+                      color: i === 0 ? "#1d4ed8" : i === 1 ? "#16a34a" : "#475569",
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
 
               <h3
-                className="font-extrabold mb-4 text-balance"
-                style={{ fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "#001826", letterSpacing: "-0.02em" }}
+                className="font-extrabold mb-5 text-balance"
+                style={{
+                  fontSize: "clamp(1.5rem, 2.5vw, 2.2rem)",
+                  color: "#001826",
+                  letterSpacing: "-0.02em",
+                }}
               >
                 Kfz-Mechatroniker / Mechaniker (m/w/d)
               </h3>
 
-              <p className="text-base leading-relaxed mb-8 max-w-2xl" style={{ color: "#475569" }}>
-                Du bist Kfz-Mechatroniker oder Mechaniker, weißt was du tust — und willst in einer Werkstatt arbeiten, die dich auch als Menschen sieht. Dann bist du bei Autoklinik genau richtig.
+              <p className="text-base leading-relaxed mb-10 max-w-2xl" style={{ color: "#475569" }}>
+                Du weißt, was du tust. Du willst in einem kleinen, ehrlichen Team arbeiten — ohne Konzernstress, ohne Umsatzdruck, ohne Bullshit. Dann meld dich.
               </p>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 p-6 rounded-2xl" style={{ backgroundColor: "#f8fafc", border: "1px solid #e2eef4" }}>
-                {[
-                  { icon: "M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2z", label: "Reutlingen" },
-                  { icon: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5", label: "Alle Marken" },
-                  { icon: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z", label: "Meisterbetrieb" },
-                  { icon: "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z", label: "Kleines Team" },
-                ].map((item) => (
-                  <div key={item.label} className="flex items-center gap-2.5">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0074a2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d={item.icon} />
-                    </svg>
-                    <span className="text-xs font-semibold" style={{ color: "#334155" }}>{item.label}</span>
-                  </div>
-                ))}
-              </div>
 
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
                   href="/karriere/kfz-mechatroniker"
-                  className="inline-flex items-center justify-center gap-2.5 rounded-full px-8 py-4 text-sm font-bold text-white transition-all hover:brightness-110 active:scale-[.97]"
+                  className="inline-flex items-center justify-center gap-2.5 rounded-full px-9 py-4 text-sm font-bold text-white transition-all hover:brightness-110 active:scale-[.97]"
                   style={{ backgroundColor: "#002e40" }}
                 >
-                  Alles zur Stelle & Bewerben
+                  Alles zur Stelle ansehen
                   <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                     <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </Link>
                 <Link
                   href="/karriere/kfz-mechatroniker#bewerben"
-                  className="inline-flex items-center justify-center gap-2.5 rounded-full border px-8 py-4 text-sm font-semibold transition-all hover:border-[#0074a2] hover:text-[#0074a2]"
-                  style={{ borderColor: "#d5e8f0", color: "#475569" }}
+                  className="inline-flex items-center justify-center gap-2.5 rounded-full border px-9 py-4 text-sm font-semibold transition-all hover:border-[#0074a2] hover:text-[#0074a2]"
+                  style={{ borderColor: "#c7dce8", color: "#475569" }}
                 >
                   Direkt bewerben
                 </Link>
@@ -329,21 +394,32 @@ export default function KarrierePage() {
         </div>
       </section>
 
-      {/* ── FINALE CTA ── */}
+      {/* ── CTA FINAL ── */}
       <section style={{ backgroundColor: "#001826" }}>
-        <div className="max-w-4xl mx-auto px-6 sm:px-10 py-24 text-center">
-          <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#60c8f0" }} {...fadeUp(0)}>
-            Fragen?
+        <div className="max-w-3xl mx-auto px-6 sm:px-10 py-24 text-center">
+          <motion.p
+            className="text-xs font-bold uppercase tracking-[0.22em] mb-5"
+            style={{ color: "#60c8f0" }}
+            {...fadeUp(0)}
+          >
+            Noch Fragen?
           </motion.p>
           <motion.h2
             className="font-extrabold text-white text-balance mb-5"
-            style={{ fontSize: "clamp(1.8rem, 3vw, 2.6rem)", letterSpacing: "-0.02em" }}
+            style={{
+              fontSize: "clamp(1.8rem, 3vw, 2.6rem)",
+              letterSpacing: "-0.02em",
+            }}
             {...fadeUp(0.1)}
           >
-            Ruf uns einfach an — wir reden.
+            Ruf uns einfach an. Kein Stress, kein Bewerbungsgespräch mit Anzug.
           </motion.h2>
-          <motion.p className="text-base mb-10" style={{ color: "rgba(255,255,255,0.5)" }} {...fadeUp(0.2)}>
-            Kein Vorstellungsgespräch in einem sterilen Konferenzraum. Komm vorbei oder ruf kurz an.
+          <motion.p
+            className="text-base leading-relaxed mb-10"
+            style={{ color: "rgba(255,255,255,0.48)" }}
+            {...fadeUp(0.2)}
+          >
+            Komm vorbei oder schreib uns. Wir sind entspannt — und freuen uns auf dich.
           </motion.p>
           <motion.div className="flex flex-wrap justify-center gap-4" {...fadeUp(0.3)}>
             <a
@@ -361,7 +437,7 @@ export default function KarrierePage() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2.5 rounded-full border px-8 py-4 text-sm font-semibold transition-all hover:bg-white/10"
-              style={{ borderColor: "rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.8)" }}
+              style={{ borderColor: "rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.75)" }}
             >
               WhatsApp schreiben
             </a>
