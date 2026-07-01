@@ -17,14 +17,18 @@ export async function GET(request: Request) {
     url.searchParams.set("show_replies", "true");
   }
 
+  // Tag-based caching: stays cached until POST /api/revalidate is called.
+  // Falls back to a 1-hour TTL so stale data never lives forever.
   const upstream = await fetch(url.toString(), {
-    next: { revalidate: 300 }, // cache 5 min server-side
+    next: { tags: ["google-reviews"], revalidate: 3600 },
   });
 
   const data = await upstream.json();
 
   return NextResponse.json(data, {
     headers: {
+      // Let the browser re-use for 60 s, but allow stale for up to 5 min
+      // while the server fetches fresh data in the background.
       "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
     },
   });
