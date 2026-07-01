@@ -9,6 +9,7 @@ import { ServicesList } from "@/components/home/services-list";
 import { CtaBanner } from "@/components/home/cta-banner";
 import { HowItWorks } from "@/components/home/how-it-works";
 import { ContactSection } from "@/components/contact-section";
+import GoogleReviews from "@/components/google-reviews";
 
 export const metadata = {
   title: "Autoklinik Reutlingen",
@@ -29,6 +30,7 @@ export default function HomePage() {
         <ServicesList />
         <CtaBanner />
         <HowItWorks />
+        <GoogleReviews />
         <ContactSection />
       </main>
       <AutoklinikFooter />
