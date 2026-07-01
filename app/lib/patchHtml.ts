@@ -112,6 +112,17 @@ function rewriteAssets(html: string): string {
     "/assets/js/jquery-3.5.1.min.js"
   );
 
+  // Special case: TÜV icon – Webflow emits a mixed-encoding path where the space
+  // is percent-encoded but ü is left as raw Unicode. Handle both forms explicitly.
+  html = html.replace(
+    /\.\.\/cdn\.prod\.website-files\.com\/6937ded41fbb0d4d0e15a31e\/6937e7159229bbc42b6c8632_icon%20t[^\s"'<>]*\.png/gi,
+    "/assets/images/6937e7159229bbc42b6c8632_icon-tuev.png"
+  );
+  html = html.replace(
+    /https:\/\/cdn\.prod\.website-files\.com\/6937ded41fbb0d4d0e15a31e\/6937e7159229bbc42b6c8632_icon%20t[^\s"'<>]*\.png/gi,
+    "/assets/images/6937e7159229bbc42b6c8632_icon-tuev.png"
+  );
+
   // Images - replace URL-encoded paths from local CDN mirror
   // Pattern: ../cdn.prod.website-files.com/SITE_ID/FILENAME (may be URL-encoded)
   for (const [filename, localPath] of Object.entries(IMAGE_MAP)) {
