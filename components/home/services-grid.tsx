@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "motion/react";
+import { fadeUp, staggerContainer, staggerItem } from "@/lib/animation";
 
 const services = [
   {
@@ -15,7 +19,7 @@ const services = [
   {
     title: "Inspektion & Wartung",
     description: "Wartung nach Herstellervorgaben, damit dein Fahrzeug fit bleibt und teure Folgeschäden gar nicht erst entstehen.",
-    href: "/klimaservice",
+    href: "/inspektion",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M6 3v4M18 3v4M4 9h16M5 6h14a1 1 0 0 1 1 1v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1z" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
@@ -25,7 +29,7 @@ const services = [
   {
     title: "TÜV & AU",
     description: "Wir bereiten dein Auto vor und begleiten die Prüfung – damit du entspannt durchkommst.",
-    href: "/terminbuchung",
+    href: "/tuev-au",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M12 3l7 4v5c0 4.5-3 7-7 9-4-2-7-4.5-7-9V7l7-4z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
@@ -36,7 +40,7 @@ const services = [
   {
     title: "Reifenservice",
     description: "Reifenwechsel, Prüfung und Beratung für sicheren Grip – passend zu Saison, Fahrstil und Budget.",
-    href: "/terminbuchung",
+    href: "/reifenservice",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <circle cx="7" cy="17" r="2.5" stroke="currentColor" strokeWidth="1.7" />
@@ -74,61 +78,77 @@ export function ServicesGrid() {
   return (
     <section id="leistungen" style={{ backgroundColor: "#ffffff" }}>
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
+
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }}>
+            <motion.p
+              className="text-xs font-semibold uppercase tracking-[0.2em] mb-4"
+              style={{ color: "#0074a2" }}
+              {...fadeUp(0)}
+            >
               Leistungen
-            </p>
-            <h2
+            </motion.p>
+            <motion.h2
               className="font-bold tracking-tight text-balance"
               style={{ color: "#002e40", fontSize: "clamp(2rem, 3.5vw, 3rem)" }}
+              {...fadeUp(0.1)}
             >
               Alles aus einer Hand —<br />
               sauber, schnell, ehrlich.
-            </h2>
+            </motion.h2>
           </div>
-          <Link
-            href="/terminbuchung"
-            className="inline-flex shrink-0 items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:brightness-110"
-            style={{ backgroundColor: "#0074a2" }}
-          >
-            Termin buchen
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
+          <motion.div {...fadeUp(0.2)}>
+            <Link
+              href="/terminbuchung"
+              className="inline-flex shrink-0 items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:brightness-110"
+              style={{ backgroundColor: "#0074a2" }}
+            >
+              Termin buchen
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+          </motion.div>
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ backgroundColor: "#e5eef3" }}>
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px"
+          style={{ backgroundColor: "#e5eef3" }}
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+        >
           {services.map((service) => (
-            <Link
-              key={service.title}
-              href={service.href}
-              className="group flex flex-col gap-5 p-8 transition-colors hover:bg-blue-50"
-              style={{ backgroundColor: "#ffffff" }}
-            >
-              <div
-                className="flex h-11 w-11 items-center justify-center rounded-xl"
-                style={{ backgroundColor: "#e8f4fa", color: "#0074a2" }}
+            <motion.div key={service.title} variants={staggerItem}>
+              <Link
+                href={service.href}
+                className="group flex flex-col gap-5 p-8 transition-colors h-full hover:bg-blue-50"
+                style={{ backgroundColor: "#ffffff" }}
               >
-                {service.icon}
-              </div>
-              <div>
-                <h3 className="text-base font-semibold mb-2 flex items-center gap-2" style={{ color: "#002e40" }}>
-                  {service.title}
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0">
-                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#4a6272" }}>
-                  {service.description}
-                </p>
-              </div>
-            </Link>
+                <div
+                  className="flex h-11 w-11 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110"
+                  style={{ backgroundColor: "#e8f4fa", color: "#0074a2" }}
+                >
+                  {service.icon}
+                </div>
+                <div>
+                  <h3 className="text-base font-semibold mb-2 flex items-center gap-2" style={{ color: "#002e40" }}>
+                    {service.title}
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0">
+                      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "#4a6272" }}>
+                    {service.description}
+                  </p>
+                </div>
+              </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

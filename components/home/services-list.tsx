@@ -1,5 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "motion/react";
+import { fadeUp, slideLeft, staggerContainer, staggerItem } from "@/lib/animation";
 
 const CheckIcon = () => (
   <svg viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5 shrink-0 mt-0.5" aria-hidden="true">
@@ -65,34 +69,53 @@ export function ServicesList() {
   return (
     <section style={{ backgroundColor: "#f5f9fc" }}>
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-28">
+
         {/* Header */}
         <div className="mb-16">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-5" style={{ color: "#0074a2" }}>
+          <motion.p
+            className="text-xs font-semibold uppercase tracking-[0.2em] mb-5"
+            style={{ color: "#0074a2" }}
+            {...fadeUp(0)}
+          >
             Unser Leistungsspektrum
-          </p>
-          <h2
+          </motion.p>
+          <motion.h2
             className="font-bold tracking-tight text-balance"
             style={{ color: "#002e40", fontSize: "clamp(1.9rem, 3vw, 2.8rem)" }}
+            {...fadeUp(0.1)}
           >
             Alles, was dein Auto braucht.
-          </h2>
+          </motion.h2>
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ backgroundColor: "#d5e8f0" }}>
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px"
+          style={{ backgroundColor: "#d5e8f0" }}
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-40px" }}
+        >
           {categories.map((cat) => (
-            <div
+            <motion.div
               key={cat.title}
+              variants={staggerItem}
               className="flex flex-col gap-6 p-8"
               style={{ backgroundColor: "#f5f9fc" }}
             >
-              <Image
-                src={cat.icon}
-                alt={cat.iconAlt}
-                width={44}
-                height={44}
-                className="h-11 w-11 object-contain"
-              />
+              <motion.div
+                whileHover={{ scale: 1.08, rotate: -3 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <Image
+                  src={cat.icon}
+                  alt={cat.iconAlt}
+                  width={44}
+                  height={44}
+                  className="h-11 w-11 object-contain"
+                />
+              </motion.div>
               <h3 className="text-sm font-bold leading-snug" style={{ color: "#002e40" }}>
                 {cat.title}
               </h3>
@@ -106,12 +129,12 @@ export function ServicesList() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* CTA */}
-        <div className="mt-12 flex flex-wrap gap-3">
+        <motion.div className="mt-12 flex flex-wrap gap-3" {...fadeUp(0.15)}>
           <Link
             href="/terminbuchung"
             className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110"
@@ -129,7 +152,7 @@ export function ServicesList() {
           >
             Termin anfragen
           </Link>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

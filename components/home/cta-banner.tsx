@@ -1,11 +1,22 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "motion/react";
+import { fadeUp, scaleUp, EASE } from "@/lib/animation";
 
 export function CtaBanner() {
   return (
     <section style={{ backgroundColor: "#001824" }}>
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-8">
-        <div className="relative overflow-hidden rounded-2xl" style={{ minHeight: 340 }}>
+        <motion.div
+          className="relative overflow-hidden rounded-2xl"
+          style={{ minHeight: 340 }}
+          initial={{ opacity: 0, scale: 0.97 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.8, ease: EASE }}
+        >
           {/* Background image */}
           <Image
             src="/assets/images/6937e7163e052d298653ff55_reperatur-mann-.png"
@@ -22,19 +33,28 @@ export function CtaBanner() {
 
           {/* Content */}
           <div className="relative z-10 flex flex-col justify-center h-full px-10 sm:px-16 py-16 max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(140,210,235,0.85)" }}>
+            <motion.p
+              className="text-xs font-semibold uppercase tracking-[0.2em] mb-4"
+              style={{ color: "rgba(140,210,235,0.85)" }}
+              {...fadeUp(0.2)}
+            >
               Bereit?
-            </p>
-            <h2
+            </motion.p>
+            <motion.h2
               className="font-bold tracking-tight leading-[1.1] text-balance mb-6"
               style={{ color: "#ffffff", fontSize: "clamp(1.9rem, 3vw, 2.8rem)" }}
+              {...fadeUp(0.3)}
             >
               Jetzt Termin vereinbaren — schnell &amp; einfach.
-            </h2>
-            <p className="text-base mb-10" style={{ color: "rgba(255,255,255,0.6)" }}>
+            </motion.h2>
+            <motion.p
+              className="text-base mb-10"
+              style={{ color: "rgba(255,255,255,0.6)" }}
+              {...fadeUp(0.38)}
+            >
               Online buchen oder direkt anrufen. Wir sind für dich da.
-            </p>
-            <div className="flex flex-wrap gap-3">
+            </motion.p>
+            <motion.div className="flex flex-wrap gap-3" {...fadeUp(0.45)}>
               <Link
                 href="/terminbuchung"
                 className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110 active:scale-[0.97]"
@@ -52,9 +72,9 @@ export function CtaBanner() {
               >
                 Termin anfragen
               </Link>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
