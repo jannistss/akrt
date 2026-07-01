@@ -52,10 +52,10 @@ export function NavBody({ children, className }: NavBodyProps) {
     <motion.div
       className={cn(
         "hidden md:flex items-center justify-between gap-2 w-full max-w-[1280px] rounded-2xl px-6 py-3 transition-all duration-300",
-        "border border-[rgba(26,111,207,0.18)]",
+        "border border-[rgba(26,111,207,0.18)] bg-white",
         scrolled
-          ? "bg-white/92 backdrop-blur-xl shadow-[0_8px_32px_rgba(13,27,42,0.14)]"
-          : "bg-white/70 backdrop-blur-md shadow-[0_4px_20px_rgba(13,27,42,0.06)]",
+          ? "shadow-[0_8px_32px_rgba(13,27,42,0.14)]"
+          : "shadow-[0_4px_20px_rgba(13,27,42,0.08)]",
         className
       )}
     >
@@ -308,7 +308,7 @@ interface MobileNavHeaderProps {
 
 export function MobileNavHeader({ children }: MobileNavHeaderProps) {
   return (
-    <div className="flex items-center justify-between w-full rounded-2xl border border-[rgba(26,111,207,0.18)] bg-white/72 backdrop-blur-xl px-4 py-3 shadow-[0_4px_20px_rgba(13,27,42,0.06)]">
+    <div className="flex items-center justify-between w-full rounded-2xl border border-[rgba(26,111,207,0.18)] bg-white px-4 py-3 shadow-[0_4px_20px_rgba(13,27,42,0.08)]">
       {children}
     </div>
   );
