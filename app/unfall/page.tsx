@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
@@ -5,204 +6,287 @@ import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { ContactSection } from "@/components/contact-section";
 import { WorkshopServices } from "@/components/workshop-services";
 
-export const metadata = {
-  title: "Unfallservice | Autoklinik Reutlingen",
+export const metadata: Metadata = {
+  title: "Unfallservice & Kfz-Gutachten in Reutlingen | Autoklinik Reutlingen",
   description:
-    "Unfallgutachten & Reparatur an einem Ort. Unabhängiger Gutachter im Haus, kostenlos bei Fremdverschulden.",
+    "Unfall in Reutlingen? Gutachten und Reparatur aus einer Hand — unabhängiger Sachverständiger im Haus, kostenlos bei Fremdverschulden. Jetzt Termin online buchen.",
+  keywords: [
+    "Unfallservice Reutlingen",
+    "Kfz Gutachten Reutlingen",
+    "Unfallreparatur Reutlingen",
+    "Unfallschaden Reutlingen",
+    "Kfz Sachverständiger Reutlingen",
+    "Autoklinik Reutlingen",
+  ],
+  openGraph: {
+    title: "Unfallservice & Kfz-Gutachten in Reutlingen | Autoklinik Reutlingen",
+    description: "Gutachten und Reparatur an einem Ort — kostenlos bei Fremdverschulden. Unabhängiger Sachverständiger im Haus.",
+    url: "https://autoklinik-reutlingen.de/unfall",
+    siteName: "Autoklinik Reutlingen",
+    locale: "de_DE",
+    type: "website",
+  },
+  alternates: { canonical: "https://autoklinik-reutlingen.de/unfall" },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AutoRepair",
+  name: "Autoklinik Reutlingen",
+  url: "https://autoklinik-reutlingen.de",
+  telephone: "+4971219880800",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Schillerstraße 22",
+    addressLocality: "Reutlingen",
+    postalCode: "72764",
+    addressRegion: "BW",
+    addressCountry: "DE",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Unfallservice",
+    itemListElement: [
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Kfz-Gutachten (unabhängig)" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Unfallreparatur & Karosserie" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Lackierung" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Versicherungsabwicklung" } },
+    ],
+  },
 };
 
 const highlights = [
   "Kostenlos bei Fremdverschulden",
   "Unabhängiger Gutachter im Haus",
-  "Kurze Wartezeiten",
-  "Für alle Marken",
-  "Qualitätsarbeit & Meisterbetrieb",
+  "Alle Marken",
+  "Meisterbetrieb",
+  "Versicherungsabwicklung",
   "TÜV in 48 Stunden",
 ];
 
-const steps = [
+const faqs = [
   {
-    title: "Termin vereinbaren",
-    description:
-      "Schreib uns bei WhatsApp, ruf direkt durch oder nutze das Formular auf der Website. Wir melden uns innerhalb von 24 Stunden zurück.",
+    q: "Was muss ich nach einem Unfall sofort tun?",
+    a: "Unfallstelle absichern, Polizei rufen (wenn nötig), Fotos machen, Personalien tauschen — und dann uns kontaktieren. Wir begleiten Sie durch den Rest.",
   },
   {
-    title: "Fahrzeug & Gutachten",
-    description:
-      "Unser zertifizierter Kfz-Sachverständiger prüft das Fahrzeug direkt vor Ort. Keine Wege, keine Warterei.",
+    q: "Kostet das Gutachten mich etwas?",
+    a: "Bei Fremdverschulden trägt die gegnerische Haftpflichtversicherung die Kosten für das Gutachten vollständig. Sie zahlen nichts.",
   },
   {
-    title: "Reparatur & fertig",
-    description:
-      "Wir reparieren das Fahrzeug fachgerecht. Alles aus einer Hand – Gutachten, Reparatur, Abrechnung mit der Versicherung.",
+    q: "Muss ich zur Vertragswerkstatt meines Fahrzeugherstellers?",
+    a: "Nein. Als Geschädigter haben Sie das Recht, eine freie Fachwerkstatt zu wählen. Die Versicherung muss die Reparaturkosten erstatten — auch bei uns.",
+  },
+  {
+    q: "Wie lange dauert die Unfallreparatur?",
+    a: "Das hängt vom Schadensumfang ab. Wir schätzen die Zeit bei der Begutachtung ein und halten Sie laufend auf dem Laufenden — ohne böse Überraschungen.",
+  },
+  {
+    q: "Bekomme ich einen Ersatzwagen?",
+    a: "Bei Fremdverschulden haben Sie in der Regel Anspruch auf Nutzungsausfall oder einen Mietwagen — wir helfen Ihnen, das korrekt gegenüber der Versicherung geltend zu machen.",
   },
 ];
 
 export default function UnfallPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <AutoklinikNavbar />
-      <main className="font-sans">
-
-        {/* Hero */}
-        <header className="relative overflow-hidden" style={{ backgroundColor: "#0d1b2a", minHeight: 480 }}>
-          <div className="max-w-7xl mx-auto px-6 py-24 flex flex-col lg:flex-row items-center gap-12">
-            <div className="flex-1 max-w-2xl">
-              <span className="inline-block text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#4aadce" }}>
-                Unfallservice
-              </span>
-              <h1 className="text-4xl sm:text-5xl font-bold leading-tight tracking-tight text-balance mb-5" style={{ color: "#fff" }}>
-                Unfall gehabt? Gutachten & Reparatur an einem Ort.
-              </h1>
-              <p className="text-base sm:text-lg leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.76)" }}>
-                Bei uns bekommen Sie alles aus einer Hand: professionelles Kfz-Gutachten durch einen unabhängigen Sachverständigen und fachgerechte Reparatur – direkt hier in der Haldenhaustraße in Reutlingen.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link href="/terminbuchung" className="rounded-xl px-6 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90" style={{ backgroundColor: "#0074a2" }}>
-                  Termin online buchen
+      <main>
+        {/* ── Hero — urgent, confident ── */}
+        <section style={{ backgroundColor: "#002e40" }} className="pt-32 pb-20">
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
+              <div className="flex-1">
+                <Link
+                  href="/#leistungen"
+                  className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest mb-8 hover:opacity-80 transition-opacity"
+                  style={{ color: "#4db8d8" }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M10 4L6 8l4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  Alle Leistungen
                 </Link>
-                <a href="tel:+4971211452619" className="rounded-xl border px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.35)", color: "#fff" }}>
-                  Termin anfragen
-                </a>
+                <h1
+                  className="font-bold tracking-tight leading-[1.08] text-balance mb-6"
+                  style={{ color: "#ffffff", fontSize: "clamp(2.4rem, 5vw, 3.8rem)" }}
+                >
+                  Unfall gehabt?<br />
+                  <span style={{ color: "#4db8d8" }}>Gutachten & Reparatur</span><br />
+                  aus einer Hand.
+                </h1>
+                <p className="text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "rgba(255,255,255,0.65)" }}>
+                  Unabhängiger Kfz-Sachverständiger direkt im Haus — kein Umweg, kein Doppeltermin. Wir erledigen Gutachten, Reparatur und Versicherungsabwicklung komplett für Sie.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    href="/terminbuchung"
+                    className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110"
+                    style={{ backgroundColor: "#0074a2" }}
+                  >
+                    Jetzt Termin buchen
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+                  <a
+                    href="tel:+4971219880800"
+                    className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/10"
+                    style={{ borderColor: "rgba(255,255,255,0.25)", color: "rgba(255,255,255,0.85)" }}
+                  >
+                    07121 9880800
+                  </a>
+                </div>
+                <div className="flex flex-wrap gap-3 mt-8">
+                  {highlights.map((t) => (
+                    <span key={t} className="rounded-full px-4 py-1.5 text-xs font-medium" style={{ backgroundColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.7)" }}>
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="hidden lg:block flex-none" style={{ maxWidth: 360 }}>
-              <Image
-                src="/assets/images/6937e7167a27ffa77e40aa08_Hero-Image.png"
-                alt="Mechaniker in blauer Arbeitskleidung"
-                width={360}
-                height={420}
-                className="object-contain"
-                priority
-              />
+              <div className="relative w-full lg:w-[440px] rounded-2xl overflow-hidden shrink-0" style={{ height: 460 }}>
+                <Image
+                  src="/assets/images/6937e7163e052d298653ff55_reperatur-mann-.png"
+                  alt="Kfz-Sachverständiger begutachtet Unfallschaden in der Autoklinik Reutlingen"
+                  fill
+                  className="object-cover object-center"
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 440px"
+                />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, rgba(0,20,32,0.65) 100%)" }} />
+                <div
+                  className="absolute bottom-6 left-6 rounded-xl px-5 py-4"
+                  style={{ backgroundColor: "rgba(0,46,64,0.88)", backdropFilter: "blur(10px)", border: "1px solid rgba(77,184,216,0.25)" }}
+                >
+                  <p className="text-sm font-bold text-white">Kostenlos bei Fremdverschulden</p>
+                  <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.6)" }}>Gutachten & Reparatur — Sie zahlen nichts</p>
+                </div>
+              </div>
             </div>
           </div>
-        </header>
+        </section>
 
-        {/* Info card */}
-        <section className="py-12" style={{ backgroundColor: "#f4f8fb" }}>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="rounded-2xl overflow-hidden flex flex-col md:flex-row" style={{ backgroundColor: "#fff", border: "1px solid #e4edf3" }}>
-              {/* Opening hours */}
-              <div className="flex-1 p-8 border-b md:border-b-0 md:border-r" style={{ borderColor: "#e4edf3" }}>
-                <h2 className="text-sm font-bold uppercase tracking-wider mb-5" style={{ color: "#0074a2" }}>
-                  Öffnungszeiten
+        {/* ── Why Autoklinik for accidents ── */}
+        <section style={{ backgroundColor: "#f5f9fc" }}>
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }}>Der Unterschied</p>
+                <h2 className="font-bold tracking-tight leading-[1.1] text-balance mb-6" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }}>
+                  Normalerweise fangen nach dem Unfall die Probleme erst an.
                 </h2>
-                <ul className="flex flex-col gap-2 text-sm" style={{ color: "#0d1b2a" }}>
-                  {["Mo.", "Di.", "Mi.", "Do.", "Fr."].map((d) => (
-                    <li key={d} className="flex justify-between gap-4">
-                      <span className="font-medium">{d}</span>
-                      <span style={{ color: "#4a6070" }}>8 Uhr bis 18 Uhr</span>
-                    </li>
-                  ))}
-                  <li className="flex justify-between gap-4">
-                    <span className="font-medium">Sa.</span>
-                    <span style={{ color: "#4a6070" }}>nach Terminvereinbarung</span>
-                  </li>
-                </ul>
+                <p className="text-sm leading-relaxed mb-4" style={{ color: "#4a6272" }}>
+                  Polizei, Versicherung, Gutachter suchen, Termin beim Gutachter, Fahrzeug hinfahren, Gutachten warten, dann Werkstatt suchen — das kostet Nerven, Zeit und manchmal auch Geld, wenn man die falschen Entscheidungen trifft.
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: "#4a6272" }}>
+                  In der Autoklinik Reutlingen ist das anders: Unser zertifizierter Kfz-Sachverständiger sitzt direkt im Haus. Sie kommen einmal zu uns — und gehen mit einem fertigen Gutachten und einem Reparaturauftrag. Wir übernehmen die komplette Versicherungsabwicklung.
+                </p>
               </div>
-              {/* Contact */}
-              <div className="flex-1 p-8 border-b md:border-b-0 md:border-r" style={{ borderColor: "#e4edf3" }}>
-                <h2 className="text-sm font-bold uppercase tracking-wider mb-5" style={{ color: "#0074a2" }}>
-                  Kontakt
-                </h2>
-                <ul className="flex flex-col gap-2 text-sm" style={{ color: "#0d1b2a" }}>
-                  <li><a href="mailto:info@autoklinik-reutlingen.de" className="hover:underline" style={{ color: "#0074a2" }}>info@autoklinik-reutlingen.de</a></li>
-                  <li><a href="tel:+4971211452619" className="hover:underline" style={{ color: "#0074a2" }}>07121 14526199</a></li>
-                  <li className="pt-1" style={{ color: "#4a6070" }}>Haldenhaustraße 3<br />72770 Reutlingen</li>
-                </ul>
-              </div>
-              {/* CTA */}
-              <div className="flex-1 p-8 flex flex-col justify-center gap-3">
-                <h2 className="text-base font-bold" style={{ color: "#0d1b2a" }}>Jetzt Termin vereinbaren</h2>
-                <Link href="/terminbuchung" className="rounded-xl px-5 py-3 text-sm font-semibold text-white text-center transition-opacity hover:opacity-90" style={{ backgroundColor: "#0074a2" }}>
-                  Termin online buchen
-                </Link>
-                <a href="tel:+4971211452619" className="rounded-xl border px-5 py-3 text-sm font-semibold text-center transition-colors hover:bg-[#f4f8fb]" style={{ borderColor: "#b8d0dc", color: "#0d1b2a" }}>
-                  Termin anfragen
-                </a>
+              <div className="flex flex-col gap-4">
+                {[
+                  { title: "Unabhängiger Sachverständiger im Haus", text: "Kein Umweg, kein zweiter Termin. Das Gutachten entsteht direkt bei uns — vollständig und versicherungskonform." },
+                  { title: "Reparaturkostenermittlung", text: "Vollständige Dokumentation aller Schäden, Wertminderungsberechnung und Nutzungsausfallentschädigung." },
+                  { title: "Direktabrechnung mit der Versicherung", text: "Wir kommunizieren direkt mit der Haftpflichtversicherung des Unfallgegners — Sie müssen sich um nichts kümmern." },
+                  { title: "Karosserie, Lack & Technik", text: "Als Meisterbetrieb reparieren wir alles fachgerecht — Karosserieschäden, Lackarbeiten und mechanische Folgeschäden." },
+                ].map((p) => (
+                  <div key={p.title} className="flex gap-5 p-5 rounded-xl" style={{ backgroundColor: "#ffffff", border: "1px solid #d5e8f0" }}>
+                    <div className="h-6 w-6 rounded-full shrink-0 mt-0.5 flex items-center justify-center" style={{ backgroundColor: "#0074a2" }}>
+                      <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                        <path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold mb-1" style={{ color: "#002e40" }}>{p.title}</p>
+                      <p className="text-sm leading-relaxed" style={{ color: "#4a6272" }}>{p.text}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
+          </div>
+        </section>
 
-            {/* Highlights */}
-            <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-              {highlights.map((h) => (
-                <div key={h} className="rounded-xl flex items-center gap-2 px-4 py-3 text-xs font-medium" style={{ backgroundColor: "#fff", border: "1px solid #e4edf3", color: "#0d1b2a" }}>
-                  <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: "#e5f1f5" }}>
-                    <svg width="8" height="8" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                      <path d="M2 5l2 2 4-4" stroke="#0074a2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </span>
-                  {h}
+        {/* ── How it works ── */}
+        <section style={{ backgroundColor: "#ffffff" }}>
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }}>Ablauf</p>
+            <h2 className="font-bold tracking-tight mb-14 text-balance" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }}>
+              So einfach geht es
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ backgroundColor: "#d5e8f0" }}>
+              {[
+                { step: "01", title: "Termin vereinbaren", desc: "Rufen Sie an, schreiben Sie oder buchen Sie online. Wir finden innerhalb von 24 Stunden einen Termin für Sie." },
+                { step: "02", title: "Gutachten & Befund", desc: "Unser Sachverständiger prüft und dokumentiert alle Schäden direkt vor Ort — vollständig und unabhängig." },
+                { step: "03", title: "Reparatur & fertig", desc: "Wir reparieren fachgerecht und rechnen mit der Versicherung ab. Sie holen Ihr Fahrzeug wie neu ab." },
+              ].map((s) => (
+                <div key={s.step} className="p-8 flex flex-col gap-4" style={{ backgroundColor: "#ffffff" }}>
+                  <span className="text-5xl font-bold tabular-nums" style={{ color: "#e8f4fa" }}>{s.step}</span>
+                  <h3 className="text-base font-bold" style={{ color: "#002e40" }}>{s.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "#4a6272" }}>{s.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* What the expert does */}
-        <section className="py-20" style={{ backgroundColor: "#fff" }}>
-          <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-16 items-start">
-            <div className="flex-1">
-              <h2 className="text-3xl font-bold tracking-tight mb-4" style={{ color: "#0d1b2a" }}>
-                Nach einem Unfall beginnt der Stress erst richtig.
-              </h2>
-              <p className="text-sm leading-relaxed mb-6" style={{ color: "#4a6070" }}>
-                Polizei, Versicherung, Gutachter, Werkstatt – nach einem Verkehrsunfall müssen Sie an tausend Dinge gleichzeitig denken. Normalerweise heißt das: Termin beim Gutachter machen, Fahrzeug hinfahren, warten, Gutachten abholen, dann eine Werkstatt suchen und das Ganze von vorne.
-              </p>
-              <p className="text-sm leading-relaxed" style={{ color: "#4a6070" }}>
-                Bei uns nicht. In der Autoklinik Reutlingen arbeitet ein zertifizierter Kfz-Sachverständiger direkt vor Ort – im selben Gebäude. Das bedeutet: Sie fahren einmal zu uns und alles wird erledigt. Gutachten, Reparatur, fertig.
-              </p>
-            </div>
-            <div className="flex-1 rounded-2xl p-8" style={{ backgroundColor: "#f4f8fb", border: "1px solid #e4edf3" }}>
-              <h3 className="text-base font-bold mb-4" style={{ color: "#0d1b2a" }}>Was unser Sachverständiger für Sie tut</h3>
-              <p className="text-sm leading-relaxed" style={{ color: "#4a6070" }}>
-                Vollständige Dokumentation aller Schäden – inklusive Reparaturkostenermittlung, Wertminderungsberechnung und Nutzungsausfallentschädigung. Ihr Gutachten ist Ihr stärkstes Argument gegenüber der Versicherung.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Workshop services */}
+        {/* ── Workshop services component ── */}
         <WorkshopServices />
 
-        {/* How it works */}
-        <section className="py-20" style={{ backgroundColor: "#fff" }}>
-          <div className="max-w-7xl mx-auto px-6">
-            <h2 className="text-3xl font-bold tracking-tight mb-4 text-center" style={{ color: "#0d1b2a" }}>
-              So einfach geht&apos;s
+        {/* ── FAQ ── */}
+        <section style={{ backgroundColor: "#ffffff" }}>
+          <div className="max-w-3xl mx-auto px-6 sm:px-10 py-24">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }}>FAQ</p>
+            <h2 className="font-bold tracking-tight mb-12" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }}>
+              Häufige Fragen nach einem Unfall
             </h2>
-            <p className="text-sm text-center mb-12" style={{ color: "#4a6070" }}>
-              Wir verbinden handwerkliche Expertise mit modernster Technologie. Unser Ziel ist es, höchste Qualitätsstandards zu garantieren.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
-              {steps.map((step, i) => (
-                <div key={step.title} className="flex flex-col items-center text-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full text-base font-bold text-white" style={{ backgroundColor: "#0074a2" }}>
-                    {i + 1}
-                  </div>
-                  <h3 className="text-base font-bold" style={{ color: "#0d1b2a" }}>{step.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "#4a6070" }}>{step.description}</p>
-                </div>
+            <div className="flex flex-col gap-0" style={{ borderTop: "1px solid #d5e8f0" }}>
+              {faqs.map((faq) => (
+                <details key={faq.q} className="group py-6" style={{ borderBottom: "1px solid #d5e8f0" }}>
+                  <summary className="flex items-center justify-between cursor-pointer list-none gap-4">
+                    <span className="text-base font-semibold" style={{ color: "#002e40" }}>{faq.q}</span>
+                    <span className="shrink-0 text-[#0074a2]">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="transition-transform group-open:rotate-45">
+                        <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                      </svg>
+                    </span>
+                  </summary>
+                  <p className="mt-4 text-sm leading-relaxed" style={{ color: "#4a6272" }}>{faq.a}</p>
+                </details>
               ))}
             </div>
           </div>
         </section>
 
-        {/* CTA Banner */}
-        <section className="py-16" style={{ backgroundColor: "#0d1b2a" }}>
-          <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
-            <h2 className="text-2xl font-bold text-white text-balance">
-              Jetzt Termin vereinbaren
-            </h2>
-            <p className="text-sm hidden sm:block" style={{ color: "rgba(255,255,255,0.6)" }}>Schnell. Einfach. Direkt online oder telefonisch.</p>
-            <div className="flex flex-wrap gap-3 shrink-0">
-              <a href="tel:+4971211452619" className="rounded-xl border px-6 py-3 text-sm font-semibold transition-colors hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.35)", color: "#fff" }}>
-                Termin anfragen
-              </a>
-              <Link href="/terminbuchung" className="rounded-xl px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90" style={{ backgroundColor: "#0074a2" }}>
-                Termin online buchen
-              </Link>
+        {/* ── Other services ── */}
+        <section style={{ backgroundColor: "#f5f9fc" }}>
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-20">
+            <p className="text-sm font-semibold mb-8" style={{ color: "#4a6272" }}>Weitere Leistungen der Autoklinik</p>
+            <div className="flex flex-wrap gap-3">
+              {[
+                { name: "Inspektion & Wartung", href: "/inspektion" },
+                { name: "TÜV & AU", href: "/tuev-au" },
+                { name: "Reifenservice", href: "/reifenservice" },
+                { name: "Glasservice", href: "/glasservice" },
+                { name: "Klimaservice", href: "/klimaservice" },
+                { name: "Flottenbetreuung", href: "/flottenbetreuung" },
+              ].map((s) => (
+                <Link
+                  key={s.name}
+                  href={s.href}
+                  className="inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-medium transition-all hover:border-[#0074a2] hover:text-[#0074a2]"
+                  style={{ borderColor: "#c5dde8", color: "#002e40" }}
+                >
+                  {s.name}
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
+              ))}
             </div>
           </div>
         </section>

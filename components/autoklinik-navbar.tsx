@@ -22,15 +22,17 @@ const navItems: NavItem[] = [
     name: "Leistungen",
     link: "#leistungen",
     children: [
+      { name: "Inspektion & Wartung", link: "/inspektion" },
+      { name: "TÜV & AU", link: "/tuev-au" },
+      { name: "Reifenservice", link: "/reifenservice" },
+      { name: "Glasservice", link: "/glasservice" },
       { name: "Klimaservice", link: "/klimaservice" },
       { name: "Unfallservice", link: "/unfall" },
       { name: "Flottenbetreuung", link: "/flottenbetreuung" },
-      { name: "Terminbuchung", link: "/terminbuchung" },
     ],
   },
   { name: "Flotte", link: "/flottenbetreuung" },
   { name: "Kontakt", link: "#kontakt" },
-  { name: "Unfall", link: "/unfall" },
 ];
 
 export function AutoklinikNavbar() {
@@ -139,11 +141,6 @@ export function AutoklinikNavbar() {
           {/* Kontakt */}
           <MobileNavLink href="#kontakt" onClick={() => setIsMobileMenuOpen(false)} delay={0.16}>
             Kontakt
-          </MobileNavLink>
-
-          {/* Unfall */}
-          <MobileNavLink href="/unfall" onClick={() => setIsMobileMenuOpen(false)} delay={0.20}>
-            Unfall
           </MobileNavLink>
 
           {/* CTA */}
