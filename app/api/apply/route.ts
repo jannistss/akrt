@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       const blob = await put(
         `bewerbungen/${Date.now()}-${cvFile.name}`,
         cvFile,
-        { access: "public" }
+        { access: "private" }
       );
       cvUrl = blob.url;
     }
