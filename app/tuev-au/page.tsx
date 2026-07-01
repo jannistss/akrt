@@ -19,22 +19,22 @@ const jsonLd = {
 
 const checks = [
   { title: "Licht & Elektrik", desc: "Alle Scheinwerfer, Blinker, Bremsleuchten und elektrischen Sicherheitskomponenten werden geprüft und eingestellt." },
-  { title: "Bremsen", desc: "Bremsbeläge, Bremsscheiben und Bremsflüssigkeit — wir prüfen, ob alles TÜV-konform ist und tauschen bei Bedarf aus." },
+  { title: "Bremsen", desc: "Bremsbeläge, Bremsscheiben und Bremsflüssigkeit - wir prüfen, ob alles TÜV-konform ist und tauschen bei Bedarf aus." },
   { title: "Fahrwerk & Lenkung", desc: "Spurstangen, Achsgelenke, Stoßdämpfer und Bereifung werden auf Verschleiß und Sicherheit kontrolliert." },
   { title: "Abgasuntersuchung (AU)", desc: "Emissionswerte messen, OBD-Diagnose durchführen und sicherstellen, dass Ihr Fahrzeug die gesetzlichen Grenzwerte einhält." },
   { title: "Karosserie & Rahmen", desc: "Sichtprüfung auf Rost, Risse oder strukturelle Schäden, die die Fahrzeugsicherheit beeinträchtigen könnten." },
-  { title: "Mängelbeseitigung", desc: "Werden bei der HU Mängel festgestellt, beheben wir diese direkt — für eine reibungslose Nachprüfung." },
+  { title: "Mängelbeseitigung", desc: "Werden bei der HU Mängel festgestellt, beheben wir diese direkt - für eine reibungslose Nachprüfung." },
 ];
 
 const steps = [
   { step: "01", title: "Vorbereitungscheck", desc: "Wir prüfen Ihr Fahrzeug auf alle relevanten TÜV-Kriterien und identifizieren vorhandene Mängel." },
-  { step: "02", title: "Mängelbeseitigung", desc: "Alle festgestellten Mängel werden direkt bei uns behoben — Bremsen, Licht, Fahrwerk und mehr." },
+  { step: "02", title: "Mängelbeseitigung", desc: "Alle festgestellten Mängel werden direkt bei uns behoben - Bremsen, Licht, Fahrwerk und mehr." },
   { step: "03", title: "Zum TÜV-Termin", desc: "Ihr Fahrzeug ist optimal vorbereitet. Wir koordinieren den Termin mit unserem TÜV-Partner." },
 ];
 
 const faqs = [
   { q: "Wann ist mein Fahrzeug zur HU fällig?", a: "Neue Fahrzeuge müssen nach 3 Jahren zur ersten HU, danach alle 2 Jahre. Das genaue Fälligkeitsdatum steht auf der TÜV-Plakette hinten am Fahrzeug." },
-  { q: "Was kostet der TÜV-Vorbereitungscheck?", a: "Den Vorbereitungscheck führen wir kostengünstig durch und rechnen die Kosten bei direkt folgender Reparatur auf Wunsch an. Sprechen Sie uns an — wir nennen Ihnen vorab den genauen Preis." },
+  { q: "Was kostet der TÜV-Vorbereitungscheck?", a: "Den Vorbereitungscheck führen wir kostengünstig durch und rechnen die Kosten bei direkt folgender Reparatur auf Wunsch an. Sprechen Sie uns an - wir nennen Ihnen vorab den genauen Preis." },
   { q: "Was passiert, wenn mein Auto beim TÜV durchfällt?", a: "Mit erheblichen Mängeln haben Sie 4 Wochen Zeit, diese zu beseitigen und das Fahrzeug erneut vorzustellen. Bei gefährlichen Mängeln muss das Fahrzeug sofort stillgelegt werden. Wir kümmern uns um schnelle Beseitigung." },
   { q: "Führt die Autoklinik die HU selbst durch?", a: "Wir bereiten Ihr Fahrzeug optimal vor und arbeiten mit anerkannten Prüforganisationen vor Ort zusammen. So kommen Sie mit einem Top-Fahrzeug zum TÜV-Termin." },
   { q: "Kann ich direkt nach dem TÜV-Vorbereitungscheck zur Hauptuntersuchung?", a: "Ja. Wir koordinieren Termine so, dass Sie möglichst wenig Aufwand haben. Rufen Sie uns an oder buchen Sie online." },
@@ -71,7 +71,7 @@ export default function TuevAuPage() {
                   TÜV &amp; Hauptuntersuchung<br />in Reutlingen
                 </motion.h1>
                 <motion.p className="text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "rgba(255,255,255,0.75)" }} {...fadeUp(0.2)}>
-                  Wir bereiten Ihr Fahrzeug gründlich vor — Vorbereitungscheck, Mängelbeseitigung und Koordination mit dem TÜV. Ohne Stress, ohne Überraschungen.
+                  Wir bereiten Ihr Fahrzeug gründlich vor - Vorbereitungscheck, Mängelbeseitigung und Koordination mit dem TÜV. Ohne Stress, ohne Überraschungen.
                 </motion.p>
                 <motion.div className="flex flex-wrap gap-3" {...fadeUp(0.3)}>
                   <Link href="/terminbuchung" className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold transition-all hover:brightness-110" style={{ backgroundColor: "#002e40", color: "#ffffff" }}>
@@ -168,7 +168,7 @@ export default function TuevAuPage() {
               <motion.div {...slideLeft(0)}>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-3" style={{ color: "rgba(255,255,255,0.6)" }}>TÜV-Termin</p>
                 <h2 className="font-bold tracking-tight text-balance" style={{ color: "#ffffff", fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}>Jetzt TÜV-Vorbereitungstermin buchen.</h2>
-                <p className="mt-3 text-sm leading-relaxed max-w-xl" style={{ color: "rgba(255,255,255,0.65)" }}>Wir prüfen, beheben Mängel und koordinieren den TÜV-Termin — alles aus einer Hand.</p>
+                <p className="mt-3 text-sm leading-relaxed max-w-xl" style={{ color: "rgba(255,255,255,0.65)" }}>Wir prüfen, beheben Mängel und koordinieren den TÜV-Termin - alles aus einer Hand.</p>
               </motion.div>
               <motion.div {...scaleUp(0.15)}>
                 <Link href="/terminbuchung" className="inline-flex shrink-0 items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold transition-all hover:brightness-110" style={{ backgroundColor: "#002e40", color: "#ffffff" }}>

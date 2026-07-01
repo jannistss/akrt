@@ -58,12 +58,12 @@ export async function POST(req: NextRequest) {
       from: "Autoklinik Karriere <onboarding@resend.dev>",
       to,
       replyTo: email,
-      subject: `Neue Bewerbung: ${position} — ${name}`,
+      subject: `Neue Bewerbung: ${position} - ${name}`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; background: #f8fafc; border-radius: 12px;">
           <div style="background: #002e40; border-radius: 8px; padding: 24px; margin-bottom: 24px;">
             <h1 style="color: #ffffff; margin: 0; font-size: 20px;">Neue Bewerbung eingegangen</h1>
-            <p style="color: rgba(255,255,255,0.7); margin: 8px 0 0; font-size: 14px;">Autoklinik Reutlingen — Karriere</p>
+            <p style="color: rgba(255,255,255,0.7); margin: 8px 0 0; font-size: 14px;">Autoklinik Reutlingen - Karriere</p>
           </div>
 
           <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden;">
@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
             </tr>
             <tr style="border-bottom: 1px solid #e2e8f0;">
               <td style="padding: 14px 20px; font-size: 13px; font-weight: 600; color: #64748b;">Telefon</td>
-              <td style="padding: 14px 20px; font-size: 14px; color: #0f172a;">${phone || "—"}</td>
+              <td style="padding: 14px 20px; font-size: 14px; color: #0f172a;">${phone || "-"}</td>
             </tr>
             ${
               message

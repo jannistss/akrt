@@ -28,7 +28,7 @@ export function HowItWorks() {
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
 
-          {/* Left — sticky heading */}
+          {/* Left - sticky heading */}
           <div className="lg:sticky" style={{ top: "8rem" }}>
             <motion.p
               className="text-xs font-semibold uppercase tracking-[0.2em] mb-5"
@@ -65,7 +65,7 @@ export function HowItWorks() {
             </motion.div>
           </div>
 
-          {/* Right — animated steps */}
+          {/* Right - animated steps */}
           <div className="flex flex-col gap-0" style={{ borderTop: "1px solid #d5e8f0" }}>
             {steps.map((step, i) => (
               <motion.div

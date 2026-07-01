@@ -151,14 +151,14 @@ function ReviewCard({ review, showReplies }: { review: Review; showReplies: bool
       {/* Stars */}
       <StarRow rating={review.star_rating} />
 
-      {/* Comment — only rendered when non-empty after cleaning */}
+      {/* Comment - only rendered when non-empty after cleaning */}
       {comment && (
         <p className="text-sm leading-relaxed flex-grow" style={{ color: "#334e5c" }}>
           {comment}
         </p>
       )}
 
-      {/* Owner reply — only shown when showReplies is enabled and reply is non-empty */}
+      {/* Owner reply - only shown when showReplies is enabled and reply is non-empty */}
       {showReplies && replyComment && (
         <div className="rounded-xl border border-[#1a6fcf]/25 bg-[#0d1b2a]/60 p-4 flex flex-col gap-2">
           <div className="flex items-center gap-2">
@@ -290,7 +290,7 @@ export default function GoogleReviews({ showReplies = false }: GoogleReviewsProp
               <span className="text-lg font-bold ml-1" style={{ color: "#002e40" }}>5.0</span>
             </div>
             <p className="text-sm max-w-sm" style={{ color: "#7a96a3" }}>
-              Wir freuen uns über jede Bewertung — sei der Erste und teile deine Erfahrung.
+              Wir freuen uns über jede Bewertung - sei der Erste und teile deine Erfahrung.
             </p>
             <a
               href="https://g.page/r/CTkakRV7d20NEBM/review"

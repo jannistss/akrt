@@ -17,17 +17,17 @@ const jsonLd = {
 };
 
 const services = [
-  { title: "Reifenmontage & Wuchten", desc: "Professionelle Montage und präzises Auswuchten Ihrer Reifen auf modernen Maschinen — für ruhigen, sicheren Lauf." },
+  { title: "Reifenmontage & Wuchten", desc: "Professionelle Montage und präzises Auswuchten Ihrer Reifen auf modernen Maschinen - für ruhigen, sicheren Lauf." },
   { title: "Sommer- & Winterreifenwechsel", desc: "Saisonaler Reifenwechsel inkl. Sichtprüfung des Reifenzustands und korrekter Einstellung des Luftdrucks." },
-  { title: "Reifeneinlagerung", desc: "Wir lagern Ihre Saisonreifen fachgerecht ein — trocken, nummeriert und auf Profiltiefe kontrolliert." },
+  { title: "Reifeneinlagerung", desc: "Wir lagern Ihre Saisonreifen fachgerecht ein - trocken, nummeriert und auf Profiltiefe kontrolliert." },
   { title: "Reifenreparatur", desc: "Kleiner Nagel, aber kein Drama: Schäden am Laufstreifen reparieren wir schnell und dauerhaft." },
-  { title: "RDKS-Sensor-Service", desc: "Reifendruckkontrollsystem prüfen, Sensoren ersetzen und korrekt anlernen — bei neuen wie gebrauchten Rädern." },
+  { title: "RDKS-Sensor-Service", desc: "Reifendruckkontrollsystem prüfen, Sensoren ersetzen und korrekt anlernen - bei neuen wie gebrauchten Rädern." },
   { title: "Reifenberatung", desc: "Welcher Reifen passt zu Ihrem Fahrzeug, Ihrer Fahrweise und Ihrem Budget? Wir beraten ehrlich und herstellerunabhängig." },
 ];
 
 const faqs = [
-  { q: "Wann sollte ich auf Winter- oder Sommerreifen wechseln?", a: "Als Faustregel gilt: Winterreifen von Oktober bis Ostern (O-bis-O-Regel). Bei Temperaturen dauerhaft unter 7 °C bieten Winterreifen deutlich bessere Haftung — unabhängig von Schnee." },
-  { q: "Was kostet der Reifenwechsel bei der Autoklinik?", a: "Die Kosten hängen von Reifengröße und Felgentyp ab. Rufen Sie uns kurz an oder schreiben Sie uns — wir nennen Ihnen den genauen Preis vorab." },
+  { q: "Wann sollte ich auf Winter- oder Sommerreifen wechseln?", a: "Als Faustregel gilt: Winterreifen von Oktober bis Ostern (O-bis-O-Regel). Bei Temperaturen dauerhaft unter 7 °C bieten Winterreifen deutlich bessere Haftung - unabhängig von Schnee." },
+  { q: "Was kostet der Reifenwechsel bei der Autoklinik?", a: "Die Kosten hängen von Reifengröße und Felgentyp ab. Rufen Sie uns kurz an oder schreiben Sie uns - wir nennen Ihnen den genauen Preis vorab." },
   { q: "Kann ich Räder einlagern lassen?", a: "Ja. Wir bieten sichere, fachgerechte Einlagerung Ihrer Saisonräder. Zu Saisonbeginn bringen wir sie einfach wieder hervor und montieren sie direkt." },
   { q: "Wie lange dauert ein Reifenwechsel?", a: "Ein vollständiger Radsatz-Wechsel inkl. Wuchten dauert in der Regel 45–60 Minuten. Mit Terminvereinbarung oft noch schneller." },
   { q: "Welche Profiltiefe muss ein Reifen mindestens haben?", a: "Gesetzlich sind 1,6 mm Mindestprofiltiefe vorgeschrieben. Wir empfehlen aber den Wechsel spätestens bei 3 mm (Winter) bzw. 2,5 mm (Sommer) für optimale Sicherheit." },
@@ -64,7 +64,7 @@ export default function ReifenservicePage() {
                   Reifenservice<br /><span style={{ color: "#0074a2" }}>in Reutlingen</span>
                 </motion.h1>
                 <motion.p className="text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "#4a6272" }} {...fadeUp(0.2)}>
-                  Reifenwechsel, Einlagerung, Reparatur und RDKS — alles aus einer Hand. Schnell, günstig und ohne lange Wartezeiten.
+                  Reifenwechsel, Einlagerung, Reparatur und RDKS - alles aus einer Hand. Schnell, günstig und ohne lange Wartezeiten.
                 </motion.p>
                 <motion.div className="flex flex-wrap gap-3 mb-8" {...fadeUp(0.3)}>
                   <Link href="/terminbuchung" className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110" style={{ backgroundColor: "#0074a2" }}>

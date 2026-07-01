@@ -18,26 +18,26 @@ const jsonLd = {
 
 const services = [
   { title: "Klima-Check & Drucktest", desc: "Kühlleistung, Systemdruck und Gesamtzustand werden gemessen. So wissen Sie sofort, ob und wo gehandelt werden muss." },
-  { title: "Kältemittel befüllen", desc: "Wir befüllen Ihre Anlage mit dem richtigen Kältemittel (R134a oder R1234yf) — nach Herstellervorgabe und in der korrekten Menge." },
-  { title: "Desinfektion", desc: "Bakterien, Schimmel und Gerüche aus dem Klimasystem entfernen — für frische, saubere Luft im Innenraum." },
+  { title: "Kältemittel befüllen", desc: "Wir befüllen Ihre Anlage mit dem richtigen Kältemittel (R134a oder R1234yf) - nach Herstellervorgabe und in der korrekten Menge." },
+  { title: "Desinfektion", desc: "Bakterien, Schimmel und Gerüche aus dem Klimasystem entfernen - für frische, saubere Luft im Innenraum." },
   { title: "Innenraumfilter wechseln", desc: "Ein verstopfter Pollenfilter mindert Kühlleistung und Luftqualität. Wir wechseln ihn schnell und günstig." },
   { title: "Dichtheitsprüfung", desc: "Mit Kontrastmittel und UV-Licht spüren wir Undichtigkeiten im Kältemittelkreislauf auf, bevor größere Schäden entstehen." },
   { title: "Kompressor & Bauteile", desc: "Defekter Klimakompressor oder kaputtes Expansionsventil? Wir tauschen Verschleißteile fachgerecht aus." },
 ];
 
 const whyPoints = [
-  { title: "Bessere Kühlleistung", text: "Ein optimal befülltes System kühlt schneller und effizienter — wichtig an heißen Sommertagen." },
-  { title: "Gesündere Luft", text: "Ohne Desinfektion sammeln sich Bakterien und Schimmel im System — das riecht nicht nur schlecht, sondern kann die Gesundheit belasten." },
-  { title: "Undichtigkeiten früh erkennen", text: "Kleine Lecks werden groß. Wir finden sie bevor der Kompressor zu Schaden kommt — das spart bares Geld." },
+  { title: "Bessere Kühlleistung", text: "Ein optimal befülltes System kühlt schneller und effizienter - wichtig an heißen Sommertagen." },
+  { title: "Gesündere Luft", text: "Ohne Desinfektion sammeln sich Bakterien und Schimmel im System - das riecht nicht nur schlecht, sondern kann die Gesundheit belasten." },
+  { title: "Undichtigkeiten früh erkennen", text: "Kleine Lecks werden groß. Wir finden sie bevor der Kompressor zu Schaden kommt - das spart bares Geld." },
   { title: "Werterhalt", text: "Ein gepflegtes Klimasystem ist beim Gebrauchtwagenverkauf ein echter Pluspunkt." },
 ];
 
 const faqs = [
-  { q: "Wie oft sollte die Klimaanlage gewartet werden?", a: "Empfohlen wird eine Überprüfung alle 2 Jahre. Kältemittel entweicht durch Diffusion schleichend — nach 3–5 Jahren ist die Anlage oft schon deutlich unter Druck." },
+  { q: "Wie oft sollte die Klimaanlage gewartet werden?", a: "Empfohlen wird eine Überprüfung alle 2 Jahre. Kältemittel entweicht durch Diffusion schleichend - nach 3–5 Jahren ist die Anlage oft schon deutlich unter Druck." },
   { q: "Woran erkenne ich, dass die Klimaanlage gewartet werden muss?", a: "Typische Anzeichen: Die Luft kühlt nicht mehr richtig, unangenehme Gerüche beim Einschalten, beschlagene Scheiben, die sich langsamer klären, oder der Kompressor springt hörbar an und ab." },
-  { q: "Was kostet ein Klimaservice?", a: "Ein Basis-Check mit Auffüllung liegt je nach Kältemitteltyp und -menge typisch zwischen 60 und 150 €. Wir nennen Ihnen den genauen Preis vorab — ohne Nachträge." },
+  { q: "Was kostet ein Klimaservice?", a: "Ein Basis-Check mit Auffüllung liegt je nach Kältemitteltyp und -menge typisch zwischen 60 und 150 €. Wir nennen Ihnen den genauen Preis vorab - ohne Nachträge." },
   { q: "Wie lange dauert der Klimaservice?", a: "Der Check inkl. Kältemittelbefüllung dauert ca. 45–60 Minuten. Desinfektion kommt noch ca. 20 Minuten obendrauf." },
-  { q: "Kann ich die Klimaanlage auch im Winter prüfen lassen?", a: "Ja, das ist sogar sinnvoll — gerade für die Scheibenentfeuchtung, die auch im Winter aktiv ist. Und ein Frühjahrs-Check kurz vor der Hitzesaison ist ideal." },
+  { q: "Kann ich die Klimaanlage auch im Winter prüfen lassen?", a: "Ja, das ist sogar sinnvoll - gerade für die Scheibenentfeuchtung, die auch im Winter aktiv ist. Und ein Frühjahrs-Check kurz vor der Hitzesaison ist ideal." },
 ];
 
 const related = [
@@ -72,7 +72,7 @@ export default function KlimaservicePage() {
                   Klimaservice<br /><span style={{ color: "#4db8d8" }}>in Reutlingen</span>
                 </motion.h1>
                 <motion.p className="text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "rgba(255,255,255,0.65)" }} {...fadeUp(0.2)}>
-                  Klima-Check, Kältemittelbefüllung, Desinfektion und Filterservice — kalt, sauber und schnell erledigt. Für alle Fahrzeugmarken, ohne versteckte Kosten.
+                  Klima-Check, Kältemittelbefüllung, Desinfektion und Filterservice - kalt, sauber und schnell erledigt. Für alle Fahrzeugmarken, ohne versteckte Kosten.
                 </motion.p>
                 <motion.div className="flex flex-wrap gap-3" {...fadeUp(0.3)}>
                   <Link href="/terminbuchung" className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110" style={{ backgroundColor: "#0074a2" }}>

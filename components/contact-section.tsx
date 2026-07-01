@@ -19,7 +19,7 @@ export function ContactSection() {
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
-          {/* Left — info + map */}
+          {/* Left - info + map */}
           <div className="flex flex-col gap-8">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-5" style={{ color: "#0074a2" }}>
@@ -32,7 +32,7 @@ export function ContactSection() {
                 Wir sind für dich da.
               </h2>
               <p className="text-base leading-relaxed" style={{ color: "#4a6272" }}>
-                Ruf an, schreib uns oder nutz das Formular — wir melden uns schnell.
+                Ruf an, schreib uns oder nutz das Formular - wir melden uns schnell.
               </p>
             </div>
 
@@ -89,7 +89,7 @@ export function ContactSection() {
             </div>
           </div>
 
-          {/* Right — form */}
+          {/* Right - form */}
           <div
             className="rounded-2xl p-8 sm:p-10"
             style={{ backgroundColor: "#f5f9fc", border: "1px solid #d5e8f0" }}
@@ -98,7 +98,7 @@ export function ContactSection() {
               Rückruf-Service
             </h3>
             <p className="text-sm mb-8" style={{ color: "#4a6272" }}>
-              Lass deine Nummer da — wir melden uns schnellstmöglich.
+              Lass deine Nummer da - wir melden uns schnellstmöglich.
             </p>
 
             {status === "success" ? (

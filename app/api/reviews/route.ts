@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     url.searchParams.set("show_replies", "true");
   }
 
-  // No Next.js server-side cache — the backend (google-business-profile-sync)
+  // No Next.js server-side cache - the backend (google-business-profile-sync)
   // handles its own 60 s cache and purges it instantly after every sync via
   // its own /api/revalidate endpoint. Caching here would only delay updates.
   const upstream = await fetch(url.toString(), { cache: "no-store" });
