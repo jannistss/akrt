@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import useSWR from "swr";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { fadeUp, staggerContainer, staggerItem, EASE } from "@/lib/animation";
 
 /* ─────────────────────────────────────────────────────────────
    Types
@@ -221,16 +223,21 @@ export default function GoogleReviews({ showReplies = false }: GoogleReviewsProp
         {/* Header card */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12">
           <div>
-            <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "#0074a2" }}>
+            <motion.p
+              className="text-xs font-semibold tracking-widest uppercase mb-2"
+              style={{ color: "#0074a2" }}
+              {...fadeUp(0)}
+            >
               Kundenstimmen
-            </p>
-            <h2
+            </motion.p>
+            <motion.h2
               id="reviews-heading"
               className="text-3xl font-bold leading-tight"
               style={{ color: "#002e40" }}
+              {...fadeUp(0.1)}
             >
               Was unsere Kunden sagen
-            </h2>
+            </motion.h2>
           </div>
 
           {/* Rating badge + CTA */}
@@ -308,11 +315,19 @@ export default function GoogleReviews({ showReplies = false }: GoogleReviewsProp
 
         {!isLoading && hasReviews && (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-40px" }}
+            >
               {reviews.map((review) => (
-                <ReviewCard key={review.id} review={review} showReplies={showReplies} />
+                <motion.div key={review.id} variants={staggerItem}>
+                  <ReviewCard review={review} showReplies={showReplies} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             {hasMore && (
               <div className="mt-10 flex justify-center">
