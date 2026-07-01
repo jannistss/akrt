@@ -39,6 +39,16 @@ export async function POST(req: NextRequest) {
       cvUrl = blob.url;
     }
 
+    const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:3000";
+
+    const cvDownloadLink = cvUrl
+      ? `${baseUrl}/api/cv-download?url=${encodeURIComponent(cvUrl)}`
+      : null;
+
     const to = process.env.APPLICATION_EMAIL ?? "info@autoklinik-reutlingen.de";
 
     await resend.emails.send({
@@ -79,11 +89,11 @@ export async function POST(req: NextRequest) {
                 : ""
             }
             ${
-              cvUrl
+              cvDownloadLink
                 ? `<tr>
               <td style="padding: 14px 20px; font-size: 13px; font-weight: 600; color: #64748b;">Lebenslauf</td>
               <td style="padding: 14px 20px; font-size: 14px;">
-                <a href="${cvUrl}" style="color: #0074a2; text-decoration: none; font-weight: 600;">Datei herunterladen &rarr;</a>
+                <a href="${cvDownloadLink}" style="color: #0074a2; text-decoration: none; font-weight: 600;">Datei herunterladen &rarr;</a>
               </td>
             </tr>`
                 : ""

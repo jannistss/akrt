@@ -20,7 +20,7 @@ const TOTAL_STEPS = 4;
 const stepTitles = [
   "Wer bist du?",
   "Wie erreichen wir dich?",
-  "Warum Autoklinik?",
+  "Warum du?",
   "Deine Unterlagen",
 ];
 
@@ -144,12 +144,12 @@ function StepThree({ data, onChange }: { data: FormData; onChange: (k: keyof For
     <div className="flex flex-col gap-5">
       <div>
         <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: "#64748b" }}>
-          Warum Autoklinik? Erzähl uns von dir. *
-        </label>
-        <textarea
-          value={data.message}
-          onChange={(e) => onChange("message", e.target.value)}
-          placeholder="Was motiviert dich? Welche Erfahrungen bringst du mit? Warum passt du zu uns?&#10;&#10;Keine Angst — ein paar ehrliche Sätze reichen."
+          Dein Anschreiben — warum bist du der Richtige? *
+          </label>
+          <textarea
+            value={data.message}
+            onChange={(e) => onChange("message", e.target.value)}
+            placeholder="Erzähl uns von dir: Welche Erfahrungen bringst du mit? Was macht dich als Kfz-Mechatroniker aus? Warum möchtest du bei uns arbeiten?&#10;&#10;Keine Angst — ein paar ehrliche Sätze reichen."
           className={inputCls}
           style={{ ...inputStyle, resize: "vertical", minHeight: 160 }}
           required
