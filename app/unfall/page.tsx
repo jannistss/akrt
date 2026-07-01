@@ -148,6 +148,73 @@ export default function UnfallPage() {
 
         <WorkshopServices />
 
+        {/* ── Najami Partner Section ── */}
+        <section style={{ backgroundColor: "#f0f7ff" }}>
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
+              <div className="flex-1">
+                <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#1d4ed8" }} {...fadeUp(0)}>
+                  Direkter Partner im Haus
+                </motion.p>
+                <motion.h2 className="font-bold tracking-tight mb-4 text-balance" style={{ color: "#0f172a", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }} {...fadeUp(0.1)}>
+                  Unabhängiges Kfz-Gutachten direkt bei uns im Haus
+                </motion.h2>
+                <motion.p className="text-base leading-relaxed mb-4" style={{ color: "#475569" }} {...fadeUp(0.2)}>
+                  Kfz-Sachverständigenbüro Najami sitzt direkt in unserer Werkstatt — kein zweiter Termin, kein Umweg. Karim Najami erstellt Ihr Gutachten vor Ort, vollständig und unabhängig von der Versicherung.
+                </motion.p>
+                <motion.div className="flex items-start gap-3 p-4 rounded-xl mb-8" style={{ backgroundColor: "#dbeafe", border: "1px solid #93c5fd" }} {...fadeUp(0.25)}>
+                  <svg className="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#1d4ed8" />
+                  </svg>
+                  <p className="text-sm font-medium" style={{ color: "#1e40af" }}>
+                    Bei Fremdverschulden kostenlos — Express-Gutachten innerhalb von 24 Stunden möglich.
+                  </p>
+                </motion.div>
+                <motion.div className="flex flex-wrap gap-3" {...fadeUp(0.3)}>
+                  <Link
+                    href="/kfz-gutachter"
+                    className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110"
+                    style={{ backgroundColor: "#1d4ed8" }}
+                  >
+                    Mehr erfahren
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+                  <a
+                    href="tel:+4915563146679"
+                    className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:border-[#1d4ed8] hover:text-[#1d4ed8]"
+                    style={{ borderColor: "#bfdbfe", color: "#334155" }}
+                  >
+                    0155 631 46679
+                  </a>
+                </motion.div>
+              </div>
+              <motion.div
+                className="relative w-full lg:w-[440px] rounded-2xl overflow-hidden shrink-0"
+                style={{ height: 420 }}
+                {...slideRight(0.15)}
+              >
+                <img
+                  src="https://www.sv-najami.de/images/najami-work-1.webp"
+                  alt="Karim Najami — Kfz-Sachverständiger bei der Fahrzeugbegutachtung in Reutlingen"
+                  className="w-full h-full object-cover object-center"
+                  crossOrigin="anonymous"
+                />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 50%, rgba(15,23,42,0.65) 100%)" }} />
+                <motion.div
+                  className="absolute bottom-6 left-6 rounded-xl px-5 py-3"
+                  style={{ backgroundColor: "rgba(15,23,42,0.88)", backdropFilter: "blur(10px)", border: "1px solid rgba(147,197,253,0.25)" }}
+                  {...scaleUp(0.3)}
+                >
+                  <p className="text-xs font-bold text-white">Karim Najami</p>
+                  <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.6)" }}>Zertifizierter Kfz-Sachverständiger</p>
+                </motion.div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
         {/* ── FAQ ── */}
         <section style={{ backgroundColor: "#ffffff" }}>
           <div className="max-w-3xl mx-auto px-6 sm:px-10 py-24">
