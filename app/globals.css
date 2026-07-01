@@ -7,11 +7,11 @@
   --color-ak-blue-light: #3b8fe8;
   --color-ak-surface: rgba(255, 255, 255, 0.72);
   --color-ak-border: rgba(26, 111, 207, 0.18);
-  --font-sans: var(--font-geist), "Geist", system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-dm-sans), "DM Sans", system-ui, -apple-system, sans-serif;
 }
 
-/* The Webflow CSS font variable is overridden in autoklinik.css to use Geist.
-   This fallback ensures the navbar and any React components also use Geist. */
+/* Webflow CSS font variable is overridden in autoklinik.css to use DM Sans.
+   This ensures the navbar and all React components also use DM Sans. */
 body {
-  font-family: var(--font-geist, "Geist"), system-ui, sans-serif;
+  font-family: var(--font-dm-sans, "DM Sans"), system-ui, sans-serif;
 }
