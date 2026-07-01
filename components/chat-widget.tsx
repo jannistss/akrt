@@ -33,7 +33,7 @@ type Flow =
 interface Option {
   label: string;
   flow?: Flow;
-  action?: "call" | "whatsapp" | "karriere" | "rueckruf";
+  action?: "call" | "whatsapp" | "karriere" | "rueckruf" | "online";
 }
 
 /* ─── Flow definitions ──────────────────────────────────── */
@@ -55,11 +55,11 @@ const FLOWS: Record<
   },
   termin: {
     message:
-      "Super! Ruf uns einfach an oder schreib uns auf WhatsApp - wir finden schnell einen passenden Termin für dich.",
+      "Wie möchtest du deinen Termin vereinbaren?",
     options: [
-      { label: "Anrufen", action: "call" },
+      { label: "Online buchen", action: "online" },
       { label: "WhatsApp", action: "whatsapp" },
-      { label: "Rückruf anfordern", action: "rueckruf" },
+      { label: "Anrufen", action: "call" },
       { label: "Zurück", flow: "root" },
     ],
   },
@@ -395,6 +395,10 @@ export function ChatWidget() {
     }
     if (opt.action === "whatsapp") {
       window.open("https://wa.me/4971219886660", "_blank");
+      return;
+    }
+    if (opt.action === "online") {
+      window.location.href = "/terminbuchung";
       return;
     }
     if (opt.action === "karriere") {
