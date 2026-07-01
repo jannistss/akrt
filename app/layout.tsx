@@ -1,9 +1,10 @@
 import "./globals.css";
-import { Geist } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 
-const geist = Geist({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-geist",
+  axes: ["opsz"],
+  variable: "--font-dm-sans",
   display: "swap",
 });
 
@@ -15,7 +16,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de" className={geist.variable}>
+    <html lang="de" className={dmSans.variable}>
       <body>{children}</body>
     </html>
   );

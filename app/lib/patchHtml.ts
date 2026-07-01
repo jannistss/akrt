@@ -136,12 +136,26 @@ function rewriteAssets(html: string): string {
     );
   }
 
-  // Video files – handle both %2F (literal slash encoded) and %252F (double-encoded)
-  // The HTML uses the CDN URL with %2F as a path separator before the filename
-  const videoBase = "cdn\\.prod\\.website-files\\.com\\/6937ded41fbb0d4d0e15a31e(?:%2F|%252F)6937e4e4e0cf1553ecb4976f_031";
+  // Video files – four distinct forms appear in the HTML:
+  //   1. https://cdn.../%2F...   (absolute CDN, %2F-encoded slash)
+  //   2. ../cdn.../%252F...      (relative local path, double-encoded slash)
+  //   3. comma-separated data attribute mixing both forms above
+  // The local files live at /assets/hero.{mp4,webm} and /assets/hero-poster.jpg
+  const videoFilename = "6937e4e4e0cf1553ecb4976f_031";
+  const cdnHost = "cdn\\.prod\\.website-files\\.com";
+  const siteSlash = "6937ded41fbb0d4d0e15a31e(?:%2F|%252F)"; // %2F or %252F
+  const videoBase = `${cdnHost}\\/${siteSlash}${videoFilename}`;
+
+  // Absolute https:// form
   html = html.replace(new RegExp(`https?:\\/\\/${videoBase}_mp4\\.mp4`, "g"), "/assets/hero.mp4");
   html = html.replace(new RegExp(`https?:\\/\\/${videoBase}_webm\\.webm`, "g"), "/assets/hero.webm");
   html = html.replace(new RegExp(`https?:\\/\\/${videoBase}_poster\\.0000000\\.jpg`, "g"), "/assets/hero-poster.jpg");
+
+  // Relative ../cdn... form (used in <source src="...">)
+  const relVideoBase = `\\.\\.\\/cdn\\.prod\\.website-files\\.com\\/${siteSlash}${videoFilename}`;
+  html = html.replace(new RegExp(`${relVideoBase}_mp4\\.mp4`, "g"), "/assets/hero.mp4");
+  html = html.replace(new RegExp(`${relVideoBase}_webm\\.webm`, "g"), "/assets/hero.webm");
+  html = html.replace(new RegExp(`${relVideoBase}_poster\\.0000000\\.jpg`, "g"), "/assets/hero-poster.jpg");
 
   return html;
 }

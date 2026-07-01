@@ -49,14 +49,16 @@ export function HeadInjector({ headHtml }: HeadInjectorProps) {
         style.textContent = el.textContent;
         node = style;
       } else if (tag === "script") {
+        // Skip inline scripts entirely – Webflow head inlines call WebFont.load()
+        // and other browser-global helpers that crash outside Webflow's runtime.
+        // Only inject external <script src="..."> tags.
+        const src = el.getAttribute("src");
+        if (!src) return;
         const script = document.createElement("script");
         Array.from(el.attributes).forEach((attr) => {
           if (attr.name === "integrity" || attr.name === "crossorigin") return;
           script.setAttribute(attr.name, attr.value);
         });
-        if (!el.getAttribute("src")) {
-          script.textContent = el.textContent;
-        }
         node = script;
       }
 
