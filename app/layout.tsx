@@ -12,6 +12,10 @@ export const metadata = {
   title: "Autoklinik Reutlingen",
   description:
     "Werkstatt in Reutlingen: Inspektion, Reparatur & TÜV. Faire Preise, kurze Wartezeiten. Jetzt Termin vereinbaren – schnell & zuverlässig.",
+  icons: {
+    icon: "/assets/images/6937e76d5753525e801ff711_logo-autoklinik2.png",
+    apple: "/assets/images/6937e76d5753525e801ff711_logo-autoklinik2.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
