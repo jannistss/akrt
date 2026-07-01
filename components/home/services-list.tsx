@@ -63,7 +63,7 @@ const categories = [
 
 export function ServicesList() {
   return (
-    <section style={{ backgroundColor: "#001824" }}>
+    <section style={{ backgroundColor: "#f5f9fc" }}>
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-28">
         {/* Header */}
         <div className="mb-16">
@@ -72,19 +72,19 @@ export function ServicesList() {
           </p>
           <h2
             className="font-bold tracking-tight text-balance"
-            style={{ color: "#ffffff", fontSize: "clamp(1.9rem, 3vw, 2.8rem)" }}
+            style={{ color: "#002e40", fontSize: "clamp(1.9rem, 3vw, 2.8rem)" }}
           >
             Alles, was dein Auto braucht.
           </h2>
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ backgroundColor: "rgba(255,255,255,0.07)" }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ backgroundColor: "#d5e8f0" }}>
           {categories.map((cat) => (
             <div
               key={cat.title}
               className="flex flex-col gap-6 p-8"
-              style={{ backgroundColor: "#001824" }}
+              style={{ backgroundColor: "#f5f9fc" }}
             >
               <Image
                 src={cat.icon}
@@ -92,16 +92,15 @@ export function ServicesList() {
                 width={44}
                 height={44}
                 className="h-11 w-11 object-contain"
-                style={{ filter: "brightness(0) saturate(100%) invert(55%) sepia(60%) saturate(500%) hue-rotate(170deg)" }}
               />
-              <h3 className="text-sm font-bold leading-snug" style={{ color: "#ffffff" }}>
+              <h3 className="text-sm font-bold leading-snug" style={{ color: "#002e40" }}>
                 {cat.title}
               </h3>
               <ul className="flex flex-col gap-2.5">
                 {cat.items.map((item) => (
                   <li key={item} className="flex items-start gap-2.5">
                     <CheckIcon />
-                    <span className="text-sm leading-snug" style={{ color: "rgba(255,255,255,0.45)" }}>
+                    <span className="text-sm leading-snug" style={{ color: "#4a6272" }}>
                       {item}
                     </span>
                   </li>
@@ -125,8 +124,8 @@ export function ServicesList() {
           </Link>
           <Link
             href="#kontakt"
-            className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/5"
-            style={{ borderColor: "rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.7)" }}
+            className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all"
+            style={{ borderColor: "#b0d4e4", color: "#002e40" }}
           >
             Termin anfragen
           </Link>

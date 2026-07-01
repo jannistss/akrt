@@ -12,7 +12,7 @@ const links = [
 
 export function AutoklinikFooter() {
   return (
-    <footer style={{ backgroundColor: "#000e16" }}>
+    <footer style={{ backgroundColor: "#002e40" }}>
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
         {/* Main row */}
         <div
