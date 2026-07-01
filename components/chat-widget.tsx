@@ -29,7 +29,9 @@ type Flow =
   | "karriere"
   | "oeffnungszeiten"
   | "notfall"
-  | "rueckruf";
+  | "rueckruf"
+  | "preise_mehr"
+  | "termin_help";
 
 interface Option {
   label: string;
