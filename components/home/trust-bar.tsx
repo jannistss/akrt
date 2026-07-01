@@ -1,23 +1,30 @@
 const items = [
-  { kicker: "Fair kalkuliert", label: "Faire Preise" },
-  { kicker: "Ohne lange Wartezeit", label: "Schnelle Termine" },
-  { kicker: "Präzise Fehlersuche", label: "Moderne Diagnosetechnik" },
-  { kicker: "Vor Ort für dich da", label: "Direkt in Reutlingen" },
+  { number: "2.000+", label: "Zufriedene Kunden" },
+  { number: "48 Std.", label: "TÜV-Termin garantiert" },
+  { number: "15+", label: "Jahre Erfahrung" },
+  { number: "Alle", label: "Marken & Modelle" },
 ];
 
 export function TrustBar() {
   return (
-    <section className="font-sans" style={{ backgroundColor: "#e5f1f5" }}>
-      <div className="max-w-7xl mx-auto px-6 py-7">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-          {items.map((item) => (
-            <div key={item.label} className="flex flex-col gap-0.5">
-              <span className="text-xs font-medium" style={{ color: "#0074a2" }}>
-                {item.kicker}
+    <section style={{ backgroundColor: "#001824" }}>
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+          {items.map((item, i) => (
+            <div
+              key={item.label}
+              className="flex flex-col gap-1.5 py-10 pr-8"
+              style={{
+                borderRight: i < items.length - 1 ? "1px solid rgba(255,255,255,0.08)" : undefined,
+                paddingLeft: i === 0 ? 0 : "2rem",
+              }}
+            >
+              <span className="text-3xl font-bold tracking-tight" style={{ color: "#ffffff" }}>
+                {item.number}
               </span>
-              <strong className="text-sm font-bold" style={{ color: "#000608" }}>
+              <span className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
                 {item.label}
-              </strong>
+              </span>
             </div>
           ))}
         </div>

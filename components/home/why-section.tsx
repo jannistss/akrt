@@ -1,63 +1,94 @@
+import Image from "next/image";
+
 const points = [
   {
-    title: "Transparent",
-    text: "Du weißt vorab, was auf dich zukommt – bei Aufwand, Preis und Zeit.",
+    number: "01",
+    title: "Transparent von Anfang an",
+    text: "Du weißt vorab, was auf dich zukommt – bei Aufwand, Preis und Zeitaufwand. Keine versteckten Kosten, kein Fachchinesisch.",
   },
   {
-    title: "Schnell erreichbar",
-    text: "Kurze Wege, direkte Ansprechpartner und Termine, die alltagstauglich bleiben.",
+    number: "02",
+    title: "Schnell & direkt erreichbar",
+    text: "Kurze Wege, direkte Ansprechpartner und Termine, die in deinen Alltag passen. Per WhatsApp, Telefon oder online.",
   },
   {
-    title: "Saubere Qualität",
-    text: "Wir arbeiten sorgfältig, modern und so, dass dein Auto sicher wieder auf die Straße kommt.",
+    number: "03",
+    title: "Meisterqualität garantiert",
+    text: "Wir arbeiten sorgfältig, mit moderner Diagnosetechnik und so, dass dein Fahrzeug sicher wieder auf die Straße kommt.",
   },
   {
-    title: "Lokal verankert",
-    text: "Autoklinik Reutlingen ist keine anonyme Kette, sondern deine Werkstatt vor Ort.",
+    number: "04",
+    title: "Deine Werkstatt vor Ort",
+    text: "Autoklinik Reutlingen ist keine anonyme Kette – wir kennen unsere Kunden und sind für dich persönlich da.",
   },
 ];
 
 export function WhySection() {
   return (
-    <section className="font-sans" style={{ backgroundColor: "#ffffff" }}>
-      <div className="max-w-7xl mx-auto px-6 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Left */}
-          <div>
-            <span
-              className="text-xs font-semibold uppercase tracking-widest"
-              style={{ color: "#0074a2" }}
+    <section style={{ backgroundColor: "#000e16" }}>
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-28">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+          {/* Left — image */}
+          <div className="relative rounded-2xl overflow-hidden" style={{ minHeight: 460 }}>
+            <Image
+              src="/assets/images/6937e7163e052d298653ff55_reperatur-mann-.png"
+              alt="Mechaniker bei der Arbeit in der Autoklinik Reutlingen."
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            {/* Subtle overlay */}
+            <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(0,46,64,0.18) 0%, transparent 60%)" }} />
+            {/* Floating badge */}
+            <div
+              className="absolute bottom-6 left-6 rounded-xl px-5 py-4"
+              style={{ backgroundColor: "rgba(0,14,22,0.85)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.1)" }}
             >
+              <p className="text-xs font-medium mb-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>Seit über 15 Jahren</p>
+              <p className="text-sm font-bold" style={{ color: "#ffffff" }}>Vertrauenspartner in Reutlingen</p>
+            </div>
+          </div>
+
+          {/* Right — content */}
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-5" style={{ color: "#0074a2" }}>
               Warum Autoklinik?
-            </span>
+            </p>
             <h2
-              className="mt-3 text-3xl sm:text-4xl font-bold tracking-tight leading-tight text-balance"
-              style={{ color: "#000608" }}
+              className="font-bold tracking-tight leading-[1.1] text-balance mb-6"
+              style={{ color: "#ffffff", fontSize: "clamp(1.9rem, 3vw, 2.8rem)" }}
             >
               Weil du eine Werkstatt brauchst, die ehrlich arbeitet.
             </h2>
-            <p className="mt-4 text-base leading-relaxed" style={{ color: "#4c5052" }}>
-              Wir erklären dir klar, was gemacht werden muss, was sinnvoll ist und was noch warten
-              kann. Ohne Druck, ohne Fachchinesisch, ohne versteckte Überraschungen.
+            <p className="text-base leading-relaxed mb-12" style={{ color: "#4c5052" }}>
+              Wir erklären dir klar, was gemacht werden muss, was sinnvoll ist und was noch warten kann. Ohne Druck, ohne versteckte Überraschungen.
             </p>
-          </div>
 
-          {/* Right – points */}
-          <div className="flex flex-col gap-5">
-            {points.map((point) => (
-              <div
-                key={point.title}
-                className="flex flex-col gap-1 border-l-2 pl-4"
-                style={{ borderColor: "#0074a2" }}
-              >
-                <strong className="text-sm font-bold" style={{ color: "#000608" }}>
-                  {point.title}
-                </strong>
-                <p className="text-sm leading-relaxed" style={{ color: "#4c5052" }}>
-                  {point.text}
-                </p>
-              </div>
-            ))}
+            <div             className="flex flex-col gap-0" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+              {points.map((point) => (
+                <div
+                  key={point.number}
+                  className="flex gap-6 py-6"
+                  style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+                >
+                  <span
+                    className="text-xs font-bold shrink-0 mt-0.5 tabular-nums"
+                    style={{ color: "rgba(0,116,162,0.5)", minWidth: 28 }}
+                  >
+                    {point.number}
+                  </span>
+                  <div>
+                    <p className="text-sm font-bold mb-1" style={{ color: "#ffffff" }}>
+                      {point.title}
+                    </p>
+                    <p className="text-sm leading-relaxed" style={{ color: "#4c5052" }}>
+                      {point.text}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

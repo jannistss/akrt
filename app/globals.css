@@ -1,17 +1,29 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ak-navy: #0d1b2a;
-  --color-ak-navy-light: #1a2e45;
-  --color-ak-blue: #1a6fcf;
-  --color-ak-blue-light: #3b8fe8;
-  --color-ak-surface: rgba(255, 255, 255, 0.72);
-  --color-ak-border: rgba(26, 111, 207, 0.18);
+  /* Brand palette */
+  --color-background: #000e16;
+  --color-foreground: #ffffff;
+  --color-ak-deep: #000e16;
+  --color-ak-navy: #001824;
+  --color-ak-blue: #0074a2;
+  --color-ak-blue-light: #4db8d8;
+  --color-ak-surface-light: #f4f8fa;
+  --color-ak-muted: rgba(255, 255, 255, 0.4);
+
+  /* Typography */
   --font-sans: var(--font-dm-sans), "DM Sans", system-ui, -apple-system, sans-serif;
 }
 
-/* Webflow CSS font variable is overridden in autoklinik.css to use DM Sans.
-   This ensures the navbar and all React components also use DM Sans. */
+html {
+  background-color: #000e16;
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-dm-sans, "DM Sans"), system-ui, sans-serif;
+  background-color: #000e16;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
