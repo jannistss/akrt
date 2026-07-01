@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import useSWR from "swr";
 import { cn } from "@/lib/utils";
 
@@ -188,8 +189,12 @@ interface GoogleReviewsProps {
   showReplies?: boolean;
 }
 
+const PAGE_SIZE = 12;
+
 export default function GoogleReviews({ showReplies = false }: GoogleReviewsProps) {
-  const fetchUrl = `/api/reviews?limit=12&min_stars=1${showReplies ? "&show_replies=true" : ""}`;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  const fetchUrl = `/api/reviews?limit=50&min_stars=1${showReplies ? "&show_replies=true" : ""}`;
 
   const { data, error, isLoading } = useSWR<ApiResponse>(
     fetchUrl,
@@ -199,9 +204,11 @@ export default function GoogleReviews({ showReplies = false }: GoogleReviewsProp
 
   // Treat missing/malformed data the same as a network error
   const hasApiError = !isLoading && !error && (!data || !Array.isArray(data?.reviews));
-  const reviews = (!hasApiError && !error && data?.reviews) ? data.reviews : [];
-  const count = data?.count ?? 0;
-  const hasReviews = reviews.length > 0;
+  const allReviews = (!hasApiError && !error && data?.reviews) ? data.reviews : [];
+  const reviews = allReviews.slice(0, visibleCount);
+  const count = data?.count ?? allReviews.length;
+  const hasReviews = allReviews.length > 0;
+  const hasMore = visibleCount < allReviews.length;
 
   return (
     <section
@@ -246,7 +253,7 @@ export default function GoogleReviews({ showReplies = false }: GoogleReviewsProp
               </div>
 
             <a
-              href="https://g.page/r/autoklinik-reutlingen/review"
+              href="https://g.page/r/CTkakRV7d20NEBM/review"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-all duration-200 hover:brightness-110 active:scale-[.98]"
@@ -279,7 +286,7 @@ export default function GoogleReviews({ showReplies = false }: GoogleReviewsProp
               Wir freuen uns über jede Bewertung — sei der Erste und teile deine Erfahrung.
             </p>
             <a
-              href="https://search.google.com/local/writereview?placeid=autoklinik-reutlingen"
+              href="https://g.page/r/CTkakRV7d20NEBM/review"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-all hover:brightness-110"
@@ -300,11 +307,28 @@ export default function GoogleReviews({ showReplies = false }: GoogleReviewsProp
         )}
 
         {!isLoading && hasReviews && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {reviews.map((review) => (
-              <ReviewCard key={review.id} review={review} showReplies={showReplies} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {reviews.map((review) => (
+                <ReviewCard key={review.id} review={review} showReplies={showReplies} />
+              ))}
+            </div>
+
+            {hasMore && (
+              <div className="mt-10 flex justify-center">
+                <button
+                  onClick={() => setVisibleCount((v) => v + PAGE_SIZE)}
+                  className="inline-flex items-center gap-2 rounded-xl border px-7 py-3 text-sm font-semibold transition-all duration-200 hover:bg-[#0074a2] hover:text-white hover:border-[#0074a2] active:scale-[.98]"
+                  style={{ borderColor: "#0074a2", color: "#0074a2", backgroundColor: "transparent" }}
+                >
+                  Mehr Bewertungen anzeigen
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M6 9l6 6 6-6"/>
+                  </svg>
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>

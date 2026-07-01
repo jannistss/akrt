@@ -5,7 +5,7 @@ const CLIENT_SLUG = "autoklinik-reutlingen";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const limit = searchParams.get("limit") ?? "12";
+  const limit = searchParams.get("limit") ?? "50";
   const minStars = searchParams.get("min_stars") ?? "5";
   const showReplies = searchParams.get("show_replies");
 
