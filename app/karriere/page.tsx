@@ -164,21 +164,7 @@ export default function KarrierePage() {
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-        >
-          <span className="text-xs uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.3)" }}>Scroll</span>
-          <motion.div
-            className="w-px h-8"
-            style={{ backgroundColor: "rgba(0,116,162,0.6)" }}
-            animate={{ scaleY: [0, 1, 0] }}
-            transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-          />
-        </motion.div>
+
       </section>
 
       {/* ── WER WIR SIND ── */}
