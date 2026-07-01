@@ -1,14 +1,32 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
 
-export const metadata = {
-  title: "Terminbuchung | Autoklinik Reutlingen",
-  description:
-    "Buchen Sie jetzt Ihren Termin bei Autoklinik Reutlingen. Schnelle und unkomplizierte Online-Terminvereinbarung.",
-};
-
 export default function TerminbuchungPage() {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [iframeHeight, setIframeHeight] = useState(1200);
+
+  useEffect(() => {
+    // Listen for postMessage height updates from wscloud
+    function handleMessage(e: MessageEvent) {
+      if (typeof e.data === "number" && e.data > 200) {
+        setIframeHeight(e.data + 40);
+      }
+      // Some booking tools send {height: ...} or {type: "resize", height: ...}
+      if (e.data && typeof e.data === "object") {
+        const h = e.data.height ?? e.data.iframeHeight ?? e.data.frameHeight;
+        if (typeof h === "number" && h > 200) {
+          setIframeHeight(h + 40);
+        }
+      }
+    }
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
+
   return (
     <>
       <AutoklinikNavbar />
@@ -24,18 +42,25 @@ export default function TerminbuchungPage() {
               Termin online buchen
             </h1>
             <p className="text-base leading-relaxed max-w-xl mx-auto" style={{ color: "rgba(255,255,255,0.72)" }}>
-              Schnell und unkompliziert – such dir einfach einen passenden Termin aus.
+              Schnell und unkompliziert - such dir einfach einen passenden Termin aus.
             </p>
           </div>
         </header>
 
-        {/* Booking embed */}
+        {/* Booking embed - full width, height follows iframe content */}
         <section style={{ backgroundColor: "#f4f8fb" }}>
           <iframe
+            ref={iframeRef}
             src="https://booking.wscloud.io/WM1592874/Step1aServiceSelection"
             title="Online-Terminbuchung Autoklinik Reutlingen"
+            scrolling="no"
             className="w-full block"
-            style={{ minHeight: 900, border: "none", display: "block" }}
+            style={{
+              height: iframeHeight,
+              border: "none",
+              display: "block",
+              overflow: "hidden",
+            }}
             loading="lazy"
             allow="payment"
           />
@@ -48,7 +73,7 @@ export default function TerminbuchungPage() {
               Lieber direkt Kontakt aufnehmen?
             </h2>
             <p className="text-sm leading-relaxed mb-8" style={{ color: "#4a6070" }}>
-              Kein Problem – ruf uns einfach an oder schreib uns eine E-Mail. Wir finden gemeinsam einen passenden Termin.
+              Kein Problem - ruf uns einfach an oder schreib uns eine E-Mail. Wir finden gemeinsam einen passenden Termin.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a
