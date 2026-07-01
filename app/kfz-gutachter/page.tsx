@@ -12,7 +12,7 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "AutomotiveBusiness",
     name: "Kfz-Sachverständigenbüro Najami",
-    description: "Unabhängiger Kfz-Sachverständiger in Reutlingen — Express-Gutachten, kostenlos bei Fremdverschulden",
+    description: "Unabhängiger Kfz-Sachverständiger in Reutlingen - Express-Gutachten, kostenlos bei Fremdverschulden",
     telephone: "+491556314 6679",
     email: "info@sv-najami.de",
     url: "https://www.sv-najami.de",
@@ -34,9 +34,9 @@ const jsonLd = [
     "@type": "FAQPage",
     mainEntity: [
       { "@type": "Question", name: "Muss ich den Gutachter selbst bezahlen?", acceptedAnswer: { "@type": "Answer", text: "Nein. Bei einem Unfall mit Fremdverschulden zahlt die Haftpflichtversicherung des Unfallverursachers alle Kosten vollständig gemäß §249 BGB. Sie müssen nichts vorstrecken." } },
-      { "@type": "Question", name: "Wie schnell bekomme ich einen Termin?", acceptedAnswer: { "@type": "Answer", text: "In der Regel innerhalb von 24 Stunden. Da Kfz-Gutachter Najami direkt in unserer Werkstatt ansässig ist, ist eine schnelle Koordination möglich — auch kurzfristig." } },
+      { "@type": "Question", name: "Wie schnell bekomme ich einen Termin?", acceptedAnswer: { "@type": "Answer", text: "In der Regel innerhalb von 24 Stunden. Da Kfz-Gutachter Najami direkt in unserer Werkstatt ansässig ist, ist eine schnelle Koordination möglich - auch kurzfristig." } },
       { "@type": "Question", name: "Was kostet ein Gutachten als Selbstzahler?", acceptedAnswer: { "@type": "Answer", text: "Die Honorare richten sich nach der BVSK-Tabelle, ab ca. 220 EUR bei 1.000 EUR Schaden." } },
-      { "@type": "Question", name: "Was ist der Vorteil eines unabhängigen Gutachters?", acceptedAnswer: { "@type": "Answer", text: "Ein unabhängiger Sachverständiger arbeitet nur für den Geschädigten, nicht für die Versicherung — das verhindert eine Unter-Bewertung des Schadens und sichert den vollen Anspruch." } },
+      { "@type": "Question", name: "Was ist der Vorteil eines unabhängigen Gutachters?", acceptedAnswer: { "@type": "Answer", text: "Ein unabhängiger Sachverständiger arbeitet nur für den Geschädigten, nicht für die Versicherung - das verhindert eine Unter-Bewertung des Schadens und sichert den vollen Anspruch." } },
     ],
   },
   {
@@ -50,25 +50,25 @@ const jsonLd = [
 ];
 
 const services = [
-  { icon: "🔍", title: "Unfallschadensgutachten", desc: "Bei Fremdverschulden kostenlos — die Versicherung übernimmt alle Kosten gemäß §249 BGB." },
+  { icon: "🔍", title: "Unfallschadensgutachten", desc: "Bei Fremdverschulden kostenlos - die Versicherung übernimmt alle Kosten gemäß §249 BGB." },
   { icon: "📉", title: "Wertminderungsgutachten", desc: "Merkantile Wertminderung nach der anerkannten Ruhkopf/Sahm-Methode." },
-  { icon: "⚖️", title: "Totalschadensgutachten", desc: "Wiederbeschaffungswert und Restwertermittlung — vollständig und gerichtsfest." },
-  { icon: "🚗", title: "Fahrzeugwertgutachten", desc: "Für Kauf, Verkauf, Versicherung oder Erbschaft — unabhängig und belastbar." },
-  { icon: "⚡", title: "Express-Gutachten 24h", desc: "Gutachtenübergabe innerhalb von 24 Stunden — direkt vor Ort in der Werkstatt." },
-  { icon: "🏆", title: "Oldtimergutachten", desc: "Klassiker und Liebhaberfahrzeuge — fachkundige Bewertung mit Liebe zum Detail." },
+  { icon: "⚖️", title: "Totalschadensgutachten", desc: "Wiederbeschaffungswert und Restwertermittlung - vollständig und gerichtsfest." },
+  { icon: "🚗", title: "Fahrzeugwertgutachten", desc: "Für Kauf, Verkauf, Versicherung oder Erbschaft - unabhängig und belastbar." },
+  { icon: "⚡", title: "Express-Gutachten 24h", desc: "Gutachtenübergabe innerhalb von 24 Stunden - direkt vor Ort in der Werkstatt." },
+  { icon: "🏆", title: "Oldtimergutachten", desc: "Klassiker und Liebhaberfahrzeuge - fachkundige Bewertung mit Liebe zum Detail." },
 ];
 
 const advantages = [
-  { title: "Unabhängig", desc: "Kein Interessenkonflikt mit der Versicherung — ausschließlich in Ihrem Interesse." },
+  { title: "Unabhängig", desc: "Kein Interessenkonflikt mit der Versicherung - ausschließlich in Ihrem Interesse." },
   { title: "Vollständig", desc: "Sichert Ihren vollen Schadensersatzanspruch ohne Abstriche." },
-  { title: "Kostenlos", desc: "Bei Fremdverschulden zahlt die gegnerische Versicherung — Sie zahlen nichts." },
+  { title: "Kostenlos", desc: "Bei Fremdverschulden zahlt die gegnerische Versicherung - Sie zahlen nichts." },
 ];
 
 const faqs = [
   { q: "Muss ich den Gutachter selbst bezahlen?", a: "Nein. Bei einem Unfall mit Fremdverschulden zahlt die Haftpflichtversicherung des Unfallverursachers alle Kosten vollständig gemäß §249 BGB. Sie müssen nichts vorstrecken." },
-  { q: "Wie schnell bekomme ich einen Termin?", a: "In der Regel innerhalb von 24 Stunden. Da Kfz-Gutachter Najami direkt in unserer Werkstatt ansässig ist, ist eine schnelle Koordination möglich — auch kurzfristig." },
+  { q: "Wie schnell bekomme ich einen Termin?", a: "In der Regel innerhalb von 24 Stunden. Da Kfz-Gutachter Najami direkt in unserer Werkstatt ansässig ist, ist eine schnelle Koordination möglich - auch kurzfristig." },
   { q: "Was kostet ein Gutachten als Selbstzahler?", a: "Die Honorare richten sich nach der BVSK-Tabelle, ab ca. 220 EUR bei 1.000 EUR Schaden." },
-  { q: "Was ist der Vorteil eines unabhängigen Gutachters?", a: "Ein unabhängiger Sachverständiger arbeitet nur für den Geschädigten, nicht für die Versicherung — das verhindert eine Unter-Bewertung des Schadens und sichert den vollen Anspruch." },
+  { q: "Was ist der Vorteil eines unabhängigen Gutachters?", a: "Ein unabhängiger Sachverständiger arbeitet nur für den Geschädigten, nicht für die Versicherung - das verhindert eine Unter-Bewertung des Schadens und sichert den vollen Anspruch." },
 ];
 
 export default function KfzGutachterPage() {
@@ -85,7 +85,7 @@ export default function KfzGutachterPage() {
           <div className="absolute inset-0 z-0">
             <Image
               src="/assets/images/najami/hero-desktop.webp"
-              alt="Kfz-Gutachter Reutlingen — professionelle Fahrzeugbegutachtung"
+              alt="Kfz-Gutachter Reutlingen - professionelle Fahrzeugbegutachtung"
               fill
               className="object-cover object-center"
               priority
@@ -180,7 +180,7 @@ export default function KfzGutachterPage() {
               <div>
                 <p className="text-base font-bold mb-2" style={{ color: "#1e3a8a" }}>Bei Fremdverschulden zahlen Sie nichts</p>
                 <p className="text-sm leading-relaxed" style={{ color: "#1e40af" }}>
-                  Die gegnerische Haftpflichtversicherung übernimmt alle Gutachterkosten vollständig gemäß <strong>§249 BGB</strong>. Sie müssen kein Geld vorstrecken — wir rechnen direkt mit der Versicherung ab.
+                  Die gegnerische Haftpflichtversicherung übernimmt alle Gutachterkosten vollständig gemäß <strong>§249 BGB</strong>. Sie müssen kein Geld vorstrecken - wir rechnen direkt mit der Versicherung ab.
                 </p>
               </div>
             </motion.div>
@@ -225,7 +225,7 @@ export default function KfzGutachterPage() {
               <motion.div className="relative w-full lg:w-[480px] shrink-0 rounded-2xl overflow-hidden" style={{ height: 500 }} {...slideLeft(0)}>
                 <Image
                   src="/assets/images/najami/najami-work-1.webp"
-                  alt="Karim Najami — zertifizierter Kfz-Sachverständiger bei der Fahrzeugbegutachtung"
+                  alt="Karim Najami - zertifizierter Kfz-Sachverständiger bei der Fahrzeugbegutachtung"
                   fill
                   className="object-cover object-center"
                 />
@@ -245,7 +245,7 @@ export default function KfzGutachterPage() {
                 <motion.h2 className="font-bold tracking-tight mb-2 text-balance" style={{ color: "#0f172a", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }} {...fadeUp(0.1)}>Karim Najami</motion.h2>
                 <motion.p className="text-sm font-semibold mb-6" style={{ color: "#1d4ed8" }} {...fadeUp(0.15)}>Zertifizierter Kfz-Sachverständiger</motion.p>
                 <motion.p className="text-base leading-relaxed mb-8" style={{ color: "#475569" }} {...fadeUp(0.2)}>
-                  Als unabhängiger Sachverständiger arbeite ich ausschließlich in Ihrem Interesse — nicht für Versicherungen. Direkt vor Ort in unserer Partnerwerkstatt in Reutlingen, schnell und zuverlässig. Jedes Gutachten entsteht mit dem Ziel, Ihren vollen Schadensersatzanspruch zu sichern.
+                  Als unabhängiger Sachverständiger arbeite ich ausschließlich in Ihrem Interesse - nicht für Versicherungen. Direkt vor Ort in unserer Partnerwerkstatt in Reutlingen, schnell und zuverlässig. Jedes Gutachten entsteht mit dem Ziel, Ihren vollen Schadensersatzanspruch zu sichern.
                 </motion.p>
                 <motion.div className="flex flex-wrap gap-3" {...fadeUp(0.3)}>
                   <a
@@ -338,7 +338,7 @@ export default function KfzGutachterPage() {
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
             <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#1d4ed8" }} {...fadeUp(0)}>Kontakt & Standort</motion.p>
             <motion.h2 className="font-bold tracking-tight mb-12 text-balance" style={{ color: "#0f172a", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }} {...fadeUp(0.1)}>
-              Direkt vor Ort — Haldenhaustraße 3, Reutlingen
+              Direkt vor Ort - Haldenhaustraße 3, Reutlingen
             </motion.h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
               <motion.div className="flex flex-col gap-6" {...slideLeft(0.1)}>
@@ -374,7 +374,7 @@ export default function KfzGutachterPage() {
               </motion.div>
               <motion.div className="rounded-2xl overflow-hidden" style={{ height: 380 }} {...slideRight(0.1)}>
                 <iframe
-                  title="Kfz-Sachverständigenbüro Najami — Haldenhaustraße 3, 72770 Reutlingen"
+                  title="Kfz-Sachverständigenbüro Najami - Haldenhaustraße 3, 72770 Reutlingen"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2633.3!2d9.2012!3d48.4926!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4799fc6e3b3b3b3b%3A0x0!2sHaldenhaustra%C3%9Fe+3%2C+72770+Reutlingen!5e0!3m2!1sde!2sde!4v1"
                   width="100%"
                   height="100%"

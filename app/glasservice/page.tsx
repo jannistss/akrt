@@ -17,20 +17,20 @@ const jsonLd = {
 };
 
 const services = [
-  { title: "Steinschlagreparatur", desc: "Kleiner Steinschlag? Schnell repariert bevor sich Risse bilden. In ca. 30 Minuten — oft ohne Zuzahlung über die Versicherung." },
-  { title: "Windschutzscheibenwechsel", desc: "Riss zu groß für eine Reparatur? Wir tauschen die Scheibe fachgerecht aus — mit Originalscheiben oder gleichwertigen Alternativen." },
+  { title: "Steinschlagreparatur", desc: "Kleiner Steinschlag? Schnell repariert bevor sich Risse bilden. In ca. 30 Minuten - oft ohne Zuzahlung über die Versicherung." },
+  { title: "Windschutzscheibenwechsel", desc: "Riss zu groß für eine Reparatur? Wir tauschen die Scheibe fachgerecht aus - mit Originalscheiben oder gleichwertigen Alternativen." },
   { title: "Heck- & Seitenscheiben", desc: "Beschädigte Heck- oder Seitenscheibe? Wir ersetzen alle Fahrzeugscheiben schnell und sauber." },
-  { title: "Versicherungsabrechnung", desc: "Wir übernehmen die Direktabrechnung mit Ihrer KFZ-Versicherung — kein Papierkram für Sie, keine Vorleistung." },
+  { title: "Versicherungsabrechnung", desc: "Wir übernehmen die Direktabrechnung mit Ihrer KFZ-Versicherung - kein Papierkram für Sie, keine Vorleistung." },
   { title: "Kalibrierung von Fahrerassistenzsystemen", desc: "Nach einem Scheibenwechsel kalibrieren wir Kameras und Sensoren (z. B. Spurhalteassistent, Notbremsassistent) neu." },
-  { title: "Dichtheitsprüfung", desc: "Nach der Montage testen wir auf Dichtigkeit — damit kein Wasser eindringen kann und die Klebung hält." },
+  { title: "Dichtheitsprüfung", desc: "Nach der Montage testen wir auf Dichtigkeit - damit kein Wasser eindringen kann und die Klebung hält." },
 ];
 
 const faqs = [
-  { q: "Zahlt die Versicherung einen Steinschlag?", a: "Ja — mit Teilkaskoversicherung sind Steinschlag-Reparaturen in der Regel ohne Selbstbeteiligung gedeckt. Wir rechnen direkt mit Ihrer Versicherung ab." },
+  { q: "Zahlt die Versicherung einen Steinschlag?", a: "Ja - mit Teilkaskoversicherung sind Steinschlag-Reparaturen in der Regel ohne Selbstbeteiligung gedeckt. Wir rechnen direkt mit Ihrer Versicherung ab." },
   { q: "Wann lohnt sich Reparatur, wann Scheibenwechsel?", a: "Steinschläge bis etwa 3 cm Durchmesser und außerhalb des direkten Sichtfelds können meist repariert werden. Größere Risse oder Schäden im Sichtfeld erfordern einen Scheibenwechsel." },
   { q: "Wie lange dauert der Scheibenwechsel?", a: "Ein Windschutzscheibenwechsel dauert ca. 1–2 Stunden. Anschließend benötigt der Kleber eine Aushärtezeit von ca. 1 Stunde, bevor das Fahrzeug wieder vollständig genutzt werden kann." },
-  { q: "Kann ich direkt nach dem Steinschlag kommen?", a: "Je schneller, desto besser — denn Temperaturwechsel und Erschütterungen können aus einem kleinen Steinschlag schnell einen langen Riss machen. Rufen Sie uns an, wir finden einen kurzfristigen Termin." },
-  { q: "Verliere ich meine TÜV-Plakette nach einem Scheibenwechsel?", a: "Nein — solange die neue Scheibe den Anforderungen entspricht und sauber eingebaut ist, hat das keinen Einfluss auf die HU-Plakette." },
+  { q: "Kann ich direkt nach dem Steinschlag kommen?", a: "Je schneller, desto besser - denn Temperaturwechsel und Erschütterungen können aus einem kleinen Steinschlag schnell einen langen Riss machen. Rufen Sie uns an, wir finden einen kurzfristigen Termin." },
+  { q: "Verliere ich meine TÜV-Plakette nach einem Scheibenwechsel?", a: "Nein - solange die neue Scheibe den Anforderungen entspricht und sauber eingebaut ist, hat das keinen Einfluss auf die HU-Plakette." },
 ];
 
 const related = [
@@ -67,7 +67,7 @@ export default function GlasservicePage() {
                   Glasservice &amp;<br /><span style={{ color: "#0074a2" }}>Windschutzscheibe</span><br />in Reutlingen
                 </motion.h1>
                 <motion.p className="text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "#4a6272" }} {...fadeUp(0.2)}>
-                  Steinschlag reparieren oder Scheibe tauschen — wir erledigen das schnell und rechnen direkt mit Ihrer KFZ-Versicherung ab. Ohne Aufwand für Sie.
+                  Steinschlag reparieren oder Scheibe tauschen - wir erledigen das schnell und rechnen direkt mit Ihrer KFZ-Versicherung ab. Ohne Aufwand für Sie.
                 </motion.p>
                 <motion.div className="flex flex-wrap gap-3 mb-8" {...fadeUp(0.3)}>
                   <Link href="/terminbuchung" className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110" style={{ backgroundColor: "#0074a2" }}>

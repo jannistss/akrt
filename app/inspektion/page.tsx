@@ -36,25 +36,25 @@ const jsonLd = {
 };
 
 const services = [
-  { title: "Ölwechsel & Filterwechsel", desc: "Motor-, Luft-, Pollen- und Kraftstofffilter — alles nach Herstellervorgabe ausgetauscht. Nur geprüfte Markenöle." },
+  { title: "Ölwechsel & Filterwechsel", desc: "Motor-, Luft-, Pollen- und Kraftstofffilter - alles nach Herstellervorgabe ausgetauscht. Nur geprüfte Markenöle." },
   { title: "Große Inspektion", desc: "Komplette Durchsicht nach Herstellerspezifikation: über 50 Prüfpunkte, Sichtprüfung Fahrwerk, Bremsen, Lichter." },
   { title: "Zahnriemen & Zahnkette", desc: "Fristgerechter Wechsel verhindert Totalschäden. Wir prüfen Intervall und Zustand und beraten ehrlich." },
-  { title: "Bremsflüssigkeit", desc: "Feuchtigkeitsgehalt messen, bei Bedarf vollständig wechseln — für sichere Bremskraft bei jedem Wetter." },
+  { title: "Bremsflüssigkeit", desc: "Feuchtigkeitsgehalt messen, bei Bedarf vollständig wechseln - für sichere Bremskraft bei jedem Wetter." },
   { title: "Kühlflüssigkeit & Frostschutz", desc: "Konzentration prüfen, System spülen und neu befüllen. Schutz für den Motor das ganze Jahr." },
-  { title: "Service-Intervall-Reset", desc: "Rücksetzung des Servicezählers im Bordcomputer nach jeder Inspektion — alle gängigen Fahrzeuge." },
+  { title: "Service-Intervall-Reset", desc: "Rücksetzung des Servicezählers im Bordcomputer nach jeder Inspektion - alle gängigen Fahrzeuge." },
 ];
 
 const whyPoints = [
-  { title: "Kein Markenzwang", text: "Wir bedienen alle Marken mit Originalteilen oder gleichwertigen Alternativen — keine teure Vertragsbindung." },
+  { title: "Kein Markenzwang", text: "Wir bedienen alle Marken mit Originalteilen oder gleichwertigen Alternativen - keine teure Vertragsbindung." },
   { title: "Transparente Preise", text: "Vor jeder Arbeit nennen wir Ihnen den genauen Preis. Kein Nachschlag, keine Überraschungen auf der Rechnung." },
   { title: "Garantie bleibt erhalten", text: "Durch EU-Recht dürfen freie Werkstätten herstellerkonforme Inspektionen durchführen, ohne die Garantie zu gefährden." },
-  { title: "Kurze Wartezeiten", text: "Online-Terminbuchung rund um die Uhr — oft Termin innerhalb von 48 Stunden verfügbar." },
+  { title: "Kurze Wartezeiten", text: "Online-Terminbuchung rund um die Uhr - oft Termin innerhalb von 48 Stunden verfügbar." },
 ];
 
 const faqs = [
-  { q: "Wie oft muss ich mein Auto inspizieren lassen?", a: "Die meisten Hersteller empfehlen eine Inspektion alle 12 Monate oder alle 15.000–30.000 km — je nachdem, was zuerst erreicht wird. Ihr Serviceheft oder Bordcomputer zeigt den genauen Intervall." },
-  { q: "Verliere ich meine Garantie, wenn ich nicht zur Vertragswerkstatt gehe?", a: "Nein. Seit dem EU-Gruppenfreistellungsgesetz (GVO) dürfen Sie jeden qualifizierten Fachbetrieb für Garantiearbeiten und Inspektionen nutzen — die Garantie bleibt erhalten, solange Original- oder gleichwertige Teile verbaut werden." },
-  { q: "Was kostet eine Inspektion bei der Autoklinik?", a: "Der Preis hängt vom Fahrzeug, Motoröl und Umfang ab. Wir nennen Ihnen vor der Arbeit immer einen verbindlichen Festpreis — keine versteckten Nachträge." },
+  { q: "Wie oft muss ich mein Auto inspizieren lassen?", a: "Die meisten Hersteller empfehlen eine Inspektion alle 12 Monate oder alle 15.000–30.000 km - je nachdem, was zuerst erreicht wird. Ihr Serviceheft oder Bordcomputer zeigt den genauen Intervall." },
+  { q: "Verliere ich meine Garantie, wenn ich nicht zur Vertragswerkstatt gehe?", a: "Nein. Seit dem EU-Gruppenfreistellungsgesetz (GVO) dürfen Sie jeden qualifizierten Fachbetrieb für Garantiearbeiten und Inspektionen nutzen - die Garantie bleibt erhalten, solange Original- oder gleichwertige Teile verbaut werden." },
+  { q: "Was kostet eine Inspektion bei der Autoklinik?", a: "Der Preis hängt vom Fahrzeug, Motoröl und Umfang ab. Wir nennen Ihnen vor der Arbeit immer einen verbindlichen Festpreis - keine versteckten Nachträge." },
   { q: "Kann ich während der Inspektion warten?", a: "Ja. Für Wartungsarbeiten können Sie in unserem Wartebereich bleiben. Bei umfangreicheren Arbeiten holen wir Sie gerne mit einem Kostenvoranschlag ab." },
   { q: "Wie lange dauert eine Inspektion?", a: "Eine kleine Inspektion (Ölwechsel + Filtercheck) dauert ca. 1 Stunde. Die große Inspektion je nach Fahrzeug 2–3 Stunden." },
 ];
@@ -90,7 +90,7 @@ export default function InspektionPage() {
                   Inspektion &amp; Wartung<br /><span style={{ color: "#4db8d8" }}>in Reutlingen</span>
                 </motion.h1>
                 <motion.p className="text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "rgba(255,255,255,0.75)" }} {...fadeUp(0.2)}>
-                  Herstellerkonformer Inspektionsservice für alle Marken — transparent, termingerecht und ohne versteckte Kosten. Ihre Herstellergarantie bleibt erhalten.
+                  Herstellerkonformer Inspektionsservice für alle Marken - transparent, termingerecht und ohne versteckte Kosten. Ihre Herstellergarantie bleibt erhalten.
                 </motion.p>
                 <motion.div className="flex flex-wrap gap-3" {...fadeUp(0.3)}>
                   <Link href="/terminbuchung" className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110" style={{ backgroundColor: "#0074a2" }}>
@@ -140,7 +140,7 @@ export default function InspektionPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
                 <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>Warum zu uns</motion.p>
-                <motion.h2 className="font-bold tracking-tight leading-[1.1] text-balance mb-8" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }} {...fadeUp(0.1)}>Freie Werkstatt — volle Herstellerkonformität.</motion.h2>
+                <motion.h2 className="font-bold tracking-tight leading-[1.1] text-balance mb-8" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }} {...fadeUp(0.1)}>Freie Werkstatt - volle Herstellerkonformität.</motion.h2>
                 <div style={{ borderTop: "1px solid #d5e8f0" }}>
                   {whyPoints.map((p, i) => (
                     <motion.div key={p.title} className="flex gap-5 py-5" style={{ borderBottom: "1px solid #d5e8f0" }} {...fadeUp(0.1 + i * 0.08)}>
@@ -190,7 +190,7 @@ export default function InspektionPage() {
               <motion.div {...slideLeft(0)}>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-3" style={{ color: "#4db8d8" }}>Termin buchen</p>
                 <h2 className="font-bold tracking-tight text-balance" style={{ color: "#ffffff", fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}>Jetzt Inspektionstermin vereinbaren.</h2>
-                <p className="mt-3 text-sm leading-relaxed max-w-xl" style={{ color: "rgba(255,255,255,0.6)" }}>Online buchen oder anrufen — wir finden schnell einen passenden Termin für Ihr Fahrzeug.</p>
+                <p className="mt-3 text-sm leading-relaxed max-w-xl" style={{ color: "rgba(255,255,255,0.6)" }}>Online buchen oder anrufen - wir finden schnell einen passenden Termin für Ihr Fahrzeug.</p>
               </motion.div>
               <motion.div {...scaleUp(0.15)}>
                 <Link href="/terminbuchung" className="inline-flex shrink-0 items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110" style={{ backgroundColor: "#0074a2" }}>

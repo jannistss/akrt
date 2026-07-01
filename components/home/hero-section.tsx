@@ -61,7 +61,7 @@ export function HeroSection() {
         />
       </motion.div>
 
-      {/* ── Mechanic image — slides in from right, bottom-anchored ── */}
+      {/* ── Mechanic image - slides in from right, bottom-anchored ── */}
       <motion.div
         className="absolute bottom-0 right-0 z-20 hidden lg:block pointer-events-none select-none"
         style={{ width: 380, height: "78%" }}
@@ -79,7 +79,7 @@ export function HeroSection() {
 
 
 
-      {/* ── Main content — vertically centered ── */}
+      {/* ── Main content - vertically centered ── */}
       <div className="relative z-30 flex items-center" style={{ minHeight: "100svh" }}>
           <div className="max-w-7xl mx-auto w-full px-6 sm:px-10 lg:px-16" style={{ paddingTop: "22vh", paddingBottom: "8vh" }}>
           <div className="max-w-[600px]">
@@ -93,7 +93,7 @@ export function HeroSection() {
               Meisterbetrieb · Reutlingen
             </motion.p>
 
-            {/* Headline — each line staggers in */}
+            {/* Headline - each line staggers in */}
             <div aria-label="Deine Werkstatt. Ehrlich. Schnell. Zuverlässig.">
               {["Deine Werkstatt.", "Ehrlich. Schnell.", "Zuverlässig."].map((line, i) => (
                 <div key={line} className="overflow-hidden">
@@ -116,7 +116,7 @@ export function HeroSection() {
               style={{ color: "rgba(255,255,255,0.88)" }}
               {...fadeUp(0.6)}
             >
-              Inspektion, Reparatur &amp; TÜV — alles aus einer Hand.
+              Inspektion, Reparatur &amp; TÜV - alles aus einer Hand.
               Faire Preise, kurze Wartezeiten, direkt in Reutlingen.
             </motion.p>
 

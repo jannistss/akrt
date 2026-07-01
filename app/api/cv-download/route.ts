@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // Obfuscates the real blob URL so it is never exposed in the email link.
-// The token in the email is permanent — on every click the server fetches the file
+// The token in the email is permanent - on every click the server fetches the file
 // directly using the BLOB_READ_WRITE_TOKEN and streams it to the browser.
 
 function xorCipher(input: string): string {

@@ -20,24 +20,24 @@ const jsonLd = {
 const highlights = ["Kostenlos bei Fremdverschulden", "Unabhängiger Gutachter im Haus", "Alle Marken", "Meisterbetrieb", "Versicherungsabwicklung", "TÜV in 48 Stunden"];
 
 const whyPoints = [
-  { title: "Unabhängiger Sachverständiger im Haus", text: "Kein Umweg, kein zweiter Termin. Das Gutachten entsteht direkt bei uns — vollständig und versicherungskonform." },
+  { title: "Unabhängiger Sachverständiger im Haus", text: "Kein Umweg, kein zweiter Termin. Das Gutachten entsteht direkt bei uns - vollständig und versicherungskonform." },
   { title: "Reparaturkostenermittlung", text: "Vollständige Dokumentation aller Schäden, Wertminderungsberechnung und Nutzungsausfallentschädigung." },
-  { title: "Direktabrechnung mit der Versicherung", text: "Wir kommunizieren direkt mit der Haftpflichtversicherung des Unfallgegners — Sie müssen sich um nichts kümmern." },
-  { title: "Karosserie, Lack & Technik", text: "Als Meisterbetrieb reparieren wir alles fachgerecht — Karosserieschäden, Lackarbeiten und mechanische Folgeschäden." },
+  { title: "Direktabrechnung mit der Versicherung", text: "Wir kommunizieren direkt mit der Haftpflichtversicherung des Unfallgegners - Sie müssen sich um nichts kümmern." },
+  { title: "Karosserie, Lack & Technik", text: "Als Meisterbetrieb reparieren wir alles fachgerecht - Karosserieschäden, Lackarbeiten und mechanische Folgeschäden." },
 ];
 
 const steps = [
   { step: "01", title: "Termin vereinbaren", desc: "Rufen Sie an, schreiben Sie oder buchen Sie online. Wir finden innerhalb von 24 Stunden einen Termin für Sie." },
-  { step: "02", title: "Gutachten & Befund", desc: "Unser Sachverständiger prüft und dokumentiert alle Schäden direkt vor Ort — vollständig und unabhängig." },
+  { step: "02", title: "Gutachten & Befund", desc: "Unser Sachverständiger prüft und dokumentiert alle Schäden direkt vor Ort - vollständig und unabhängig." },
   { step: "03", title: "Reparatur & fertig", desc: "Wir reparieren fachgerecht und rechnen mit der Versicherung ab. Sie holen Ihr Fahrzeug wie neu ab." },
 ];
 
 const faqs = [
-  { q: "Was muss ich nach einem Unfall sofort tun?", a: "Unfallstelle absichern, Polizei rufen (wenn nötig), Fotos machen, Personalien tauschen — und dann uns kontaktieren. Wir begleiten Sie durch den Rest." },
+  { q: "Was muss ich nach einem Unfall sofort tun?", a: "Unfallstelle absichern, Polizei rufen (wenn nötig), Fotos machen, Personalien tauschen - und dann uns kontaktieren. Wir begleiten Sie durch den Rest." },
   { q: "Kostet das Gutachten mich etwas?", a: "Bei Fremdverschulden trägt die gegnerische Haftpflichtversicherung die Kosten für das Gutachten vollständig. Sie zahlen nichts." },
-  { q: "Muss ich zur Vertragswerkstatt meines Fahrzeugherstellers?", a: "Nein. Als Geschädigter haben Sie das Recht, eine freie Fachwerkstatt zu wählen. Die Versicherung muss die Reparaturkosten erstatten — auch bei uns." },
-  { q: "Wie lange dauert die Unfallreparatur?", a: "Das hängt vom Schadensumfang ab. Wir schätzen die Zeit bei der Begutachtung ein und halten Sie laufend auf dem Laufenden — ohne böse Überraschungen." },
-  { q: "Bekomme ich einen Ersatzwagen?", a: "Bei Fremdverschulden haben Sie in der Regel Anspruch auf Nutzungsausfall oder einen Mietwagen — wir helfen Ihnen, das korrekt gegenüber der Versicherung geltend zu machen." },
+  { q: "Muss ich zur Vertragswerkstatt meines Fahrzeugherstellers?", a: "Nein. Als Geschädigter haben Sie das Recht, eine freie Fachwerkstatt zu wählen. Die Versicherung muss die Reparaturkosten erstatten - auch bei uns." },
+  { q: "Wie lange dauert die Unfallreparatur?", a: "Das hängt vom Schadensumfang ab. Wir schätzen die Zeit bei der Begutachtung ein und halten Sie laufend auf dem Laufenden - ohne böse Überraschungen." },
+  { q: "Bekomme ich einen Ersatzwagen?", a: "Bei Fremdverschulden haben Sie in der Regel Anspruch auf Nutzungsausfall oder einen Mietwagen - wir helfen Ihnen, das korrekt gegenüber der Versicherung geltend zu machen." },
 ];
 
 const related = [
@@ -71,7 +71,7 @@ export default function UnfallPage() {
                   Unfall gehabt?<br /><span style={{ color: "#4db8d8" }}>Gutachten &amp; Reparatur</span><br />aus einer Hand.
                 </motion.h1>
                 <motion.p className="text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "rgba(255,255,255,0.65)" }} {...fadeUp(0.2)}>
-                  Unabhängiger Kfz-Sachverständiger direkt im Haus — kein Umweg, kein Doppeltermin. Wir erledigen Gutachten, Reparatur und Versicherungsabwicklung komplett für Sie.
+                  Unabhängiger Kfz-Sachverständiger direkt im Haus - kein Umweg, kein Doppeltermin. Wir erledigen Gutachten, Reparatur und Versicherungsabwicklung komplett für Sie.
                 </motion.p>
                 <motion.div className="flex flex-wrap gap-3" {...fadeUp(0.3)}>
                   <Link href="/terminbuchung" className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110" style={{ backgroundColor: "#0074a2" }}>
@@ -91,7 +91,7 @@ export default function UnfallPage() {
                 <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, rgba(0,20,32,0.65) 100%)" }} />
                 <motion.div className="absolute bottom-6 left-6 rounded-xl px-5 py-4" style={{ backgroundColor: "rgba(0,46,64,0.88)", backdropFilter: "blur(10px)", border: "1px solid rgba(77,184,216,0.25)" }} {...scaleUp(0.4)}>
                   <p className="text-sm font-bold text-white">Kostenlos bei Fremdverschulden</p>
-                  <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.6)" }}>Gutachten &amp; Reparatur — Sie zahlen nichts</p>
+                  <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.6)" }}>Gutachten &amp; Reparatur - Sie zahlen nichts</p>
                 </motion.div>
               </motion.div>
             </div>
@@ -106,10 +106,10 @@ export default function UnfallPage() {
                 <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>Der Unterschied</motion.p>
                 <motion.h2 className="font-bold tracking-tight leading-[1.1] text-balance mb-6" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }} {...fadeUp(0.1)}>Normalerweise fangen nach dem Unfall die Probleme erst an.</motion.h2>
                 <motion.p className="text-sm leading-relaxed mb-4" style={{ color: "#4a6272" }} {...fadeUp(0.2)}>
-                  Polizei, Versicherung, Gutachter suchen, Termin beim Gutachter, Fahrzeug hinfahren, Gutachten warten, dann Werkstatt suchen — das kostet Nerven, Zeit und manchmal auch Geld.
+                  Polizei, Versicherung, Gutachter suchen, Termin beim Gutachter, Fahrzeug hinfahren, Gutachten warten, dann Werkstatt suchen - das kostet Nerven, Zeit und manchmal auch Geld.
                 </motion.p>
                 <motion.p className="text-sm leading-relaxed" style={{ color: "#4a6272" }} {...fadeUp(0.25)}>
-                  In der Autoklinik Reutlingen ist das anders: Unser zertifizierter Kfz-Sachverständiger sitzt direkt im Haus. Sie kommen einmal zu uns — und gehen mit einem fertigen Gutachten und einem Reparaturauftrag.
+                  In der Autoklinik Reutlingen ist das anders: Unser zertifizierter Kfz-Sachverständiger sitzt direkt im Haus. Sie kommen einmal zu uns - und gehen mit einem fertigen Gutachten und einem Reparaturauftrag.
                 </motion.p>
               </div>
               <motion.div className="flex flex-col gap-4" variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-60px" }}>
@@ -160,14 +160,14 @@ export default function UnfallPage() {
                   Unabhängiges Kfz-Gutachten direkt bei uns im Haus
                 </motion.h2>
                 <motion.p className="text-base leading-relaxed mb-4" style={{ color: "#475569" }} {...fadeUp(0.2)}>
-                  Kfz-Sachverständigenbüro Najami sitzt direkt in unserer Werkstatt — kein zweiter Termin, kein Umweg. Karim Najami erstellt Ihr Gutachten vor Ort, vollständig und unabhängig von der Versicherung.
+                  Kfz-Sachverständigenbüro Najami sitzt direkt in unserer Werkstatt - kein zweiter Termin, kein Umweg. Karim Najami erstellt Ihr Gutachten vor Ort, vollständig und unabhängig von der Versicherung.
                 </motion.p>
                 <motion.div className="flex items-start gap-3 p-4 rounded-xl mb-8" style={{ backgroundColor: "#dbeafe", border: "1px solid #93c5fd" }} {...fadeUp(0.25)}>
                   <svg className="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#1d4ed8" />
                   </svg>
                   <p className="text-sm font-medium" style={{ color: "#1e40af" }}>
-                    Bei Fremdverschulden kostenlos — Express-Gutachten innerhalb von 24 Stunden möglich.
+                    Bei Fremdverschulden kostenlos - Express-Gutachten innerhalb von 24 Stunden möglich.
                   </p>
                 </motion.div>
                 <motion.div className="flex flex-wrap gap-3" {...fadeUp(0.3)}>
@@ -197,7 +197,7 @@ export default function UnfallPage() {
               >
                 <img
                   src="/assets/images/najami/najami-work-1.webp"
-                  alt="Karim Najami — Kfz-Sachverständiger bei der Fahrzeugbegutachtung in Reutlingen"
+                  alt="Karim Najami - Kfz-Sachverständiger bei der Fahrzeugbegutachtung in Reutlingen"
                   className="w-full h-full object-cover object-center"
                 />
                 <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 50%, rgba(15,23,42,0.65) 100%)" }} />
@@ -239,7 +239,7 @@ export default function UnfallPage() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
               <motion.div {...slideLeft(0)}>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-3" style={{ color: "#4db8d8" }}>Jetzt handeln</p>
-                <h2 className="font-bold tracking-tight text-balance" style={{ color: "#ffffff", fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}>Wir sind für Sie da — noch heute.</h2>
+                <h2 className="font-bold tracking-tight text-balance" style={{ color: "#ffffff", fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}>Wir sind für Sie da - noch heute.</h2>
                 <p className="mt-3 text-sm leading-relaxed max-w-xl" style={{ color: "rgba(255,255,255,0.6)" }}>Rufen Sie an oder buchen Sie direkt online. Wir finden schnell einen Termin.</p>
               </motion.div>
               <motion.div className="flex flex-wrap gap-3 shrink-0" {...scaleUp(0.15)}>

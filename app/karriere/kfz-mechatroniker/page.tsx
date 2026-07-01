@@ -28,7 +28,7 @@ const stepDescriptions = [
   "Stell dich kurz vor.",
   "So können wir uns melden.",
   "Erzähl uns von dir.",
-  "Fast geschafft — lad deinen Lebenslauf hoch.",
+  "Fast geschafft - lad deinen Lebenslauf hoch.",
 ];
 
 // ── Step Progress Bar ────────────────────────────────────────────────────────
@@ -144,19 +144,19 @@ function StepThree({ data, onChange }: { data: FormData; onChange: (k: keyof For
     <div className="flex flex-col gap-5">
       <div>
         <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: "#64748b" }}>
-          Dein Anschreiben — warum bist du der Richtige? *
+          Dein Anschreiben - warum bist du der Richtige? *
           </label>
           <textarea
             value={data.message}
             onChange={(e) => onChange("message", e.target.value)}
-            placeholder="Erzähl uns von dir: Welche Erfahrungen bringst du mit? Was macht dich als Kfz-Mechatroniker aus? Warum möchtest du bei uns arbeiten?&#10;&#10;Keine Angst — ein paar ehrliche Sätze reichen."
+            placeholder="Erzähl uns von dir: Welche Erfahrungen bringst du mit? Was macht dich als Kfz-Mechatroniker aus? Warum möchtest du bei uns arbeiten?&#10;&#10;Keine Angst - ein paar ehrliche Sätze reichen."
           className={inputCls}
           style={{ ...inputStyle, resize: "vertical", minHeight: 160 }}
           required
           autoFocus
         />
         <p className="mt-2 text-xs" style={{ color: "#94a3b8" }}>
-          {data.message.length} Zeichen — je ehrlicher desto besser.
+          {data.message.length} Zeichen - je ehrlicher desto besser.
         </p>
       </div>
     </div>
@@ -171,7 +171,7 @@ function StepFour({ data, onFileChange }: { data: FormData; onFileChange: (file:
     <div className="flex flex-col gap-5">
       <div>
         <label className="block text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#64748b" }}>
-          Lebenslauf (PDF, max. 10 MB) — optional
+          Lebenslauf (PDF, max. 10 MB) - optional
         </label>
         <div
           className="relative flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed px-6 py-10 cursor-pointer transition-all duration-200"
@@ -217,7 +217,7 @@ function StepFour({ data, onFileChange }: { data: FormData; onFileChange: (file:
                 </svg>
               </div>
               <p className="text-sm font-semibold" style={{ color: "#475569" }}>Datei hierher ziehen oder klicken</p>
-              <p className="text-xs" style={{ color: "#94a3b8" }}>PDF, DOC oder DOCX — max. 10 MB</p>
+              <p className="text-xs" style={{ color: "#94a3b8" }}>PDF, DOC oder DOCX - max. 10 MB</p>
             </>
           )}
           <input
@@ -231,7 +231,7 @@ function StepFour({ data, onFileChange }: { data: FormData; onFileChange: (file:
       </div>
       <div className="rounded-2xl px-5 py-4 text-sm" style={{ backgroundColor: "#f0f7ff", border: "1px solid #dbeafe" }}>
         <p className="font-semibold mb-1" style={{ color: "#1d4ed8" }}>Kein Lebenslauf? Kein Problem.</p>
-        <p style={{ color: "#475569" }}>Du kannst deine Bewerbung auch ohne Lebenslauf abschicken — wir melden uns trotzdem bei dir.</p>
+        <p style={{ color: "#475569" }}>Du kannst deine Bewerbung auch ohne Lebenslauf abschicken - wir melden uns trotzdem bei dir.</p>
       </div>
     </div>
   );
@@ -392,7 +392,7 @@ function ApplicationWizard() {
         </motion.p>
       )}
 
-      {/* Datenschutzhinweis — nur auf letztem Schritt */}
+      {/* Datenschutzhinweis - nur auf letztem Schritt */}
       {step === TOTAL_STEPS - 1 && (
         <p className="text-xs leading-relaxed" style={{ color: "#94a3b8" }}>
           Mit dem Absenden stimmst du zu, dass wir deine Daten zur Bearbeitung deiner Bewerbung verwenden. Deine Daten werden vertraulich behandelt und nicht an Dritte weitergegeben.{" "}
@@ -474,7 +474,7 @@ const requirements = [
 ];
 
 const whatWeOffer = [
-  "Vollzeit, Montag bis Freitag — keine Wochenendschichten",
+  "Vollzeit, Montag bis Freitag - keine Wochenendschichten",
   "Leistungsgerechte Vergütung nach Erfahrung",
   "Direkter Draht zur Geschäftsleitung, flache Hierarchien",
   "Moderner Maschinenpark und aktuelle Diagnosetechnik",
@@ -629,7 +629,7 @@ export default function KfzMechatronikerPage() {
             In 4 Schritten bewerben
           </motion.h2>
           <motion.p className="text-sm leading-relaxed mb-12" style={{ color: "#64748b" }} {...fadeUp(0.15)}>
-            Kein langes Formular. Nur das Wichtigste — dauert unter 2 Minuten.
+            Kein langes Formular. Nur das Wichtigste - dauert unter 2 Minuten.
           </motion.p>
 
           <motion.div

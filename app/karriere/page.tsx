@@ -8,18 +8,18 @@ import { fadeUp, staggerContainer, staggerItem, EASE } from "@/lib/animation";
 const perks = [
   {
     num: "01",
-    title: "Faires Gehalt — ohne Verhandlungspoker",
+    title: "Faires Gehalt - ohne Verhandlungspoker",
     body: "Wir zahlen leistungsgerecht und pünktlich. Kein Tarifdschungel, kein Kleingedrucktes. Was wir sagen, gilt.",
   },
   {
     num: "02",
     title: "Montag bis Freitag. Fertig.",
-    body: "Kein Wochenende, kein Schichtchaos, kein Bereitschaftsdienst. Deine Freizeit gehört dir — und das meinen wir ernst.",
+    body: "Kein Wochenende, kein Schichtchaos, kein Bereitschaftsdienst. Deine Freizeit gehört dir - und das meinen wir ernst.",
   },
   {
     num: "03",
     title: "Werkzeug, das funktioniert",
-    body: "Aktuelle Diagnosetechnik, saubere Hebebühnen, professionelles Werkzeug. Du arbeitest konzentriert — nicht gegen dein Equipment.",
+    body: "Aktuelle Diagnosetechnik, saubere Hebebühnen, professionelles Werkzeug. Du arbeitest konzentriert - nicht gegen dein Equipment.",
   },
   {
     num: "04",
@@ -29,12 +29,12 @@ const perks = [
   {
     num: "05",
     title: "Jeden Tag ein anderes Auto",
-    body: "BMW, Mercedes, VW, Opel — alle Marken, alle Baujahre. Du löst echte Probleme statt immer denselben Ölwechsel zu machen.",
+    body: "BMW, Mercedes, VW, Opel - alle Marken, alle Baujahre. Du löst echte Probleme statt immer denselben Ölwechsel zu machen.",
   },
   {
     num: "06",
     title: "Ein Team, das zusammenhält",
-    body: "Wir lachen auch mal. Wir helfen uns gegenseitig. Du wirst hier nicht allein gelassen — weder bei kniffligen Fehlern noch im Alltag.",
+    body: "Wir lachen auch mal. Wir helfen uns gegenseitig. Du wirst hier nicht allein gelassen - weder bei kniffligen Fehlern noch im Alltag.",
   },
 ];
 
@@ -197,13 +197,13 @@ export default function KarrierePage() {
                 {...fadeUp(0.2)}
               >
                 <p>
-                  Autoklinik Reutlingen ist jung — und genau das macht uns anders. Kein verstaubter Betrieb mit eingerosteten Abläufen. Wir bauen gerade was auf, und du kannst von Anfang an mitgestalten.
+                  Autoklinik Reutlingen ist jung - und genau das macht uns anders. Kein verstaubter Betrieb mit eingerosteten Abläufen. Wir bauen gerade was auf, und du kannst von Anfang an mitgestalten.
                 </p>
                 <p>
-                  Unser Team ist klein, motiviert und direkt. Hier duzt man sich, hilft sich gegenseitig und lacht auch mal — ohne dass man deswegen schief angeguckt wird. Kein Ellbogenklima, kein Konkurrenzdenken.
+                  Unser Team ist klein, motiviert und direkt. Hier duzt man sich, hilft sich gegenseitig und lacht auch mal - ohne dass man deswegen schief angeguckt wird. Kein Ellbogenklima, kein Konkurrenzdenken.
                 </p>
                 <p>
-                  Das Arbeitsklima ist entspannt, aber professionell. Wir nehmen unsere Arbeit ernst — nicht uns selbst. Und wenn du eine Idee hast, wird sie gehört. Nicht in drei Monaten nach vier Meetings, sondern direkt.
+                  Das Arbeitsklima ist entspannt, aber professionell. Wir nehmen unsere Arbeit ernst - nicht uns selbst. Und wenn du eine Idee hast, wird sie gehört. Nicht in drei Monaten nach vier Meetings, sondern direkt.
                 </p>
               </motion.div>
             </div>
@@ -358,7 +358,7 @@ export default function KarrierePage() {
               </h3>
 
               <p className="text-base leading-relaxed mb-10 max-w-2xl" style={{ color: "#475569" }}>
-                Du weißt, was du tust. Du willst in einem kleinen, ehrlichen Team arbeiten — ohne Konzernstress, ohne Umsatzdruck, ohne Bullshit. Dann meld dich.
+                Du weißt, was du tust. Du willst in einem kleinen, ehrlichen Team arbeiten - ohne Konzernstress, ohne Umsatzdruck, ohne Bullshit. Dann meld dich.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">
@@ -410,7 +410,7 @@ export default function KarrierePage() {
             style={{ color: "rgba(255,255,255,0.48)" }}
             {...fadeUp(0.2)}
           >
-            Komm vorbei oder schreib uns. Wir sind entspannt — und freuen uns auf dich.
+            Komm vorbei oder schreib uns. Wir sind entspannt - und freuen uns auf dich.
           </motion.p>
           <motion.div className="flex flex-wrap justify-center gap-4" {...fadeUp(0.3)}>
             <a

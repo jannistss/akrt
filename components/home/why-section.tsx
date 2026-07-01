@@ -33,7 +33,7 @@ export function WhySection() {
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
-          {/* Left — image */}
+          {/* Left - image */}
           <motion.div
             className="relative rounded-2xl overflow-hidden"
             style={{ minHeight: 460 }}
@@ -60,7 +60,7 @@ export function WhySection() {
             </motion.div>
           </motion.div>
 
-          {/* Right — content */}
+          {/* Right - content */}
           <div>
             <motion.p
               className="text-xs font-semibold uppercase tracking-[0.2em] mb-5"

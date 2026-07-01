@@ -94,7 +94,7 @@ export function ServicesGrid() {
               style={{ color: "#002e40", fontSize: "clamp(2rem, 3.5vw, 3rem)" }}
               {...fadeUp(0.1)}
             >
-              Alles aus einer Hand —<br />
+              Alles aus einer Hand -<br />
               sauber, schnell, ehrlich.
             </motion.h2>
           </div>

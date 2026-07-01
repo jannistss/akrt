@@ -45,7 +45,7 @@ export function CtaBanner() {
               style={{ color: "#ffffff", fontSize: "clamp(1.9rem, 3vw, 2.8rem)" }}
               {...fadeUp(0.3)}
             >
-              Jetzt Termin vereinbaren — schnell &amp; einfach.
+              Jetzt Termin vereinbaren - schnell &amp; einfach.
             </motion.h2>
             <motion.p
               className="text-base mb-10"

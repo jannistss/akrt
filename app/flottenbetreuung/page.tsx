@@ -21,19 +21,19 @@ const highlights = ["Meisterbetrieb", "Alle Marken", "Faire Flottenpreise", "Kur
 
 const benefits = [
   { title: "Minimale Standzeiten", text: "Wir koordinieren Servicetermine gezielt, um Ausfälle Ihrer Fahrzeuge auf ein Minimum zu reduzieren. Keine langen Wartezeiten." },
-  { title: "Ein Ansprechpartner für alles", text: "Inspektion, Reifen, TÜV, Reparatur — ein Betrieb, eine Rechnung, ein Ansprechpartner. Das spart Zeit und Nerven." },
-  { title: "Faire Flottenkonditionen", text: "Ab einer gewissen Fahrzeuganzahl profitieren Sie von günstigen Flottenpreisen. Sprechen Sie uns an — wir machen ein individuelles Angebot." },
-  { title: "Kompetenter Meisterbetrieb", text: "Alle Arbeiten werden von qualifizierten Fachkräften unter Meisteraufsicht durchgeführt — für höchste Qualität und Rechtssicherheit." },
-  { title: "Intervallüberwachung", text: "Wir behalten die Wartungsintervalle für Ihre gesamte Flotte im Blick und erinnern Sie rechtzeitig — damit kein Fahrzeug überfällig wird." },
-  { title: "Flexibel & transparent", text: "Klare Kommunikation, verbindliche Festpreise und flexible Termingestaltung — auch für kurzfristige Reparaturen." },
+  { title: "Ein Ansprechpartner für alles", text: "Inspektion, Reifen, TÜV, Reparatur - ein Betrieb, eine Rechnung, ein Ansprechpartner. Das spart Zeit und Nerven." },
+  { title: "Faire Flottenkonditionen", text: "Ab einer gewissen Fahrzeuganzahl profitieren Sie von günstigen Flottenpreisen. Sprechen Sie uns an - wir machen ein individuelles Angebot." },
+  { title: "Kompetenter Meisterbetrieb", text: "Alle Arbeiten werden von qualifizierten Fachkräften unter Meisteraufsicht durchgeführt - für höchste Qualität und Rechtssicherheit." },
+  { title: "Intervallüberwachung", text: "Wir behalten die Wartungsintervalle für Ihre gesamte Flotte im Blick und erinnern Sie rechtzeitig - damit kein Fahrzeug überfällig wird." },
+  { title: "Flexibel & transparent", text: "Klare Kommunikation, verbindliche Festpreise und flexible Termingestaltung - auch für kurzfristige Reparaturen." },
 ];
 
 const faqs = [
   { q: "Ab wie vielen Fahrzeugen lohnt sich Flottenbetreuung?", a: "Schon ab 2–3 Fahrzeugen lohnt es sich, einen verlässlichen Partnerbetrieb zu haben. Ab ca. 5 Fahrzeugen sind spezielle Flottenkonditionen möglich. Sprechen Sie uns einfach an." },
-  { q: "Können Sie Fahrzeuge unterschiedlicher Marken betreuen?", a: "Ja — wir betreuen alle gängigen Marken und Modelle. Als freie Fachwerkstatt sind wir nicht auf einen Hersteller beschränkt." },
-  { q: "Bieten Sie Abhol- und Bringservice an?", a: "Je nach Umfang und Vereinbarung — sprechen Sie uns darauf an. Für Flottenpartner finden wir individuelle Lösungen." },
+  { q: "Können Sie Fahrzeuge unterschiedlicher Marken betreuen?", a: "Ja - wir betreuen alle gängigen Marken und Modelle. Als freie Fachwerkstatt sind wir nicht auf einen Hersteller beschränkt." },
+  { q: "Bieten Sie Abhol- und Bringservice an?", a: "Je nach Umfang und Vereinbarung - sprechen Sie uns darauf an. Für Flottenpartner finden wir individuelle Lösungen." },
   { q: "Wie werden Kosten abgerechnet?", a: "Auf Wunsch monatlich gesammelt oder nach jedem Auftrag einzeln. Wir passen die Abrechnung an Ihre Buchhaltung an." },
-  { q: "Was passiert, wenn ein Fahrzeug kurzfristig ausfällt?", a: "Wir versuchen stets, Flottenpartner bevorzugt zu terminieren. Rufen Sie an — wir finden auch für dringende Fälle eine Lösung." },
+  { q: "Was passiert, wenn ein Fahrzeug kurzfristig ausfällt?", a: "Wir versuchen stets, Flottenpartner bevorzugt zu terminieren. Rufen Sie an - wir finden auch für dringende Fälle eine Lösung." },
 ];
 
 const related = [
@@ -67,7 +67,7 @@ export default function FlottenbetreuungPage() {
                   Weniger Ausfälle,<br />mehr Kilometer.<br /><span style={{ color: "#4db8d8" }}>Flottenbetreuung</span><br />vom Meisterbetrieb.
                 </motion.h1>
                 <motion.p className="text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "rgba(255,255,255,0.65)" }} {...fadeUp(0.2)}>
-                  Ob 3 oder 30 Fahrzeuge — wir halten Ihren Fuhrpark zuverlässig auf der Straße. Inspektion, TÜV, Reifen und Reparaturen aus einer Hand, mit fairen Preisen und kurzen Wartezeiten.
+                  Ob 3 oder 30 Fahrzeuge - wir halten Ihren Fuhrpark zuverlässig auf der Straße. Inspektion, TÜV, Reifen und Reparaturen aus einer Hand, mit fairen Preisen und kurzen Wartezeiten.
                 </motion.p>
                 <motion.div className="flex flex-wrap gap-3" {...fadeUp(0.3)}>
                   <Link href="/terminbuchung" className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110" style={{ backgroundColor: "#0074a2" }}>
@@ -164,7 +164,7 @@ export default function FlottenbetreuungPage() {
               <motion.div {...slideLeft(0)}>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-3" style={{ color: "#4db8d8" }}>Angebot einholen</p>
                 <h2 className="font-bold tracking-tight text-balance" style={{ color: "#ffffff", fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}>Erzählen Sie uns von Ihrer Flotte.</h2>
-                <p className="mt-3 text-sm leading-relaxed max-w-xl" style={{ color: "rgba(255,255,255,0.6)" }}>Wir erstellen Ihnen ein unverbindliches Angebot — zugeschnitten auf die Größe und Anforderungen Ihres Fuhrparks.</p>
+                <p className="mt-3 text-sm leading-relaxed max-w-xl" style={{ color: "rgba(255,255,255,0.6)" }}>Wir erstellen Ihnen ein unverbindliches Angebot - zugeschnitten auf die Größe und Anforderungen Ihres Fuhrparks.</p>
               </motion.div>
               <motion.div className="flex flex-wrap gap-3 shrink-0" {...scaleUp(0.15)}>
                 <Link href="/terminbuchung" className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110" style={{ backgroundColor: "#0074a2" }}>
