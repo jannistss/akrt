@@ -392,6 +392,16 @@ function ApplicationWizard() {
         </motion.p>
       )}
 
+      {/* Datenschutzhinweis — nur auf letztem Schritt */}
+      {step === TOTAL_STEPS - 1 && (
+        <p className="text-xs leading-relaxed" style={{ color: "#94a3b8" }}>
+          Mit dem Absenden stimmst du zu, dass wir deine Daten zur Bearbeitung deiner Bewerbung verwenden. Deine Daten werden vertraulich behandelt und nicht an Dritte weitergegeben.{" "}
+          <Link href="/datenschutz" className="underline hover:text-[#0074a2] transition-colors">
+            Datenschutzerklärung
+          </Link>
+        </p>
+      )}
+
       {/* Navigation */}
       <div className="flex items-center justify-between gap-4">
         <button
