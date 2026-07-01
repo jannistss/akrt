@@ -29,10 +29,10 @@ const navItems: NavItem[] = [
       { name: "Klimaservice", link: "/klimaservice" },
       { name: "Unfallservice", link: "/unfall" },
       { name: "Flottenbetreuung", link: "/flottenbetreuung" },
-      { name: "Kfz-Gutachter Najami", link: "/kfz-gutachter" },
     ],
   },
   { name: "Flotte", link: "/flottenbetreuung" },
+  { name: "Kfz-Gutachter", link: "/kfz-gutachter" },
   { name: "Kontakt", link: "#kontakt" },
 ];
 
@@ -139,8 +139,13 @@ export function AutoklinikNavbar() {
             Flotte
           </MobileNavLink>
 
+          {/* Kfz-Gutachter */}
+          <MobileNavLink href="/kfz-gutachter" onClick={() => setIsMobileMenuOpen(false)} delay={0.14}>
+            Kfz-Gutachter
+          </MobileNavLink>
+
           {/* Kontakt */}
-          <MobileNavLink href="#kontakt" onClick={() => setIsMobileMenuOpen(false)} delay={0.16}>
+          <MobileNavLink href="#kontakt" onClick={() => setIsMobileMenuOpen(false)} delay={0.18}>
             Kontakt
           </MobileNavLink>
 
