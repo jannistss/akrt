@@ -40,11 +40,13 @@ export async function POST(req: NextRequest) {
       cvUrl = blob.url;
     }
 
-    const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : "http://localhost:3000";
+    const baseUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ??
+      (process.env.VERCEL_PROJECT_PRODUCTION_URL
+        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+        : null) ??
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ??
+      "https://akrt-iota.vercel.app";
 
     const cvDownloadLink = cvUrl
       ? `${baseUrl}/api/cv-download?token=${encodeToken(cvUrl)}`

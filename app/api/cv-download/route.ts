@@ -1,18 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { presignUrl } from "@vercel/blob";
 
-// The token→blobUrl mapping is embedded in the link by the apply route.
-// We never expose the real blob URL externally — the token IS the link,
-// and the blob URL travels server-side only (encoded in the signed email link
-// via a simple HMAC-like obfuscation using the BLOB_READ_WRITE_TOKEN secret).
-//
-// Implementation: apply route encodes blobUrl with a secret key → base64.
-// cv-download route decodes it server-side → generates a fresh presignUrl → redirects.
-// The link never expires because we can always generate a new presignUrl on demand.
+// Obfuscates the real blob URL so it is never exposed in the email link.
+// The token in the email is permanent — on every click the server fetches the file
+// directly using the BLOB_READ_WRITE_TOKEN and streams it to the browser.
 
-function encode(blobUrl: string): string {
+function xorCipher(input: string): string {
   const secret = (process.env.BLOB_READ_WRITE_TOKEN ?? "").slice(0, 32).padEnd(32, "x");
-  const buf = Buffer.from(blobUrl, "utf8");
+  const buf = Buffer.from(input, "utf8");
   const out = Buffer.alloc(buf.length);
   for (let i = 0; i < buf.length; i++) {
     out[i] = buf[i] ^ secret.charCodeAt(i % secret.length);
@@ -21,10 +15,10 @@ function encode(blobUrl: string): string {
 }
 
 export function encodeToken(blobUrl: string): string {
-  return encode(blobUrl);
+  return xorCipher(blobUrl);
 }
 
-function decode(token: string): string {
+function decodeToken(token: string): string {
   const secret = (process.env.BLOB_READ_WRITE_TOKEN ?? "").slice(0, 32).padEnd(32, "x");
   const buf = Buffer.from(token, "base64url");
   const out = Buffer.alloc(buf.length);
@@ -44,21 +38,34 @@ export async function GET(req: NextRequest) {
 
   let blobUrl: string;
   try {
-    blobUrl = decode(token);
+    blobUrl = decodeToken(token);
   } catch {
     return NextResponse.json({ error: "Invalid token" }, { status: 403 });
   }
 
-  if (!blobUrl.includes(".private.blob.vercel-storage.com")) {
+  if (!blobUrl.includes(".blob.vercel-storage.com")) {
     return NextResponse.json({ error: "Invalid URL" }, { status: 403 });
   }
 
-  try {
-    // Generate a fresh short-lived signed URL — but the token in the email is permanent.
-    const signed = await presignUrl(blobUrl, { expiresIn: 3600 });
-    return NextResponse.redirect(signed);
-  } catch (err) {
-    console.error("[cv-download] presign error:", err);
-    return NextResponse.json({ error: "Could not generate download link" }, { status: 500 });
+  // Fetch the private blob server-side using the read/write token as auth.
+  const blobRes = await fetch(blobUrl, {
+    headers: {
+      Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN ?? ""}`,
+    },
+  });
+
+  if (!blobRes.ok) {
+    return NextResponse.json({ error: "File not found" }, { status: 404 });
   }
+
+  const contentType = blobRes.headers.get("content-type") ?? "application/octet-stream";
+  const filename = blobUrl.split("/").pop() ?? "lebenslauf";
+
+  return new NextResponse(blobRes.body, {
+    status: 200,
+    headers: {
+      "Content-Type": contentType,
+      "Content-Disposition": `attachment; filename="${filename}"`,
+    },
+  });
 }
