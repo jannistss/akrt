@@ -30,18 +30,15 @@ export default function TerminbuchungPage() {
         </header>
 
         {/* Booking embed */}
-        <section className="py-16" style={{ backgroundColor: "#f4f8fb" }}>
-          <div className="max-w-4xl mx-auto px-6">
-            <div className="rounded-2xl overflow-hidden shadow-sm" style={{ backgroundColor: "#fff", border: "1px solid #e4edf3" }}>
-              <iframe
-                src="https://www.seatsplus.de/autoklinik-reutlingen"
-                title="Online-Terminbuchung Autoklinik Reutlingen"
-                className="w-full"
-                style={{ minHeight: 700, border: "none" }}
-                loading="lazy"
-              />
-            </div>
-          </div>
+        <section style={{ backgroundColor: "#f4f8fb" }}>
+          <iframe
+            src="https://booking.wscloud.io/WM1592874/Step1aServiceSelection"
+            title="Online-Terminbuchung Autoklinik Reutlingen"
+            className="w-full block"
+            style={{ minHeight: 900, border: "none", display: "block" }}
+            loading="lazy"
+            allow="payment"
+          />
         </section>
 
         {/* Fallback contact */}
