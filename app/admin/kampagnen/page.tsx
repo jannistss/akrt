@@ -1,22 +1,22 @@
 "use client";
 
-import { campaigns } from "@/lib/admin/mock-data";
-import { StatCard, StatusBadge, PageHeader } from "@/components/admin/admin-ui";
+import { mockKampagnen } from "@/lib/admin/mock-data";
+import { StatCard, StatusBadge, SectionHeader } from "@/components/admin/admin-ui";
 import { Megaphone, Users, CheckCircle, Clock } from "lucide-react";
 import { format } from "date-fns";
 import { de } from "date-fns/locale";
 
 export default function KampagnenPage() {
-  const active = campaigns.filter((c) => c.status === "aktiv").length;
-  const sent = campaigns.filter((c) => c.status === "gesendet").length;
-  const totalRecipients = campaigns.reduce((s, c) => s + c.recipients, 0);
+  const active = mockKampagnen.filter((c) => c.status === "aktiv").length;
+  const sent = mockKampagnen.filter((c) => c.status === "gesendet").length;
+  const totalRecipients = mockKampagnen.reduce((s, c) => s + c.recipients, 0);
 
   return (
     <div className="space-y-8">
-      <PageHeader title="Kampagnen" subtitle="E-Mail- und SMS-Marketingkampagnen" />
+      <SectionHeader title="Kampagnen" subtitle="E-Mail- und SMS-Marketingkampagnen" />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Gesamt" value={campaigns.length} icon={<Megaphone size={20} />} />
+        <StatCard label="Gesamt" value={mockKampagnen.length} icon={<Megaphone size={20} />} />
         <StatCard label="Aktiv" value={active} icon={<Clock size={20} />} color="text-blue-400" />
         <StatCard label="Gesendet" value={sent} icon={<CheckCircle size={20} />} color="text-green-400" />
         <StatCard label="Empfanger" value={totalRecipients} icon={<Users size={20} />} />
@@ -35,7 +35,7 @@ export default function KampagnenPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
-            {campaigns.map((c) => (
+            {mockKampagnen.map((c) => (
               <tr key={c.id} className="hover:bg-white/[0.02] transition-colors">
                 <td className="px-5 py-4 font-medium text-white">{c.name}</td>
                 <td className="px-5 py-4 text-white/50">{c.type}</td>
