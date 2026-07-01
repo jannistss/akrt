@@ -26,6 +26,18 @@ interface ApiResponse {
 ───────────────────────────────────────────────────────────── */
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
+/** Strip legacy UI artifact strings that can leak through from the data source. */
+const ARTIFACT_STRINGS = ["Bearbeiten", "Löschen", "Antworten", "", "", ""];
+
+function cleanText(raw: string | null | undefined): string {
+  if (!raw) return "";
+  let text = raw;
+  for (const artifact of ARTIFACT_STRINGS) {
+    text = text.split(artifact).join("");
+  }
+  return text.trim();
+}
+
 function relativeDate(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
   const mins = Math.floor(diff / 60000);
@@ -88,13 +100,16 @@ function SkeletonCard() {
   );
 }
 
-function ReviewCard({ review }: { review: Review }) {
+function ReviewCard({ review, showReplies }: { review: Review; showReplies: boolean }) {
   const initials = review.reviewer_name
     .split(" ")
     .map((n) => n[0])
     .join("")
     .slice(0, 2)
     .toUpperCase();
+
+  const comment = cleanText(review.comment);
+  const replyComment = cleanText(review.reply_comment);
 
   return (
     <article className="rounded-2xl border border-white/10 bg-white/5 p-5 flex flex-col gap-4 hover:bg-white/[0.07] transition-colors duration-200">
@@ -129,13 +144,15 @@ function ReviewCard({ review }: { review: Review }) {
       {/* Stars */}
       <StarRow rating={review.star_rating} />
 
-      {/* Comment */}
-      <p className="text-sm text-white/75 leading-relaxed flex-1">
-        {review.comment}
-      </p>
+      {/* Comment — only rendered when non-empty after cleaning */}
+      {comment && (
+        <p className="text-sm text-white/75 leading-relaxed flex-1">
+          {comment}
+        </p>
+      )}
 
-      {/* Owner reply */}
-      {review.reply_comment && (
+      {/* Owner reply — only shown when showReplies is enabled and reply is non-empty */}
+      {showReplies && replyComment && (
         <div className="rounded-xl border border-[#1a6fcf]/25 bg-[#0d1b2a]/60 p-4 flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <div className="w-5 h-5 rounded-full bg-[#1a6fcf]/30 flex items-center justify-center shrink-0">
@@ -148,7 +165,7 @@ function ReviewCard({ review }: { review: Review }) {
             </p>
           </div>
           <p className="text-xs text-white/55 leading-relaxed">
-            {review.reply_comment}
+            {replyComment}
           </p>
         </div>
       )}
@@ -159,14 +176,26 @@ function ReviewCard({ review }: { review: Review }) {
 /* ─────────────────────────────────────────────────────────────
    Main widget
 ───────────────────────────────────────────────────────────── */
-export default function GoogleReviews() {
+interface GoogleReviewsProps {
+  /**
+   * When true, owner replies are fetched from the API (show_replies=true)
+   * and rendered beneath each review card. Default: false.
+   */
+  showReplies?: boolean;
+}
+
+export default function GoogleReviews({ showReplies = false }: GoogleReviewsProps) {
+  const fetchUrl = `/api/reviews?limit=12&min_stars=5${showReplies ? "&show_replies=true" : ""}`;
+
   const { data, error, isLoading } = useSWR<ApiResponse>(
-    "/api/reviews?limit=12&min_stars=5",
+    fetchUrl,
     fetcher,
     { revalidateOnFocus: false }
   );
 
-  const reviews = data?.reviews ?? [];
+  // Treat API-level errors (e.g. unknown slug) the same as network errors
+  const hasApiError = !isLoading && (!data || "error" in (data as object));
+  const reviews = (!hasApiError && data?.reviews) ? data.reviews : [];
   const count = data?.count ?? 0;
   const hasReviews = reviews.length > 0;
 
@@ -206,7 +235,7 @@ export default function GoogleReviews() {
                 <span className="text-2xl font-bold text-white">5.0</span>
                 <StarRow rating={5} size={14} />
               </div>
-              {!isLoading && hasReviews && (
+        {!isLoading && !hasApiError && hasReviews && (
                 <p className="text-xs text-white/50">{count} Bewertungen</p>
               )}
             </div>
@@ -235,13 +264,13 @@ export default function GoogleReviews() {
           </div>
         )}
 
-        {error && !isLoading && (
+        {(error || hasApiError) && !isLoading && (
           <div className="text-center py-16 text-white/40 text-sm">
             Bewertungen konnten nicht geladen werden.
           </div>
         )}
 
-        {!isLoading && !error && !hasReviews && (
+        {!isLoading && !error && !hasApiError && !hasReviews && (
           <div className="text-center py-16 text-white/40 text-sm">
             Noch keine Bewertungen vorhanden.
           </div>
@@ -250,7 +279,7 @@ export default function GoogleReviews() {
         {!isLoading && hasReviews && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {reviews.map((review) => (
-              <ReviewCard key={review.id} review={review} />
+              <ReviewCard key={review.id} review={review} showReplies={showReplies} />
             ))}
           </div>
         )}
