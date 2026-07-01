@@ -2,72 +2,60 @@ import Image from "next/image";
 import Link from "next/link";
 
 const CheckIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    className="h-4 w-4 shrink-0"
-    aria-hidden="true"
-  >
-    <polyline
-      points="21 5 12 14 8 10"
-      style={{ stroke: "#0074a2", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, fill: "none" }}
-    />
-    <path
-      d="M21,11v9a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V4A1,1,0,0,1,4,3H16"
-      style={{ stroke: "#002e40", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, fill: "none" }}
-    />
+  <svg viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5 shrink-0 mt-0.5" aria-hidden="true">
+    <path d="M3 8l3.5 3.5L13 4" stroke="#0074a2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 const categories = [
   {
     icon: "/assets/images/6937e715063be152c1cb3309_icon-reperatur.png",
-    iconAlt: "Blauer Schraubenschlüssel gekreuzt mit schwarzem Schraubendreher.",
+    iconAlt: "Schraubenschlüssel und Schraubendreher.",
     title: "Reparatur & Instandsetzung",
     items: [
       "Motordiagnose & Reparatur",
       "Getriebeinstandsetzung",
-      "Bremsenservice (Scheiben, Beläge, Flüssigkeit)",
+      "Bremsenservice",
       "Stoßdämpfer & Fahrwerk",
       "Auspuff & Abgasanlage",
       "Kupplungsservice",
       "Ölwechsel & Filterwechsel",
       "Unfallinstandsetzung",
       "Lackierarbeiten",
-      "Dellendoktor",
       "Smart Repair",
     ],
   },
   {
     icon: "/assets/images/6937e715ad67a7e8c6f8f320_icon-hebebuehne.png",
-    iconAlt: "Blaues Auto auf einer Scherenbühne für Wartung oder Reparatur.",
+    iconAlt: "Auto auf Hebebühne.",
     title: "Wartung & Inspektion",
     items: [
-      "Jahresinspektion / HU-Vorbereitung",
-      "TÜV / AU (inkl. Durchführung im Haus)",
-      "Fahrzeug-Check (Urlaubs-, Winter-, Frühjahrs-Check)",
+      "Jahresinspektion",
+      "HU-Vorbereitung",
+      "TÜV & AU (im Haus)",
+      "Fahrzeug-Check",
       "Batterieprüfung & Austausch",
-      "Klimaanlagenservice (Reinigung, Nachfüllung)",
-      "Getriebespülung (nach der Tim-Eckart-Methode)",
+      "Klimaanlagenservice",
+      "Getriebespülung",
     ],
   },
   {
     icon: "/assets/images/6937e7168920287b24bafc7c_icon-reifen.png",
-    iconAlt: "Blauer Reifen mit Schraubenschlüssel, der Reifenreparatur symbolisiert.",
+    iconAlt: "Reifen mit Schraubenschlüssel.",
     title: "Reifen & Räder",
     items: [
       "Reifenwechsel & Einlagerung",
       "Reifenmontage & Wuchten",
-      "Felgenservice & -aufbereitung",
+      "Felgenservice",
       "Achsvermessung",
     ],
   },
   {
     icon: "/assets/images/698dccd20f3ec8ce449ef838_Icon-Glas.png",
-    iconAlt: "Symbol einer schwarzen Limousine mit blauen Scheiben.",
+    iconAlt: "Auto mit Scheiben.",
     title: "Glas & Steinschlag",
     items: [
-      "Schneller Austausch",
+      "Schneller Scheibenaustausch",
       "Steinschlagreparatur",
     ],
   },
@@ -75,47 +63,45 @@ const categories = [
 
 export function ServicesList() {
   return (
-    <section className="font-sans" style={{ backgroundColor: "#e5f1f5" }}>
-      <div className="max-w-7xl mx-auto px-6 py-20">
-        <div className="mb-10">
-          <span
-            className="text-xs font-semibold uppercase tracking-widest"
-            style={{ color: "#0074a2" }}
-          >
-            Service
-          </span>
+    <section style={{ backgroundColor: "#001824" }}>
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-28">
+        {/* Header */}
+        <div className="mb-16">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-5" style={{ color: "#0074a2" }}>
+            Unser Leistungsspektrum
+          </p>
           <h2
-            className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-balance"
-            style={{ color: "#000608" }}
+            className="font-bold tracking-tight text-balance"
+            style={{ color: "#ffffff", fontSize: "clamp(1.9rem, 3vw, 2.8rem)" }}
           >
-            Umfassende Lösungen für Ihr Fahrzeug
+            Alles, was dein Auto braucht.
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ backgroundColor: "rgba(255,255,255,0.07)" }}>
           {categories.map((cat) => (
             <div
               key={cat.title}
-              className="rounded-2xl p-6 flex flex-col gap-5"
-              style={{ backgroundColor: "#ffffff", border: "1.5px solid rgba(0,116,162,0.10)" }}
+              className="flex flex-col gap-6 p-8"
+              style={{ backgroundColor: "#001824" }}
             >
               <Image
                 src={cat.icon}
                 alt={cat.iconAlt}
-                width={56}
-                height={56}
-                className="h-14 w-14 object-contain"
+                width={44}
+                height={44}
+                className="h-11 w-11 object-contain"
+                style={{ filter: "brightness(0) saturate(100%) invert(55%) sepia(60%) saturate(500%) hue-rotate(170deg)" }}
               />
-              <h3
-                className="text-sm font-bold leading-snug"
-                style={{ color: "#000608" }}
-                dangerouslySetInnerHTML={{ __html: cat.title.replace(" &", " &amp;").replace("&", "<br/>& ") }}
-              />
-              <ul className="flex flex-col gap-2">
+              <h3 className="text-sm font-bold leading-snug" style={{ color: "#ffffff" }}>
+                {cat.title}
+              </h3>
+              <ul className="flex flex-col gap-2.5">
                 {cat.items.map((item) => (
-                  <li key={item} className="flex items-start gap-2">
+                  <li key={item} className="flex items-start gap-2.5">
                     <CheckIcon />
-                    <span className="text-sm leading-snug" style={{ color: "#4c5052" }}>
+                    <span className="text-sm leading-snug" style={{ color: "rgba(255,255,255,0.45)" }}>
                       {item}
                     </span>
                   </li>
@@ -125,18 +111,22 @@ export function ServicesList() {
           ))}
         </div>
 
-        <div className="mt-10 flex flex-wrap gap-3">
+        {/* CTA */}
+        <div className="mt-12 flex flex-wrap gap-3">
           <Link
             href="/terminbuchung"
-            className="rounded-xl px-6 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110"
             style={{ backgroundColor: "#0074a2" }}
           >
             Termin online buchen
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </Link>
           <Link
             href="#kontakt"
-            className="rounded-xl border px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-[#cce3ec]"
-            style={{ borderColor: "#0074a2", color: "#0074a2" }}
+            className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/5"
+            style={{ borderColor: "rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.7)" }}
           >
             Termin anfragen
           </Link>
