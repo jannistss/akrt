@@ -1,10 +1,13 @@
 "use client";
 
+import React from "react";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 
 interface WebflowPageProps {
   /** The patched Webflow HTML string (navbar already stripped) */
   html: string;
+  /** Optional React content injected after the Webflow HTML (e.g. reviews widget) */
+  children?: React.ReactNode;
 }
 
 /**
@@ -12,7 +15,7 @@ interface WebflowPageProps {
  * Webflow-generated page HTML. The HTML is rendered via dangerouslySetInnerHTML
  * inside a wrapper that acts as the document body.
  */
-export function WebflowPage({ html }: WebflowPageProps) {
+export function WebflowPage({ html, children }: WebflowPageProps) {
   return (
     <>
       <AutoklinikNavbar />
@@ -20,6 +23,7 @@ export function WebflowPage({ html }: WebflowPageProps) {
           (adds w-mod-js classes, inline styles) causing unavoidable SSR/client
           mismatches. The content is functionally correct on both sides. */}
       <div dangerouslySetInnerHTML={{ __html: html }} suppressHydrationWarning />
+      {children}
     </>
   );
 }

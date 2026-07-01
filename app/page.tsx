@@ -1,6 +1,7 @@
 import { getBodyContent, getExtraHeadContent } from "./lib/patchHtml";
 import { HeadInjector } from "@/components/head-injector";
 import { WebflowPage } from "@/components/webflow-page";
+import GoogleReviews from "@/components/google-reviews";
 
 export default function HomePage() {
   const bodyContent = getBodyContent("index.html");
@@ -9,7 +10,9 @@ export default function HomePage() {
   return (
     <>
       <HeadInjector headHtml={headContent} />
-      <WebflowPage html={bodyContent} />
+      <WebflowPage html={bodyContent}>
+        <GoogleReviews />
+      </WebflowPage>
     </>
   );
 }
