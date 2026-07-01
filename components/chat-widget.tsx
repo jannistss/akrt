@@ -49,28 +49,28 @@ const FLOWS: Record<
       { label: "Preise & Kosten", flow: "preise" },
       { label: "Unfall / Unfallschaden", flow: "unfall" },
       { label: "Reifen", flow: "reifen" },
-      { label: "Offnungszeiten", flow: "oeffnungszeiten" },
+      { label: "Öffnungszeiten", flow: "oeffnungszeiten" },
       { label: "Mehr Optionen...", flow: "flotte" },
     ],
   },
   termin: {
     message:
-      "Super! Ruf uns einfach an oder schreib uns auf WhatsApp - wir finden schnell einen passenden Termin fur dich.",
+      "Super! Ruf uns einfach an oder schreib uns auf WhatsApp - wir finden schnell einen passenden Termin für dich.",
     options: [
       { label: "Anrufen", action: "call" },
       { label: "WhatsApp", action: "whatsapp" },
-      { label: "Ruckruf anfordern", action: "rueckruf" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Rückruf anfordern", action: "rueckruf" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise: {
     message:
-      "Zu welchem Bereich mochtest du Preisinformationen? Alle Preise sind Bruttopreise exkl. MwSt.",
+      "Zu welchem Bereich möchtest du Preisinformationen? Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
-      { label: "Olwechsel", flow: "preise_oelwechsel" },
+      { label: "Ölwechsel", flow: "preise_oelwechsel" },
       { label: "Inspektion", flow: "preise_inspektion" },
-      { label: "Raderwechsel", flow: "preise_reifen" },
-      { label: "TUV / HU", flow: "preise_tuev" },
+      { label: "Räderwechsel", flow: "preise_reifen" },
+      { label: "TÜV / HU", flow: "preise_tuev" },
       { label: "Klimaanlage", flow: "preise_klima" },
       { label: "Weitere", flow: "preise_mehr" },
     ],
@@ -81,69 +81,69 @@ const FLOWS: Record<
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_oelwechsel: {
     message:
-      "Olwechsel nach Herstellervorgaben, Motorol nach freigegebener Spezifikation ab 90,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
+      "Ölwechsel nach Herstellervorgaben, Motoröl nach freigegebener Spezifikation ab 90,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_bremsen: {
     message:
-      "Fur Bremsarbeiten bitte direkt anfragen - wir kalkulieren je nach Fahrzeug und Umfang. Ruf uns kurz an! Alle Preise sind Bruttopreise exkl. MwSt.",
+      "Für Bremsarbeiten bitte direkt anfragen - wir kalkulieren je nach Fahrzeug und Umfang. Ruf uns kurz an! Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Anrufen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_tuev: {
     message:
-      "HU/TUV Durchsicht (Vorcheck) ab 30,00 €. Haupt-/Abgasuntersuchung inkl. Abgasuntersuchung ab 165,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
+      "HU/TÜV Durchsicht (Vorcheck) ab 30,00 €. Haupt-/Abgasuntersuchung inkl. Abgasuntersuchung ab 165,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_reifen: {
     message:
-      "Raderwechsel / Umstecken pro Satz ohne Wuchten ab 20,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
+      "Räderwechsel / Umstecken pro Satz ohne Wuchten ab 20,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_klima: {
     message:
-      "Klima-Service (Sicherheitsprufung & Befüllen) ab 115,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
+      "Klima-Service (Sicherheitsprüfung & Befüllen) ab 115,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_mehr: {
     message:
-      "Weitere Preise im Uberblick (alle Bruttopreise exkl. MwSt.):\n- Getriebespulung ab 350,00 €\n- Achsvermessung ab 110,00 €\n- Fehlerdiagnose ab 20,00 €\n- Lichttest ab 20,00 €",
+      "Weitere Preise im Überblick (alle Bruttopreise exkl. MwSt.):\n- Getriebespülung ab 350,00 €\n- Achsvermessung ab 110,00 €\n- Fehlerdiagnose ab 20,00 €\n- Lichttest ab 20,00 €",
     options: [
       { label: "Termin buchen", action: "call" },
-      { label: "Zuruck zu Preisen", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück zu Preisen", flow: "preise" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_unfallschaden: {
     message:
-      "Unfallschaden werden nach Kalkulation abgerechnet - in der Regel ubernimmt das die Versicherung des Unfallverursachers. Wir kummern uns um alles.",
+      "Unfallschäden werden nach Kalkulation abgerechnet - in der Regel übernimmt das die Versicherung des Unfallverursachers. Wir kümmern uns um alles.",
     options: [
       { label: "Mehr zu Unfallservice", flow: "unfall" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_elektrik: {
@@ -152,65 +152,65 @@ const FLOWS: Record<
     options: [
       { label: "Anrufen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_diagnose: {
     message:
-      "Fehlerdiagnose (Auslesen des Fehlercodespeichers) ab 20,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
+      "Fehlerdiagnose (Auslesen des Fehlercodes­speichers) ab 20,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Anrufen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   unfall: {
     message:
-      "Bei einem Unfall kummern wir uns um alles - von der Schadensbegutachtung uber den Kfz-Gutachter bis zur Reparatur. Du zahlst nichts, wenn der andere schuld ist.",
+      "Bei einem Unfall kümmern wir uns um alles - von der Schadensbegutachtung über den Kfz-Gutachter bis zur Reparatur. Du zahlst nichts, wenn der andere schuld ist.",
     options: [
       { label: "Jetzt anrufen", action: "call" },
       { label: "WhatsApp schreiben", action: "whatsapp" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   reifen: {
     message:
-      "Reifenwechsel, Einlagerung, Neue Reifen - alles bei uns. Wechsel ab 39 €, Einlagerung auf Anfrage.",
+      "Räderwechsel / Umstecken pro Satz ohne Wuchten ab 20,00 €. Einlagerung auf Anfrage. Alle Preise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "WhatsApp", action: "whatsapp" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   oel: {
     message:
-      "Olwechsel inkl. Olfilter ab 59 €. Wir verwenden nur herstellerfreigegebene Ole fur dein Fahrzeug.",
+      "Ölwechsel nach Herstellervorgaben, Motoröl nach freigegebener Spezifikation ab 90,00 €. Alle Preise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   klima: {
     message:
-      "Klimaanlage prufen & auffullen ab 79 €. Dichtigkeitstest und Desinfektion auf Wunsch.",
+      "Klima-Service (Sicherheitsprüfung & Befüllen) ab 115,00 €. Alle Preise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   bremsen: {
     message:
-      "Bremsbelage ab 79 € / Achse. Kostenloser Bremscheck jederzeit moglich - einfach vorbeikommen.",
+      "Für Bremsarbeiten bitte direkt anfragen - wir kalkulieren je nach Fahrzeug und Umfang. Kostenloser Bremscheck jederzeit möglich.",
     options: [
       { label: "Termin buchen", action: "call" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   flotte: {
     message:
       "Weitere Themen - womit kann ich dir helfen?",
     options: [
-      { label: "Olwechsel", flow: "oel" },
+      { label: "Ölwechsel", flow: "oel" },
       { label: "Klimaanlage", flow: "klima" },
       { label: "Bremsen", flow: "bremsen" },
       { label: "Flottenbetreuung", flow: "flotte" },
@@ -223,29 +223,29 @@ const FLOWS: Record<
       "Wir suchen aktuell einen Kfz-Mechatroniker (m/w/d). Schau dir unsere Karriere-Seite an!",
     options: [
       { label: "Zur Karriere-Seite", action: "karriere" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   oeffnungszeiten: {
     message:
-      "Unsere Offnungszeiten:\n\nMontag - Freitag: 08:00 - 18:00 Uhr\nSamstag: 09:00 - 14:00 Uhr\nSonntag: Geschlossen\n\nAdresse: Haldenhaustra&szlig;e 3, 72770 Reutlingen",
+      "Unsere Öffnungszeiten:\n\nMontag - Freitag: 08:00 - 18:00 Uhr\nSamstag: 09:00 - 14:00 Uhr\nSonntag: Geschlossen\n\nAdresse: Haldenhausstraße 3, 72770 Reutlingen",
     options: [
       { label: "Anrufen", action: "call" },
       { label: "Route planen", action: "whatsapp" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   notfall: {
     message:
-      "Bei einem Notfall ruf uns sofort an. Wir versuchen dir so schnell wie moglich zu helfen.",
+      "Bei einem Notfall ruf uns sofort an. Wir versuchen dir so schnell wie möglich zu helfen.",
     options: [
       { label: "Jetzt anrufen", action: "call" },
       { label: "WhatsApp", action: "whatsapp" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   rueckruf: {
-    message: "Hinterlasse deinen Namen und deine Telefonnummer - wir rufen dich zuruck.",
+    message: "Hinterlasse deinen Namen und deine Telefonnummer - wir rufen dich zurück.",
     options: [],
   },
 };
