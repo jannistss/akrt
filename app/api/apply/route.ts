@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { put } from "@vercel/blob";
 import { Resend } from "resend";
+import { encodeToken } from "@/app/api/cv-download/route";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -46,7 +47,7 @@ export async function POST(req: NextRequest) {
         : "http://localhost:3000";
 
     const cvDownloadLink = cvUrl
-      ? `${baseUrl}/api/cv-download?url=${encodeURIComponent(cvUrl)}`
+      ? `${baseUrl}/api/cv-download?token=${encodeToken(cvUrl)}`
       : null;
 
     const to = process.env.APPLICATION_EMAIL ?? "info@autoklinik-reutlingen.de";
