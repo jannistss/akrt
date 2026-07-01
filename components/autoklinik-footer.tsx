@@ -2,12 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 const links = [
-  { label: "Leistungen", href: "#leistungen" },
+  { label: "Inspektion & Wartung", href: "/inspektion" },
+  { label: "TÜV & AU", href: "/tuev-au" },
+  { label: "Reifenservice", href: "/reifenservice" },
+  { label: "Glasservice", href: "/glasservice" },
   { label: "Klimaservice", href: "/klimaservice" },
   { label: "Unfallservice", href: "/unfall" },
   { label: "Flottenbetreuung", href: "/flottenbetreuung" },
   { label: "Terminbuchung", href: "/terminbuchung" },
-  { label: "Kontakt", href: "#kontakt" },
 ];
 
 export function AutoklinikFooter() {
@@ -63,8 +65,13 @@ export function AutoklinikFooter() {
             </p>
             <ul className="flex flex-col gap-3 text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>
               <li>
-                <a href="tel:+4971217969500" className="transition-colors hover:text-white">
-                  +49 7121 796 9500
+                <a href="tel:+4907121155261990" className="transition-colors hover:text-white">
+                  07121 15526199
+                </a>
+              </li>
+              <li>
+                <a href="https://wa.me/4917661973298" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">
+                  0176 61973298 (WhatsApp)
                 </a>
               </li>
               <li>
@@ -73,8 +80,8 @@ export function AutoklinikFooter() {
                 </a>
               </li>
               <li style={{ color: "rgba(255,255,255,0.35)" }}>
-                Alteburgstraße 150<br />
-                72762 Reutlingen
+                Haldenhaustraße 3<br />
+                72770 Reutlingen
               </li>
             </ul>
           </div>

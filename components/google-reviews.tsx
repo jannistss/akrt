@@ -24,7 +24,11 @@ interface ApiResponse {
 /* ─────────────────────────────────────────────────────────────
    Helpers
 ───────────────────────────────────────────────────────────── */
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
+const fetcher = (url: string) =>
+  fetch(url, { cache: "no-store" }).then((r) => {
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.json();
+  });
 
 /** Strip legacy UI artifact strings that can leak through from the data source. */
 const ARTIFACT_STRINGS = ["Bearbeiten", "Löschen", "Antworten", "", "", ""];
@@ -185,7 +189,7 @@ interface GoogleReviewsProps {
 }
 
 export default function GoogleReviews({ showReplies = false }: GoogleReviewsProps) {
-  const fetchUrl = `/api/reviews?limit=12&min_stars=5${showReplies ? "&show_replies=true" : ""}`;
+  const fetchUrl = `https://google-business-profile-sync.vercel.app/api/reviews?client=autoklinik-reutlingen&limit=12&min_stars=1&show_replies=${showReplies ? "true" : "false"}`;
 
   const { data, error, isLoading } = useSWR<ApiResponse>(
     fetchUrl,
@@ -193,9 +197,9 @@ export default function GoogleReviews({ showReplies = false }: GoogleReviewsProp
     { revalidateOnFocus: false }
   );
 
-  // Treat API-level errors (e.g. unknown slug) the same as network errors
-  const hasApiError = !isLoading && (!data || "error" in (data as object));
-  const reviews = (!hasApiError && data?.reviews) ? data.reviews : [];
+  // Treat missing/malformed data the same as a network error
+  const hasApiError = !isLoading && !error && (!data || !Array.isArray(data?.reviews));
+  const reviews = (!hasApiError && !error && data?.reviews) ? data.reviews : [];
   const count = data?.count ?? 0;
   const hasReviews = reviews.length > 0;
 

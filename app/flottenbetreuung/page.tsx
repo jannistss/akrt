@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
@@ -5,200 +6,357 @@ import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { ContactSection } from "@/components/contact-section";
 import { WorkshopServices } from "@/components/workshop-services";
 
-export const metadata = {
-  title: "Flottenbetreuung | Autoklinik Reutlingen",
+export const metadata: Metadata = {
+  title: "Flottenbetreuung in Reutlingen | Fuhrparkservice vom Meisterbetrieb | Autoklinik",
   description:
-    "Professionelle Flottenbetreuung für Handwerk, Pflegedienste & Kurierdienste. Meisterbetrieb mit fairen Preisen.",
+    "Professionelle Flottenbetreuung für Unternehmen in Reutlingen. Inspektion, Reifen, TÜV und Reparaturen für Ihren gesamten Fuhrpark — aus einer Hand, mit fairen Preisen.",
+  keywords: [
+    "Flottenbetreuung Reutlingen",
+    "Fuhrparkservice Reutlingen",
+    "Firmenwagen Werkstatt Reutlingen",
+    "Flottenservice Reutlingen",
+    "Fuhrpark Reutlingen",
+    "Autoklinik Reutlingen",
+  ],
+  openGraph: {
+    title: "Flottenbetreuung in Reutlingen | Autoklinik Reutlingen",
+    description: "Flottenbetreuung vom Meisterbetrieb — weniger Ausfälle, mehr Kilometer, faire Preise.",
+    url: "https://autoklinik-reutlingen.de/flottenbetreuung",
+    siteName: "Autoklinik Reutlingen",
+    locale: "de_DE",
+    type: "website",
+  },
+  alternates: { canonical: "https://autoklinik-reutlingen.de/flottenbetreuung" },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AutoRepair",
+  name: "Autoklinik Reutlingen",
+  url: "https://autoklinik-reutlingen.de",
+  telephone: "+4971219880800",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Schillerstraße 22",
+    addressLocality: "Reutlingen",
+    postalCode: "72764",
+    addressRegion: "BW",
+    addressCountry: "DE",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Flottenbetreuung",
+    itemListElement: [
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Inspektion & Wartung für Flotten" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "TÜV & AU Koordination" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Reifenservice für Fuhrparks" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Unfallreparatur & Gutachten" } },
+    ],
+  },
 };
 
 const highlights = [
   "Meisterbetrieb",
-  "Faire Preise",
+  "Alle Marken",
+  "Faire Flottenpreise",
   "Kurze Wartezeiten",
-  "Für alle Marken",
-  "Qualitätsarbeit",
+  "Terminkoordination",
   "TÜV in 48 Stunden",
 ];
 
-const steps = [
+const benefits = [
   {
-    title: "Termin vereinbaren",
-    description:
-      "Schreib uns bei WhatsApp, ruf direkt durch oder nutze das Formular auf der Website. Wir melden uns innerhalb von 24 Stunden zurück.",
+    title: "Minimale Standzeiten",
+    text: "Wir koordinieren Servicetermine gezielt, um Ausfälle Ihrer Fahrzeuge auf ein Minimum zu reduzieren. Keine langen Wartezeiten.",
   },
   {
-    title: "Fahrzeuge bringen",
-    description:
-      "Wir koordinieren Servicetermine so, dass dein Betrieb möglichst wenig Stillstandzeit hat.",
+    title: "Ein Ansprechpartner für alles",
+    text: "Inspektion, Reifen, TÜV, Reparatur — ein Betrieb, eine Rechnung, ein Ansprechpartner. Das spart Zeit und Nerven.",
   },
   {
-    title: "Flotte läuft weiter",
-    description:
-      "Wir erledigen alles transparent und schnell – damit deine Fahrzeuge wieder auf der Straße sind.",
+    title: "Faire Flottenkonditionen",
+    text: "Ab einer gewissen Fahrzeuganzahl profitieren Sie von günstigen Flottenpreisen. Sprechen Sie uns an — wir machen ein individuelles Angebot.",
+  },
+  {
+    title: "Kompetenter Meisterbetrieb",
+    text: "Alle Arbeiten werden von qualifizierten Fachkräften unter Meisteraufsicht durchgeführt — für höchste Qualität und Rechtssicherheit.",
+  },
+  {
+    title: "Intervallüberwachung",
+    text: "Wir behalten die Wartungsintervalle für Ihre gesamte Flotte im Blick und erinnern Sie rechtzeitig — damit kein Fahrzeug überfällig wird.",
+  },
+  {
+    title: "Flexibel & transparent",
+    text: "Klare Kommunikation, verbindliche Festpreise und flexible Termingestaltung — auch für kurzfristige Reparaturen.",
   },
 ];
 
-export default function FottenbetreuungPage() {
+const faqs = [
+  {
+    q: "Ab wie vielen Fahrzeugen lohnt sich Flottenbetreuung?",
+    a: "Schon ab 2–3 Fahrzeugen lohnt es sich, einen verlässlichen Partnerbetrieb zu haben. Ab ca. 5 Fahrzeugen sind spezielle Flottenkonditionen möglich. Sprechen Sie uns einfach an.",
+  },
+  {
+    q: "Können Sie Fahrzeuge unterschiedlicher Marken betreuen?",
+    a: "Ja — wir betreuen alle gängigen Marken und Modelle. Als freie Fachwerkstatt sind wir nicht auf einen Hersteller beschränkt.",
+  },
+  {
+    q: "Bieten Sie Abhol- und Bringservice an?",
+    a: "Je nach Umfang und Vereinbarung — sprechen Sie uns darauf an. Für Flottenpartner finden wir individuelle Lösungen.",
+  },
+  {
+    q: "Wie werden Kosten abgerechnet?",
+    a: "Auf Wunsch monatlich gesammelt oder nach jedem Auftrag einzeln. Wir passen die Abrechnung an Ihre Buchhaltung an.",
+  },
+  {
+    q: "Was passiert, wenn ein Fahrzeug kurzfristig ausfällt?",
+    a: "Wir versuchen stets, Flottenpartner bevorzugt zu terminieren. Rufen Sie an — wir finden auch für dringende Fälle eine Lösung.",
+  },
+];
+
+export default function FlottenbetreuungPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <AutoklinikNavbar />
-      <main className="font-sans">
-
-        {/* Hero */}
-        <header className="relative overflow-hidden" style={{ backgroundColor: "#0d1b2a", minHeight: 480 }}>
-          <div className="max-w-7xl mx-auto px-6 py-24 flex flex-col lg:flex-row items-center gap-12">
-            <div className="flex-1 max-w-2xl">
-              <span className="inline-block text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#4aadce" }}>
-                Flottenbetreuung
-              </span>
-              <h1 className="text-4xl sm:text-5xl font-bold leading-tight tracking-tight text-balance mb-5" style={{ color: "#fff" }}>
-                Weniger Ausfälle, mehr Kilometer. Flottenbetreuung vom Meisterbetrieb.
-              </h1>
-              <p className="text-base sm:text-lg leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.76)" }}>
-                Ob 5 oder 50 Fahrzeuge – wir halten Ihre Flotte zuverlässig auf der Straße. Schnell, fair und persönlich. Direkt aus Reutlingen.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link href="/terminbuchung" className="rounded-xl px-6 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90" style={{ backgroundColor: "#0074a2" }}>
-                  Termin online buchen
+      <main>
+        {/* ── Hero ── */}
+        <section style={{ backgroundColor: "#002e40" }} className="pt-32 pb-20">
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
+              <div className="flex-1">
+                <Link
+                  href="/#leistungen"
+                  className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest mb-8 hover:opacity-80 transition-opacity"
+                  style={{ color: "#4db8d8" }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M10 4L6 8l4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  Alle Leistungen
                 </Link>
-                <a href="tel:+4971211452619" className="rounded-xl border px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.35)", color: "#fff" }}>
-                  Flottenbetreuung anfragen
-                </a>
+                <h1
+                  className="font-bold tracking-tight leading-[1.08] text-balance mb-6"
+                  style={{ color: "#ffffff", fontSize: "clamp(2.4rem, 5vw, 3.8rem)" }}
+                >
+                  Weniger Ausfälle,<br />
+                  mehr Kilometer.<br />
+                  <span style={{ color: "#4db8d8" }}>Flottenbetreuung</span><br />
+                  vom Meisterbetrieb.
+                </h1>
+                <p className="text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "rgba(255,255,255,0.65)" }}>
+                  Ob 3 oder 30 Fahrzeuge — wir halten Ihren Fuhrpark zuverlässig auf der Straße. Inspektion, TÜV, Reifen und Reparaturen aus einer Hand, mit fairen Preisen und kurzen Wartezeiten.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    href="/terminbuchung"
+                    className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110"
+                    style={{ backgroundColor: "#0074a2" }}
+                  >
+                    Flotte anfragen
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+                  <a
+                    href="tel:+4971219880800"
+                    className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/10"
+                    style={{ borderColor: "rgba(255,255,255,0.25)", color: "rgba(255,255,255,0.85)" }}
+                  >
+                    07121 9880800
+                  </a>
+                </div>
+                <div className="flex flex-wrap gap-3 mt-8">
+                  {highlights.map((t) => (
+                    <span key={t} className="rounded-full px-4 py-1.5 text-xs font-medium" style={{ backgroundColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.7)" }}>
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="hidden lg:block flex-none" style={{ maxWidth: 360 }}>
-              <Image
-                src="/assets/images/6937e7167a27ffa77e40aa08_Hero-Image.png"
-                alt="Mechaniker in blauer Arbeitskleidung"
-                width={360}
-                height={420}
-                className="object-contain"
-                priority
-              />
+              <div className="relative w-full lg:w-[440px] rounded-2xl overflow-hidden shrink-0" style={{ height: 460 }}>
+                <Image
+                  src="/assets/images/6937e7167a27ffa77e40aa08_Hero-Image.png"
+                  alt="Flottenbetreuung Werkstatt Autoklinik Reutlingen"
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 440px"
+                />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, rgba(0,20,32,0.6) 100%)" }} />
+                {/* Stats badges */}
+                <div className="absolute bottom-6 left-6 flex gap-3">
+                  <div className="rounded-xl px-4 py-3 text-center" style={{ backgroundColor: "rgba(0,46,64,0.88)", backdropFilter: "blur(10px)", border: "1px solid rgba(77,184,216,0.2)" }}>
+                    <p className="text-xl font-bold text-white">48h</p>
+                    <p className="text-[10px]" style={{ color: "rgba(255,255,255,0.6)" }}>TÜV-Termin</p>
+                  </div>
+                  <div className="rounded-xl px-4 py-3 text-center" style={{ backgroundColor: "rgba(0,46,64,0.88)", backdropFilter: "blur(10px)", border: "1px solid rgba(77,184,216,0.2)" }}>
+                    <p className="text-xl font-bold text-white">1</p>
+                    <p className="text-[10px]" style={{ color: "rgba(255,255,255,0.6)" }}>Ansprechpartner</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </header>
+        </section>
 
-        {/* Info card */}
-        <section className="py-12" style={{ backgroundColor: "#f4f8fb" }}>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="rounded-2xl overflow-hidden flex flex-col md:flex-row" style={{ backgroundColor: "#fff", border: "1px solid #e4edf3" }}>
-              <div className="flex-1 p-8 border-b md:border-b-0 md:border-r" style={{ borderColor: "#e4edf3" }}>
-                <h2 className="text-sm font-bold uppercase tracking-wider mb-5" style={{ color: "#0074a2" }}>
-                  Öffnungszeiten
+        {/* ── For whom ── */}
+        <section style={{ backgroundColor: "#f5f9fc" }}>
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }}>Für Unternehmen</p>
+                <h2 className="font-bold tracking-tight leading-[1.1] text-balance mb-6" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }}>
+                  Wer einen Fuhrpark betreibt, kennt das Problem.
                 </h2>
-                <ul className="flex flex-col gap-2 text-sm" style={{ color: "#0d1b2a" }}>
-                  {["Mo.", "Di.", "Mi.", "Do.", "Fr."].map((d) => (
-                    <li key={d} className="flex justify-between gap-4">
-                      <span className="font-medium">{d}</span>
-                      <span style={{ color: "#4a6070" }}>8 Uhr bis 18 Uhr</span>
-                    </li>
+                <p className="text-sm leading-relaxed mb-4" style={{ color: "#4a6272" }}>
+                  Ein Fahrzeug fällt aus, der Zeitplan gerät ins Wanken, Kunden warten. Wartungsintervalle werden vergessen, Rechnungen kommen aus allen Richtungen — und den Überblick behält niemand mehr.
+                </p>
+                <p className="text-sm leading-relaxed mb-8" style={{ color: "#4a6272" }}>
+                  Die Autoklinik Reutlingen übernimmt die Verantwortung für Ihren gesamten Fuhrpark: Wartungsintervalle, TÜV-Koordination, Reparaturen, alles aus einer Hand.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {["Handwerksbetriebe", "Pflegedienste", "Kurierdienste", "Einzelhändler", "Bauunternehmen", "Soziale Träger"].map((t) => (
+                    <span key={t} className="rounded-full px-4 py-2 text-xs font-semibold" style={{ backgroundColor: "#e8f4fa", color: "#0074a2" }}>
+                      {t}
+                    </span>
                   ))}
-                  <li className="flex justify-between gap-4">
-                    <span className="font-medium">Sa.</span>
-                    <span style={{ color: "#4a6070" }}>nach Terminvereinbarung</span>
-                  </li>
-                </ul>
+                </div>
               </div>
-              <div className="flex-1 p-8 border-b md:border-b-0 md:border-r" style={{ borderColor: "#e4edf3" }}>
-                <h2 className="text-sm font-bold uppercase tracking-wider mb-5" style={{ color: "#0074a2" }}>
-                  Kontakt
-                </h2>
-                <ul className="flex flex-col gap-2 text-sm" style={{ color: "#0d1b2a" }}>
-                  <li><a href="mailto:info@autoklinik-reutlingen.de" className="hover:underline" style={{ color: "#0074a2" }}>info@autoklinik-reutlingen.de</a></li>
-                  <li><a href="tel:+4971211452619" className="hover:underline" style={{ color: "#0074a2" }}>07121 14526199</a></li>
-                  <li className="pt-1" style={{ color: "#4a6070" }}>Haldenhaustraße 3<br />72770 Reutlingen</li>
-                </ul>
-              </div>
-              <div className="flex-1 p-8 flex flex-col justify-center gap-3">
-                <h2 className="text-base font-bold" style={{ color: "#0d1b2a" }}>Jetzt Termin vereinbaren</h2>
-                <Link href="/terminbuchung" className="rounded-xl px-5 py-3 text-sm font-semibold text-white text-center transition-opacity hover:opacity-90" style={{ backgroundColor: "#0074a2" }}>
-                  Termin online buchen
-                </Link>
-                <a href="tel:+4971211452619" className="rounded-xl border px-5 py-3 text-sm font-semibold text-center transition-colors hover:bg-[#f4f8fb]" style={{ borderColor: "#b8d0dc", color: "#0d1b2a" }}>
-                  Termin anfragen
-                </a>
+              <div className="flex flex-col gap-0" style={{ borderTop: "1px solid #d5e8f0" }}>
+                {benefits.slice(0, 4).map((b) => (
+                  <div key={b.title} className="flex gap-5 py-5" style={{ borderBottom: "1px solid #d5e8f0" }}>
+                    <div className="h-5 w-5 rounded-full shrink-0 mt-0.5 flex items-center justify-center" style={{ backgroundColor: "#0074a2" }}>
+                      <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                        <path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold mb-1" style={{ color: "#002e40" }}>{b.title}</p>
+                      <p className="text-sm leading-relaxed" style={{ color: "#4a6272" }}>{b.text}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
+          </div>
+        </section>
 
-            <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-              {highlights.map((h) => (
-                <div key={h} className="rounded-xl flex items-center gap-2 px-4 py-3 text-xs font-medium" style={{ backgroundColor: "#fff", border: "1px solid #e4edf3", color: "#0d1b2a" }}>
-                  <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: "#e5f1f5" }}>
-                    <svg width="8" height="8" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                      <path d="M2 5l2 2 4-4" stroke="#0074a2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        {/* ── Full benefits grid ── */}
+        <section style={{ backgroundColor: "#ffffff" }}>
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }}>Was Sie bekommen</p>
+            <h2 className="font-bold tracking-tight mb-14 text-balance" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }}>
+              Unser Flottenservice-Versprechen
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ backgroundColor: "#d5e8f0" }}>
+              {benefits.map((b) => (
+                <div key={b.title} className="p-8" style={{ backgroundColor: "#ffffff" }}>
+                  <div className="h-5 w-5 rounded-full mb-5 flex items-center justify-center" style={{ backgroundColor: "#0074a2" }}>
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                      <path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                  </span>
-                  {h}
+                  </div>
+                  <h3 className="text-base font-bold mb-2" style={{ color: "#002e40" }}>{b.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "#4a6272" }}>{b.text}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Why us */}
-        <section className="py-20" style={{ backgroundColor: "#fff" }}>
-          <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-16 items-start">
-            <div className="flex-1">
-              <h2 className="text-3xl font-bold tracking-tight mb-4" style={{ color: "#0d1b2a" }}>
-                Wer eine Flotte betreibt, kennt das:
-              </h2>
-              <p className="text-sm leading-relaxed mb-4" style={{ color: "#4a6070" }}>
-                Ein Fahrzeug fällt aus, der Zeitplan gerät ins Wanken, Kunden warten. Werkstatttermine sind schwer zu koordinieren, Rechnungen kommen aus allen Richtungen – und den Überblick über Wartungsintervalle behält auch niemand so richtig.
-              </p>
-              <p className="text-sm leading-relaxed" style={{ color: "#4a6070" }}>
-                Genau hier kommen wir ins Spiel. Die Autoklinik Reutlingen ist nicht nur Ihre Werkstatt um die Ecke – wir sind Ihr Partner für alles, was Ihre Fahrzeugflotte am Laufen hält. Als Meisterbetrieb mit fairen Preisen und kurzen Wartezeiten betreuen wir Fuhrparks jeder Größe – schnell, transparent und zuverlässig.
-              </p>
-            </div>
-            <div className="flex-1 rounded-2xl p-8" style={{ backgroundColor: "#f4f8fb", border: "1px solid #e4edf3" }}>
-              <h3 className="text-base font-bold mb-3" style={{ color: "#0d1b2a" }}>Für wen unsere Flottenbetreuung ideal ist</h3>
-              <p className="text-sm leading-relaxed" style={{ color: "#4a6070" }}>
-                Sie haben ein Unternehmen mit einem Fuhrpark? Dann melden Sie sich bei uns. Ob Handwerk, Pflegedienste, Kurierdienste oder andere Betriebe – wir passen unsere Leistungen an Ihre Anforderungen an.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Workshop services */}
+        {/* ── Workshop services ── */}
         <WorkshopServices />
 
-        {/* How it works */}
-        <section className="py-20" style={{ backgroundColor: "#fff" }}>
-          <div className="max-w-7xl mx-auto px-6">
-            <h2 className="text-3xl font-bold tracking-tight mb-4 text-center" style={{ color: "#0d1b2a" }}>
-              So einfach geht&apos;s
+        {/* ── CTA ── */}
+        <section style={{ backgroundColor: "#002e40" }}>
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-16">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-3" style={{ color: "#4db8d8" }}>Angebot einholen</p>
+                <h2 className="font-bold tracking-tight text-balance" style={{ color: "#ffffff", fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}>
+                  Erzählen Sie uns von Ihrer Flotte.
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed max-w-xl" style={{ color: "rgba(255,255,255,0.6)" }}>
+                  Wir erstellen Ihnen ein unverbindliches Angebot — zugeschnitten auf die Größe und Anforderungen Ihres Fuhrparks.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3 shrink-0">
+                <Link
+                  href="/terminbuchung"
+                  className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110"
+                  style={{ backgroundColor: "#0074a2" }}
+                >
+                  Angebot anfragen
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
+                <a
+                  href="tel:+4971219880800"
+                  className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/10"
+                  style={{ borderColor: "rgba(255,255,255,0.25)", color: "rgba(255,255,255,0.85)" }}
+                >
+                  07121 9880800
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── FAQ ── */}
+        <section style={{ backgroundColor: "#ffffff" }}>
+          <div className="max-w-3xl mx-auto px-6 sm:px-10 py-24">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }}>FAQ</p>
+            <h2 className="font-bold tracking-tight mb-12" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }}>
+              Häufige Fragen zur Flottenbetreuung
             </h2>
-            <p className="text-sm text-center mb-12" style={{ color: "#4a6070" }}>
-              Wir verbinden handwerkliche Expertise mit modernster Technologie. Unser Ziel ist es, höchste Qualitätsstandards zu garantieren.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
-              {steps.map((step, i) => (
-                <div key={step.title} className="flex flex-col items-center text-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full text-base font-bold text-white" style={{ backgroundColor: "#0074a2" }}>
-                    {i + 1}
-                  </div>
-                  <h3 className="text-base font-bold" style={{ color: "#0d1b2a" }}>{step.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "#4a6070" }}>{step.description}</p>
-                </div>
+            <div className="flex flex-col gap-0" style={{ borderTop: "1px solid #d5e8f0" }}>
+              {faqs.map((faq) => (
+                <details key={faq.q} className="group py-6" style={{ borderBottom: "1px solid #d5e8f0" }}>
+                  <summary className="flex items-center justify-between cursor-pointer list-none gap-4">
+                    <span className="text-base font-semibold" style={{ color: "#002e40" }}>{faq.q}</span>
+                    <span className="shrink-0 text-[#0074a2]">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="transition-transform group-open:rotate-45">
+                        <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                      </svg>
+                    </span>
+                  </summary>
+                  <p className="mt-4 text-sm leading-relaxed" style={{ color: "#4a6272" }}>{faq.a}</p>
+                </details>
               ))}
             </div>
           </div>
         </section>
 
-        {/* CTA Banner */}
-        <section className="py-16" style={{ backgroundColor: "#0d1b2a" }}>
-          <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
-            <h2 className="text-2xl font-bold text-white text-balance">
-              Jetzt Termin vereinbaren
-            </h2>
-            <p className="text-sm hidden sm:block" style={{ color: "rgba(255,255,255,0.6)" }}>Schnell. Einfach. Direkt online oder telefonisch.</p>
-            <div className="flex flex-wrap gap-3 shrink-0">
-              <a href="tel:+4971211452619" className="rounded-xl border px-6 py-3 text-sm font-semibold transition-colors hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.35)", color: "#fff" }}>
-                Termin anfragen
-              </a>
-              <Link href="/terminbuchung" className="rounded-xl px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90" style={{ backgroundColor: "#0074a2" }}>
-                Termin online buchen
-              </Link>
+        {/* ── Other services ── */}
+        <section style={{ backgroundColor: "#f5f9fc" }}>
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-20">
+            <p className="text-sm font-semibold mb-8" style={{ color: "#4a6272" }}>Weitere Leistungen der Autoklinik</p>
+            <div className="flex flex-wrap gap-3">
+              {[
+                { name: "Inspektion & Wartung", href: "/inspektion" },
+                { name: "TÜV & AU", href: "/tuev-au" },
+                { name: "Reifenservice", href: "/reifenservice" },
+                { name: "Glasservice", href: "/glasservice" },
+                { name: "Klimaservice", href: "/klimaservice" },
+                { name: "Unfallservice", href: "/unfall" },
+              ].map((s) => (
+                <Link
+                  key={s.name}
+                  href={s.href}
+                  className="inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-medium transition-all hover:border-[#0074a2] hover:text-[#0074a2]"
+                  style={{ borderColor: "#c5dde8", color: "#002e40" }}
+                >
+                  {s.name}
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
