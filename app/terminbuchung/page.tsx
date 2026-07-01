@@ -34,11 +34,12 @@ export default function TerminbuchungPage() {
           <div className="max-w-4xl mx-auto px-6">
             <div className="rounded-2xl overflow-hidden shadow-sm" style={{ backgroundColor: "#fff", border: "1px solid #e4edf3" }}>
               <iframe
-                src="https://www.seatsplus.de/autoklinik-reutlingen"
+                src="https://booking.wscloud.io/WM1592874/Step1aServiceSelection"
                 title="Online-Terminbuchung Autoklinik Reutlingen"
                 className="w-full"
-                style={{ minHeight: 700, border: "none" }}
+                style={{ minHeight: 800, border: "none" }}
                 loading="lazy"
+                allow="payment"
               />
             </div>
           </div>
