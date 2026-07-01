@@ -33,6 +33,7 @@ const navItems: NavItem[] = [
   },
   { name: "Flotte", link: "/flottenbetreuung" },
   { name: "Kfz-Gutachter", link: "/kfz-gutachter" },
+  { name: "Karriere", link: "/karriere" },
   { name: "Kontakt", link: "#kontakt" },
 ];
 
@@ -144,8 +145,13 @@ export function AutoklinikNavbar() {
             Kfz-Gutachter
           </MobileNavLink>
 
+          {/* Karriere */}
+          <MobileNavLink href="/karriere" onClick={() => setIsMobileMenuOpen(false)} delay={0.16}>
+            Karriere
+          </MobileNavLink>
+
           {/* Kontakt */}
-          <MobileNavLink href="#kontakt" onClick={() => setIsMobileMenuOpen(false)} delay={0.18}>
+          <MobileNavLink href="#kontakt" onClick={() => setIsMobileMenuOpen(false)} delay={0.20}>
             Kontakt
           </MobileNavLink>
 
