@@ -21,10 +21,15 @@ export async function GET(request: Request) {
   // handles its own 60 s cache and purges it instantly after every sync via
   // its own /api/revalidate endpoint. Caching here would only delay updates.
   const upstream = await fetch(url.toString(), { cache: "no-store" });
-
   const data = await upstream.json();
 
-  // Tell the browser not to cache either — always reflect latest backend data.
+  if (!upstream.ok) {
+    return NextResponse.json(
+      { error: data?.error ?? "Upstream error", status: upstream.status },
+      { status: upstream.status, headers: { "Cache-Control": "no-store" } }
+    );
+  }
+
   return NextResponse.json(data, {
     headers: { "Cache-Control": "no-store" },
   });

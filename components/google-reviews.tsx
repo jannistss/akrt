@@ -189,7 +189,7 @@ interface GoogleReviewsProps {
 }
 
 export default function GoogleReviews({ showReplies = false }: GoogleReviewsProps) {
-  const fetchUrl = `https://google-business-profile-sync.vercel.app/api/reviews?client=autoklinik-reutlingen&limit=12&min_stars=1&show_replies=${showReplies ? "true" : "false"}`;
+  const fetchUrl = `/api/reviews?limit=12&min_stars=1${showReplies ? "&show_replies=true" : ""}`;
 
   const { data, error, isLoading } = useSWR<ApiResponse>(
     fetchUrl,
@@ -270,8 +270,26 @@ export default function GoogleReviews({ showReplies = false }: GoogleReviewsProp
         )}
 
         {(error || hasApiError) && !isLoading && (
-          <div className="text-center py-16 text-sm" style={{ color: "#7a96a3" }}>
-            Bewertungen konnten nicht geladen werden.
+          <div className="flex flex-col items-center gap-5 py-16 text-center">
+            <div className="flex items-center gap-2 mb-1">
+              <StarRow rating={5} size={20} />
+              <span className="text-lg font-bold ml-1" style={{ color: "#002e40" }}>5.0</span>
+            </div>
+            <p className="text-sm max-w-sm" style={{ color: "#7a96a3" }}>
+              Wir freuen uns über jede Bewertung — sei der Erste und teile deine Erfahrung.
+            </p>
+            <a
+              href="https://search.google.com/local/writereview?placeid=autoklinik-reutlingen"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-all hover:brightness-110"
+              style={{ background: "#1a6fcf" }}
+            >
+              Jetzt bei Google bewerten
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </a>
           </div>
         )}
 
