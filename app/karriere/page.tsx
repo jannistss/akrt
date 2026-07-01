@@ -47,15 +47,20 @@ export default function KarrierePage() {
         className="relative overflow-hidden"
         style={{ minHeight: "100svh", backgroundColor: "#001826" }}
       >
-        {/* Real workshop image as background */}
+        {/* Hero video background */}
         <div className="absolute inset-0">
-          <img
-            src="/assets/images/6937e7163e052d298653ff55_reperatur-mann-.png"
-            alt=""
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
             aria-hidden="true"
             className="w-full h-full object-cover object-center"
-            style={{ opacity: 0.18 }}
-          />
+            style={{ opacity: 0.28 }}
+          >
+            <source src="/assets/hero.mp4" type="video/mp4" />
+            <source src="/assets/hero.webm" type="video/webm" />
+          </video>
           <div
             className="absolute inset-0"
             style={{
@@ -206,13 +211,13 @@ export default function KarrierePage() {
                 {...fadeUp(0.2)}
               >
                 <p>
-                  Autoklinik Reutlingen gibt es noch nicht lange. Und das ist kein Nachteil — das ist eine Chance. Für dich. Wir bauen gerade etwas auf, und du kannst von Anfang an mitgestalten.
+                  Autoklinik Reutlingen ist jung — und genau das macht uns anders. Kein verstaubter Betrieb mit eingerosteten Abläufen. Wir bauen gerade was auf, und du kannst von Anfang an mitgestalten.
                 </p>
                 <p>
-                  Wir reparieren alles — BMW, Mercedes, VW, Exoten. Ehrlich, fair und direkt. Kein Aufschlag für Unwissenheit, kein Umsatzziel, das auf deinem Rücken ausgetragen wird.
+                  Unser Team ist klein, motiviert und direkt. Hier duzt man sich, hilft sich gegenseitig und lacht auch mal — ohne dass man deswegen schief angeguckt wird. Kein Ellbogenklima, kein Konkurrenzdenken.
                 </p>
                 <p>
-                  Das Arbeitsklima? Respektvoll. Direkt. Mit Humor. Wir sind kein anonymes Team, sondern Kollegen, die sich gegenseitig vertrauen.
+                  Das Arbeitsklima ist entspannt, aber professionell. Wir nehmen unsere Arbeit ernst — nicht uns selbst. Und wenn du eine Idee hast, wird sie gehört. Nicht in drei Monaten nach vier Meetings, sondern direkt.
                 </p>
               </motion.div>
             </div>
