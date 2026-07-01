@@ -119,7 +119,7 @@ export default function KarrierePage() {
             style={{ color: "rgba(255,255,255,0.6)" }}
             {...fadeUp(0.2)}
           >
-            Autoklinik Reutlingen ist kein Konzern. Wir sind eine frische, ehrliche Werkstatt — und wir brauchen eine Person, die das genauso sieht wie wir.
+            Autoklinik Reutlingen ist kein Konzern. Wir sind eine frische, ehrliche Werkstatt - und wir brauchen eine Person, die das genauso sieht wie wir.
           </motion.p>
 
           <motion.div className="flex flex-wrap gap-4 mt-10" {...fadeUp(0.3)}>
