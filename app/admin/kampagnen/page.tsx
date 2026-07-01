@@ -7,9 +7,9 @@ import { format } from "date-fns";
 import { de } from "date-fns/locale";
 
 export default function KampagnenPage() {
-  const active = mockKampagnen.filter((c) => c.status === "aktiv").length;
-  const sent = mockKampagnen.filter((c) => c.status === "gesendet").length;
-  const totalRecipients = mockKampagnen.reduce((s, c) => s + c.recipients, 0);
+  const geplant = mockKampagnen.filter((c) => c.status === "geplant").length;
+  const gesendet = mockKampagnen.filter((c) => c.status === "gesendet").length;
+  const totalEmpfaenger = mockKampagnen.reduce((s, c) => s + (c.empfaenger ?? 0), 0);
 
   return (
     <div className="space-y-8">
@@ -17,9 +17,9 @@ export default function KampagnenPage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard label="Gesamt" value={mockKampagnen.length} icon={<Megaphone size={20} />} />
-        <StatCard label="Aktiv" value={active} icon={<Clock size={20} />} color="text-blue-400" />
-        <StatCard label="Gesendet" value={sent} icon={<CheckCircle size={20} />} color="text-green-400" />
-        <StatCard label="Empfanger" value={totalRecipients} icon={<Users size={20} />} />
+        <StatCard label="Geplant" value={geplant} icon={<Clock size={20} />} color="text-blue-400" />
+        <StatCard label="Gesendet" value={gesendet} icon={<CheckCircle size={20} />} color="text-green-400" />
+        <StatCard label="Empfanger" value={totalEmpfaenger} icon={<Users size={20} />} />
       </div>
 
       <div className="bg-[#0d1117] border border-white/5 rounded-xl overflow-hidden">
@@ -29,7 +29,7 @@ export default function KampagnenPage() {
               <th className="text-left px-5 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">Kampagne</th>
               <th className="text-left px-5 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">Typ</th>
               <th className="text-left px-5 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">Empfanger</th>
-              <th className="text-left px-5 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">Offnungsrate</th>
+              <th className="text-left px-5 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">Geoffnet</th>
               <th className="text-left px-5 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">Datum</th>
               <th className="text-left px-5 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">Status</th>
             </tr>
@@ -38,11 +38,11 @@ export default function KampagnenPage() {
             {mockKampagnen.map((c) => (
               <tr key={c.id} className="hover:bg-white/[0.02] transition-colors">
                 <td className="px-5 py-4 font-medium text-white">{c.name}</td>
-                <td className="px-5 py-4 text-white/50">{c.type}</td>
-                <td className="px-5 py-4 text-white/70">{c.recipients}</td>
-                <td className="px-5 py-4 text-white/70">{c.openRate ?? "-"}</td>
+                <td className="px-5 py-4 text-white/50 capitalize">{c.typ}</td>
+                <td className="px-5 py-4 text-white/70">{c.empfaenger ?? "-"}</td>
+                <td className="px-5 py-4 text-white/70">{c.geoeffnet != null ? `${Math.round((c.geoeffnet / (c.empfaenger ?? 1)) * 100)}%` : "-"}</td>
                 <td className="px-5 py-4 text-white/50">
-                  {format(new Date(c.date), "dd. MMM yyyy", { locale: de })}
+                  {c.geplantFuer ? format(new Date(c.geplantFuer), "dd. MMM yyyy", { locale: de }) : "-"}
                 </td>
                 <td className="px-5 py-4">
                   <StatusBadge status={c.status} />
