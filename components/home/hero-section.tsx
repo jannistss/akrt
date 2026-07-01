@@ -18,20 +18,25 @@ export function HeroSection() {
           <source src="/assets/hero.webm" type="video/webm" />
         </video>
 
-        {/* Light-blue-to-transparent gradient rising from the bottom — exactly like Webflow */}
+        {/* Full-coverage base tint so all text is always readable */}
+        <div
+          className="absolute inset-0 z-10"
+          style={{ background: "rgba(0,10,18,0.42)" }}
+        />
+        {/* Light-blue-to-transparent gradient rising from the bottom — like Webflow */}
         <div
           className="absolute inset-0 z-10"
           style={{
             background:
-              "linear-gradient(to top, rgba(0,116,162,0.78) 0%, rgba(0,100,140,0.35) 30%, transparent 58%)",
+              "linear-gradient(to top, rgba(0,90,130,0.90) 0%, rgba(0,80,115,0.55) 28%, transparent 60%)",
           }}
         />
-        {/* Dark navy tint top → fades out so video shows through mid-section */}
+        {/* Dark navy tint top → keeps eyebrow + headline crisp */}
         <div
           className="absolute inset-0 z-10"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(0,14,22,0.72) 0%, rgba(0,14,22,0.18) 55%, transparent 100%)",
+              "linear-gradient(to bottom, rgba(0,14,22,0.82) 0%, rgba(0,14,22,0.30) 50%, transparent 100%)",
           }}
         />
       </div>
@@ -82,7 +87,7 @@ export function HeroSection() {
             {/* Sub */}
             <p
               className="mt-6 text-base sm:text-lg leading-relaxed"
-              style={{ color: "rgba(255,255,255,0.72)" }}
+              style={{ color: "rgba(255,255,255,0.92)" }}
             >
               Inspektion, Reparatur &amp; TÜV — alles aus einer Hand.
               Faire Preise, kurze Wartezeiten, direkt in Reutlingen.
@@ -101,7 +106,7 @@ export function HeroSection() {
                 </svg>
               </Link>
               <Link
-                href="tel:+4971217969500"
+                href="tel:+4907121155261990"
                 className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/10 active:scale-[0.97]"
                 style={{ borderColor: "rgba(255,255,255,0.32)", color: "#ffffff" }}
               >
@@ -125,7 +130,7 @@ export function HeroSection() {
                       <path d="M2 5l2.2 2.2L8 3" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </span>
-                  <span className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.7)" }}>
+                  <span className="text-xs font-semibold" style={{ color: "#ffffff" }}>
                     {badge}
                   </span>
                 </div>
