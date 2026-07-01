@@ -119,7 +119,7 @@ function ReviewCard({ review, showReplies }: { review: Review; showReplies: bool
   const replyComment = cleanText(review.reply_comment);
 
   return (
-    <article className="rounded-2xl p-5 flex flex-col gap-4 transition-colors duration-200" style={{ backgroundColor: "#ffffff", border: "1px solid #d5e8f0" }}>
+    <article className="rounded-2xl p-5 flex flex-col gap-4 h-full transition-colors duration-200" style={{ backgroundColor: "#ffffff", border: "1px solid #d5e8f0" }}>
       {/* Reviewer header */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
@@ -153,7 +153,7 @@ function ReviewCard({ review, showReplies }: { review: Review; showReplies: bool
 
       {/* Comment — only rendered when non-empty after cleaning */}
       {comment && (
-        <p className="text-sm leading-relaxed flex-1" style={{ color: "#334e5c" }}>
+        <p className="text-sm leading-relaxed flex-grow" style={{ color: "#334e5c" }}>
           {comment}
         </p>
       )}
@@ -323,7 +323,7 @@ export default function GoogleReviews({ showReplies = false }: GoogleReviewsProp
               viewport={{ once: true, margin: "-40px" }}
             >
               {reviews.map((review) => (
-                <motion.div key={review.id} variants={staggerItem}>
+                <motion.div key={review.id} variants={staggerItem} className="flex flex-col">
                   <ReviewCard review={review} showReplies={showReplies} />
                 </motion.div>
               ))}
