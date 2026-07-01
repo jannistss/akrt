@@ -7,7 +7,7 @@ import { motion } from "motion/react";
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay },
+  transition: { duration: 0.7, ease: "cubic-bezier(0.22, 1, 0.36, 1)" as const, delay },
 });
 
 const fadeIn = (delay = 0) => ({
@@ -19,7 +19,7 @@ const fadeIn = (delay = 0) => ({
 const slideRight = (delay = 0) => ({
   initial: { opacity: 0, x: 48 },
   animate: { opacity: 1, x: 0 },
-  transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay },
+  transition: { duration: 0.9, ease: "cubic-bezier(0.22, 1, 0.36, 1)" as const, delay },
 });
 
 export function HeroSection() {
@@ -31,7 +31,7 @@ export function HeroSection() {
         className="absolute inset-0 z-0"
         initial={{ scale: 1.06 }}
         animate={{ scale: 1 }}
-        transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.8, ease: "cubic-bezier(0.22, 1, 0.36, 1)" as const }}
       >
         <video
           autoPlay
@@ -100,7 +100,7 @@ export function HeroSection() {
                     style={{ color: "#ffffff", fontSize: "clamp(2.6rem, 5.2vw, 4.8rem)" }}
                     initial={{ y: "110%" }}
                     animate={{ y: "0%" }}
-                    transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.25 + i * 0.1 }}
+                    transition={{ duration: 0.75, ease: "cubic-bezier(0.22, 1, 0.36, 1)" as const, delay: 0.25 + i * 0.1 }}
                   >
                     {line}
                   </motion.span>
