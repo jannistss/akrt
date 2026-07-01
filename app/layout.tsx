@@ -1,5 +1,6 @@
 import "./globals.css";
 import { DM_Sans } from "next/font/google";
+import { ChatWidget } from "@/components/chat-widget";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -21,7 +22,10 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de" className={`${dmSans.variable} bg-background`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <ChatWidget />
+      </body>
     </html>
   );
 }
