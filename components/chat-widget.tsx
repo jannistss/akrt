@@ -65,28 +65,28 @@ const FLOWS: Record<
   },
   preise: {
     message:
-      "Zu welchem Bereich mochtest du Preisinformationen?",
+      "Zu welchem Bereich mochtest du Preisinformationen? Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
-      { label: "Inspektion", flow: "preise_inspektion" },
       { label: "Olwechsel", flow: "preise_oelwechsel" },
-      { label: "Bremsen", flow: "preise_bremsen" },
+      { label: "Inspektion", flow: "preise_inspektion" },
+      { label: "Raderwechsel", flow: "preise_reifen" },
       { label: "TUV / HU", flow: "preise_tuev" },
-      { label: "Reifen", flow: "preise_reifen" },
       { label: "Klimaanlage", flow: "preise_klima" },
+      { label: "Weitere", flow: "preise_mehr" },
     ],
   },
   preise_inspektion: {
     message:
-      "Eine Inspektion bei uns beginnt ab ca. 89 € (ohne Teile). Der genaue Preis hangt vom Fahrzeug und Hersteller-Vorgaben ab. Ruf uns kurz an - wir nennen dir in 2 Minuten deinen Preis.",
+      "Inspektion nach Herstellervorgaben ab 150,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
-      { label: "Anrufen", action: "call" },
+      { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
       { label: "Zuruck", flow: "root" },
     ],
   },
   preise_oelwechsel: {
     message:
-      "Ein Olwechsel inkl. Filter kostet bei uns je nach Fahrzeug ab ca. 59 €. Hochleistungsole fur Premium-Fahrzeuge konnen abweichen.",
+      "Olwechsel nach Herstellervorgaben, Motorol nach freigegebener Spezifikation ab 90,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
@@ -95,16 +95,16 @@ const FLOWS: Record<
   },
   preise_bremsen: {
     message:
-      "Bremsbelage wechseln ab ca. 79 € pro Achse (Teile + Arbeit). Bremsscheiben zusatzlich ab ca. 120 € pro Achse. Kostenloser Check jederzeit moglich.",
+      "Fur Bremsarbeiten bitte direkt anfragen - wir kalkulieren je nach Fahrzeug und Umfang. Ruf uns kurz an! Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
-      { label: "Termin buchen", action: "call" },
+      { label: "Anrufen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
       { label: "Zuruck", flow: "root" },
     ],
   },
   preise_tuev: {
     message:
-      "Wir bereiten dein Fahrzeug auf die HU vor und begleiten dich zum TUV. Vorcheck ab 29 €. Bei Bestehen direkt mit HU-Abnahme moglich.",
+      "HU/TUV Durchsicht (Vorcheck) ab 30,00 €. Haupt-/Abgasuntersuchung inkl. Abgasuntersuchung ab 165,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
@@ -113,7 +113,7 @@ const FLOWS: Record<
   },
   preise_reifen: {
     message:
-      "Reifenwechsel (4 Rader) ab 39 €. Einlagerung moglich. Wir haben Reifen aller Marken - einfach anfragen.",
+      "Raderwechsel / Umstecken pro Satz ohne Wuchten ab 20,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
@@ -122,10 +122,19 @@ const FLOWS: Record<
   },
   preise_klima: {
     message:
-      "Klimaanlage prufen & auffullen ab 79 €. Dichtigkeitstest und Desinfektion auf Wunsch.",
+      "Klima-Service (Sicherheitsprufung & Befüllen) ab 115,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
+      { label: "Zuruck", flow: "root" },
+    ],
+  },
+  preise_mehr: {
+    message:
+      "Weitere Preise im Uberblick (alle Bruttopreise exkl. MwSt.):\n- Getriebespulung ab 350,00 €\n- Achsvermessung ab 110,00 €\n- Fehlerdiagnose ab 20,00 €\n- Lichttest ab 20,00 €",
+    options: [
+      { label: "Termin buchen", action: "call" },
+      { label: "Zuruck zu Preisen", flow: "preise" },
       { label: "Zuruck", flow: "root" },
     ],
   },
@@ -139,7 +148,7 @@ const FLOWS: Record<
   },
   preise_elektrik: {
     message:
-      "Elektrische Diagnose ab 49 €. Reparaturen je nach Aufwand. Einfach vorbeikommen oder anrufen.",
+      "Elektrische Diagnose ab 20,00 € (Fehlerdiagnose). Reparaturen je nach Aufwand. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Anrufen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
@@ -148,7 +157,7 @@ const FLOWS: Record<
   },
   preise_diagnose: {
     message:
-      "Fahrzeugdiagnose (OBD) ab 39 €. Wir lesen alle Fehlercodes aus und erklaren dir was sie bedeuten.",
+      "Fehlerdiagnose (Auslesen des Fehlercodespeichers) ab 20,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Anrufen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
