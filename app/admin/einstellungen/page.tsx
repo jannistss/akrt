@@ -1,6 +1,6 @@
 "use client";
 
-import { PageHeader } from "@/components/admin/admin-ui";
+import { SectionHeader } from "@/components/admin/admin-ui";
 import { Building2, Mail, Phone, MapPin, Clock, Bell, Shield, Palette } from "lucide-react";
 
 function SettingSection({ title, icon, children }: { title: string; icon: React.ReactNode; children: React.ReactNode }) {
@@ -44,7 +44,7 @@ function ToggleRow({ label, description, defaultChecked }: { label: string; desc
 export default function EinstellungenPage() {
   return (
     <div className="space-y-8">
-      <PageHeader title="Einstellungen" subtitle="Werkstatt- und Systemkonfiguration" />
+      <SectionHeader title="Einstellungen" subtitle="Werkstatt- und Systemkonfiguration" />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <SettingSection title="Werkstatt" icon={<Building2 size={18} />}>
