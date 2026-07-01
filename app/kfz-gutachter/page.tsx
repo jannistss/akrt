@@ -84,12 +84,11 @@ export default function KfzGutachterPage() {
         <section className="relative min-h-[92vh] flex items-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <Image
-              src="https://www.sv-najami.de/images/design-mode/fabian-oelkers-hero-desktop.webp"
+              src="/assets/images/najami/hero-desktop.webp"
               alt="Kfz-Gutachter Reutlingen — professionelle Fahrzeugbegutachtung"
               fill
               className="object-cover object-center"
               priority
-              crossOrigin="anonymous"
             />
             <div className="absolute inset-0" style={{ background: "rgba(0,10,20,0.62)" }} />
             <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(0,10,20,0.70) 45%, transparent 100%)" }} />
@@ -99,12 +98,11 @@ export default function KfzGutachterPage() {
             <div className="max-w-2xl">
               <motion.div className="flex items-center gap-2 mb-6" {...fadeUp(0)}>
                 <Image
-                  src="https://www.sv-najami.de/images/najami-logo-white.png"
+                  src="/assets/images/najami/logo-white.png"
                   alt="Kfz-Sachverständigenbüro Najami Logo"
                   width={140}
                   height={40}
                   className="h-10 w-auto object-contain"
-                  crossOrigin="anonymous"
                 />
               </motion.div>
               <motion.p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#60c4e0" }} {...fadeUp(0.05)}>
@@ -226,11 +224,10 @@ export default function KfzGutachterPage() {
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
               <motion.div className="relative w-full lg:w-[480px] shrink-0 rounded-2xl overflow-hidden" style={{ height: 500 }} {...slideLeft(0)}>
                 <Image
-                  src="https://www.sv-najami.de/images/najami-work-1.webp"
+                  src="/assets/images/najami/najami-work-1.webp"
                   alt="Karim Najami — zertifizierter Kfz-Sachverständiger bei der Fahrzeugbegutachtung"
                   fill
                   className="object-cover object-center"
-                  crossOrigin="anonymous"
                 />
                 <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 55%, rgba(15,23,42,0.6) 100%)" }} />
                 <motion.div

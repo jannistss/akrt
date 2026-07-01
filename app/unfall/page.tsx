@@ -196,10 +196,9 @@ export default function UnfallPage() {
                 {...slideRight(0.15)}
               >
                 <img
-                  src="https://www.sv-najami.de/images/najami-work-1.webp"
+                  src="/assets/images/najami/najami-work-1.webp"
                   alt="Karim Najami — Kfz-Sachverständiger bei der Fahrzeugbegutachtung in Reutlingen"
                   className="w-full h-full object-cover object-center"
-                  crossOrigin="anonymous"
                 />
                 <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 50%, rgba(15,23,42,0.65) 100%)" }} />
                 <motion.div
