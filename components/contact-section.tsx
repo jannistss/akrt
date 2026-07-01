@@ -15,7 +15,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="kontakt" style={{ backgroundColor: "#001824" }}>
+    <section id="kontakt" style={{ backgroundColor: "#ffffff" }}>
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
@@ -27,17 +27,17 @@ export function ContactSection() {
               </p>
               <h2
                 className="font-bold tracking-tight leading-[1.1] text-balance mb-4"
-                style={{ color: "#ffffff", fontSize: "clamp(1.9rem, 3vw, 2.8rem)" }}
+                style={{ color: "#002e40", fontSize: "clamp(1.9rem, 3vw, 2.8rem)" }}
               >
                 Wir sind für dich da.
               </h2>
-              <p className="text-base leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
+              <p className="text-base leading-relaxed" style={{ color: "#4a6272" }}>
                 Ruf an, schreib uns oder nutz das Formular — wir melden uns schnell.
               </p>
             </div>
 
             {/* Contact details */}
-            <div className="flex flex-col gap-4 text-sm" style={{ color: "rgba(255,255,255,0.55)" }}>
+            <div className="flex flex-col gap-4 text-sm" style={{ color: "#4a6272" }}>
               <a href="tel:+4971217969500" className="flex items-center gap-3 transition-colors hover:text-white">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style={{ backgroundColor: "rgba(0,116,162,0.18)" }}>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -67,7 +67,7 @@ export function ContactSection() {
             </div>
 
             {/* Map */}
-            <div className="rounded-2xl overflow-hidden" style={{ minHeight: 260, border: "1px solid rgba(255,255,255,0.07)" }}>
+            <div className="rounded-2xl overflow-hidden" style={{ minHeight: 260, border: "1px solid #d5e8f0" }}>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d661.0533888621147!2d9.136535357279765!3d48.490796816070876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4799f1a26eb81357%3A0xd6d777b15911a39!2sAutoklinik%20Reutlingen%20GmbH!5e0!3m2!1sde!2sde!4v1770907350817!5m2!1sde!2sde"
                 width="100%"
@@ -84,12 +84,12 @@ export function ContactSection() {
           {/* Right — form */}
           <div
             className="rounded-2xl p-8 sm:p-10"
-            style={{ backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
+            style={{ backgroundColor: "#f5f9fc", border: "1px solid #d5e8f0" }}
           >
-            <h3 className="text-lg font-bold mb-1" style={{ color: "#ffffff" }}>
+            <h3 className="text-lg font-bold mb-1" style={{ color: "#002e40" }}>
               Rückruf-Service
             </h3>
-            <p className="text-sm mb-8" style={{ color: "rgba(255,255,255,0.45)" }}>
+            <p className="text-sm mb-8" style={{ color: "#4a6272" }}>
               Lass deine Nummer da — wir melden uns schnellstmöglich.
             </p>
 
@@ -107,7 +107,7 @@ export function ContactSection() {
                   { id: "contact-phone", label: "Telefonnummer *", type: "tel", name: "phone" },
                 ].map((field) => (
                   <div key={field.id} className="flex flex-col gap-1.5">
-                    <label htmlFor={field.id} className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.6)" }}>
+                    <label htmlFor={field.id} className="text-sm font-medium" style={{ color: "#002e40" }}>
                       {field.label}
                     </label>
                     <input
@@ -117,16 +117,16 @@ export function ContactSection() {
                       required={field.name === "phone"}
                       className="rounded-xl px-4 py-3 text-sm outline-none transition-colors"
                       style={{
-                        backgroundColor: "rgba(255,255,255,0.05)",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        color: "#ffffff",
+                        backgroundColor: "#ffffff",
+                        border: "1px solid #c5dde8",
+                        color: "#002e40",
                       }}
                     />
                   </div>
                 ))}
 
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-message" className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.6)" }}>
+                  <label htmlFor="contact-message" className="text-sm font-medium" style={{ color: "#002e40" }}>
                     Nachricht
                   </label>
                   <textarea
@@ -136,9 +136,9 @@ export function ContactSection() {
                     placeholder="Beschreibe dein Anliegen kurz…"
                     className="rounded-xl px-4 py-3 text-sm outline-none transition-colors resize-none"
                     style={{
-                      backgroundColor: "rgba(255,255,255,0.05)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      color: "#ffffff",
+                      backgroundColor: "#ffffff",
+                      border: "1px solid #c5dde8",
+                      color: "#002e40",
                     }}
                   />
                 </div>
@@ -151,7 +151,7 @@ export function ContactSection() {
                     required
                     className="mt-0.5 h-4 w-4 rounded accent-[#0074a2]"
                   />
-                  <label htmlFor="contact-privacy" className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  <label htmlFor="contact-privacy" className="text-sm" style={{ color: "#4a6272" }}>
                     Ich akzeptiere die{" "}
                     <a href="/datenschutz" className="underline" style={{ color: "#0074a2" }}>
                       Datenschutzerklärung

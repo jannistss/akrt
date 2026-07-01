@@ -7,22 +7,22 @@ const items = [
 
 export function TrustBar() {
   return (
-    <section style={{ backgroundColor: "#001824" }}>
+    <section style={{ backgroundColor: "#eef6fa", borderBottom: "1px solid #d5e8f0" }}>
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-2 lg:grid-cols-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+        <div className="grid grid-cols-2 lg:grid-cols-4" style={{ }}>
           {items.map((item, i) => (
             <div
               key={item.label}
-              className="flex flex-col gap-1.5 py-10 pr-8"
+              className="flex flex-col gap-1.5 py-8 pr-8"
               style={{
-                borderRight: i < items.length - 1 ? "1px solid rgba(255,255,255,0.08)" : undefined,
+                borderRight: i < items.length - 1 ? "1px solid #d5e8f0" : undefined,
                 paddingLeft: i === 0 ? 0 : "2rem",
               }}
             >
-              <span className="text-3xl font-bold tracking-tight" style={{ color: "#ffffff" }}>
+              <span className="text-2xl font-bold tracking-tight" style={{ color: "#002e40" }}>
                 {item.number}
               </span>
-              <span className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
+              <span className="text-sm" style={{ color: "#4a6272" }}>
                 {item.label}
               </span>
             </div>

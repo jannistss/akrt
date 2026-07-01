@@ -20,7 +20,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section style={{ backgroundColor: "#001824" }}>
+    <section style={{ backgroundColor: "#ffffff" }}>
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
 
@@ -31,11 +31,11 @@ export function HowItWorks() {
             </p>
             <h2
               className="font-bold tracking-tight leading-[1.1] text-balance mb-6"
-              style={{ color: "#ffffff", fontSize: "clamp(1.9rem, 3vw, 2.8rem)" }}
+              style={{ color: "#002e40", fontSize: "clamp(1.9rem, 3vw, 2.8rem)" }}
             >
               In drei Schritten zu deiner reparierten Kiste.
             </h2>
-            <p className="text-base leading-relaxed mb-10" style={{ color: "#4c5052" }}>
+            <p className="text-base leading-relaxed mb-10" style={{ color: "#4a6272" }}>
               Von der ersten Anfrage bis zur Abholung: Wir halten den Ablauf klar, schnell und angenehm für dich.
             </p>
             <Link
@@ -51,28 +51,28 @@ export function HowItWorks() {
           </div>
 
           {/* Right — steps */}
-          <div           className="flex flex-col gap-0" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+          <div className="flex flex-col gap-0" style={{ borderTop: "1px solid #d5e8f0" }}>
             {steps.map((step, i) => (
               <div
                 key={step.number}
                 className="flex gap-8 py-10"
-                  style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+                style={{ borderBottom: "1px solid #d5e8f0" }}
               >
                 <div
                   className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-sm font-bold tabular-nums"
                   style={{
                     backgroundColor: i === 0 ? "#0074a2" : "transparent",
-                    border: i === 0 ? "none" : "1.5px solid rgba(0,116,162,0.25)",
+                    border: i === 0 ? "none" : "1.5px solid #b0d4e4",
                     color: i === 0 ? "#ffffff" : "#0074a2",
                   }}
                 >
                   {step.number}
                 </div>
                 <div className="pt-2">
-                  <h3 className="text-base font-bold mb-2" style={{ color: "#ffffff" }}>
+                  <h3 className="text-base font-bold mb-2" style={{ color: "#002e40" }}>
                     {step.title}
                   </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "#4c5052" }}>
+                  <p className="text-sm leading-relaxed" style={{ color: "#4a6272" }}>
                     {step.text}
                   </p>
                 </div>

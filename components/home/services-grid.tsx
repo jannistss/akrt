@@ -72,17 +72,17 @@ const services = [
 
 export function ServicesGrid() {
   return (
-    <section id="leistungen" style={{ backgroundColor: "#001824" }}>
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-28">
+    <section id="leistungen" style={{ backgroundColor: "#ffffff" }}>
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-16">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }}>
               Leistungen
             </p>
             <h2
               className="font-bold tracking-tight text-balance"
-              style={{ color: "#ffffff", fontSize: "clamp(2rem, 3.5vw, 3rem)" }}
+              style={{ color: "#002e40", fontSize: "clamp(2rem, 3.5vw, 3rem)" }}
             >
               Alles aus einer Hand —<br />
               sauber, schnell, ehrlich.
@@ -101,28 +101,28 @@ export function ServicesGrid() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ backgroundColor: "rgba(255,255,255,0.07)" }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ backgroundColor: "#e5eef3" }}>
           {services.map((service) => (
             <Link
               key={service.title}
               href={service.href}
-              className="group flex flex-col gap-5 p-8 transition-colors hover:brightness-125"
-              style={{ backgroundColor: "#001824" }}
+              className="group flex flex-col gap-5 p-8 transition-colors hover:bg-blue-50"
+              style={{ backgroundColor: "#ffffff" }}
             >
               <div
-                className="flex h-11 w-11 items-center justify-center rounded-xl transition-colors group-hover:bg-opacity-80"
-                style={{ backgroundColor: "rgba(0,116,162,0.18)", color: "#4db8d8" }}
+                className="flex h-11 w-11 items-center justify-center rounded-xl"
+                style={{ backgroundColor: "#e8f4fa", color: "#0074a2" }}
               >
                 {service.icon}
               </div>
               <div>
-                <h3 className="text-base font-semibold mb-2 flex items-center gap-2" style={{ color: "#ffffff" }}>
+                <h3 className="text-base font-semibold mb-2 flex items-center gap-2" style={{ color: "#002e40" }}>
                   {service.title}
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0">
                     <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </h3>
-                <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.45)" }}>
+                <p className="text-sm leading-relaxed" style={{ color: "#4a6272" }}>
                   {service.description}
                 </p>
               </div>

@@ -18,14 +18,11 @@ const trustPoints = [
 
 export function TrustLogos() {
   return (
-    <section style={{ backgroundColor: "#001824" }}>
-      <div
-        className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-20"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
-      >
+    <section style={{ backgroundColor: "#eef6fa", borderTop: "1px solid #d5e8f0" }}>
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-20">
         {/* Brand logos row */}
-        <div className="flex flex-wrap items-center justify-between gap-6 mb-16">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "rgba(255,255,255,0.3)" }}>
+        <div className="flex flex-wrap items-center justify-between gap-6 mb-14">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#4a6272" }}>
             Für alle Marken
           </p>
           <div className="flex flex-wrap items-center gap-8">
@@ -37,7 +34,7 @@ export function TrustLogos() {
                 width={44}
                 height={44}
                 className="h-10 w-10 object-contain"
-                style={{ filter: "brightness(0) invert(1)", opacity: 0.35 }}
+                style={{ filter: "brightness(0) saturate(0)", opacity: 0.4 }}
               />
             ))}
           </div>
@@ -46,13 +43,13 @@ export function TrustLogos() {
         {/* Trust points */}
         <div
           className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-px"
-          style={{ backgroundColor: "rgba(255,255,255,0.07)" }}
+          style={{ backgroundColor: "#d5e8f0" }}
         >
           {trustPoints.map((point) => (
             <div
               key={point.label}
               className="flex items-center gap-3 px-6 py-5"
-              style={{ backgroundColor: "#001824" }}
+              style={{ backgroundColor: "#eef6fa" }}
             >
               <Image
                 src={point.icon}
@@ -60,9 +57,8 @@ export function TrustLogos() {
                 width={28}
                 height={28}
                 className="h-6 w-6 object-contain shrink-0"
-                style={{ filter: "brightness(0) saturate(100%) invert(40%) sepia(90%) saturate(400%) hue-rotate(170deg)" }}
               />
-              <span className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.65)" }}>
+              <span className="text-sm font-medium" style={{ color: "#002e40" }}>
                 {point.label}
               </span>
             </div>
