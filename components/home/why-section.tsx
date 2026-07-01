@@ -43,8 +43,8 @@ export function WhySection() {
               className="absolute bottom-6 left-6 rounded-xl px-5 py-4"
               style={{ backgroundColor: "rgba(0,14,22,0.82)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.1)" }}
             >
-              <p className="text-xs font-medium mb-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>Seit über 15 Jahren</p>
-              <p className="text-sm font-bold" style={{ color: "#ffffff" }}>Vertrauenspartner in Reutlingen</p>
+              <p className="text-xs font-medium mb-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>Meisterbetrieb</p>
+              <p className="text-sm font-bold" style={{ color: "#ffffff" }}>Dein Vertrauenspartner in Reutlingen</p>
             </div>
           </div>
 
