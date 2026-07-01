@@ -17,19 +17,15 @@ export async function GET(request: Request) {
     url.searchParams.set("show_replies", "true");
   }
 
-  // Tag-based caching: stays cached until POST /api/revalidate is called.
-  // Falls back to a 1-hour TTL so stale data never lives forever.
-  const upstream = await fetch(url.toString(), {
-    next: { tags: ["google-reviews"], revalidate: 3600 },
-  });
+  // No Next.js server-side cache — the backend (google-business-profile-sync)
+  // handles its own 60 s cache and purges it instantly after every sync via
+  // its own /api/revalidate endpoint. Caching here would only delay updates.
+  const upstream = await fetch(url.toString(), { cache: "no-store" });
 
   const data = await upstream.json();
 
+  // Tell the browser not to cache either — always reflect latest backend data.
   return NextResponse.json(data, {
-    headers: {
-      // Let the browser re-use for 60 s, but allow stale for up to 5 min
-      // while the server fetches fresh data in the background.
-      "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
-    },
+    headers: { "Cache-Control": "no-store" },
   });
 }
