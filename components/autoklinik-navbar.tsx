@@ -29,6 +29,7 @@ const navItems: NavItem[] = [
       { name: "Klimaservice", link: "/klimaservice" },
       { name: "Unfallservice", link: "/unfall" },
       { name: "Flottenbetreuung", link: "/flottenbetreuung" },
+      { name: "Kfz-Gutachter Najami", link: "/kfz-gutachter" },
     ],
   },
   { name: "Flotte", link: "/flottenbetreuung" },
