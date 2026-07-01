@@ -23,8 +23,10 @@ export function Navbar({ children, className }: NavbarProps) {
     <motion.nav
       data-scrolled={scrolled}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4 transition-[padding]",
-        scrolled && "pt-2",
+        "fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-300",
+        scrolled
+          ? "bg-white/95 backdrop-blur-xl shadow-[0_2px_16px_rgba(13,27,42,0.08)]"
+          : "bg-white/80 backdrop-blur-sm",
         className
       )}
     >
@@ -51,11 +53,10 @@ export function NavBody({ children, className }: NavBodyProps) {
   return (
     <motion.div
       className={cn(
-        "hidden md:flex items-center justify-between gap-2 w-full max-w-5xl rounded-2xl px-5 py-3 transition-all duration-300",
-        "border border-[rgba(26,111,207,0.18)]",
+        "hidden md:flex items-center justify-between gap-2 w-full px-6 py-3 transition-all duration-300",
         scrolled
-          ? "bg-white/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(13,27,42,0.12)]"
-          : "bg-white/60 backdrop-blur-md shadow-[0_4px_20px_rgba(13,27,42,0.06)]",
+          ? "bg-white/95 backdrop-blur-xl shadow-[0_4px_24px_rgba(13,27,42,0.10)] border-b border-[rgba(26,111,207,0.12)]"
+          : "bg-white/80 backdrop-blur-md",
         className
       )}
     >
@@ -280,7 +281,7 @@ export function NavbarLogo({ src, alt = "Logo", href = "/", className }: NavbarL
       transition={{ type: "spring", stiffness: 400, damping: 20 }}
       className={cn("flex items-center shrink-0", className)}
     >
-      <img src={src} alt={alt} className="h-10 w-auto object-contain" />
+      <img src={src} alt={alt} className="h-14 w-auto object-contain" />
     </motion.a>
   );
 }
@@ -308,7 +309,7 @@ interface MobileNavHeaderProps {
 
 export function MobileNavHeader({ children }: MobileNavHeaderProps) {
   return (
-    <div className="flex items-center justify-between w-full rounded-2xl border border-[rgba(26,111,207,0.18)] bg-white/72 backdrop-blur-xl px-4 py-3 shadow-[0_4px_20px_rgba(13,27,42,0.06)]">
+    <div className="flex items-center justify-between w-full px-4 py-3">
       {children}
     </div>
   );

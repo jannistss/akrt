@@ -1,7 +1,7 @@
 const items = [
-  { number: "2.000+", label: "Zufriedene Kunden" },
+  { number: "5 ★", label: "Google Bewertung" },
   { number: "48 Std.", label: "TÜV-Termin garantiert" },
-  { number: "15+", label: "Jahre Erfahrung" },
+  { number: "Fairer", label: "Festpreis, kein Surprise" },
   { number: "Alle", label: "Marken & Modelle" },
 ];
 

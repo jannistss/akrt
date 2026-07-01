@@ -41,18 +41,18 @@ export function HeroSection() {
         />
       </div>
 
-      {/* Mechanic image — desktop right side, bottom-anchored */}
+      {/* Mechanic image — desktop right side, bottom-anchored, overflow visible */}
       <div
         className="absolute bottom-0 right-0 z-20 hidden lg:block pointer-events-none select-none"
-        style={{ width: 440 }}
+        style={{ width: 460, height: "100%" }}
       >
         <Image
           src="/assets/images/6937e7167a27ffa77e40aa08_Hero-Image.png"
           alt="Lächelnder Mechaniker in blauer Arbeitskleidung mit Klemmbrett."
-          width={440}
-          height={520}
+          fill
           priority
           className="object-contain object-bottom"
+          sizes="460px"
         />
       </div>
 
@@ -107,13 +107,25 @@ export function HeroSection() {
               </Link>
               <Link
                 href="tel:+4907121155261990"
-                className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/10 active:scale-[0.97]"
+                className="inline-flex items-center gap-2.5 rounded-full border px-6 py-3.5 text-sm font-semibold transition-all hover:bg-white/10 active:scale-[0.97]"
                 style={{ borderColor: "rgba(255,255,255,0.32)", color: "#ffffff" }}
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Jetzt anrufen
+                Anrufen
+              </Link>
+              <Link
+                href="https://wa.me/4917661973298"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 rounded-full border px-6 py-3.5 text-sm font-semibold transition-all hover:bg-white/10 active:scale-[0.97]"
+                style={{ borderColor: "rgba(37,211,102,0.5)", color: "#ffffff" }}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M20.52 3.48A11.93 11.93 0 0012 0C5.37 0 0 5.37 0 12c0 2.11.55 4.17 1.59 5.99L0 24l6.18-1.62A11.93 11.93 0 0012 24c6.63 0 12-5.37 12-12 0-3.21-1.25-6.23-3.48-8.52zM12 22c-1.85 0-3.67-.5-5.25-1.44l-.38-.22-3.9 1.02 1.04-3.8-.25-.39A9.93 9.93 0 012 12C2 6.48 6.48 2 12 2c2.66 0 5.16 1.04 7.04 2.93A9.93 9.93 0 0122 12c0 5.52-4.48 10-10 10zm5.47-7.38l-1.93-.56a.75.75 0 00-.74.19l-.54.56a.74.74 0 01-.8.17 11.3 11.3 0 01-3.44-2.19 11.3 11.3 0 01-2.19-3.44.74.74 0 01.17-.8l.56-.54a.75.75 0 00.19-.74l-.56-1.93a.75.75 0 00-.72-.54h-1.8a.75.75 0 00-.75.78c.16 2.06 1 4.01 2.39 5.56a13.08 13.08 0 005.57 3.93.75.75 0 00.84-.23l.56-.7a.75.75 0 00-.08-1.02z" fill="#25D366"/>
+                </svg>
+                WhatsApp
               </Link>
             </div>
 
