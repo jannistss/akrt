@@ -17,11 +17,39 @@ export async function GET(request: Request) {
     url.searchParams.set("show_replies", "true");
   }
 
-  const upstream = await fetch(url.toString(), {
-    next: { revalidate: 300 }, // cache 5 min server-side
-  });
+  let upstream: Response;
+  try {
+    upstream = await fetch(url.toString(), {
+      next: { revalidate: 300 }, // cache 5 min server-side
+    });
+  } catch (err) {
+    return NextResponse.json(
+      { error: "upstream_unreachable", message: String(err) },
+      { status: 502 }
+    );
+  }
 
-  const data = await upstream.json();
+  // Guard: only parse as JSON if the response actually says so.
+  // Plain-text errors from the upstream (e.g. DB syntax errors) would
+  // otherwise throw inside .json() and produce an unhandled 500.
+  const contentType = upstream.headers.get("content-type") ?? "";
+  if (!upstream.ok || !contentType.includes("application/json")) {
+    const body = await upstream.text().catch(() => "(unreadable)");
+    return NextResponse.json(
+      { error: "upstream_error", status: upstream.status, message: body },
+      { status: 502 }
+    );
+  }
+
+  let data: unknown;
+  try {
+    data = await upstream.json();
+  } catch (err) {
+    return NextResponse.json(
+      { error: "invalid_json", message: String(err) },
+      { status: 502 }
+    );
+  }
 
   return NextResponse.json(data, {
     headers: {
