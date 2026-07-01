@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 
 /* ─── Types ─────────────────────────────────────────────── */
 type Message = { role: "bot" | "user"; text: string };
@@ -33,7 +34,7 @@ type Flow =
 interface Option {
   label: string;
   flow?: Flow;
-  action?: "call" | "whatsapp" | "karriere" | "rueckruf";
+  action?: "call" | "whatsapp" | "karriere" | "rueckruf" | "online";
 }
 
 /* ─── Flow definitions ──────────────────────────────────── */
@@ -49,159 +50,168 @@ const FLOWS: Record<
       { label: "Preise & Kosten", flow: "preise" },
       { label: "Unfall / Unfallschaden", flow: "unfall" },
       { label: "Reifen", flow: "reifen" },
-      { label: "Offnungszeiten", flow: "oeffnungszeiten" },
+      { label: "Öffnungszeiten", flow: "oeffnungszeiten" },
       { label: "Mehr Optionen...", flow: "flotte" },
     ],
   },
   termin: {
     message:
-      "Super! Ruf uns einfach an oder schreib uns auf WhatsApp - wir finden schnell einen passenden Termin fur dich.",
+      "Wie möchtest du deinen Termin vereinbaren?",
     options: [
-      { label: "Anrufen", action: "call" },
+      { label: "Online buchen", action: "online" },
       { label: "WhatsApp", action: "whatsapp" },
-      { label: "Ruckruf anfordern", action: "rueckruf" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Anrufen", action: "call" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise: {
     message:
-      "Zu welchem Bereich mochtest du Preisinformationen?",
+      "Zu welchem Bereich möchtest du Preisinformationen? Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
+      { label: "Ölwechsel", flow: "preise_oelwechsel" },
       { label: "Inspektion", flow: "preise_inspektion" },
-      { label: "Olwechsel", flow: "preise_oelwechsel" },
-      { label: "Bremsen", flow: "preise_bremsen" },
-      { label: "TUV / HU", flow: "preise_tuev" },
-      { label: "Reifen", flow: "preise_reifen" },
+      { label: "Räderwechsel", flow: "preise_reifen" },
+      { label: "TÜV / HU", flow: "preise_tuev" },
       { label: "Klimaanlage", flow: "preise_klima" },
+      { label: "Weitere", flow: "preise_mehr" },
     ],
   },
   preise_inspektion: {
     message:
-      "Eine Inspektion bei uns beginnt ab ca. 89 € (ohne Teile). Der genaue Preis hangt vom Fahrzeug und Hersteller-Vorgaben ab. Ruf uns kurz an - wir nennen dir in 2 Minuten deinen Preis.",
+      "Inspektion nach Herstellervorgaben ab 150,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
-      { label: "Anrufen", action: "call" },
+      { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_oelwechsel: {
     message:
-      "Ein Olwechsel inkl. Filter kostet bei uns je nach Fahrzeug ab ca. 59 €. Hochleistungsole fur Premium-Fahrzeuge konnen abweichen.",
+      "Ölwechsel nach Herstellervorgaben, Motoröl nach freigegebener Spezifikation ab 90,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_bremsen: {
     message:
-      "Bremsbelage wechseln ab ca. 79 € pro Achse (Teile + Arbeit). Bremsscheiben zusatzlich ab ca. 120 € pro Achse. Kostenloser Check jederzeit moglich.",
+      "Für Bremsarbeiten bitte direkt anfragen - wir kalkulieren je nach Fahrzeug und Umfang. Ruf uns kurz an! Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
-      { label: "Termin buchen", action: "call" },
+      { label: "Anrufen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_tuev: {
     message:
-      "Wir bereiten dein Fahrzeug auf die HU vor und begleiten dich zum TUV. Vorcheck ab 29 €. Bei Bestehen direkt mit HU-Abnahme moglich.",
+      "HU/TÜV Durchsicht (Vorcheck) ab 30,00 €. Haupt-/Abgasuntersuchung inkl. Abgasuntersuchung ab 165,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_reifen: {
     message:
-      "Reifenwechsel (4 Rader) ab 39 €. Einlagerung moglich. Wir haben Reifen aller Marken - einfach anfragen.",
+      "Räderwechsel / Umstecken pro Satz ohne Wuchten ab 20,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_klima: {
     message:
-      "Klimaanlage prufen & auffullen ab 79 €. Dichtigkeitstest und Desinfektion auf Wunsch.",
+      "Klima-Service (Sicherheitsprüfung & Befüllen) ab 115,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
+    ],
+  },
+  preise_mehr: {
+    message:
+      "Weitere Preise im Überblick (alle Bruttopreise exkl. MwSt.):\n- Getriebespülung ab 350,00 €\n- Achsvermessung ab 110,00 €\n- Fehlerdiagnose ab 20,00 €\n- Lichttest ab 20,00 €",
+    options: [
+      { label: "Termin buchen", action: "call" },
+      { label: "Zurück zu Preisen", flow: "preise" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_unfallschaden: {
     message:
-      "Unfallschaden werden nach Kalkulation abgerechnet - in der Regel ubernimmt das die Versicherung des Unfallverursachers. Wir kummern uns um alles.",
+      "Unfallschäden werden nach Kalkulation abgerechnet - in der Regel übernimmt das die Versicherung des Unfallverursachers. Wir kümmern uns um alles.",
     options: [
       { label: "Mehr zu Unfallservice", flow: "unfall" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_elektrik: {
     message:
-      "Elektrische Diagnose ab 49 €. Reparaturen je nach Aufwand. Einfach vorbeikommen oder anrufen.",
+      "Elektrische Diagnose ab 20,00 € (Fehlerdiagnose). Reparaturen je nach Aufwand. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Anrufen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   preise_diagnose: {
     message:
-      "Fahrzeugdiagnose (OBD) ab 39 €. Wir lesen alle Fehlercodes aus und erklaren dir was sie bedeuten.",
+      "Fehlerdiagnose (Auslesen des Fehlercodes­speichers) ab 20,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
     options: [
       { label: "Anrufen", action: "call" },
       { label: "Weitere Preise", flow: "preise" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   unfall: {
     message:
-      "Bei einem Unfall kummern wir uns um alles - von der Schadensbegutachtung uber den Kfz-Gutachter bis zur Reparatur. Du zahlst nichts, wenn der andere schuld ist.",
+      "Bei einem Unfall kümmern wir uns um alles - von der Schadensbegutachtung über den Kfz-Gutachter bis zur Reparatur. Du zahlst nichts, wenn der andere schuld ist.",
     options: [
       { label: "Jetzt anrufen", action: "call" },
       { label: "WhatsApp schreiben", action: "whatsapp" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   reifen: {
     message:
-      "Reifenwechsel, Einlagerung, Neue Reifen - alles bei uns. Wechsel ab 39 €, Einlagerung auf Anfrage.",
+      "Räderwechsel / Umstecken pro Satz ohne Wuchten ab 20,00 €. Einlagerung auf Anfrage. Alle Preise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
       { label: "WhatsApp", action: "whatsapp" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   oel: {
     message:
-      "Olwechsel inkl. Olfilter ab 59 €. Wir verwenden nur herstellerfreigegebene Ole fur dein Fahrzeug.",
+      "Ölwechsel nach Herstellervorgaben, Motoröl nach freigegebener Spezifikation ab 90,00 €. Alle Preise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   klima: {
     message:
-      "Klimaanlage prufen & auffullen ab 79 €. Dichtigkeitstest und Desinfektion auf Wunsch.",
+      "Klima-Service (Sicherheitsprüfung & Befüllen) ab 115,00 €. Alle Preise exkl. MwSt.",
     options: [
       { label: "Termin buchen", action: "call" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   bremsen: {
     message:
-      "Bremsbelage ab 79 € / Achse. Kostenloser Bremscheck jederzeit moglich - einfach vorbeikommen.",
+      "Für Bremsarbeiten bitte direkt anfragen - wir kalkulieren je nach Fahrzeug und Umfang. Kostenloser Bremscheck jederzeit möglich.",
     options: [
       { label: "Termin buchen", action: "call" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   flotte: {
     message:
       "Weitere Themen - womit kann ich dir helfen?",
     options: [
-      { label: "Olwechsel", flow: "oel" },
+      { label: "Ölwechsel", flow: "oel" },
       { label: "Klimaanlage", flow: "klima" },
       { label: "Bremsen", flow: "bremsen" },
       { label: "Flottenbetreuung", flow: "flotte" },
@@ -214,30 +224,39 @@ const FLOWS: Record<
       "Wir suchen aktuell einen Kfz-Mechatroniker (m/w/d). Schau dir unsere Karriere-Seite an!",
     options: [
       { label: "Zur Karriere-Seite", action: "karriere" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   oeffnungszeiten: {
     message:
-      "Unsere Offnungszeiten:\n\nMontag - Freitag: 08:00 - 18:00 Uhr\nSamstag: 09:00 - 14:00 Uhr\nSonntag: Geschlossen\n\nAdresse: Haldenhaustra&szlig;e 3, 72770 Reutlingen",
+      "Unsere Öffnungszeiten:\n\nMontag - Freitag: 08:00 - 18:00 Uhr\nSamstag: 09:00 - 14:00 Uhr\nSonntag: Geschlossen\n\nAdresse: Haldenhausstraße 3, 72770 Reutlingen",
     options: [
       { label: "Anrufen", action: "call" },
       { label: "Route planen", action: "whatsapp" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   notfall: {
     message:
-      "Bei einem Notfall ruf uns sofort an. Wir versuchen dir so schnell wie moglich zu helfen.",
+      "Bei einem Notfall ruf uns sofort an. Wir versuchen dir so schnell wie möglich zu helfen.",
     options: [
       { label: "Jetzt anrufen", action: "call" },
       { label: "WhatsApp", action: "whatsapp" },
-      { label: "Zuruck", flow: "root" },
+      { label: "Zurück", flow: "root" },
     ],
   },
   rueckruf: {
-    message: "Hinterlasse deinen Namen und deine Telefonnummer - wir rufen dich zuruck.",
+    message: "Hinterlasse deinen Namen und deine Telefonnummer - wir rufen dich zurück.",
     options: [],
+  },
+  termin_help: {
+    message: "Was kann ich für dich tun?",
+    options: [
+      { label: "Welche Leistung soll ich wählen?", flow: "preise" },
+      { label: "Lieber anrufen", action: "call" },
+      { label: "WhatsApp schreiben", action: "whatsapp" },
+      { label: "Alles klar, danke!", flow: "root" },
+    ],
   },
 };
 
@@ -335,6 +354,7 @@ function CallbackForm({ onBack }: { onBack: () => void }) {
 
 /* ─── Main widget ───────────────────────────────────────── */
 export function ChatWidget() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [flow, setFlow] = useState<Flow>("root");
   const [messages, setMessages] = useState<Message[]>([]);
@@ -350,6 +370,45 @@ export function ChatWidget() {
     const t = setTimeout(() => setShowProactive(true), 4000);
     return () => clearTimeout(t);
   }, []);
+
+  /* on /terminbuchung: open chat after 3s with booking-specific message */
+  useEffect(() => {
+    if (pathname !== "/terminbuchung") return;
+    const alreadyShown = sessionStorage.getItem("ak_termin_chat");
+    if (alreadyShown) return;
+    const t = setTimeout(() => {
+      sessionStorage.setItem("ak_termin_chat", "1");
+      setShowProactive(false);
+      setOpen(true);
+      setMessages([]);
+      setTyping(true);
+      setTimeout(() => {
+        setTyping(false);
+        setMessages([
+          {
+            role: "bot",
+            text: "Brauchst du Hilfe bei der Terminbuchung? Ich bin gleich da - einfach fragen! 👋",
+          },
+        ]);
+        // follow-up after 2s
+        setTimeout(() => {
+          setTyping(true);
+          setTimeout(() => {
+            setTyping(false);
+            setMessages((prev) => [
+              ...prev,
+              {
+                role: "bot",
+                text: "Falls du unsicher bist welche Leistung du buchen sollst, oder lieber direkt anrufen möchtest - ich helfe dir weiter.",
+              },
+            ]);
+            setFlow("termin_help");
+          }, 800);
+        }, 2000);
+      }, 700);
+    }, 3000);
+    return () => clearTimeout(t);
+  }, [pathname]);
 
   /* scroll to bottom */
   useEffect(() => {
@@ -386,6 +445,10 @@ export function ChatWidget() {
     }
     if (opt.action === "whatsapp") {
       window.open("https://wa.me/4971219886660", "_blank");
+      return;
+    }
+    if (opt.action === "online") {
+      window.location.href = "/terminbuchung";
       return;
     }
     if (opt.action === "karriere") {
