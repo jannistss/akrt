@@ -506,9 +506,9 @@ export function ChatWidget() {
 
     const controller = new AbortController();
     const timeout = setTimeout(() => {
-      console.log("[v0] sendMessage TIMEOUT after 20s for:", text);
+      console.log("[v0] sendMessage TIMEOUT after 55s for:", text);
       controller.abort();
-    }, 20000);
+    }, 55000);
 
     try {
       const res = await fetch("/api/chat", {

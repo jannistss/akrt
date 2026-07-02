@@ -60,6 +60,9 @@ REGELN:
 - Bei Preisfragen immer "zzgl. 19% MwSt." erwähnen und Bruttopreis nennen
 - Nur Themen der Autoklinik Reutlingen`;
 
+// Extend Vercel serverless function timeout to 60s (default is 10s)
+export const maxDuration = 60;
+
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
@@ -69,14 +72,10 @@ export async function POST(req: Request) {
       apiKey: process.env.AI_GATEWAY_API_KEY ?? process.env.VERCEL_AI_GATEWAY_KEY,
     });
 
-    // Try models in order, fall back on rate-limit errors
-    // Spread across providers so rate limits don't all hit at once
+    // Primary model + 1 fallback from a different provider
     const MODELS = [
-      "openai/gpt-4.1-nano",          // OpenAI — fast & cheap
-      "google/gemini-3.5-flash",       // Google — different provider pool
-      "anthropic/claude-3-haiku",      // Anthropic — different provider pool
-      "openai/gpt-4o-mini",            // OpenAI fallback
-      "google/gemini-2.5-flash-lite",  // Google fallback
+      "openai/gpt-4.1-nano",    // Fast, cheap, reliable
+      "openai/gpt-4o-mini",     // Fallback if nano is rate-limited
     ];
 
     const encoder = new TextEncoder();
