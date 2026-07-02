@@ -363,7 +363,10 @@ export function ChatWidget() {
   const [showProactive, setShowProactive] = useState(false);
   const [proactiveDismissed, setProactiveDismissed] = useState(false);
   const [typing, setTyping] = useState(false);
+  const [input, setInput] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   /* proactive bubble after 4s, once */
   useEffect(() => {
@@ -465,6 +468,64 @@ export function ChatWidget() {
     if (opt.flow) {
       setFlow(opt.flow);
       addBotMessage(FLOWS[opt.flow].message);
+    }
+  }
+
+  async function sendMessage(text: string) {
+    if (!text.trim() || aiLoading) return;
+    setInput("");
+    const userMsg: Message = { role: "user", text };
+    setMessages((prev) => [...prev, userMsg]);
+    setAiLoading(true);
+
+    // Build conversation history for the AI (last 10 messages)
+    const history = [...messages, userMsg].slice(-10).map((m) => ({
+      role: m.role === "bot" ? "assistant" : "user",
+      content: m.text,
+    }));
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: history }),
+      });
+      if (!res.ok) throw new Error("Fehler");
+
+      const reader = res.body?.getReader();
+      const decoder = new TextDecoder();
+      let botText = "";
+      setMessages((prev) => [...prev, { role: "bot", text: "" }]);
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value);
+          // Parse AI SDK data stream format
+          const lines = chunk.split("\n");
+          for (const line of lines) {
+            if (line.startsWith("0:")) {
+              try {
+                const token = JSON.parse(line.slice(2));
+                botText += token;
+                setMessages((prev) => {
+                  const updated = [...prev];
+                  updated[updated.length - 1] = { role: "bot", text: botText };
+                  return updated;
+                });
+              } catch {}
+            }
+          }
+        }
+      }
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        { role: "bot", text: "Sorry, da ist etwas schiefgelaufen. Ruf uns kurz an: 07121 988 6660" },
+      ]);
+    } finally {
+      setAiLoading(false);
     }
   }
 
@@ -608,33 +669,74 @@ export function ChatWidget() {
               <div ref={bottomRef} />
             </div>
 
-            {/* Callback form or quick replies */}
+            {/* Callback form or quick replies + text input */}
             {flow === "rueckruf" ? (
               <div className="shrink-0 border-t" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
                 <CallbackForm onBack={() => { setFlow("root"); addBotMessage(FLOWS.root.message); }} />
               </div>
             ) : (
-              !typing && currentFlow.options.length > 0 && (
-                <div
-                  className="shrink-0 px-4 pb-4 pt-3 flex flex-wrap gap-2 border-t"
-                  style={{ borderColor: "rgba(255,255,255,0.07)" }}
+              <div className="shrink-0 border-t" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
+                {/* Quick reply buttons */}
+                {!typing && !aiLoading && currentFlow.options.length > 0 && (
+                  <div className="px-4 pt-3 pb-2 flex flex-wrap gap-2">
+                    {currentFlow.options.map((opt) => (
+                      <button
+                        key={opt.label}
+                        onClick={() => handleOption(opt)}
+                        className="rounded-full px-3 py-1.5 text-xs font-medium border transition-all hover:scale-105 active:scale-95"
+                        style={{
+                          borderColor: "rgba(0,116,162,0.4)",
+                          color: "#7dd3fc",
+                          background: "rgba(0,116,162,0.08)",
+                        }}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {/* Free text input */}
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    sendMessage(input);
+                  }}
+                  className="flex items-center gap-2 px-3 pb-3 pt-2"
                 >
-                  {currentFlow.options.map((opt) => (
-                    <button
-                      key={opt.label}
-                      onClick={() => handleOption(opt)}
-                      className="rounded-full px-3 py-1.5 text-xs font-medium border transition-all hover:scale-105 active:scale-95"
-                      style={{
-                        borderColor: "rgba(0,116,162,0.4)",
-                        color: "#7dd3fc",
-                        background: "rgba(0,116,162,0.08)",
-                      }}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-              )
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Eigene Frage stellen..."
+                    disabled={aiLoading}
+                    className="flex-1 rounded-xl px-3 py-2 text-sm outline-none disabled:opacity-50"
+                    style={{
+                      background: "rgba(255,255,255,0.07)",
+                      color: "#e2e8f0",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={aiLoading || !input.trim()}
+                    className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-opacity disabled:opacity-40"
+                    style={{ background: "#0074a2" }}
+                    aria-label="Senden"
+                  >
+                    {aiLoading ? (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true" className="animate-spin">
+                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                      </svg>
+                    ) : (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <line x1="22" y1="2" x2="11" y2="13" />
+                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                      </svg>
+                    )}
+                  </button>
+                </form>
+              </div>
             )}
           </motion.div>
         )}
