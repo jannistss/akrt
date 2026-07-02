@@ -583,16 +583,15 @@ export function ChatWidget() {
       }
     } catch (err: unknown) {
       const isAbort = err instanceof Error && err.name === "AbortError";
-      console.log("[v0] sendMessage ERROR:", err instanceof Error ? err.message : String(err), "isAbort:", isAbort);
+      const errMsg = err instanceof Error ? err.message : String(err);
+      console.log("[v0] sendMessage ERROR:", errMsg, "isAbort:", isAbort);
       setLastFailedMessage(text);
+      let errorText = "Kurzer Fehler — bitte nochmal versuchen.";
+      if (isAbort) errorText = "Die Antwort hat zu lange gedauert. Bitte nochmal versuchen.";
+      else if (errMsg.includes("500") || errMsg.includes("gedrosselt")) errorText = "Der Assistent ist gerade überlastet. Bitte kurz warten und nochmal versuchen.";
       setMessages((prev) => [
         ...prev,
-        {
-          role: "bot",
-          text: isAbort
-            ? "Die Antwort hat zu lange gedauert. Bitte nochmal versuchen."
-            : "Kurzer Fehler — bitte nochmal versuchen.",
-        },
+        { role: "bot", text: errorText },
       ]);
       setChatStep("idle");
     } finally {

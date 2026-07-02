@@ -70,10 +70,13 @@ export async function POST(req: Request) {
     });
 
     // Try models in order, fall back on rate-limit errors
+    // Spread across providers so rate limits don't all hit at once
     const MODELS = [
-      "openai/gpt-4.1-nano",
-      "openai/gpt-4o-mini",
-      "google/gemini-2.0-flash",
+      "openai/gpt-4.1-nano",          // OpenAI — fast & cheap
+      "google/gemini-3.5-flash",       // Google — different provider pool
+      "anthropic/claude-3-haiku",      // Anthropic — different provider pool
+      "openai/gpt-4o-mini",            // OpenAI fallback
+      "google/gemini-2.5-flash-lite",  // Google fallback
     ];
 
     const encoder = new TextEncoder();
