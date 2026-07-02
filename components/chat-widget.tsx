@@ -534,8 +534,8 @@ export function ChatWidget() {
 
       console.log("[v0] stream complete, botText length:", botText.length, "preview:", botText.slice(0, 80));
 
-      // If model returned nothing useful, treat as error
-      if (!botText.trim()) throw new Error("Leere Antwort vom Modell");
+      // If model returned nothing useful — likely a rate-limit from the server
+      if (!botText.trim()) throw new Error("RATE_LIMIT");
 
       // Detect chat step from bot text to show contextual chips/inputs
       const lower = botText.toLowerCase();
@@ -578,11 +578,11 @@ export function ChatWidget() {
     } catch (err: unknown) {
       const isAbort = err instanceof Error && err.name === "AbortError";
       const errMsg = err instanceof Error ? err.message : String(err);
-      console.log("[v0] sendMessage ERROR:", errMsg, "isAbort:", isAbort);
+      const isRateLimit = errMsg === "RATE_LIMIT" || errMsg.includes("500") || errMsg.includes("rate");
       setLastFailedMessage(text);
       let errorText = "Kurzer Fehler — bitte nochmal versuchen.";
       if (isAbort) errorText = "Die Antwort hat zu lange gedauert. Bitte nochmal versuchen.";
-      else if (errMsg.includes("500") || errMsg.includes("gedrosselt")) errorText = "Der Assistent ist gerade überlastet. Bitte kurz warten und nochmal versuchen.";
+      else if (isRateLimit) errorText = "Zu viele Anfragen — bitte 30 Sekunden warten und es nochmal versuchen.";
       setMessages((prev) => [
         ...prev,
         { role: "bot", text: errorText },
