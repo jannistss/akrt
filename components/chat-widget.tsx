@@ -580,13 +580,38 @@ export function ChatWidget() {
           // Always scan the full chat history and override bad JSON values
           const userMsgs = messages.filter((m) => m.role === "user").map((m) => m.text.trim());
 
-          // Extract Leistung from chat
+          // Normalize map: keyword → clean label
+          const LEISTUNG_MAP: Record<string, string> = {
+            "tüv-vorcheck": "TÜV-Vorcheck",
+            "vorcheck": "TÜV-Vorcheck",
+            "hu+au": "TÜV / HU+AU",
+            "hauptuntersuchung": "TÜV / HU+AU",
+            "tüv": "TÜV / HU+AU",
+            "ölwechsel": "Ölwechsel",
+            "oelwechsel": "Ölwechsel",
+            "inspektion": "Inspektion",
+            "räderwechsel": "Räderwechsel",
+            "reifenwechsel": "Räderwechsel",
+            "bremsen": "Bremsservice",
+            "klima": "Klima-Service",
+            "diagnose": "Fehlerdiagnose",
+            "unfall": "Unfallinstandsetzung",
+            "glasservice": "Glasservice",
+            "achsvermessung": "Achsvermessung",
+          };
+
+          // Extract Leistung from chat — always normalize to clean label
           if (isEmpty(data.leistung)) {
-            const LEISTUNGEN = ["tüv", "hu+au", "hauptuntersuchung", "ölwechsel", "oelwechsel", "inspektion", "räderwechsel", "reifenwechsel", "bremsen", "klima", "diagnose", "unfall", "glasservice", "achsvermessung"];
             for (const msg of userMsgs) {
-              const found = LEISTUNGEN.find((l) => msg.toLowerCase().includes(l));
-              if (found) { data.leistung = msg.trim(); break; }
+              const lower = msg.toLowerCase();
+              const found = Object.keys(LEISTUNG_MAP).find((k) => lower.includes(k));
+              if (found) { data.leistung = LEISTUNG_MAP[found]; break; }
             }
+          } else {
+            // Also normalize if AI wrote something like "tüv bra" or "TÜV!"
+            const lower = data.leistung.toLowerCase();
+            const found = Object.keys(LEISTUNG_MAP).find((k) => lower.includes(k));
+            if (found) data.leistung = LEISTUNG_MAP[found];
           }
 
           // Extract Fahrzeug from chat
