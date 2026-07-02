@@ -47,7 +47,7 @@ export async function POST(req: Request) {
     });
 
     const result = streamText({
-      model: gw("openai/gpt-4o-mini"),
+      model: gw("google/gemini-2.5-flash-lite"),
       system: SYSTEM_PROMPT,
       messages,
       maxTokens: 400,
