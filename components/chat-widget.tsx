@@ -533,7 +533,7 @@ export function ChatWidget() {
       }
 
       // Detect TERMIN_BEREIT signal from AI
-      const terminMatch = botText.match(/TERMIN_BEREIT:(\{.*?\})/s);
+      const terminMatch = botText.match(/TERMIN_BEREIT:([\s\S]*?\})/);
       if (terminMatch) {
         try {
           const data = JSON.parse(terminMatch[1]);
@@ -543,7 +543,7 @@ export function ChatWidget() {
             const updated = [...prev];
             updated[updated.length - 1] = {
               role: "bot",
-              text: botText.replace(/TERMIN_BEREIT:\{.*?\}/s, "").trim(),
+              text: botText.replace(/TERMIN_BEREIT:[\s\S]*?\}/, "").trim(),
             };
             return updated;
           });
