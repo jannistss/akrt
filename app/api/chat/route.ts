@@ -74,7 +74,6 @@ export async function POST(req: Request) {
       model: gw("openai/gpt-4.1-nano"),
       system: SYSTEM_PROMPT,
       messages,
-      maxTokens: 400,
     });
 
     return result.toTextStreamResponse({
