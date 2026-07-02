@@ -909,7 +909,6 @@ export function ChatWidget() {
                   onSubmit={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    if (chatStep === "kennzeichen") return;
                     sendMessage(input);
                   }}
                   className="flex items-center gap-2 px-3 pb-3 pt-2"
