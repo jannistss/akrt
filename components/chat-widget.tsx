@@ -600,18 +600,24 @@ export function ChatWidget() {
             "achsvermessung": "Achsvermessung",
           };
 
-          // Extract Leistung from chat — always normalize to clean label
-          if (isEmpty(data.leistung)) {
+          // Extract ALL leistungen from the entire chat history (user can name multiple)
+          {
+            const found = new Set<string>();
+            // Scan every user message for any leistung keyword
             for (const msg of userMsgs) {
               const lower = msg.toLowerCase();
-              const found = Object.keys(LEISTUNG_MAP).find((k) => lower.includes(k));
-              if (found) { data.leistung = LEISTUNG_MAP[found]; break; }
+              for (const [key, label] of Object.entries(LEISTUNG_MAP)) {
+                if (lower.includes(key)) found.add(label);
+              }
             }
-          } else {
-            // Also normalize if AI wrote something like "tüv bra" or "TÜV!"
-            const lower = data.leistung.toLowerCase();
-            const found = Object.keys(LEISTUNG_MAP).find((k) => lower.includes(k));
-            if (found) data.leistung = LEISTUNG_MAP[found];
+            // Also check AI's JSON value if it has real content
+            if (!isEmpty(data.leistung)) {
+              const lower = data.leistung.toLowerCase();
+              for (const [key, label] of Object.entries(LEISTUNG_MAP)) {
+                if (lower.includes(key)) found.add(label);
+              }
+            }
+            if (found.size > 0) data.leistung = Array.from(found).join(", ");
           }
 
           // Extract Fahrzeug from chat
@@ -810,7 +816,19 @@ export function ChatWidget() {
                             borderBottomRightRadius: "4px",
                           }
                     }
-                    dangerouslySetInnerHTML={{ __html: msg.text }}
+                    dangerouslySetInnerHTML={{
+                      __html: (() => {
+                        // Strip the AI's summary block — the widget card is the real summary
+                        let text = msg.text;
+                        const summaryStart = text.indexOf("**Deine Terminanfrage");
+                        if (summaryStart !== -1) {
+                          // Keep only the closing sentence after the summary
+                          const closingMatch = text.match(/Wir melden uns[^<]*/);
+                          text = closingMatch ? closingMatch[0] : "";
+                        }
+                        return text;
+                      })(),
+                    }}
                   />
                 </div>
               ))}
