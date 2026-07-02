@@ -365,9 +365,10 @@ export function ChatWidget() {
   const [typing, setTyping] = useState(false);
   const [input, setInput] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
-  const [terminData, setTerminData] = useState<null | { leistung: string; fahrzeug: string; datum: string; name: string; telefon: string }>(null);
+  const [terminData, setTerminData] = useState<null | { leistung: string; fahrzeug: string; datum: string; extras: string; name: string; telefon: string }>(null);
   const [terminSent, setTerminSent] = useState(false);
   const [terminSending, setTerminSending] = useState(false);
+  const [chatStep, setChatStep] = useState<"idle"|"datum"|"kennzeichen"|"upsell"|"name"|"telefon">("idle");
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -511,6 +512,22 @@ export function ChatWidget() {
             return updated;
           });
         }
+      }
+
+      // Detect chat step from bot text to show contextual chips
+      const lower = botText.toLowerCase();
+      if (lower.includes("kennzeichen") || (lower.includes("fahrzeug") && lower.includes("marke"))) {
+        setChatStep("kennzeichen");
+      } else if (lower.includes("wann") || lower.includes("termin") && lower.includes("datum") || lower.includes("zeitraum") || lower.includes("für wann")) {
+        setChatStep("datum");
+      } else if (lower.includes("autowäsche") || lower.includes("fahrzeugwäsche") || lower.includes("wäsche dazubuchen")) {
+        setChatStep("upsell");
+      } else if (lower.includes("auf welchen namen") || lower.includes("welchem namen")) {
+        setChatStep("name");
+      } else if (lower.includes("telefonnummer") || lower.includes("rufnummer") || lower.includes("erreichen")) {
+        setChatStep("telefon");
+      } else {
+        setChatStep("idle");
       }
 
       // Detect TERMIN_BEREIT signal from AI
@@ -755,20 +772,85 @@ export function ChatWidget() {
                   </div>
                 )}
 
+                {/* Contextual quick chips */}
+                {!aiLoading && chatStep !== "idle" && chatStep !== "kennzeichen" && (
+                  <div className="px-3 pt-2 flex flex-wrap gap-1.5">
+                    {chatStep === "datum" && ["Nächste Woche", "Ich bin flexibel", "Montag", "Dienstag", "Mittwoch", "Donnerstag"].map((chip) => (
+                      <button key={chip} onClick={() => sendMessage(chip)}
+                        className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
+                        style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
+                        {chip}
+                      </button>
+                    ))}
+                    {chatStep === "upsell" && ["Nein danke", "Außenwäsche +13,99 €", "Innen & Außen +49,99 €"].map((chip) => (
+                      <button key={chip} onClick={() => sendMessage(chip)}
+                        className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
+                        style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
+                        {chip}
+                      </button>
+                    ))}
+                    {chatStep === "name" && ["Anonym / nicht angeben"].map((chip) => (
+                      <button key={chip} onClick={() => sendMessage(chip)}
+                        className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
+                        style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
+                        {chip}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Kennzeichen input */}
+                {chatStep === "kennzeichen" && !aiLoading && (
+                  <form onSubmit={(e) => { e.preventDefault(); if (input.trim()) sendMessage(input); }}
+                    className="px-3 pt-2 pb-1">
+                    <div className="flex items-stretch rounded-lg overflow-hidden border-2 border-[#003399] bg-white"
+                      style={{ maxWidth: 220 }}>
+                      {/* EU stripe */}
+                      <div className="flex flex-col items-center justify-center px-2 py-1"
+                        style={{ background: "#003399", minWidth: 32 }}>
+                        <span className="text-yellow-300 text-xs font-bold leading-none">EU</span>
+                        <span className="text-yellow-300 text-[8px] leading-none mt-0.5">★</span>
+                      </div>
+                      <input
+                        ref={inputRef}
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value.toUpperCase())}
+                        placeholder="RT - AB 1234"
+                        maxLength={10}
+                        className="flex-1 px-2 py-2 text-sm font-bold tracking-widest outline-none bg-white text-gray-900 uppercase"
+                        style={{ letterSpacing: "0.15em" }}
+                      />
+                      <button type="submit" disabled={!input.trim()}
+                        className="px-3 flex items-center justify-center disabled:opacity-40"
+                        style={{ background: "#0074a2" }}
+                        aria-label="Kennzeichen bestätigen">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg>
+                      </button>
+                    </div>
+                    <button type="button" onClick={() => sendMessage("Kein Kennzeichen vorhanden")}
+                      className="mt-1.5 text-xs" style={{ color: "#64748b" }}>
+                      Kein Kennzeichen? Hier klicken
+                    </button>
+                  </form>
+                )}
+
                 {/* Free text input */}
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
                     sendMessage(input);
                   }}
-                  className="flex items-center gap-2 px-3 pb-3 pt-2"
+                  className={`flex items-center gap-2 px-3 pb-3 pt-2 ${chatStep === "kennzeichen" ? "hidden" : ""}`}
                 >
                   <input
-                    ref={inputRef}
+                    ref={chatStep === "kennzeichen" ? undefined : inputRef}
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Eigene Frage stellen..."
+                    placeholder={chatStep === "telefon" ? "z.B. 0171 1234567" : chatStep === "name" ? "Dein Name..." : "Nachricht eingeben..."}
                     disabled={aiLoading}
                     className="flex-1 rounded-xl px-3 py-2 text-sm outline-none disabled:opacity-50"
                     style={{
