@@ -43,7 +43,7 @@ const nextConfig = {
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https://cdn.prod.website-files.com https://lh3.googleusercontent.com https://www.google-analytics.com https://www.googletagmanager.com",
               "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://ai-gateway.vercel.sh",
-              "frame-src 'self' https://www.google.com https://maps.google.com",
+              "frame-src 'self' https://www.google.com https://maps.google.com https://booking.wscloud.io",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
