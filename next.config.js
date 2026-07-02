@@ -10,6 +10,13 @@ const nextConfig = {
   // ── Redirects ──────────────────────────────────────────────────────────────
   async redirects() {
     return [
+      // www → non-www canonical redirect (fixes Google Search Console sitemap mismatch)
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.autoklinik-reutlingen.de" }],
+        destination: "https://autoklinik-reutlingen.de/:path*",
+        permanent: true,
+      },
       // Trailing slash normalization
       {
         source: "/:path+/",
