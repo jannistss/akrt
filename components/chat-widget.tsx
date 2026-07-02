@@ -853,47 +853,49 @@ export function ChatWidget() {
                   </div>
                 )}
 
-                {/* Kennzeichen input — completely replaces free text input */}
+                {/* Kennzeichen input — isolated form to prevent double-submit */}
                 {chatStep === "kennzeichen" && !aiLoading && (
                   <div className="px-3 pt-2 pb-3">
-                    <div className="flex items-stretch rounded-lg overflow-hidden border-2 border-[#003399] bg-white"
-                      style={{ maxWidth: 240 }}>
-                      {/* EU stripe */}
-                      <div className="flex flex-col items-center justify-center px-2 py-1"
-                        style={{ background: "#003399", minWidth: 32 }}>
-                        <span className="text-yellow-300 text-xs font-bold leading-none">EU</span>
-                        <span className="text-yellow-300 text-[8px] leading-none mt-0.5">★</span>
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const val = input.trim();
+                        if (!val) return;
+                        setInput("");
+                        sendMessage(val);
+                      }}
+                    >
+                      <div className="flex items-stretch rounded-lg overflow-hidden border-2 border-[#003399] bg-white"
+                        style={{ maxWidth: 240 }}>
+                        {/* EU stripe */}
+                        <div className="flex flex-col items-center justify-center px-2 py-1"
+                          style={{ background: "#003399", minWidth: 32 }}>
+                          <span className="text-yellow-300 text-xs font-bold leading-none">EU</span>
+                          <span className="text-yellow-300 text-[8px] leading-none mt-0.5">★</span>
+                        </div>
+                        <input
+                          ref={inputRef}
+                          type="text"
+                          value={input}
+                          onChange={(e) => setInput(e.target.value.toUpperCase())}
+                          placeholder="RT - AB 1234"
+                          maxLength={10}
+                          className="flex-1 px-2 py-2 text-sm font-bold tracking-widest outline-none bg-white text-gray-900 uppercase"
+                          style={{ letterSpacing: "0.15em" }}
+                        />
+                        <button
+                          type="submit"
+                          disabled={!input.trim()}
+                          className="px-3 flex items-center justify-center disabled:opacity-40"
+                          style={{ background: "#0074a2" }}
+                          aria-label="Kennzeichen bestätigen">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
+                          </svg>
+                        </button>
                       </div>
-                      <input
-                        ref={inputRef}
-                        type="text"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value.toUpperCase())}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" && !e.nativeEvent.isComposing && input.trim()) {
-                            e.preventDefault();
-                            const val = input.trim();
-                            setInput("");
-                            sendMessage(val);
-                          }
-                        }}
-                        placeholder="RT - AB 1234"
-                        maxLength={10}
-                        className="flex-1 px-2 py-2 text-sm font-bold tracking-widest outline-none bg-white text-gray-900 uppercase"
-                        style={{ letterSpacing: "0.15em" }}
-                      />
-                      <button
-                        type="button"
-                        disabled={!input.trim()}
-                        onClick={() => { const val = input.trim(); setInput(""); sendMessage(val); }}
-                        className="px-3 flex items-center justify-center disabled:opacity-40"
-                        style={{ background: "#0074a2" }}
-                        aria-label="Kennzeichen bestätigen">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
-                        </svg>
-                      </button>
-                    </div>
+                    </form>
                     <button type="button" onClick={() => { setInput(""); sendMessage("Kein Kennzeichen vorhanden"); }}
                       className="mt-1.5 text-xs" style={{ color: "#64748b" }}>
                       Kein Kennzeichen? Hier klicken
@@ -906,6 +908,8 @@ export function ChatWidget() {
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
+                    e.stopPropagation();
+                    if (chatStep === "kennzeichen") return;
                     sendMessage(input);
                   }}
                   className="flex items-center gap-2 px-3 pb-3 pt-2"
