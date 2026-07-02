@@ -90,7 +90,7 @@ export default function TuevAuPage() {
               </div>
               <motion.div className="relative w-full lg:w-[400px] shrink-0" style={{ height: 380 }} {...slideRight(0.2)}>
                 <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                  <Image src="/assets/images/6937e7167a27ffa77e40aa08_Hero-Image.png" alt="Fahrzeug bei der Hauptuntersuchung in der Autoklinik Reutlingen" fill className="object-cover" priority sizes="(max-width: 1024px) 100vw, 400px" />
+                  <Image src="/assets/images/hero-tuev.png" alt="Fahrzeug bei der Hauptuntersuchung in der Autoklinik Reutlingen" fill className="object-cover" priority sizes="(max-width: 1024px) 100vw, 400px" />
                 </div>
                 <motion.div className="absolute -bottom-4 -right-4 rounded-2xl p-5 shadow-xl" style={{ backgroundColor: "#ffffff" }} {...scaleUp(0.4)}>
                   <Image src="/assets/images/6937e7159229bbc42b6c8632_icon-tuev.png" alt="TÜV Süd Partner" width={80} height={80} className="object-contain" />

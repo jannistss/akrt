@@ -88,7 +88,7 @@ export default function KlimaservicePage() {
                 </motion.div>
               </div>
               <motion.div className="relative w-full lg:w-[420px] rounded-2xl overflow-hidden shrink-0" style={{ height: 420 }} {...slideRight(0.2)}>
-                <Image src="/assets/images/6937e7163e052d298653ff55_reperatur-mann-.png" alt="Mechaniker prüft Klimaanlage eines Fahrzeugs in der Autoklinik Reutlingen" fill className="object-cover object-center" priority sizes="(max-width: 1024px) 100vw, 420px" />
+                <Image src="/assets/images/hero-klimaservice.png" alt="Mechaniker prüft Klimaanlage eines Fahrzeugs in der Autoklinik Reutlingen" fill className="object-cover object-center" priority sizes="(max-width: 1024px) 100vw, 420px" />
                 <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 50%, rgba(0,20,32,0.55) 100%)" }} />
                 <motion.div className="absolute bottom-6 left-6 rounded-xl px-4 py-3 flex items-center gap-3" style={{ backgroundColor: "rgba(0,46,64,0.85)", backdropFilter: "blur(8px)", border: "1px solid rgba(77,184,216,0.3)" }} {...scaleUp(0.4)}>
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14" stroke="#4db8d8" strokeWidth="1.6" strokeLinecap="round" /></svg>
@@ -143,7 +143,7 @@ export default function KlimaservicePage() {
                 </div>
               </div>
               <motion.div className="relative rounded-2xl overflow-hidden" style={{ height: 460 }} {...slideRight(0.15)}>
-                <Image src="/assets/images/6937e7167a27ffa77e40aa08_Hero-Image.png" alt="Werkstatt der Autoklinik Reutlingen" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                <Image src="/assets/images/hero-inspektion.png" alt="Werkstatt der Autoklinik Reutlingen" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
               </motion.div>
             </div>
           </div>
