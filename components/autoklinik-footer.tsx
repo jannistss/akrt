@@ -240,6 +240,10 @@ export function AutoklinikFooter() {
             <Link href="/datenschutz" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.28)" }}>
               Datenschutz
             </Link>
+            <Link href="/blog" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.28)" }}>
+              Ratgeber
+            </Link>
+            <span style={{ color: "rgba(255,255,255,0.15)" }}>·</span>
             <Link href="/impressum" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.28)" }}>
               Impressum
             </Link>
