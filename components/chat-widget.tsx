@@ -562,6 +562,74 @@ export function ChatWidget() {
       if (terminMatch) {
         try {
           const data = JSON.parse(terminMatch[1]);
+
+          // Helper: catch ANY placeholder the AI might write
+          const isEmpty = (v: string) => {
+            if (!v) return true;
+            const low = v.toLowerCase().trim();
+            // Catch: "", "...", "[...]", anything containing "nicht genannt", "nicht angegeben", "kein", "keine", "unbekannt", "n/a"
+            return (
+              low === "" || low === "..." || low === "n/a" || low === "tbd" ||
+              v.startsWith("[") ||
+              low.includes("nicht genannt") || low.includes("nicht angegeben") ||
+              low.includes("kein kennzeichen") || low.includes("keine angabe") ||
+              low.includes("unbekannt") || low.includes("noch nicht")
+            );
+          };
+
+          // Always scan the full chat history and override bad JSON values
+          const userMsgs = messages.filter((m) => m.role === "user").map((m) => m.text.trim());
+
+          // Normalize map: keyword → clean label
+          const LEISTUNG_MAP: Record<string, string> = {
+            "tüv-vorcheck": "TÜV-Vorcheck",
+            "vorcheck": "TÜV-Vorcheck",
+            "hu+au": "TÜV / HU+AU",
+            "hauptuntersuchung": "TÜV / HU+AU",
+            "tüv": "TÜV / HU+AU",
+            "ölwechsel": "Ölwechsel",
+            "oelwechsel": "Ölwechsel",
+            "inspektion": "Inspektion",
+            "räderwechsel": "Räderwechsel",
+            "reifenwechsel": "Räderwechsel",
+            "bremsen": "Bremsservice",
+            "klima": "Klima-Service",
+            "diagnose": "Fehlerdiagnose",
+            "unfall": "Unfallinstandsetzung",
+            "glasservice": "Glasservice",
+            "achsvermessung": "Achsvermessung",
+          };
+
+          // Extract Leistung from chat — always normalize to clean label
+          if (isEmpty(data.leistung)) {
+            for (const msg of userMsgs) {
+              const lower = msg.toLowerCase();
+              const found = Object.keys(LEISTUNG_MAP).find((k) => lower.includes(k));
+              if (found) { data.leistung = LEISTUNG_MAP[found]; break; }
+            }
+          } else {
+            // Also normalize if AI wrote something like "tüv bra" or "TÜV!"
+            const lower = data.leistung.toLowerCase();
+            const found = Object.keys(LEISTUNG_MAP).find((k) => lower.includes(k));
+            if (found) data.leistung = LEISTUNG_MAP[found];
+          }
+
+          // Extract Fahrzeug from chat
+          if (isEmpty(data.fahrzeug)) {
+            const MARKEN = ["vw", "volkswagen", "bmw", "mercedes", "benz", "audi", "opel", "ford", "toyota", "hyundai", "kia", "seat", "skoda", "renault", "peugeot", "citroen", "fiat", "honda", "mazda", "nissan", "volvo", "porsche", "mini", "smart", "tesla", "golf", "polo", "passat", "a3", "a4", "3er", "5er", "c-klasse", "e-klasse"];
+            for (const msg of userMsgs) {
+              const lower = msg.toLowerCase();
+              if (MARKEN.some((m) => lower.includes(m))) { data.fahrzeug = msg.trim(); break; }
+            }
+          }
+
+          // Extract Kennzeichen from chat (always rescan — AI often gets this wrong)
+          const plateRegex = /\b[A-ZÄÖÜ]{1,3}[\s-][A-ZÄÖÜ]{1,2}[\s-]?\d{1,4}[EH]?\b/i;
+          for (const msg of userMsgs) {
+            const match = msg.match(plateRegex);
+            if (match) { data.kennzeichen = match[0].toUpperCase().replace(/\s+/g, " "); break; }
+          }
+
           console.log("[v0] TERMIN_BEREIT detected:", data);
           setTerminData(data);
           setChatStep("idle");
@@ -802,20 +870,44 @@ export function ChatWidget() {
                     {/* Summary card */}
                     <div className="rounded-xl p-3 mb-2 text-xs space-y-1.5" style={{ background: "rgba(0,116,162,0.10)", border: "1px solid rgba(0,116,162,0.25)" }}>
                       <p className="font-semibold text-[11px] uppercase tracking-wide mb-2" style={{ color: "#7dd3fc" }}>Zusammenfassung</p>
-                      {[
-                        { label: "Fahrzeug", value: `${terminData.fahrzeug}${terminData.kennzeichen ? ` · ${terminData.kennzeichen}` : ""}` },
-                        { label: "Leistung", value: terminData.leistung },
-                        { label: "Wunschtermin", value: terminData.datum },
-                        ...(terminData.extras && terminData.extras !== "Nein danke" && terminData.extras !== "Keine" ? [{ label: "Extras", value: terminData.extras }] : []),
-                        { label: "Name", value: terminData.name },
-                        { label: "Telefon", value: terminData.telefon },
-                        ...(terminData.email ? [{ label: "E-Mail", value: terminData.email }] : []),
-                      ].map(({ label, value }) => (
-                        <div key={label} className="flex gap-2">
-                          <span className="shrink-0 w-20" style={{ color: "#94a3b8" }}>{label}</span>
-                          <span className="font-medium" style={{ color: "#e2e8f0" }}>{value}</span>
-                        </div>
-                      ))}
+                      {(() => {
+                        // Clean up any placeholder the AI might write
+                        const clean = (v: string) => {
+                          if (!v) return "–";
+                          const low = v.toLowerCase().trim();
+                          if (v.startsWith("[") || low === "..." || low === "n/a" || low.includes("nicht genannt") || low.includes("nicht angegeben") || low.includes("kein") || low.includes("unbekannt") || low.includes("noch nicht")) return "–";
+                          return v;
+                        };
+                        const fahrzeug = [clean(terminData.fahrzeug), terminData.kennzeichen ? `· ${terminData.kennzeichen}` : ""].filter(Boolean).join(" ");
+                        const hasExtras = terminData.extras && terminData.extras !== "Nein danke" && terminData.extras !== "Keine" && terminData.extras !== "–";
+                        // Estimate price from leistung string
+                        const priceMap: Record<string, string> = {
+                          "tüv": "ab 165,00 €", "hu": "ab 165,00 €", "hauptuntersuchung": "ab 165,00 €",
+                          "inspektion": "ab 150,00 €", "ölwechsel": "ab 90,00 €", "oelwechsel": "ab 90,00 €",
+                          "räderwechsel": "ab 20,00 €", "reifenwechsel": "ab 20,00 €",
+                          "klima": "ab 115,00 €", "bremsen": "auf Anfrage", "diagnose": "ab 20,00 €",
+                        };
+                        const leistungLower = (terminData.leistung || "").toLowerCase();
+                        const basePrice = Object.entries(priceMap).find(([k]) => leistungLower.includes(k))?.[1] ?? "auf Anfrage";
+                        const extraPrice = hasExtras && terminData.extras?.includes("49,99") ? 49.99 : hasExtras && terminData.extras?.includes("13,99") ? 13.99 : 0;
+                        const priceStr = extraPrice > 0 ? `${basePrice} + ${extraPrice.toFixed(2).replace(".", ",")} € Wäsche (zzgl. 19% MwSt.)` : `${basePrice} zzgl. 19% MwSt.`;
+                        const rows = [
+                          { label: "Fahrzeug", value: fahrzeug },
+                          { label: "Leistung", value: clean(terminData.leistung) },
+                          { label: "Wunschtermin", value: clean(terminData.datum) },
+                          ...(hasExtras ? [{ label: "Extras", value: terminData.extras }] : []),
+                          { label: "Preis", value: priceStr },
+                          { label: "Name", value: clean(terminData.name) },
+                          { label: "Telefon", value: clean(terminData.telefon) },
+                          ...(terminData.email && terminData.email !== "–" ? [{ label: "E-Mail", value: terminData.email }] : []),
+                        ];
+                        return rows.map(({ label, value }) => (
+                          <div key={label} className="flex gap-2">
+                            <span className="shrink-0 w-20" style={{ color: "#94a3b8" }}>{label}</span>
+                            <span className="font-medium" style={{ color: "#e2e8f0" }}>{value as string}</span>
+                          </div>
+                        ));
+                      })()}
                     </div>
                     <button
                       onClick={sendTermin}
