@@ -75,10 +75,12 @@ E-Mail: [E-Mail]
 
 Wir melden uns schnellstmöglich mit dem vollständigen Kostenvoranschlag und der Terminbestätigung bei dir. Bis bald!
 
-Dann ZWINGEND auf neuer Zeile (JSON komplett ausfüllen, kein Feld leer):
+Dann ZWINGEND auf neuer Zeile das JSON mit den ECHTEN Werten aus dem Gespräch (KEIN Platzhalter, KEIN "...", nur echte Werte):
 ###TERMIN_BEREIT###
-{"leistung":"...","fahrzeug":"...","kennzeichen":"...","datum":"...","extras":"...","name":"...","telefon":"...","email":"..."}
+{"leistung":"TÜV / HU+AU","fahrzeug":"VW Polo","kennzeichen":"RT W 2804","datum":"nächste Woche","extras":"Außenwäsche 13,99 €","name":"Karim Najami","telefon":"01725145465","email":"info@beispiel.de"}
 ###ENDE###
+
+WICHTIG: Ersetze JEDEN Wert im JSON mit dem tatsächlich genannten Wert aus dem Chat. Niemals "...", niemals "[Bitte...]", niemals leer lassen — immer die echten Angaben des Kunden eintragen.
 
 ═══════════════
 PREISE:
