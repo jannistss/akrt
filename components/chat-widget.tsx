@@ -365,6 +365,9 @@ export function ChatWidget() {
   const [typing, setTyping] = useState(false);
   const [input, setInput] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
+  const [terminData, setTerminData] = useState<null | { leistung: string; fahrzeug: string; datum: string; name: string; telefon: string }>(null);
+  const [terminSent, setTerminSent] = useState(false);
+  const [terminSending, setTerminSending] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -509,6 +512,24 @@ export function ChatWidget() {
           });
         }
       }
+
+      // Detect TERMIN_BEREIT signal from AI
+      const terminMatch = botText.match(/TERMIN_BEREIT:(\{.*?\})/s);
+      if (terminMatch) {
+        try {
+          const data = JSON.parse(terminMatch[1]);
+          setTerminData(data);
+          // Remove the JSON signal from the displayed message
+          setMessages((prev) => {
+            const updated = [...prev];
+            updated[updated.length - 1] = {
+              role: "bot",
+              text: botText.replace(/TERMIN_BEREIT:\{.*?\}/s, "").trim(),
+            };
+            return updated;
+          });
+        } catch {}
+      }
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -516,6 +537,38 @@ export function ChatWidget() {
       ]);
     } finally {
       setAiLoading(false);
+    }
+  }
+
+  async function sendTermin() {
+    if (!terminData || terminSending) return;
+    setTerminSending(true);
+    const chatSummary = messages
+      .map((m) => `${m.role === "user" ? "Kunde" : "Assistent"}: ${m.text}`)
+      .join("\n");
+    try {
+      const res = await fetch("/api/chat-termin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...terminData, chatSummary }),
+      });
+      if (!res.ok) throw new Error("Fehler");
+      setTerminSent(true);
+      setTerminData(null);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "bot",
+          text: `Super ${terminData.name}! Deine Terminanfrage wurde erfolgreich gesendet. Wir melden uns so schnell wie möglich unter ${terminData.telefon}. Bis bald!`,
+        },
+      ]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        { role: "bot", text: "Leider gab es einen Fehler beim Senden. Ruf uns kurz an: 07121 988 6660" },
+      ]);
+    } finally {
+      setTerminSending(false);
     }
   }
 
@@ -685,6 +738,23 @@ export function ChatWidget() {
                     ))}
                   </div>
                 )}
+                {/* Booking confirmation button */}
+                {terminData && !terminSent && (
+                  <div className="px-3 pb-2">
+                    <button
+                      onClick={sendTermin}
+                      disabled={terminSending}
+                      className="w-full rounded-xl py-2.5 text-sm font-semibold transition-opacity disabled:opacity-60"
+                      style={{ background: "#0074a2", color: "#fff" }}
+                    >
+                      {terminSending ? "Wird gesendet..." : "Terminanfrage jetzt absenden"}
+                    </button>
+                    <p className="text-center text-xs mt-1.5" style={{ color: "#64748b" }}>
+                      Wir melden uns telefonisch zur Bestätigung
+                    </p>
+                  </div>
+                )}
+
                 {/* Free text input */}
                 <form
                   onSubmit={(e) => {
