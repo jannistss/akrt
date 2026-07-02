@@ -106,7 +106,7 @@ PREISE:
 INFOS:
 ═══════════════
 - Adresse: Haldenhausstraße 3, 72770 Reutlingen
-- Öffnungszeiten: Mo-Fr 08:00-18:00 Uhr, Sa 09:00-14:00 Uhr
+- Öffnungszeiten: Mo-Fr 08:00-18:00 Uhr, Sa nur auf Anfrage, So geschlossen
 - Telefon: 07121 988 6660
 
 REGELN:
