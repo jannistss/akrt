@@ -1,4 +1,4 @@
-import { streamText, createTextStreamResponse } from "ai";
+import { streamText } from "ai";
 import { createGateway } from "@ai-sdk/gateway";
 
 export const SYSTEM_PROMPT = `Du bist der freundliche Chat-Assistent der Autoklinik Reutlingen.
@@ -6,34 +6,31 @@ export const SYSTEM_PROMPT = `Du bist der freundliche Chat-Assistent der Autokli
 TERMINBUCHUNGS-ABLAUF (PFLICHT):
 Sobald ein Kunde einen Termin möchte (oder eine Leistung nennt), führe ihn STRIKT in dieser Reihenfolge durch - IMMER nur eine Frage auf einmal:
 
-FÜHRE DIESE SCHRITTE STRIKT DER REIHE NACH DURCH. IMMER NUR EINE FRAGE AUF EINMAL. WARTE AUF DIE ANTWORT, BEVOR DU WEITERMACHST.
+WICHTIGSTE REGEL: Schaue IMMER zuerst in den bisherigen Chatverlauf. Wenn eine Information bereits genannt wurde, frage NICHT nochmal danach — gehe direkt zum nächsten fehlenden Schritt.
 
-SCHRITT 1 - LEISTUNG:
-Frage: "Für welche Leistung benötigst du einen Termin?"
-WICHTIG: Fahrzeugnamen (Golf, BMW, Audi) sind KEINE Leistungen. Wenn der Kunde ein Fahrzeug nennt, erkläre den Unterschied und frage nochmal nach der Leistung.
+TERMINBUCHUNGS-SCHRITTE — arbeite die Liste ab, überspringe bereits bekannte Infos:
 
-SCHRITT 2 - FAHRZEUGMODELL:
-Frage: "Welche Fahrzeugmarke und welches Modell hast du? (z.B. VW Golf, BMW 3er)"
+1. LEISTUNG — Welche Werkstattleistung wird benötigt? (Ölwechsel, Inspektion, TÜV, Räderwechsel, Bremsen, Klima, Diagnose, Unfall...)
+   → Wenn der Kunde eine Fahrzeugmarke statt einer Leistung nennt (z.B. "VW", "BMW"), erkläre kurz den Unterschied und frage nach der Leistung.
+   → Wenn der Kunde bereits eine Leistung genannt hat (z.B. "Ölwechsel"), ist dieser Schritt ERLEDIGT — NICHT nochmal fragen!
 
-SCHRITT 3 - KENNZEICHEN:
-Frage: "Was ist dein Kennzeichen?"
+2. FAHRZEUGMODELL — Welche Marke und welches Modell? (z.B. VW Golf, BMW 3er, Audi A4)
+   → Frage EXAKT: "Welche Fahrzeugmarke und welches Modell hast du?"
 
-SCHRITT 4 - DATUM:
-Frage: "Für wann wünschst du dir den Termin?"
+3. KENNZEICHEN — Frage EXAKT: "Was ist dein Kennzeichen?"
 
-SCHRITT 5 - WÄSCHE:
-Frage: "Möchtest du eine Fahrzeugwäsche dazubuchen? Außenwäsche 13,99 € oder Innen- & Außenwäsche 49,99 € (zzgl. 19% MwSt.)"
+4. DATUM — Frage EXAKT: "Für wann wünschst du dir den Termin?"
 
-SCHRITT 6 - NAME:
-Frage: "Auf welchen Namen darf ich die Anfrage stellen?"
+5. WÄSCHE-UPSELL — Frage EXAKT: "Möchtest du eine Fahrzeugwäsche dazubuchen? Außenwäsche 13,99 € oder Innen- & Außenwäsche 49,99 € (zzgl. 19% MwSt.)"
 
-SCHRITT 7 - TELEFON:
-Frage: "Unter welcher Telefonnummer können wir dich erreichen?"
+6. NAME — Frage EXAKT: "Auf welchen Namen darf ich die Anfrage stellen?"
 
-ERST NACH SCHRITT 7 (wenn du die Telefonnummer hast!):
-Schreibe eine kurze Zusammenfassung aller Angaben mit Preisschätzung.
-Schreibe dann: "Wir melden uns mit einem vollständigen Kostenvoranschlag und der Terminbestätigung bei dir."
-Danach schreibe ZWINGEND auf einer neuen Zeile exakt diesen Block (alle Felder ausfüllen):
+7. TELEFON — Frage EXAKT: "Unter welcher Telefonnummer können wir dich erreichen?"
+
+NUR WENN ALLE 7 SCHRITTE ABGEHAKT SIND:
+Schreibe eine freundliche Zusammenfassung mit Preisschätzung (inkl. MwSt.).
+Schreibe: "Wir melden uns mit einem vollständigen Kostenvoranschlag und der Terminbestätigung bei dir."
+Dann auf einer neuen Zeile ZWINGEND exakt:
 ###TERMIN_BEREIT###
 {"leistung":"...","fahrzeug":"...","kennzeichen":"...","datum":"...","extras":"...","name":"...","telefon":"..."}
 ###ENDE###
@@ -66,18 +63,78 @@ REGELN:
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
+    console.log("[v0] /api/chat called, messages:", messages?.length);
+
     const gw = createGateway({
       apiKey: process.env.AI_GATEWAY_API_KEY ?? process.env.VERCEL_AI_GATEWAY_KEY,
     });
 
-    const result = streamText({
-      model: gw("google/gemini-2.5-flash-lite"),
-      system: SYSTEM_PROMPT,
-      messages,
+    // Try models in order, fall back on rate-limit errors
+    // Spread across providers so rate limits don't all hit at once
+    const MODELS = [
+      "openai/gpt-4.1-nano",          // OpenAI — fast & cheap
+      "google/gemini-3.5-flash",       // Google — different provider pool
+      "anthropic/claude-3-haiku",      // Anthropic — different provider pool
+      "openai/gpt-4o-mini",            // OpenAI fallback
+      "google/gemini-2.5-flash-lite",  // Google fallback
+    ];
+
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        let success = false;
+        for (const modelId of MODELS) {
+          try {
+            console.log("[v0] trying model:", modelId);
+            let hadError: unknown = null;
+            const result = streamText({
+              model: gw(modelId),
+              system: SYSTEM_PROMPT,
+              messages,
+              onError: ({ error }) => {
+                hadError = error;
+                console.log("[v0] model", modelId, "onError:", String(error).slice(0, 120));
+              },
+            });
+            let totalChars = 0;
+            for await (const chunk of result.textStream) {
+              totalChars += chunk.length;
+              controller.enqueue(encoder.encode(chunk));
+            }
+            console.log("[v0] model", modelId, "stream done, chars:", totalChars, "hadError:", !!hadError);
+            if (totalChars === 0) {
+              // Empty stream — likely rate limited, try next model
+              console.log("[v0] model", modelId, "empty stream, trying next...");
+              continue;
+            }
+            success = true;
+            break;
+          } catch (modelErr: unknown) {
+            const msg = modelErr instanceof Error ? modelErr.message : String(modelErr);
+            console.log(`[v0] model ${modelId} caught error:`, msg.slice(0, 120));
+            // Try next model regardless of error type
+            continue;
+          }
+        }
+        if (!success) {
+          // All models rate-limited
+          controller.error(new Error("Alle Modelle gedrosselt"));
+        } else {
+          controller.close();
+        }
+      },
     });
 
-    return createTextStreamResponse({ stream: result.textStream });
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Cache-Control": "no-cache",
+        "X-Accel-Buffering": "no",
+      },
+    });
   } catch (err) {
+    console.log("[v0] /api/chat error:", err);
     return new Response(JSON.stringify({ error: String(err) }), { status: 500 });
   }
 }

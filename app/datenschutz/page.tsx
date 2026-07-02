@@ -4,7 +4,9 @@ import { AutoklinikFooter } from "@/components/autoklinik-footer";
 
 export const metadata = {
   title: "Datenschutz | Autoklinik Reutlingen",
-  description: "Datenschutzerklärung der Autoklinik Reutlingen GmbH.",
+  description: "Datenschutzerklärung der Autoklinik Reutlingen GmbH gemäß DSGVO.",
+  alternates: { canonical: "https://autoklinik-reutlingen.de/datenschutz" },
+  robots: { index: false, follow: false },
 };
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {

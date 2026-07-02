@@ -370,6 +370,7 @@ export function ChatWidget() {
   const [terminSending, setTerminSending] = useState(false);
   const [chatStep, setChatStep] = useState<"idle"|"datum"|"kennzeichen"|"upsell"|"name"|"telefon">("idle");
   const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(null);
+  const [conversationStarted, setConversationStarted] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -477,17 +478,23 @@ export function ChatWidget() {
   }
 
   async function sendMessage(text: string, isRetry = false) {
-    if (!text.trim() || aiLoading) return;
+    if (!text.trim()) return;
+    // Force-reset aiLoading if stuck
+    if (aiLoading && !isRetry) {
+      console.log("[v0] sendMessage blocked by aiLoading, forcing reset for:", text);
+      setAiLoading(false);
+      return;
+    }
     if (!isRetry) setInput("");
     const userMsg: Message = { role: "user", text };
 
     setMessages((prev) => {
-      // On retry, remove the last error bot message before re-adding user msg
       const base = isRetry ? prev.slice(0, -1) : prev;
       return [...base, userMsg];
     });
     setAiLoading(true);
     setLastFailedMessage(null);
+    setConversationStarted(true);
 
     // Build conversation history for the AI (last 10 messages)
     const history = [...messages, userMsg].slice(-10).map((m) => ({
@@ -495,8 +502,13 @@ export function ChatWidget() {
       content: m.text,
     }));
 
+    console.log("[v0] sendMessage start:", text, "history length:", history.length);
+
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 20000);
+    const timeout = setTimeout(() => {
+      console.log("[v0] sendMessage TIMEOUT after 20s for:", text);
+      controller.abort();
+    }, 20000);
 
     try {
       const res = await fetch("/api/chat", {
@@ -505,6 +517,7 @@ export function ChatWidget() {
         body: JSON.stringify({ messages: history }),
         signal: controller.signal,
       });
+      console.log("[v0] fetch response status:", res.status);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const reader = res.body?.getReader();
@@ -525,8 +538,10 @@ export function ChatWidget() {
         }
       }
 
+      console.log("[v0] stream complete, botText length:", botText.length, "preview:", botText.slice(0, 80));
+
       // If model returned nothing useful, treat as error
-      if (!botText.trim()) throw new Error("Leere Antwort");
+      if (!botText.trim()) throw new Error("Leere Antwort vom Modell");
 
       // Detect chat step from bot text to show contextual chips/inputs
       const lower = botText.toLowerCase();
@@ -546,11 +561,12 @@ export function ChatWidget() {
         setChatStep("idle");
       }
 
-      // Detect TERMIN_BEREIT signal from AI (new delimited format)
+      // Detect TERMIN_BEREIT signal from AI (delimited format)
       const terminMatch = botText.match(/###TERMIN_BEREIT###\s*([\s\S]*?)\s*###ENDE###/);
       if (terminMatch) {
         try {
           const data = JSON.parse(terminMatch[1]);
+          console.log("[v0] TERMIN_BEREIT detected:", data);
           setTerminData(data);
           setChatStep("idle");
           setMessages((prev) => {
@@ -561,19 +577,21 @@ export function ChatWidget() {
             };
             return updated;
           });
-        } catch {}
+        } catch (parseErr) {
+          console.log("[v0] TERMIN_BEREIT JSON parse failed:", parseErr, "raw:", terminMatch[1]);
+        }
       }
     } catch (err: unknown) {
       const isAbort = err instanceof Error && err.name === "AbortError";
+      const errMsg = err instanceof Error ? err.message : String(err);
+      console.log("[v0] sendMessage ERROR:", errMsg, "isAbort:", isAbort);
       setLastFailedMessage(text);
+      let errorText = "Kurzer Fehler — bitte nochmal versuchen.";
+      if (isAbort) errorText = "Die Antwort hat zu lange gedauert. Bitte nochmal versuchen.";
+      else if (errMsg.includes("500") || errMsg.includes("gedrosselt")) errorText = "Der Assistent ist gerade überlastet. Bitte kurz warten und nochmal versuchen.";
       setMessages((prev) => [
         ...prev,
-        {
-          role: "bot",
-          text: isAbort
-            ? "Die Antwort hat zu lange gedauert. Bitte nochmal versuchen."
-            : "Kurzer Fehler — bitte nochmal versuchen.",
-        },
+        { role: "bot", text: errorText },
       ]);
       setChatStep("idle");
     } finally {
@@ -761,14 +779,15 @@ export function ChatWidget() {
               </div>
             ) : (
               <div className="shrink-0 border-t" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
-                {/* Quick reply buttons — hidden when contextual chips are shown */}
-                {!typing && !aiLoading && currentFlow.options.length > 0 && chatStep === "idle" && (
+                {/* Quick reply buttons — only shown before conversation starts */}
+                {!typing && !aiLoading && currentFlow.options.length > 0 && chatStep === "idle" && !conversationStarted && (
                   <div className="px-4 pt-3 pb-2 flex flex-wrap gap-2">
-                    {currentFlow.options.map((opt) => (
-                      <button
-                        key={opt.label}
-                        onClick={() => handleOption(opt)}
-                        className="rounded-full px-3 py-1.5 text-xs font-medium border transition-all hover:scale-105 active:scale-95"
+                  {currentFlow.options.map((opt) => (
+                    <button
+                      key={opt.label}
+                      type="button"
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleOption(opt); }}
+                      className="rounded-full px-3 py-1.5 text-xs font-medium border transition-all hover:scale-105 active:scale-95"
                         style={{
                           borderColor: "rgba(0,116,162,0.4)",
                           color: "#7dd3fc",
@@ -814,21 +833,24 @@ export function ChatWidget() {
                 {!aiLoading && chatStep !== "idle" && chatStep !== "kennzeichen" && (
                   <div className="px-3 pt-2 flex flex-wrap gap-1.5">
                     {chatStep === "datum" && ["Nächste Woche", "Ich bin flexibel", "Montag", "Dienstag", "Mittwoch", "Donnerstag"].map((chip) => (
-                      <button key={chip} onClick={() => sendMessage(chip)}
+                      <button key={chip} type="button"
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setInput(""); sendMessage(chip); }}
                         className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
                         style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
                         {chip}
                       </button>
                     ))}
                     {chatStep === "upsell" && ["Nein danke", "Außenwäsche +13,99 €", "Innen & Außen +49,99 €"].map((chip) => (
-                      <button key={chip} onClick={() => sendMessage(chip)}
+                      <button key={chip} type="button"
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setInput(""); sendMessage(chip); }}
                         className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
                         style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
                         {chip}
                       </button>
                     ))}
                     {chatStep === "name" && ["Anonym / nicht angeben"].map((chip) => (
-                      <button key={chip} onClick={() => sendMessage(chip)}
+                      <button key={chip} type="button"
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setInput(""); sendMessage(chip); }}
                         className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
                         style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
                         {chip}

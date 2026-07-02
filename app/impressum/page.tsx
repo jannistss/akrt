@@ -4,7 +4,9 @@ import { AutoklinikFooter } from "@/components/autoklinik-footer";
 
 export const metadata = {
   title: "Impressum | Autoklinik Reutlingen",
-  description: "Impressum der Autoklinik Reutlingen GmbH.",
+  description: "Impressum der Autoklinik Reutlingen GmbH – Haldenhaustraße 3, 72770 Reutlingen.",
+  alternates: { canonical: "https://autoklinik-reutlingen.de/impressum" },
+  robots: { index: false, follow: false },
 };
 
 export default function ImpressumPage() {
