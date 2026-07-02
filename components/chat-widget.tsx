@@ -804,8 +804,9 @@ export function ChatWidget() {
                       <p className="font-semibold text-[11px] uppercase tracking-wide mb-2" style={{ color: "#7dd3fc" }}>Zusammenfassung</p>
                       {(() => {
                         // Clean up placeholder values the AI sometimes outputs
+                        const PLACEHOLDERS = ["...", "noch nicht angegeben", "nicht angegeben", "unbekannt", "keine angabe", "tbd", "n/a"];
                         const clean = (v: string) =>
-                          !v || v === "..." || v.startsWith("[") ? "–" : v;
+                          !v || v.startsWith("[") || PLACEHOLDERS.includes(v.toLowerCase().trim()) ? "–" : v;
                         const fahrzeug = [clean(terminData.fahrzeug), terminData.kennzeichen ? `· ${terminData.kennzeichen}` : ""].filter(Boolean).join(" ");
                         const hasExtras = terminData.extras && terminData.extras !== "Nein danke" && terminData.extras !== "Keine" && terminData.extras !== "–";
                         // Estimate price from leistung string
