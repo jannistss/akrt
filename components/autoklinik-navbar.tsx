@@ -16,31 +16,31 @@ import {
 } from "@/components/ui/resizable-navbar";
 import { cn } from "@/lib/utils";
 
-const navItems: NavItem[] = [
-  { name: "Startseite", link: "/" },
-  {
-    name: "Leistungen",
-    link: "#leistungen",
-    children: [
-      { name: "Inspektion & Wartung", link: "/inspektion" },
-      { name: "TÜV & AU", link: "/tuev-au" },
-      { name: "Reifenservice", link: "/reifenservice" },
-      { name: "Glasservice", link: "/glasservice" },
-      { name: "Klimaservice", link: "/klimaservice" },
-      { name: "Unfallservice", link: "/unfall" },
-      { name: "Flottenbetreuung", link: "/flottenbetreuung" },
-    ],
-  },
-  { name: "Flotte", link: "/flottenbetreuung" },
-  { name: "Kfz-Gutachter", link: "/kfz-gutachter" },
-  { name: "Ratgeber", link: "/blog" },
-  { name: "Karriere", link: "/karriere" },
-  { name: "Kontakt", link: "#kontakt" },
-];
-
 export function AutoklinikNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileLeistungenOpen, setMobileLeistungenOpen] = useState(false);
+
+  const navItems: NavItem[] = [
+    { name: "Startseite", link: "/" },
+    {
+      name: "Leistungen",
+      link: "#leistungen",
+      children: [
+        { name: "Inspektion & Wartung", link: "/inspektion" },
+        { name: "TÜV & AU", link: "/tuev-au" },
+        { name: "Reifenservice", link: "/reifenservice" },
+        { name: "Glasservice", link: "/glasservice" },
+        { name: "Klimaservice", link: "/klimaservice" },
+        { name: "Unfallservice", link: "/unfall" },
+        { name: "Flottenbetreuung", link: "/flottenbetreuung" },
+      ],
+    },
+    { name: "Flotte", link: "/flottenbetreuung" },
+    { name: "Kfz-Gutachter", link: "/kfz-gutachter" },
+    { name: "Ratgeber", link: "/blog" },
+    { name: "Karriere", link: "/karriere" },
+    { name: "Kontakt", link: "#kontakt" },
+  ];
 
   return (
     <Navbar>
