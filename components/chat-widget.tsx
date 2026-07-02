@@ -562,6 +562,42 @@ export function ChatWidget() {
       if (terminMatch) {
         try {
           const data = JSON.parse(terminMatch[1]);
+
+          // Helper: is this a real value or a placeholder?
+          const EMPTY = ["", "...", "nicht angegeben", "noch nicht angegeben", "unbekannt", "keine angabe", "n/a", "tbd"];
+          const isEmpty = (v: string) => !v || EMPTY.includes(v.toLowerCase().trim()) || v.startsWith("[");
+
+          // Fallback: scan the actual user messages for the info the AI forgot to put in
+          const userMsgs = messages.filter((m) => m.role === "user").map((m) => m.text.trim());
+
+          // Extract Leistung from chat if AI wrote placeholder
+          if (isEmpty(data.leistung)) {
+            const LEISTUNGEN = ["tüv", "hu", "hauptuntersuchung", "ölwechsel", "oelwechsel", "inspektion", "räderwechsel", "reifenwechsel", "bremsen", "klima", "diagnose", "unfall", "glasservice", "achsvermessung"];
+            for (const msg of userMsgs) {
+              const found = LEISTUNGEN.find((l) => msg.toLowerCase().includes(l));
+              if (found) { data.leistung = msg; break; }
+            }
+          }
+
+          // Extract Fahrzeug from chat if AI wrote placeholder
+          if (isEmpty(data.fahrzeug)) {
+            const MARKEN = ["vw", "volkswagen", "bmw", "mercedes", "audi", "opel", "ford", "toyota", "hyundai", "kia", "seat", "skoda", "renault", "peugeot", "citroen", "fiat", "honda", "mazda", "nissan", "volvo", "porsche", "mini", "smart", "tesla"];
+            for (const msg of userMsgs) {
+              const lower = msg.toLowerCase();
+              if (MARKEN.some((m) => lower.includes(m))) { data.fahrzeug = msg; break; }
+            }
+          }
+
+          // Extract Kennzeichen from chat if AI wrote placeholder
+          if (isEmpty(data.kennzeichen)) {
+            // German plate pattern: 1-3 letters, space, 1-2 letters, space, 1-4 digits
+            const plateRegex = /[A-ZÄÖÜ]{1,3}[\s-][A-Z]{1,2}[\s-]\d{1,4}[EH]?/i;
+            for (const msg of userMsgs) {
+              const match = msg.match(plateRegex);
+              if (match) { data.kennzeichen = match[0].toUpperCase(); break; }
+            }
+          }
+
           console.log("[v0] TERMIN_BEREIT detected:", data);
           setTerminData(data);
           setChatStep("idle");
