@@ -365,7 +365,7 @@ export function ChatWidget() {
   const [typing, setTyping] = useState(false);
   const [input, setInput] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
-  const [terminData, setTerminData] = useState<null | { leistung: string; fahrzeug: string; datum: string; extras: string; name: string; telefon: string }>(null);
+  const [terminData, setTerminData] = useState<null | { leistung: string; fahrzeug: string; kennzeichen: string; datum: string; extras: string; name: string; telefon: string }>(null);
   const [terminSent, setTerminSent] = useState(false);
   const [terminSending, setTerminSending] = useState(false);
   const [chatStep, setChatStep] = useState<"idle"|"datum"|"kennzeichen"|"upsell"|"name"|"telefon">("idle");
@@ -546,17 +546,18 @@ export function ChatWidget() {
         setChatStep("idle");
       }
 
-      // Detect TERMIN_BEREIT signal from AI
-      const terminMatch = botText.match(/TERMIN_BEREIT:([\s\S]*?\})/);
+      // Detect TERMIN_BEREIT signal from AI (new delimited format)
+      const terminMatch = botText.match(/###TERMIN_BEREIT###\s*([\s\S]*?)\s*###ENDE###/);
       if (terminMatch) {
         try {
           const data = JSON.parse(terminMatch[1]);
           setTerminData(data);
+          setChatStep("idle");
           setMessages((prev) => {
             const updated = [...prev];
             updated[updated.length - 1] = {
               role: "bot",
-              text: botText.replace(/TERMIN_BEREIT:[\s\S]*?\}/, "").trim(),
+              text: botText.replace(/###TERMIN_BEREIT###[\s\S]*?###ENDE###/, "").trim(),
             };
             return updated;
           });
