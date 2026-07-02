@@ -54,8 +54,6 @@ export async function POST(req: Request) {
       model: gw("google/gemini-2.5-flash-lite"),
       system: SYSTEM_PROMPT,
       messages,
-      maxTokens: 400,
-      temperature: 0.7,
     });
 
     return createTextStreamResponse({ stream: result.textStream });
