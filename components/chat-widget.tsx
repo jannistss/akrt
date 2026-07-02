@@ -369,6 +369,7 @@ export function ChatWidget() {
   const [terminSent, setTerminSent] = useState(false);
   const [terminSending, setTerminSending] = useState(false);
   const [chatStep, setChatStep] = useState<"idle"|"datum"|"kennzeichen"|"upsell"|"name"|"telefon">("idle");
+  const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -475,12 +476,18 @@ export function ChatWidget() {
     }
   }
 
-  async function sendMessage(text: string) {
+  async function sendMessage(text: string, isRetry = false) {
     if (!text.trim() || aiLoading) return;
-    setInput("");
+    if (!isRetry) setInput("");
     const userMsg: Message = { role: "user", text };
-    setMessages((prev) => [...prev, userMsg]);
+
+    setMessages((prev) => {
+      // On retry, remove the last error bot message before re-adding user msg
+      const base = isRetry ? prev.slice(0, -1) : prev;
+      return [...base, userMsg];
+    });
     setAiLoading(true);
+    setLastFailedMessage(null);
 
     // Build conversation history for the AI (last 10 messages)
     const history = [...messages, userMsg].slice(-10).map((m) => ({
@@ -488,13 +495,17 @@ export function ChatWidget() {
       content: m.text,
     }));
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: history }),
+        signal: controller.signal,
       });
-      if (!res.ok) throw new Error("Fehler");
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const reader = res.body?.getReader();
       const decoder = new TextDecoder();
@@ -514,12 +525,15 @@ export function ChatWidget() {
         }
       }
 
+      // If model returned nothing useful, treat as error
+      if (!botText.trim()) throw new Error("Leere Antwort");
+
       // Detect chat step from bot text to show contextual chips/inputs
       const lower = botText.toLowerCase();
       if (lower.includes("was ist dein kennzeichen") || lower.includes("dein kennzeichen")) {
         setChatStep("kennzeichen");
-      } else if (lower.includes("marke") && lower.includes("modell") || lower.includes("fahrzeugmarke")) {
-        setChatStep("idle"); // free text for model
+      } else if ((lower.includes("marke") && lower.includes("modell")) || lower.includes("fahrzeugmarke")) {
+        setChatStep("idle");
       } else if (lower.includes("für wann") || lower.includes("wann wünschst") || lower.includes("zeitraum")) {
         setChatStep("datum");
       } else if (lower.includes("wäsche dazubuchen") || lower.includes("fahrzeugwäsche") || lower.includes("autowäsche")) {
@@ -538,7 +552,6 @@ export function ChatWidget() {
         try {
           const data = JSON.parse(terminMatch[1]);
           setTerminData(data);
-          // Remove the JSON signal from the displayed message
           setMessages((prev) => {
             const updated = [...prev];
             updated[updated.length - 1] = {
@@ -549,12 +562,21 @@ export function ChatWidget() {
           });
         } catch {}
       }
-    } catch {
+    } catch (err: unknown) {
+      const isAbort = err instanceof Error && err.name === "AbortError";
+      setLastFailedMessage(text);
       setMessages((prev) => [
         ...prev,
-        { role: "bot", text: "Sorry, da ist etwas schiefgelaufen. Ruf uns kurz an: 07121 988 6660" },
+        {
+          role: "bot",
+          text: isAbort
+            ? "Die Antwort hat zu lange gedauert. Bitte nochmal versuchen."
+            : "Kurzer Fehler — bitte nochmal versuchen.",
+        },
       ]);
+      setChatStep("idle");
     } finally {
+      clearTimeout(timeout);
       setAiLoading(false);
     }
   }
@@ -771,6 +793,19 @@ export function ChatWidget() {
                     <p className="text-center text-xs mt-1.5" style={{ color: "#64748b" }}>
                       Wir melden uns telefonisch zur Bestätigung
                     </p>
+                  </div>
+                )}
+
+                {/* Retry button */}
+                {lastFailedMessage && !aiLoading && (
+                  <div className="px-3 pt-2">
+                    <button
+                      onClick={() => sendMessage(lastFailedMessage, true)}
+                      className="w-full rounded-xl py-2 text-xs font-medium border transition-all"
+                      style={{ borderColor: "rgba(239,68,68,0.4)", color: "#fca5a5", background: "rgba(239,68,68,0.08)" }}
+                    >
+                      Nochmal versuchen
+                    </button>
                   </div>
                 )}
 
