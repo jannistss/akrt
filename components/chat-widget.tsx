@@ -363,7 +363,14 @@ export function ChatWidget() {
   const [showProactive, setShowProactive] = useState(false);
   const [proactiveDismissed, setProactiveDismissed] = useState(false);
   const [typing, setTyping] = useState(false);
+  const [input, setInput] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+  const [terminData, setTerminData] = useState<null | { leistung: string; fahrzeug: string; datum: string; extras: string; name: string; telefon: string }>(null);
+  const [terminSent, setTerminSent] = useState(false);
+  const [terminSending, setTerminSending] = useState(false);
+  const [chatStep, setChatStep] = useState<"idle"|"datum"|"kennzeichen"|"upsell"|"name"|"telefon">("idle");
   const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   /* proactive bubble after 4s, once */
   useEffect(() => {
@@ -468,6 +475,122 @@ export function ChatWidget() {
     }
   }
 
+  async function sendMessage(text: string) {
+    if (!text.trim() || aiLoading) return;
+    setInput("");
+    const userMsg: Message = { role: "user", text };
+    setMessages((prev) => [...prev, userMsg]);
+    setAiLoading(true);
+
+    // Build conversation history for the AI (last 10 messages)
+    const history = [...messages, userMsg].slice(-10).map((m) => ({
+      role: m.role === "bot" ? "assistant" : "user",
+      content: m.text,
+    }));
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: history }),
+      });
+      if (!res.ok) throw new Error("Fehler");
+
+      const reader = res.body?.getReader();
+      const decoder = new TextDecoder();
+      let botText = "";
+      setMessages((prev) => [...prev, { role: "bot", text: "" }]);
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          botText += decoder.decode(value, { stream: true });
+          setMessages((prev) => {
+            const updated = [...prev];
+            updated[updated.length - 1] = { role: "bot", text: botText };
+            return updated;
+          });
+        }
+      }
+
+      // Detect chat step from bot text to show contextual chips/inputs
+      const lower = botText.toLowerCase();
+      if (lower.includes("was ist dein kennzeichen") || lower.includes("dein kennzeichen")) {
+        setChatStep("kennzeichen");
+      } else if (lower.includes("marke") && lower.includes("modell") || lower.includes("fahrzeugmarke")) {
+        setChatStep("idle"); // free text for model
+      } else if (lower.includes("für wann") || lower.includes("wann wünschst") || lower.includes("zeitraum")) {
+        setChatStep("datum");
+      } else if (lower.includes("wäsche dazubuchen") || lower.includes("fahrzeugwäsche") || lower.includes("autowäsche")) {
+        setChatStep("upsell");
+      } else if (lower.includes("auf welchen namen") || lower.includes("welchen namen")) {
+        setChatStep("name");
+      } else if (lower.includes("telefonnummer") || lower.includes("rufnummer") || lower.includes("erreichen")) {
+        setChatStep("telefon");
+      } else {
+        setChatStep("idle");
+      }
+
+      // Detect TERMIN_BEREIT signal from AI
+      const terminMatch = botText.match(/TERMIN_BEREIT:(\{.*?\})/s);
+      if (terminMatch) {
+        try {
+          const data = JSON.parse(terminMatch[1]);
+          setTerminData(data);
+          // Remove the JSON signal from the displayed message
+          setMessages((prev) => {
+            const updated = [...prev];
+            updated[updated.length - 1] = {
+              role: "bot",
+              text: botText.replace(/TERMIN_BEREIT:\{.*?\}/s, "").trim(),
+            };
+            return updated;
+          });
+        } catch {}
+      }
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        { role: "bot", text: "Sorry, da ist etwas schiefgelaufen. Ruf uns kurz an: 07121 988 6660" },
+      ]);
+    } finally {
+      setAiLoading(false);
+    }
+  }
+
+  async function sendTermin() {
+    if (!terminData || terminSending) return;
+    setTerminSending(true);
+    const chatSummary = messages
+      .map((m) => `${m.role === "user" ? "Kunde" : "Assistent"}: ${m.text}`)
+      .join("\n");
+    try {
+      const res = await fetch("/api/chat-termin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...terminData, chatSummary }),
+      });
+      if (!res.ok) throw new Error("Fehler");
+      setTerminSent(true);
+      setTerminData(null);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "bot",
+          text: `Super ${terminData.name}! Deine Terminanfrage wurde erfolgreich gesendet. Wir melden uns so schnell wie möglich unter ${terminData.telefon}. Bis bald!`,
+        },
+      ]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        { role: "bot", text: "Leider gab es einen Fehler beim Senden. Ruf uns kurz an: 07121 988 6660" },
+      ]);
+    } finally {
+      setTerminSending(false);
+    }
+  }
+
   const currentFlow = FLOWS[flow];
 
   return (
@@ -564,7 +687,7 @@ export function ChatWidget() {
               {messages.map((msg, i) => (
                 <div
                   key={i}
-                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} ${msg.role === "bot" && msg.text === "" ? "hidden" : ""}`}
                 >
                   <div
                     className="max-w-[85%] rounded-2xl px-3 py-2 text-sm leading-relaxed whitespace-pre-line"
@@ -586,8 +709,8 @@ export function ChatWidget() {
                 </div>
               ))}
 
-              {/* Typing indicator */}
-              {typing && (
+              {/* Typing indicator — shown for both bot flows and AI loading */}
+              {(typing || aiLoading) && (
                 <div className="flex justify-start">
                   <div
                     className="rounded-2xl px-4 py-3 flex gap-1 items-center"
@@ -608,33 +731,156 @@ export function ChatWidget() {
               <div ref={bottomRef} />
             </div>
 
-            {/* Callback form or quick replies */}
+            {/* Callback form or quick replies + text input */}
             {flow === "rueckruf" ? (
               <div className="shrink-0 border-t" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
                 <CallbackForm onBack={() => { setFlow("root"); addBotMessage(FLOWS.root.message); }} />
               </div>
             ) : (
-              !typing && currentFlow.options.length > 0 && (
-                <div
-                  className="shrink-0 px-4 pb-4 pt-3 flex flex-wrap gap-2 border-t"
-                  style={{ borderColor: "rgba(255,255,255,0.07)" }}
-                >
-                  {currentFlow.options.map((opt) => (
+              <div className="shrink-0 border-t" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
+                {/* Quick reply buttons — hidden when contextual chips are shown */}
+                {!typing && !aiLoading && currentFlow.options.length > 0 && chatStep === "idle" && (
+                  <div className="px-4 pt-3 pb-2 flex flex-wrap gap-2">
+                    {currentFlow.options.map((opt) => (
+                      <button
+                        key={opt.label}
+                        onClick={() => handleOption(opt)}
+                        className="rounded-full px-3 py-1.5 text-xs font-medium border transition-all hover:scale-105 active:scale-95"
+                        style={{
+                          borderColor: "rgba(0,116,162,0.4)",
+                          color: "#7dd3fc",
+                          background: "rgba(0,116,162,0.08)",
+                        }}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {/* Booking confirmation button */}
+                {terminData && !terminSent && (
+                  <div className="px-3 pb-2">
                     <button
-                      key={opt.label}
-                      onClick={() => handleOption(opt)}
-                      className="rounded-full px-3 py-1.5 text-xs font-medium border transition-all hover:scale-105 active:scale-95"
-                      style={{
-                        borderColor: "rgba(0,116,162,0.4)",
-                        color: "#7dd3fc",
-                        background: "rgba(0,116,162,0.08)",
-                      }}
+                      onClick={sendTermin}
+                      disabled={terminSending}
+                      className="w-full rounded-xl py-2.5 text-sm font-semibold transition-opacity disabled:opacity-60"
+                      style={{ background: "#0074a2", color: "#fff" }}
                     >
-                      {opt.label}
+                      {terminSending ? "Wird gesendet..." : "Terminanfrage jetzt absenden"}
                     </button>
-                  ))}
-                </div>
-              )
+                    <p className="text-center text-xs mt-1.5" style={{ color: "#64748b" }}>
+                      Wir melden uns telefonisch zur Bestätigung
+                    </p>
+                  </div>
+                )}
+
+                {/* Contextual quick chips */}
+                {!aiLoading && chatStep !== "idle" && chatStep !== "kennzeichen" && (
+                  <div className="px-3 pt-2 flex flex-wrap gap-1.5">
+                    {chatStep === "datum" && ["Nächste Woche", "Ich bin flexibel", "Montag", "Dienstag", "Mittwoch", "Donnerstag"].map((chip) => (
+                      <button key={chip} onClick={() => sendMessage(chip)}
+                        className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
+                        style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
+                        {chip}
+                      </button>
+                    ))}
+                    {chatStep === "upsell" && ["Nein danke", "Außenwäsche +13,99 €", "Innen & Außen +49,99 €"].map((chip) => (
+                      <button key={chip} onClick={() => sendMessage(chip)}
+                        className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
+                        style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
+                        {chip}
+                      </button>
+                    ))}
+                    {chatStep === "name" && ["Anonym / nicht angeben"].map((chip) => (
+                      <button key={chip} onClick={() => sendMessage(chip)}
+                        className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
+                        style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
+                        {chip}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Kennzeichen input */}
+                {chatStep === "kennzeichen" && !aiLoading && (
+                  <form onSubmit={(e) => { e.preventDefault(); if (input.trim()) sendMessage(input); }}
+                    className="px-3 pt-2 pb-1">
+                    <div className="flex items-stretch rounded-lg overflow-hidden border-2 border-[#003399] bg-white"
+                      style={{ maxWidth: 220 }}>
+                      {/* EU stripe */}
+                      <div className="flex flex-col items-center justify-center px-2 py-1"
+                        style={{ background: "#003399", minWidth: 32 }}>
+                        <span className="text-yellow-300 text-xs font-bold leading-none">EU</span>
+                        <span className="text-yellow-300 text-[8px] leading-none mt-0.5">★</span>
+                      </div>
+                      <input
+                        ref={inputRef}
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value.toUpperCase())}
+                        placeholder="RT - AB 1234"
+                        maxLength={10}
+                        className="flex-1 px-2 py-2 text-sm font-bold tracking-widest outline-none bg-white text-gray-900 uppercase"
+                        style={{ letterSpacing: "0.15em" }}
+                      />
+                      <button type="submit" disabled={!input.trim()}
+                        className="px-3 flex items-center justify-center disabled:opacity-40"
+                        style={{ background: "#0074a2" }}
+                        aria-label="Kennzeichen bestätigen">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg>
+                      </button>
+                    </div>
+                    <button type="button" onClick={() => sendMessage("Kein Kennzeichen vorhanden")}
+                      className="mt-1.5 text-xs" style={{ color: "#64748b" }}>
+                      Kein Kennzeichen? Hier klicken
+                    </button>
+                  </form>
+                )}
+
+                {/* Free text input */}
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    sendMessage(input);
+                  }}
+                  className={`flex items-center gap-2 px-3 pb-3 pt-2 ${chatStep === "kennzeichen" ? "hidden" : ""}`}
+                >
+                  <input
+                    ref={chatStep === "kennzeichen" ? undefined : inputRef}
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder={chatStep === "telefon" ? "z.B. 0171 1234567" : chatStep === "name" ? "Dein Name..." : "Nachricht eingeben..."}
+                    disabled={aiLoading}
+                    className="flex-1 rounded-xl px-3 py-2 text-sm outline-none disabled:opacity-50"
+                    style={{
+                      background: "rgba(255,255,255,0.07)",
+                      color: "#e2e8f0",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={aiLoading || !input.trim()}
+                    className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-opacity disabled:opacity-40"
+                    style={{ background: "#0074a2" }}
+                    aria-label="Senden"
+                  >
+                    {aiLoading ? (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true" className="animate-spin">
+                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                      </svg>
+                    ) : (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <line x1="22" y1="2" x2="11" y2="13" />
+                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                      </svg>
+                    )}
+                  </button>
+                </form>
+              </div>
             )}
           </motion.div>
         )}
