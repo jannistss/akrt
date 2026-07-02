@@ -1,4 +1,4 @@
-import { streamText } from "ai";
+import { streamText, createTextStreamResponse } from "ai";
 import { createGateway } from "@ai-sdk/gateway";
 
 export const SYSTEM_PROMPT = `Du bist der freundliche Chat-Assistent der Autoklinik Reutlingen - einer jungen, ehrlichen Kfz-Werkstatt in Reutlingen.
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
       temperature: 0.7,
     });
 
-    return result.toTextStreamResponse();
+    return createTextStreamResponse({ stream: result.textStream });
   } catch (err) {
     return new Response(JSON.stringify({ error: String(err) }), { status: 500 });
   }
