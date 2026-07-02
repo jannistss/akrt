@@ -370,6 +370,7 @@ export function ChatWidget() {
   const [terminSending, setTerminSending] = useState(false);
   const [chatStep, setChatStep] = useState<"idle"|"datum"|"kennzeichen"|"upsell"|"name"|"telefon">("idle");
   const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(null);
+  const [conversationStarted, setConversationStarted] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -493,6 +494,7 @@ export function ChatWidget() {
     });
     setAiLoading(true);
     setLastFailedMessage(null);
+    setConversationStarted(true);
 
     // Build conversation history for the AI (last 10 messages)
     const history = [...messages, userMsg].slice(-10).map((m) => ({
@@ -778,8 +780,8 @@ export function ChatWidget() {
               </div>
             ) : (
               <div className="shrink-0 border-t" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
-                {/* Quick reply buttons — hidden when contextual chips are shown */}
-                {!typing && !aiLoading && currentFlow.options.length > 0 && chatStep === "idle" && (
+                {/* Quick reply buttons — only shown before conversation starts */}
+                {!typing && !aiLoading && currentFlow.options.length > 0 && chatStep === "idle" && !conversationStarted && (
                   <div className="px-4 pt-3 pb-2 flex flex-wrap gap-2">
                   {currentFlow.options.map((opt) => (
                     <button
