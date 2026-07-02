@@ -68,33 +68,33 @@ export default function BlogPage() {
         </section>
 
         {/* Featured post */}
-        <section style={{ backgroundColor: "#f5f9fc" }} className="py-14">
-          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "#0074a2" }}>
+        <section style={{ backgroundColor: "#f0f6fa" }} className="py-16">
+          <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-7" style={{ color: "#0074a2" }}>
               Aktueller Beitrag
             </p>
             <Link href={`/blog/${featured.slug}`} className="group block">
               <div
-                className="grid grid-cols-1 lg:grid-cols-2 rounded-3xl overflow-hidden"
+                className="grid grid-cols-1 lg:grid-cols-5 rounded-3xl overflow-hidden"
                 style={{
                   backgroundColor: "#ffffff",
-                  boxShadow: "0 8px 40px rgba(0,46,64,0.10)",
+                  boxShadow: "0 4px 32px rgba(0,46,64,0.09), 0 1px 4px rgba(0,46,64,0.06)",
                 }}
               >
-                {/* Image */}
-                <div className="relative overflow-hidden" style={{ minHeight: 320 }}>
+                {/* Image — takes 3/5 of width on desktop */}
+                <div className="relative lg:col-span-3 overflow-hidden" style={{ minHeight: 360 }}>
                   <Image
                     src={featured.image}
                     alt={featured.imageAlt}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    sizes="(max-width: 1024px) 100vw, 60vw"
                     priority
                   />
                 </div>
 
-                {/* Text */}
-                <div className="flex flex-col justify-between p-8 lg:p-12">
+                {/* Text — 2/5 width on desktop */}
+                <div className="lg:col-span-2 flex flex-col justify-between p-8 lg:p-10 xl:p-12">
                   <div>
                     <span
                       className="inline-block rounded-full px-3 py-1 text-xs font-semibold mb-5"
@@ -104,14 +104,11 @@ export default function BlogPage() {
                     </span>
                     <h2
                       className="font-bold tracking-tight leading-snug mb-4 text-balance group-hover:text-[#0074a2] transition-colors duration-200"
-                      style={{ color: "#002e40", fontSize: "clamp(1.35rem, 2vw, 1.8rem)" }}
+                      style={{ color: "#002e40", fontSize: "clamp(1.25rem, 2vw, 1.65rem)" }}
                     >
                       {featured.title}
                     </h2>
-                    <p
-                      className="text-sm leading-relaxed"
-                      style={{ color: "#4a6272" }}
-                    >
+                    <p className="text-sm leading-relaxed" style={{ color: "#4a6272" }}>
                       {featured.excerpt}
                     </p>
                   </div>
@@ -131,7 +128,7 @@ export default function BlogPage() {
                       </p>
                     </div>
                     <span
-                      className="ml-auto text-xs font-semibold flex items-center gap-1.5 group-hover:gap-2.5 transition-all"
+                      className="ml-auto text-xs font-semibold flex items-center gap-1.5 group-hover:gap-3 transition-all"
                       style={{ color: "#0074a2" }}
                     >
                       Lesen
@@ -147,28 +144,28 @@ export default function BlogPage() {
         </section>
 
         {/* All posts grid */}
-        <section style={{ backgroundColor: "#ffffff" }} className="py-14 pb-24">
-          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+        <section style={{ backgroundColor: "#ffffff" }} className="py-16 pb-28">
+          <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16">
             <h2
               className="font-bold mb-10"
-              style={{ color: "#002e40", fontSize: "1.35rem" }}
+              style={{ color: "#002e40", fontSize: "1.4rem" }}
             >
               Alle Artikel
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {rest.map((post) => (
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                  className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
                   style={{
                     backgroundColor: "#ffffff",
-                    boxShadow: "0 2px 14px rgba(0,46,64,0.06)",
-                    border: "1px solid #e8f0f5",
+                    boxShadow: "0 2px 16px rgba(0,46,64,0.07)",
+                    border: "1px solid #dde9f0",
                   }}
                 >
                   {/* Image */}
-                  <div className="relative overflow-hidden" style={{ height: 210 }}>
+                  <div className="relative overflow-hidden rounded-t-2xl" style={{ height: 200 }}>
                     <Image
                       src={post.image}
                       alt={post.imageAlt}
@@ -179,7 +176,7 @@ export default function BlogPage() {
                   </div>
 
                   {/* Body */}
-                  <div className="flex flex-col flex-1 p-6">
+                  <div className="flex flex-col flex-1 p-5">
                     <span
                       className="inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold mb-3 w-fit"
                       style={{ backgroundColor: "#e8f4fa", color: "#0074a2" }}
@@ -187,13 +184,13 @@ export default function BlogPage() {
                       {post.category}
                     </span>
                     <h3
-                      className="font-bold leading-snug mb-2 text-balance group-hover:text-[#0074a2] transition-colors"
-                      style={{ color: "#002e40", fontSize: "0.975rem" }}
+                      className="font-bold leading-snug mb-2.5 text-balance group-hover:text-[#0074a2] transition-colors"
+                      style={{ color: "#002e40", fontSize: "0.95rem" }}
                     >
                       {post.title}
                     </h3>
                     <p
-                      className="text-xs leading-relaxed flex-1 mb-5 line-clamp-2"
+                      className="text-xs leading-relaxed flex-1 line-clamp-2"
                       style={{ color: "#64849a" }}
                     >
                       {post.excerpt}
@@ -201,21 +198,25 @@ export default function BlogPage() {
 
                     {/* Author + meta */}
                     <div
-                      className="flex items-center gap-2.5 pt-4"
+                      className="flex items-center gap-2.5 mt-5 pt-4"
                       style={{ borderTop: "1px solid #e8f0f5" }}
                     >
                       <AuthorAvatar name={post.author} size={7} />
                       <div className="flex-1 min-w-0">
-                        <p
-                          className="text-xs font-semibold truncate"
-                          style={{ color: "#002e40" }}
-                        >
+                        <p className="text-xs font-semibold truncate" style={{ color: "#002e40" }}>
                           {post.author}
                         </p>
                         <p className="text-xs" style={{ color: "#94a3b8" }}>
                           {post.dateDisplay} · {post.readingTime}
                         </p>
                       </div>
+                      <svg
+                        className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                        width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"
+                        style={{ color: "#0074a2" }}
+                      >
+                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
                     </div>
                   </div>
                 </Link>
