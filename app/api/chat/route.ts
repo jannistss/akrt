@@ -60,56 +60,33 @@ REGELN:
 - Bei Preisfragen immer "zzgl. 19% MwSt." erwähnen und Bruttopreis nennen
 - Nur Themen der Autoklinik Reutlingen`;
 
-// Extend Vercel serverless function timeout to 60s (default is 10s)
+// Vercel serverless function max duration
 export const maxDuration = 60;
 
-const MODELS = [
-  "openai/gpt-4.1-nano",
-  "openai/gpt-4o-mini",
-];
+// Module-level gateway instance — created once, reused across requests
+const gw = createGateway();
 
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    const gw = createGateway({
-      apiKey: process.env.AI_GATEWAY_API_KEY ?? process.env.VERCEL_AI_GATEWAY_KEY,
+    const result = streamText({
+      model: gw("openai/gpt-4.1-nano"),
+      system: SYSTEM_PROMPT,
+      messages,
+      maxTokens: 400,
     });
 
-    // Try each model until one succeeds
-    let lastError: unknown;
-    for (const modelId of MODELS) {
-      try {
-        const result = streamText({
-          model: gw(modelId),
-          system: SYSTEM_PROMPT,
-          messages,
-        });
-
-        // Return a proper streaming response using the AI SDK's built-in method
-        return result.toTextStreamResponse({
-          headers: {
-            "Cache-Control": "no-cache",
-            "X-Accel-Buffering": "no",
-          },
-        });
-      } catch (modelErr) {
-        lastError = modelErr;
-        const msg = modelErr instanceof Error ? modelErr.message : String(modelErr);
-        // Only fall through to next model on rate-limit errors
-        if (msg.includes("429") || msg.includes("rate") || msg.includes("Rate")) {
-          continue;
-        }
-        // Any other error — return 500 immediately
-        throw modelErr;
-      }
-    }
-
-    // All models rate-limited
-    throw lastError;
+    return result.toTextStreamResponse({
+      headers: {
+        "Cache-Control": "no-cache",
+        "X-Accel-Buffering": "no",
+      },
+    });
   } catch (err) {
-    console.log("[v0] /api/chat error:", err instanceof Error ? err.message : String(err));
-    return new Response(JSON.stringify({ error: "Service temporarily unavailable" }), {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.log("[v0] /api/chat error:", msg);
+    return new Response(JSON.stringify({ error: msg }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
