@@ -514,15 +514,17 @@ export function ChatWidget() {
         }
       }
 
-      // Detect chat step from bot text to show contextual chips
+      // Detect chat step from bot text to show contextual chips/inputs
       const lower = botText.toLowerCase();
-      if (lower.includes("kennzeichen") || (lower.includes("fahrzeug") && lower.includes("marke"))) {
+      if (lower.includes("was ist dein kennzeichen") || lower.includes("dein kennzeichen")) {
         setChatStep("kennzeichen");
-      } else if (lower.includes("wann") || lower.includes("termin") && lower.includes("datum") || lower.includes("zeitraum") || lower.includes("für wann")) {
+      } else if (lower.includes("marke") && lower.includes("modell") || lower.includes("fahrzeugmarke")) {
+        setChatStep("idle"); // free text for model
+      } else if (lower.includes("für wann") || lower.includes("wann wünschst") || lower.includes("zeitraum")) {
         setChatStep("datum");
-      } else if (lower.includes("autowäsche") || lower.includes("fahrzeugwäsche") || lower.includes("wäsche dazubuchen")) {
+      } else if (lower.includes("wäsche dazubuchen") || lower.includes("fahrzeugwäsche") || lower.includes("autowäsche")) {
         setChatStep("upsell");
-      } else if (lower.includes("auf welchen namen") || lower.includes("welchem namen")) {
+      } else if (lower.includes("auf welchen namen") || lower.includes("welchen namen")) {
         setChatStep("name");
       } else if (lower.includes("telefonnummer") || lower.includes("rufnummer") || lower.includes("erreichen")) {
         setChatStep("telefon");
@@ -736,8 +738,8 @@ export function ChatWidget() {
               </div>
             ) : (
               <div className="shrink-0 border-t" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
-                {/* Quick reply buttons */}
-                {!typing && !aiLoading && currentFlow.options.length > 0 && (
+                {/* Quick reply buttons — hidden when contextual chips are shown */}
+                {!typing && !aiLoading && currentFlow.options.length > 0 && chatStep === "idle" && (
                   <div className="px-4 pt-3 pb-2 flex flex-wrap gap-2">
                     {currentFlow.options.map((opt) => (
                       <button
