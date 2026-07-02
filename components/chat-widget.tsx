@@ -478,13 +478,7 @@ export function ChatWidget() {
   }
 
   async function sendMessage(text: string, isRetry = false) {
-    if (!text.trim()) return;
-    // Force-reset aiLoading if stuck
-    if (aiLoading && !isRetry) {
-      console.log("[v0] sendMessage blocked by aiLoading, forcing reset for:", text);
-      setAiLoading(false);
-      return;
-    }
+    if (!text.trim() || aiLoading) return;
     if (!isRetry) setInput("");
     const userMsg: Message = { role: "user", text };
 
@@ -506,9 +500,9 @@ export function ChatWidget() {
 
     const controller = new AbortController();
     const timeout = setTimeout(() => {
-      console.log("[v0] sendMessage TIMEOUT after 20s for:", text);
+      console.log("[v0] sendMessage TIMEOUT after 55s for:", text);
       controller.abort();
-    }, 20000);
+    }, 55000);
 
     try {
       const res = await fetch("/api/chat", {
@@ -540,8 +534,8 @@ export function ChatWidget() {
 
       console.log("[v0] stream complete, botText length:", botText.length, "preview:", botText.slice(0, 80));
 
-      // If model returned nothing useful, treat as error
-      if (!botText.trim()) throw new Error("Leere Antwort vom Modell");
+      // If model returned nothing useful — likely a rate-limit from the server
+      if (!botText.trim()) throw new Error("RATE_LIMIT");
 
       // Detect chat step from bot text to show contextual chips/inputs
       const lower = botText.toLowerCase();
@@ -584,11 +578,11 @@ export function ChatWidget() {
     } catch (err: unknown) {
       const isAbort = err instanceof Error && err.name === "AbortError";
       const errMsg = err instanceof Error ? err.message : String(err);
-      console.log("[v0] sendMessage ERROR:", errMsg, "isAbort:", isAbort);
+      const isRateLimit = errMsg === "RATE_LIMIT" || errMsg.includes("500") || errMsg.includes("rate");
       setLastFailedMessage(text);
       let errorText = "Kurzer Fehler — bitte nochmal versuchen.";
       if (isAbort) errorText = "Die Antwort hat zu lange gedauert. Bitte nochmal versuchen.";
-      else if (errMsg.includes("500") || errMsg.includes("gedrosselt")) errorText = "Der Assistent ist gerade überlastet. Bitte kurz warten und nochmal versuchen.";
+      else if (isRateLimit) errorText = "Zu viele Anfragen — bitte 30 Sekunden warten und es nochmal versuchen.";
       setMessages((prev) => [
         ...prev,
         { role: "bot", text: errorText },
@@ -859,47 +853,49 @@ export function ChatWidget() {
                   </div>
                 )}
 
-                {/* Kennzeichen input — completely replaces free text input */}
+                {/* Kennzeichen input — isolated form to prevent double-submit */}
                 {chatStep === "kennzeichen" && !aiLoading && (
                   <div className="px-3 pt-2 pb-3">
-                    <div className="flex items-stretch rounded-lg overflow-hidden border-2 border-[#003399] bg-white"
-                      style={{ maxWidth: 240 }}>
-                      {/* EU stripe */}
-                      <div className="flex flex-col items-center justify-center px-2 py-1"
-                        style={{ background: "#003399", minWidth: 32 }}>
-                        <span className="text-yellow-300 text-xs font-bold leading-none">EU</span>
-                        <span className="text-yellow-300 text-[8px] leading-none mt-0.5">★</span>
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const val = input.trim();
+                        if (!val) return;
+                        setInput("");
+                        sendMessage(val);
+                      }}
+                    >
+                      <div className="flex items-stretch rounded-lg overflow-hidden border-2 border-[#003399] bg-white"
+                        style={{ maxWidth: 240 }}>
+                        {/* EU stripe */}
+                        <div className="flex flex-col items-center justify-center px-2 py-1"
+                          style={{ background: "#003399", minWidth: 32 }}>
+                          <span className="text-yellow-300 text-xs font-bold leading-none">EU</span>
+                          <span className="text-yellow-300 text-[8px] leading-none mt-0.5">★</span>
+                        </div>
+                        <input
+                          ref={inputRef}
+                          type="text"
+                          value={input}
+                          onChange={(e) => setInput(e.target.value.toUpperCase())}
+                          placeholder="RT - AB 1234"
+                          maxLength={10}
+                          className="flex-1 px-2 py-2 text-sm font-bold tracking-widest outline-none bg-white text-gray-900 uppercase"
+                          style={{ letterSpacing: "0.15em" }}
+                        />
+                        <button
+                          type="submit"
+                          disabled={!input.trim()}
+                          className="px-3 flex items-center justify-center disabled:opacity-40"
+                          style={{ background: "#0074a2" }}
+                          aria-label="Kennzeichen bestätigen">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
+                          </svg>
+                        </button>
                       </div>
-                      <input
-                        ref={inputRef}
-                        type="text"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value.toUpperCase())}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" && !e.nativeEvent.isComposing && input.trim()) {
-                            e.preventDefault();
-                            const val = input.trim();
-                            setInput("");
-                            sendMessage(val);
-                          }
-                        }}
-                        placeholder="RT - AB 1234"
-                        maxLength={10}
-                        className="flex-1 px-2 py-2 text-sm font-bold tracking-widest outline-none bg-white text-gray-900 uppercase"
-                        style={{ letterSpacing: "0.15em" }}
-                      />
-                      <button
-                        type="button"
-                        disabled={!input.trim()}
-                        onClick={() => { const val = input.trim(); setInput(""); sendMessage(val); }}
-                        className="px-3 flex items-center justify-center disabled:opacity-40"
-                        style={{ background: "#0074a2" }}
-                        aria-label="Kennzeichen bestätigen">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
-                        </svg>
-                      </button>
-                    </div>
+                    </form>
                     <button type="button" onClick={() => { setInput(""); sendMessage("Kein Kennzeichen vorhanden"); }}
                       className="mt-1.5 text-xs" style={{ color: "#64748b" }}>
                       Kein Kennzeichen? Hier klicken
@@ -912,6 +908,8 @@ export function ChatWidget() {
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
+                    e.stopPropagation();
+                    if (chatStep === "kennzeichen") return;
                     sendMessage(input);
                   }}
                   className="flex items-center gap-2 px-3 pb-3 pt-2"

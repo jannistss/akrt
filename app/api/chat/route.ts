@@ -60,81 +60,34 @@ REGELN:
 - Bei Preisfragen immer "zzgl. 19% MwSt." erwähnen und Bruttopreis nennen
 - Nur Themen der Autoklinik Reutlingen`;
 
+// Vercel serverless function max duration
+export const maxDuration = 60;
+
+// Module-level gateway instance — created once, reused across requests
+const gw = createGateway();
+
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
-    console.log("[v0] /api/chat called, messages:", messages?.length);
 
-    const gw = createGateway({
-      apiKey: process.env.AI_GATEWAY_API_KEY ?? process.env.VERCEL_AI_GATEWAY_KEY,
+    const result = streamText({
+      model: gw("openai/gpt-4.1-nano"),
+      system: SYSTEM_PROMPT,
+      messages,
     });
 
-    // Try models in order, fall back on rate-limit errors
-    // Spread across providers so rate limits don't all hit at once
-    const MODELS = [
-      "openai/gpt-4.1-nano",          // OpenAI — fast & cheap
-      "google/gemini-3.5-flash",       // Google — different provider pool
-      "anthropic/claude-3-haiku",      // Anthropic — different provider pool
-      "openai/gpt-4o-mini",            // OpenAI fallback
-      "google/gemini-2.5-flash-lite",  // Google fallback
-    ];
-
-    const encoder = new TextEncoder();
-    const stream = new ReadableStream({
-      async start(controller) {
-        let success = false;
-        for (const modelId of MODELS) {
-          try {
-            console.log("[v0] trying model:", modelId);
-            let hadError: unknown = null;
-            const result = streamText({
-              model: gw(modelId),
-              system: SYSTEM_PROMPT,
-              messages,
-              onError: ({ error }) => {
-                hadError = error;
-                console.log("[v0] model", modelId, "onError:", String(error).slice(0, 120));
-              },
-            });
-            let totalChars = 0;
-            for await (const chunk of result.textStream) {
-              totalChars += chunk.length;
-              controller.enqueue(encoder.encode(chunk));
-            }
-            console.log("[v0] model", modelId, "stream done, chars:", totalChars, "hadError:", !!hadError);
-            if (totalChars === 0) {
-              // Empty stream — likely rate limited, try next model
-              console.log("[v0] model", modelId, "empty stream, trying next...");
-              continue;
-            }
-            success = true;
-            break;
-          } catch (modelErr: unknown) {
-            const msg = modelErr instanceof Error ? modelErr.message : String(modelErr);
-            console.log(`[v0] model ${modelId} caught error:`, msg.slice(0, 120));
-            // Try next model regardless of error type
-            continue;
-          }
-        }
-        if (!success) {
-          // All models rate-limited
-          controller.error(new Error("Alle Modelle gedrosselt"));
-        } else {
-          controller.close();
-        }
-      },
-    });
-
-    return new Response(stream, {
+    return result.toTextStreamResponse({
       headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Transfer-Encoding": "chunked",
         "Cache-Control": "no-cache",
         "X-Accel-Buffering": "no",
       },
     });
   } catch (err) {
-    console.log("[v0] /api/chat error:", err);
-    return new Response(JSON.stringify({ error: String(err) }), { status: 500 });
+    const msg = err instanceof Error ? err.message : String(err);
+    console.log("[v0] /api/chat error:", msg);
+    return new Response(JSON.stringify({ error: msg }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
