@@ -1,4 +1,5 @@
 import { streamText } from "ai";
+import { createGateway } from "@ai-sdk/gateway";
 
 const SYSTEM_PROMPT = `Du bist der freundliche Chat-Assistent der Autoklinik Reutlingen - einer jungen, ehrlichen Kfz-Werkstatt in Reutlingen.
 
@@ -48,11 +49,15 @@ WICHTIG:
 - Erwähne bei Preisen immer den Hinweis "Bruttopreise exkl. MwSt."
 - Du bist KEIN allgemeiner KI-Assistent - beantworte nur Fragen zur Autoklinik`;
 
+const gateway = createGateway({
+  apiKey: process.env.AI_GATEWAY_API_KEY ?? process.env.VERCEL_AI_GATEWAY_KEY,
+});
+
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = streamText({
-    model: "openai/gpt-4o-mini",
+    model: gateway("openai/gpt-4o-mini"),
     system: SYSTEM_PROMPT,
     messages,
     maxTokens: 300,
