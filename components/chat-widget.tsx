@@ -563,39 +563,46 @@ export function ChatWidget() {
         try {
           const data = JSON.parse(terminMatch[1]);
 
-          // Helper: is this a real value or a placeholder?
-          const EMPTY = ["", "...", "nicht angegeben", "noch nicht angegeben", "unbekannt", "keine angabe", "n/a", "tbd"];
-          const isEmpty = (v: string) => !v || EMPTY.includes(v.toLowerCase().trim()) || v.startsWith("[");
+          // Helper: catch ANY placeholder the AI might write
+          const isEmpty = (v: string) => {
+            if (!v) return true;
+            const low = v.toLowerCase().trim();
+            // Catch: "", "...", "[...]", anything containing "nicht genannt", "nicht angegeben", "kein", "keine", "unbekannt", "n/a"
+            return (
+              low === "" || low === "..." || low === "n/a" || low === "tbd" ||
+              v.startsWith("[") ||
+              low.includes("nicht genannt") || low.includes("nicht angegeben") ||
+              low.includes("kein kennzeichen") || low.includes("keine angabe") ||
+              low.includes("unbekannt") || low.includes("noch nicht")
+            );
+          };
 
-          // Fallback: scan the actual user messages for the info the AI forgot to put in
+          // Always scan the full chat history and override bad JSON values
           const userMsgs = messages.filter((m) => m.role === "user").map((m) => m.text.trim());
 
-          // Extract Leistung from chat if AI wrote placeholder
+          // Extract Leistung from chat
           if (isEmpty(data.leistung)) {
-            const LEISTUNGEN = ["tüv", "hu", "hauptuntersuchung", "ölwechsel", "oelwechsel", "inspektion", "räderwechsel", "reifenwechsel", "bremsen", "klima", "diagnose", "unfall", "glasservice", "achsvermessung"];
+            const LEISTUNGEN = ["tüv", "hu+au", "hauptuntersuchung", "ölwechsel", "oelwechsel", "inspektion", "räderwechsel", "reifenwechsel", "bremsen", "klima", "diagnose", "unfall", "glasservice", "achsvermessung"];
             for (const msg of userMsgs) {
               const found = LEISTUNGEN.find((l) => msg.toLowerCase().includes(l));
-              if (found) { data.leistung = msg; break; }
+              if (found) { data.leistung = msg.trim(); break; }
             }
           }
 
-          // Extract Fahrzeug from chat if AI wrote placeholder
+          // Extract Fahrzeug from chat
           if (isEmpty(data.fahrzeug)) {
-            const MARKEN = ["vw", "volkswagen", "bmw", "mercedes", "audi", "opel", "ford", "toyota", "hyundai", "kia", "seat", "skoda", "renault", "peugeot", "citroen", "fiat", "honda", "mazda", "nissan", "volvo", "porsche", "mini", "smart", "tesla"];
+            const MARKEN = ["vw", "volkswagen", "bmw", "mercedes", "benz", "audi", "opel", "ford", "toyota", "hyundai", "kia", "seat", "skoda", "renault", "peugeot", "citroen", "fiat", "honda", "mazda", "nissan", "volvo", "porsche", "mini", "smart", "tesla", "golf", "polo", "passat", "a3", "a4", "3er", "5er", "c-klasse", "e-klasse"];
             for (const msg of userMsgs) {
               const lower = msg.toLowerCase();
-              if (MARKEN.some((m) => lower.includes(m))) { data.fahrzeug = msg; break; }
+              if (MARKEN.some((m) => lower.includes(m))) { data.fahrzeug = msg.trim(); break; }
             }
           }
 
-          // Extract Kennzeichen from chat if AI wrote placeholder
-          if (isEmpty(data.kennzeichen)) {
-            // German plate pattern: 1-3 letters, space, 1-2 letters, space, 1-4 digits
-            const plateRegex = /[A-ZÄÖÜ]{1,3}[\s-][A-Z]{1,2}[\s-]\d{1,4}[EH]?/i;
-            for (const msg of userMsgs) {
-              const match = msg.match(plateRegex);
-              if (match) { data.kennzeichen = match[0].toUpperCase(); break; }
-            }
+          // Extract Kennzeichen from chat (always rescan — AI often gets this wrong)
+          const plateRegex = /\b[A-ZÄÖÜ]{1,3}[\s-][A-ZÄÖÜ]{1,2}[\s-]?\d{1,4}[EH]?\b/i;
+          for (const msg of userMsgs) {
+            const match = msg.match(plateRegex);
+            if (match) { data.kennzeichen = match[0].toUpperCase().replace(/\s+/g, " "); break; }
           }
 
           console.log("[v0] TERMIN_BEREIT detected:", data);
@@ -839,10 +846,13 @@ export function ChatWidget() {
                     <div className="rounded-xl p-3 mb-2 text-xs space-y-1.5" style={{ background: "rgba(0,116,162,0.10)", border: "1px solid rgba(0,116,162,0.25)" }}>
                       <p className="font-semibold text-[11px] uppercase tracking-wide mb-2" style={{ color: "#7dd3fc" }}>Zusammenfassung</p>
                       {(() => {
-                        // Clean up placeholder values the AI sometimes outputs
-                        const PLACEHOLDERS = ["...", "noch nicht angegeben", "nicht angegeben", "unbekannt", "keine angabe", "tbd", "n/a"];
-                        const clean = (v: string) =>
-                          !v || v.startsWith("[") || PLACEHOLDERS.includes(v.toLowerCase().trim()) ? "–" : v;
+                        // Clean up any placeholder the AI might write
+                        const clean = (v: string) => {
+                          if (!v) return "–";
+                          const low = v.toLowerCase().trim();
+                          if (v.startsWith("[") || low === "..." || low === "n/a" || low.includes("nicht genannt") || low.includes("nicht angegeben") || low.includes("kein") || low.includes("unbekannt") || low.includes("noch nicht")) return "–";
+                          return v;
+                        };
                         const fahrzeug = [clean(terminData.fahrzeug), terminData.kennzeichen ? `· ${terminData.kennzeichen}` : ""].filter(Boolean).join(" ");
                         const hasExtras = terminData.extras && terminData.extras !== "Nein danke" && terminData.extras !== "Keine" && terminData.extras !== "–";
                         // Estimate price from leistung string
