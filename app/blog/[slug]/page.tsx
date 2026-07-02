@@ -107,52 +107,75 @@ export default async function BlogPostPage({ params }: Props) {
       <AutoklinikNavbar />
       <main>
         {/* Hero */}
-        <section style={{ backgroundColor: "#002e40" }} className="pt-32 pb-0">
-          <div className="max-w-4xl mx-auto px-6 sm:px-10 pb-10">
+        <section style={{ backgroundColor: "#002e40" }} className="pt-32 pb-12">
+          <div className="max-w-3xl mx-auto px-6 sm:px-10">
             {/* Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs mb-8" style={{ color: "rgba(255,255,255,0.45)" }}>
+            <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs mb-8 flex-wrap" style={{ color: "rgba(255,255,255,0.4)" }}>
               <Link href="/" className="hover:text-white transition-colors">Startseite</Link>
               <span aria-hidden="true">/</span>
               <Link href="/blog" className="hover:text-white transition-colors">Ratgeber</Link>
               <span aria-hidden="true">/</span>
-              <span style={{ color: "rgba(255,255,255,0.7)" }}>{post.category}</span>
+              <span style={{ color: "rgba(255,255,255,0.65)" }}>{post.category}</span>
             </nav>
 
-            <span className="inline-block rounded-full px-3 py-1 text-xs font-semibold mb-5" style={{ backgroundColor: "rgba(0,116,162,0.35)", color: "#7dd3fc" }}>
+            <span
+              className="inline-block rounded-full px-3 py-1 text-xs font-semibold mb-6"
+              style={{ backgroundColor: "rgba(77,184,216,0.18)", color: "#7dd3fc" }}
+            >
               {post.category}
             </span>
-            <h1 className="font-bold tracking-tight text-balance mb-6 leading-[1.1]" style={{ color: "#ffffff", fontSize: "clamp(1.9rem, 4vw, 3rem)" }}>
+
+            <h1
+              className="font-bold tracking-tight text-balance leading-[1.1] mb-6"
+              style={{ color: "#ffffff", fontSize: "clamp(1.8rem, 3.8vw, 2.8rem)" }}
+            >
               {post.title}
             </h1>
-            <p className="text-base leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.7)", maxWidth: "680px" }}>
+
+            <p
+              className="text-base leading-relaxed mb-10"
+              style={{ color: "rgba(255,255,255,0.65)" }}
+            >
               {post.excerpt}
             </p>
 
-            {/* Author + meta */}
-            <div className="flex items-center gap-4 pb-10">
-              <div className="h-10 w-10 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0" style={{ backgroundColor: "#0074a2" }}>
-                {post.author.split(" ").map((n) => n[0]).join("")}
+            {/* Author + meta — clean separator */}
+            <div
+              className="flex items-center gap-3 pt-8"
+              style={{ borderTop: "1px solid rgba(255,255,255,0.12)" }}
+            >
+              <div
+                className="h-10 w-10 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0"
+                style={{ backgroundColor: "#0074a2" }}
+              >
+                {post.author.split(" ").map((n: string) => n[0]).join("")}
               </div>
               <div>
-                <p className="text-sm font-semibold" style={{ color: "#ffffff" }}>{post.author}</p>
-                <p className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{post.authorRole} · {post.dateDisplay} · {post.readingTime}</p>
+                <p className="text-sm font-semibold" style={{ color: "#ffffff" }}>
+                  {post.author}
+                </p>
+                <p className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>
+                  {post.authorRole} · {post.dateDisplay} · {post.readingTime}
+                </p>
               </div>
             </div>
           </div>
-
         </section>
 
-        {/* Hero image — sits between sections, fully rounded */}
-        <div style={{ backgroundColor: "#ffffff" }} className="pt-10">
-          <div className="max-w-4xl mx-auto px-6 sm:px-10">
-            <div className="relative rounded-2xl overflow-hidden w-full" style={{ height: "clamp(220px, 38vw, 420px)" }}>
+        {/* Hero image — full bleed, rounded, floats out of dark header */}
+        <div style={{ backgroundColor: "#f5f9fc" }} className="py-10">
+          <div className="max-w-5xl mx-auto px-6 sm:px-10">
+            <div
+              className="relative rounded-2xl overflow-hidden w-full"
+              style={{ height: "clamp(240px, 40vw, 480px)", boxShadow: "0 8px 40px rgba(0,46,64,0.12)" }}
+            >
               <Image
                 src={post.image}
                 alt={post.imageAlt}
                 fill
                 className="object-cover"
                 priority
-                sizes="(max-width: 768px) 100vw, 896px"
+                sizes="(max-width: 768px) 100vw, 1024px"
               />
             </div>
           </div>
