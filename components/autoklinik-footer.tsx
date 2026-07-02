@@ -203,12 +203,12 @@ export function AutoklinikFooter() {
             <ul className="flex flex-col gap-3 text-sm">
               {[
                 { day: "Mo – Fr", time: "08:00 – 18:00" },
-                { day: "Samstag", time: "09:00 – 14:00" },
+                { day: "Samstag", time: "Nur auf Anfrage" },
                 { day: "Sonntag", time: "Geschlossen" },
               ].map(({ day, time }) => (
                 <li key={day} className="flex items-center justify-between gap-4">
                   <span style={{ color: "rgba(255,255,255,0.38)" }}>{day}</span>
-                  <span className="font-medium" style={{ color: time === "Geschlossen" ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.65)" }}>
+                  <span className="font-medium" style={{ color: (time === "Geschlossen" || time === "Nur auf Anfrage") ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.65)" }}>
                     {time}
                   </span>
                 </li>

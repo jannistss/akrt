@@ -36,7 +36,7 @@ type Flow =
 interface Option {
   label: string;
   flow?: Flow;
-  action?: "call" | "whatsapp" | "karriere" | "rueckruf" | "online";
+  action?: "call" | "whatsapp" | "karriere" | "rueckruf" | "online" | "route";
 }
 
 /* ─── Flow definitions ──────────────────────────────────── */
@@ -231,10 +231,10 @@ const FLOWS: Record<
   },
   oeffnungszeiten: {
     message:
-      "Unsere Öffnungszeiten:\n\nMontag - Freitag: 08:00 - 18:00 Uhr\nSamstag: 09:00 - 14:00 Uhr\nSonntag: Geschlossen\n\nAdresse: Haldenhausstraße 3, 72770 Reutlingen",
+      "Unsere Öffnungszeiten:\n\nMontag - Freitag: 08:00 - 18:00 Uhr\nSamstag: Nur auf Anfrage\nSonntag: Geschlossen\n\nAdresse: Haldenhausstraße 3, 72770 Reutlingen",
     options: [
       { label: "Anrufen", action: "call" },
-      { label: "Route planen", action: "whatsapp" },
+      { label: "Route planen", action: "route" },
       { label: "Zurück", flow: "root" },
     ],
   },
@@ -456,6 +456,10 @@ export function ChatWidget() {
     }
     if (opt.action === "whatsapp") {
       window.open("https://wa.me/4971219886660", "_blank");
+      return;
+    }
+    if (opt.action === "route") {
+      window.open("https://maps.google.com/?q=Haldenhausstraße+3,+72770+Reutlingen", "_blank");
       return;
     }
     if (opt.action === "online") {
