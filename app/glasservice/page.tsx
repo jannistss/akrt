@@ -84,7 +84,7 @@ export default function GlasservicePage() {
               </div>
               <motion.div className="w-full lg:w-[440px] shrink-0 relative" style={{ height: 440 }} {...slideRight(0.2)}>
                 <div className="absolute inset-0 rounded-2xl overflow-hidden">
-                  <Image src="/assets/images/6937e7167a27ffa77e40aa08_Hero-Image.png" alt="Glasservice Windschutzscheibe wechseln Autoklinik Reutlingen" fill className="object-cover" priority sizes="(max-width: 1024px) 100vw, 440px" />
+                  <Image src="/assets/images/hero-glasservice.png" alt="Glasservice Windschutzscheibe wechseln Autoklinik Reutlingen" fill className="object-cover" priority sizes="(max-width: 1024px) 100vw, 440px" />
                   <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, rgba(0,20,32,0.5) 100%)" }} />
                 </div>
                 <motion.div className="absolute bottom-6 left-6 rounded-2xl px-5 py-4 flex items-center gap-4" style={{ backgroundColor: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.6)" }} {...scaleUp(0.4)}>

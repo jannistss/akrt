@@ -82,7 +82,7 @@ export default function ReifenservicePage() {
               <motion.div className="w-full lg:w-[400px] shrink-0 flex items-end justify-center gap-6" {...slideRight(0.2)}>
                 <div className="relative" style={{ width: 200, height: 340 }}>
                   <div className="absolute inset-0 rounded-2xl overflow-hidden">
-                    <Image src="/assets/images/6937e7163e052d298653ff55_reperatur-mann-.png" alt="Reifenwechsel in der Autoklinik Reutlingen" fill className="object-cover object-center" priority sizes="200px" />
+                    <Image src="/assets/images/hero-reifenservice.png" alt="Reifenwechsel in der Autoklinik Reutlingen" fill className="object-cover object-center" priority sizes="200px" />
                   </div>
                 </div>
                 <div className="flex flex-col gap-4 pb-6">

@@ -107,7 +107,7 @@ export default function InspektionPage() {
                 </motion.div>
               </div>
               <motion.div className="relative w-full lg:w-[440px] rounded-2xl overflow-hidden shrink-0" style={{ height: 440 }} {...slideRight(0.2)}>
-                <Image src="/assets/images/6937e7163e052d298653ff55_reperatur-mann-.png" alt="Kfz-Mechaniker führt Inspektion am Fahrzeug durch in der Autoklinik Reutlingen" fill className="object-cover object-center" priority sizes="(max-width: 1024px) 100vw, 440px" />
+                <Image src="/assets/images/hero-inspektion.png" alt="Kfz-Mechaniker führt Inspektion am Fahrzeug durch in der Autoklinik Reutlingen" fill className="object-cover object-center" priority sizes="(max-width: 1024px) 100vw, 440px" />
                 <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 50%, rgba(0,20,32,0.6) 100%)" }} />
               </motion.div>
             </div>
@@ -155,7 +155,7 @@ export default function InspektionPage() {
                 </div>
               </div>
               <motion.div className="relative rounded-2xl overflow-hidden" style={{ height: 480 }} {...slideRight(0.15)}>
-                <Image src="/assets/images/6937e7167a27ffa77e40aa08_Hero-Image.png" alt="Werkstatt Autoklinik Reutlingen von innen" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                <Image src="/assets/images/hero-tuev.png" alt="Werkstatt Autoklinik Reutlingen von innen" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
               </motion.div>
             </div>
           </div>

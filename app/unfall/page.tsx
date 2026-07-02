@@ -87,7 +87,7 @@ export default function UnfallPage() {
                 </motion.div>
               </div>
               <motion.div className="relative w-full lg:w-[440px] rounded-2xl overflow-hidden shrink-0" style={{ height: 460 }} {...slideRight(0.2)}>
-                <Image src="/assets/images/6937e7163e052d298653ff55_reperatur-mann-.png" alt="Kfz-Sachverständiger begutachtet Unfallschaden in der Autoklinik Reutlingen" fill className="object-cover object-center" priority sizes="(max-width: 1024px) 100vw, 440px" />
+                <Image src="/assets/images/hero-unfall.png" alt="Kfz-Sachverständiger begutachtet Unfallschaden in der Autoklinik Reutlingen" fill className="object-cover object-center" priority sizes="(max-width: 1024px) 100vw, 440px" />
                 <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, rgba(0,20,32,0.65) 100%)" }} />
                 <motion.div className="absolute bottom-6 left-6 rounded-xl px-5 py-4" style={{ backgroundColor: "rgba(0,46,64,0.88)", backdropFilter: "blur(10px)", border: "1px solid rgba(77,184,216,0.25)" }} {...scaleUp(0.4)}>
                   <p className="text-sm font-bold text-white">Kostenlos bei Fremdverschulden</p>
