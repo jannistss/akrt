@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   try {
-    const { leistung, fahrzeug, datum, name, telefon, chatSummary } = await req.json();
+    const { leistung, fahrzeug, kennzeichen, datum, extras, name, telefon, chatSummary } = await req.json();
 
     if (!telefon || !name) {
       return NextResponse.json({ error: "Name und Telefon fehlen" }, { status: 400 });
@@ -44,9 +44,18 @@ export async function POST(req: NextRequest) {
                 <td style="padding: 16px 0; font-size: 14px; color: #002e40;">${fahrzeug || "-"}</td>
               </tr>
               <tr style="border-bottom: 1px solid #f0f7fb;">
+                <td style="padding: 16px 0; font-size: 13px; font-weight: 600; color: #64748b;">Kennzeichen</td>
+                <td style="padding: 16px 0; font-size: 14px; color: #002e40; font-weight: 600;">${kennzeichen || "-"}</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f7fb;">
                 <td style="padding: 16px 0; font-size: 13px; font-weight: 600; color: #64748b;">Wunschtermin</td>
                 <td style="padding: 16px 0; font-size: 14px; color: #002e40;">${datum || "-"}</td>
               </tr>
+              ${extras && extras !== "Nein danke" ? `
+              <tr style="border-bottom: 1px solid #f0f7fb;">
+                <td style="padding: 16px 0; font-size: 13px; font-weight: 600; color: #64748b;">Extras</td>
+                <td style="padding: 16px 0; font-size: 14px; color: #002e40;">${extras}</td>
+              </tr>` : ""}
               ${chatSummary ? `
               <tr>
                 <td style="padding: 16px 0; font-size: 13px; font-weight: 600; color: #64748b; vertical-align: top;">Chat-Verlauf</td>

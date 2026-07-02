@@ -365,7 +365,7 @@ export function ChatWidget() {
   const [typing, setTyping] = useState(false);
   const [input, setInput] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
-  const [terminData, setTerminData] = useState<null | { leistung: string; fahrzeug: string; datum: string; extras: string; name: string; telefon: string }>(null);
+  const [terminData, setTerminData] = useState<null | { leistung: string; fahrzeug: string; kennzeichen: string; datum: string; extras: string; name: string; telefon: string }>(null);
   const [terminSent, setTerminSent] = useState(false);
   const [terminSending, setTerminSending] = useState(false);
   const [chatStep, setChatStep] = useState<"idle"|"datum"|"kennzeichen"|"upsell"|"name"|"telefon">("idle");
@@ -546,17 +546,18 @@ export function ChatWidget() {
         setChatStep("idle");
       }
 
-      // Detect TERMIN_BEREIT signal from AI
-      const terminMatch = botText.match(/TERMIN_BEREIT:([\s\S]*?\})/);
+      // Detect TERMIN_BEREIT signal from AI (new delimited format)
+      const terminMatch = botText.match(/###TERMIN_BEREIT###\s*([\s\S]*?)\s*###ENDE###/);
       if (terminMatch) {
         try {
           const data = JSON.parse(terminMatch[1]);
           setTerminData(data);
+          setChatStep("idle");
           setMessages((prev) => {
             const updated = [...prev];
             updated[updated.length - 1] = {
               role: "bot",
-              text: botText.replace(/TERMIN_BEREIT:[\s\S]*?\}/, "").trim(),
+              text: botText.replace(/###TERMIN_BEREIT###[\s\S]*?###ENDE###/, "").trim(),
             };
             return updated;
           });
@@ -836,12 +837,11 @@ export function ChatWidget() {
                   </div>
                 )}
 
-                {/* Kennzeichen input */}
+                {/* Kennzeichen input — completely replaces free text input */}
                 {chatStep === "kennzeichen" && !aiLoading && (
-                  <form onSubmit={(e) => { e.preventDefault(); if (input.trim()) sendMessage(input); }}
-                    className="px-3 pt-2 pb-1">
+                  <div className="px-3 pt-2 pb-3">
                     <div className="flex items-stretch rounded-lg overflow-hidden border-2 border-[#003399] bg-white"
-                      style={{ maxWidth: 220 }}>
+                      style={{ maxWidth: 240 }}>
                       {/* EU stripe */}
                       <div className="flex flex-col items-center justify-center px-2 py-1"
                         style={{ background: "#003399", minWidth: 32 }}>
@@ -853,12 +853,23 @@ export function ChatWidget() {
                         type="text"
                         value={input}
                         onChange={(e) => setInput(e.target.value.toUpperCase())}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && !e.nativeEvent.isComposing && input.trim()) {
+                            e.preventDefault();
+                            const val = input.trim();
+                            setInput("");
+                            sendMessage(val);
+                          }
+                        }}
                         placeholder="RT - AB 1234"
                         maxLength={10}
                         className="flex-1 px-2 py-2 text-sm font-bold tracking-widest outline-none bg-white text-gray-900 uppercase"
                         style={{ letterSpacing: "0.15em" }}
                       />
-                      <button type="submit" disabled={!input.trim()}
+                      <button
+                        type="button"
+                        disabled={!input.trim()}
+                        onClick={() => { const val = input.trim(); setInput(""); sendMessage(val); }}
                         className="px-3 flex items-center justify-center disabled:opacity-40"
                         style={{ background: "#0074a2" }}
                         aria-label="Kennzeichen bestätigen">
@@ -867,23 +878,24 @@ export function ChatWidget() {
                         </svg>
                       </button>
                     </div>
-                    <button type="button" onClick={() => sendMessage("Kein Kennzeichen vorhanden")}
+                    <button type="button" onClick={() => { setInput(""); sendMessage("Kein Kennzeichen vorhanden"); }}
                       className="mt-1.5 text-xs" style={{ color: "#64748b" }}>
                       Kein Kennzeichen? Hier klicken
                     </button>
-                  </form>
+                  </div>
                 )}
 
-                {/* Free text input */}
+                {/* Free text input — hidden during kennzeichen step */}
+                {chatStep !== "kennzeichen" && (
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
                     sendMessage(input);
                   }}
-                  className={`flex items-center gap-2 px-3 pb-3 pt-2 ${chatStep === "kennzeichen" ? "hidden" : ""}`}
+                  className="flex items-center gap-2 px-3 pb-3 pt-2"
                 >
                   <input
-                    ref={chatStep === "kennzeichen" ? undefined : inputRef}
+                    ref={inputRef}
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
@@ -915,6 +927,7 @@ export function ChatWidget() {
                     )}
                   </button>
                 </form>
+                )}
               </div>
             )}
           </motion.div>
