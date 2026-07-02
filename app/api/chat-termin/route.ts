@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   try {
-    const { leistung, fahrzeug, kennzeichen, datum, extras, name, telefon, chatSummary } = await req.json();
+    const { leistung, fahrzeug, kennzeichen, datum, extras, name, telefon, email, chatSummary } = await req.json();
 
     if (!telefon || !name) {
       return NextResponse.json({ error: "Name und Telefon fehlen" }, { status: 400 });
@@ -35,6 +35,13 @@ export async function POST(req: NextRequest) {
                   <a href="tel:${telefon}" style="color: #0074a2; text-decoration: none; font-weight: 600;">${telefon}</a>
                 </td>
               </tr>
+              ${email ? `
+              <tr style="border-bottom: 1px solid #f0f7fb;">
+                <td style="padding: 16px 0; font-size: 13px; font-weight: 600; color: #64748b;">E-Mail</td>
+                <td style="padding: 16px 0; font-size: 14px;">
+                  <a href="mailto:${email}" style="color: #0074a2; text-decoration: none; font-weight: 600;">${email}</a>
+                </td>
+              </tr>` : ""}
               <tr style="border-bottom: 1px solid #f0f7fb;">
                 <td style="padding: 16px 0; font-size: 13px; font-weight: 600; color: #64748b;">Gewünschte Leistung</td>
                 <td style="padding: 16px 0; font-size: 14px; color: #002e40;">${leistung || "-"}</td>

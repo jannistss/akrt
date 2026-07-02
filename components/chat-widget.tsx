@@ -365,10 +365,10 @@ export function ChatWidget() {
   const [typing, setTyping] = useState(false);
   const [input, setInput] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
-  const [terminData, setTerminData] = useState<null | { leistung: string; fahrzeug: string; kennzeichen: string; datum: string; extras: string; name: string; telefon: string }>(null);
+  const [terminData, setTerminData] = useState<null | { leistung: string; fahrzeug: string; kennzeichen: string; datum: string; extras: string; name: string; telefon: string; email: string }>(null);
   const [terminSent, setTerminSent] = useState(false);
   const [terminSending, setTerminSending] = useState(false);
-  const [chatStep, setChatStep] = useState<"idle"|"datum"|"kennzeichen"|"upsell"|"name"|"telefon">("idle");
+  const [chatStep, setChatStep] = useState<"idle"|"datum"|"kennzeichen"|"upsell"|"name"|"telefon"|"email">("idle");
   const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(null);
   const [conversationStarted, setConversationStarted] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -551,6 +551,8 @@ export function ChatWidget() {
         setChatStep("name");
       } else if (lower.includes("telefonnummer") || lower.includes("rufnummer") || lower.includes("erreichen")) {
         setChatStep("telefon");
+      } else if (lower.includes("e-mail") || lower.includes("email") || lower.includes("terminbestätigung schicken")) {
+        setChatStep("email");
       } else {
         setChatStep("idle");
       }
@@ -598,7 +600,8 @@ export function ChatWidget() {
     if (!terminData || terminSending) return;
     setTerminSending(true);
     const chatSummary = messages
-      .map((m) => `${m.role === "user" ? "Kunde" : "Assistent"}: ${m.text}`)
+      .filter((m) => m.text && !m.text.includes("###TERMIN_BEREIT###"))
+      .map((m, i) => `[${i + 1}] ${m.role === "user" ? "Kunde" : "Assistent"}: ${m.text.replace(/<[^>]*>/g, "")}`)
       .join("\n");
     try {
       const res = await fetch("/api/chat-termin", {
@@ -793,9 +796,27 @@ export function ChatWidget() {
                     ))}
                   </div>
                 )}
-                {/* Booking confirmation button */}
+                {/* Booking confirmation card */}
                 {terminData && !terminSent && (
-                  <div className="px-3 pb-2">
+                  <div className="px-3 pb-3 pt-1">
+                    {/* Summary card */}
+                    <div className="rounded-xl p-3 mb-2 text-xs space-y-1.5" style={{ background: "rgba(0,116,162,0.10)", border: "1px solid rgba(0,116,162,0.25)" }}>
+                      <p className="font-semibold text-[11px] uppercase tracking-wide mb-2" style={{ color: "#7dd3fc" }}>Zusammenfassung</p>
+                      {[
+                        { label: "Fahrzeug", value: `${terminData.fahrzeug}${terminData.kennzeichen ? ` · ${terminData.kennzeichen}` : ""}` },
+                        { label: "Leistung", value: terminData.leistung },
+                        { label: "Wunschtermin", value: terminData.datum },
+                        ...(terminData.extras && terminData.extras !== "Nein danke" && terminData.extras !== "Keine" ? [{ label: "Extras", value: terminData.extras }] : []),
+                        { label: "Name", value: terminData.name },
+                        { label: "Telefon", value: terminData.telefon },
+                        ...(terminData.email ? [{ label: "E-Mail", value: terminData.email }] : []),
+                      ].map(({ label, value }) => (
+                        <div key={label} className="flex gap-2">
+                          <span className="shrink-0 w-20" style={{ color: "#94a3b8" }}>{label}</span>
+                          <span className="font-medium" style={{ color: "#e2e8f0" }}>{value}</span>
+                        </div>
+                      ))}
+                    </div>
                     <button
                       onClick={sendTermin}
                       disabled={terminSending}
@@ -805,7 +826,7 @@ export function ChatWidget() {
                       {terminSending ? "Wird gesendet..." : "Terminanfrage jetzt absenden"}
                     </button>
                     <p className="text-center text-xs mt-1.5" style={{ color: "#64748b" }}>
-                      Wir melden uns telefonisch zur Bestätigung
+                      Wir melden uns telefonisch & per E-Mail zur Bestätigung
                     </p>
                   </div>
                 )}
@@ -918,7 +939,7 @@ export function ChatWidget() {
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder={chatStep === "telefon" ? "z.B. 0171 1234567" : chatStep === "name" ? "Dein Name..." : "Nachricht eingeben..."}
+                    placeholder={chatStep === "telefon" ? "z.B. 0171 1234567" : chatStep === "name" ? "Dein Name..." : chatStep === "email" ? "deine@email.de" : "Nachricht eingeben..."}
                     disabled={aiLoading}
                     className="flex-1 rounded-xl px-3 py-2 text-sm outline-none disabled:opacity-50"
                     style={{
