@@ -54,15 +54,22 @@ const gateway = createGateway({
 });
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  try {
+    const { messages } = await req.json();
+    const gw = createGateway({
+      apiKey: process.env.AI_GATEWAY_API_KEY ?? process.env.VERCEL_AI_GATEWAY_KEY,
+    });
 
-  const result = streamText({
-    model: gateway("openai/gpt-4o-mini"),
-    system: SYSTEM_PROMPT,
-    messages,
-    maxTokens: 300,
-    temperature: 0.7,
-  });
+    const result = streamText({
+      model: gw("openai/gpt-4o-mini"),
+      system: SYSTEM_PROMPT,
+      messages,
+      maxTokens: 300,
+      temperature: 0.7,
+    });
 
-  return result.toDataStreamResponse();
+    return result.toTextStreamResponse();
+  } catch (err) {
+    return new Response(JSON.stringify({ error: String(err) }), { status: 500 });
+  }
 }

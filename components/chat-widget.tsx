@@ -501,22 +501,12 @@ export function ChatWidget() {
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-          const chunk = decoder.decode(value);
-          // Parse AI SDK data stream format
-          const lines = chunk.split("\n");
-          for (const line of lines) {
-            if (line.startsWith("0:")) {
-              try {
-                const token = JSON.parse(line.slice(2));
-                botText += token;
-                setMessages((prev) => {
-                  const updated = [...prev];
-                  updated[updated.length - 1] = { role: "bot", text: botText };
-                  return updated;
-                });
-              } catch {}
-            }
-          }
+          botText += decoder.decode(value, { stream: true });
+          setMessages((prev) => {
+            const updated = [...prev];
+            updated[updated.length - 1] = { role: "bot", text: botText };
+            return updated;
+          });
         }
       }
     } catch {
