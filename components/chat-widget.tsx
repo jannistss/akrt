@@ -477,12 +477,17 @@ export function ChatWidget() {
   }
 
   async function sendMessage(text: string, isRetry = false) {
-    if (!text.trim() || aiLoading) return;
+    if (!text.trim()) return;
+    // Force-reset aiLoading if stuck
+    if (aiLoading && !isRetry) {
+      console.log("[v0] sendMessage blocked by aiLoading, forcing reset for:", text);
+      setAiLoading(false);
+      return;
+    }
     if (!isRetry) setInput("");
     const userMsg: Message = { role: "user", text };
 
     setMessages((prev) => {
-      // On retry, remove the last error bot message before re-adding user msg
       const base = isRetry ? prev.slice(0, -1) : prev;
       return [...base, userMsg];
     });
@@ -495,8 +500,13 @@ export function ChatWidget() {
       content: m.text,
     }));
 
+    console.log("[v0] sendMessage start:", text, "history length:", history.length);
+
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 20000);
+    const timeout = setTimeout(() => {
+      console.log("[v0] sendMessage TIMEOUT after 20s for:", text);
+      controller.abort();
+    }, 20000);
 
     try {
       const res = await fetch("/api/chat", {
@@ -505,6 +515,7 @@ export function ChatWidget() {
         body: JSON.stringify({ messages: history }),
         signal: controller.signal,
       });
+      console.log("[v0] fetch response status:", res.status);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const reader = res.body?.getReader();
@@ -525,8 +536,10 @@ export function ChatWidget() {
         }
       }
 
+      console.log("[v0] stream complete, botText length:", botText.length, "preview:", botText.slice(0, 80));
+
       // If model returned nothing useful, treat as error
-      if (!botText.trim()) throw new Error("Leere Antwort");
+      if (!botText.trim()) throw new Error("Leere Antwort vom Modell");
 
       // Detect chat step from bot text to show contextual chips/inputs
       const lower = botText.toLowerCase();
@@ -546,11 +559,12 @@ export function ChatWidget() {
         setChatStep("idle");
       }
 
-      // Detect TERMIN_BEREIT signal from AI (new delimited format)
+      // Detect TERMIN_BEREIT signal from AI (delimited format)
       const terminMatch = botText.match(/###TERMIN_BEREIT###\s*([\s\S]*?)\s*###ENDE###/);
       if (terminMatch) {
         try {
           const data = JSON.parse(terminMatch[1]);
+          console.log("[v0] TERMIN_BEREIT detected:", data);
           setTerminData(data);
           setChatStep("idle");
           setMessages((prev) => {
@@ -561,10 +575,13 @@ export function ChatWidget() {
             };
             return updated;
           });
-        } catch {}
+        } catch (parseErr) {
+          console.log("[v0] TERMIN_BEREIT JSON parse failed:", parseErr, "raw:", terminMatch[1]);
+        }
       }
     } catch (err: unknown) {
       const isAbort = err instanceof Error && err.name === "AbortError";
+      console.log("[v0] sendMessage ERROR:", err instanceof Error ? err.message : String(err), "isAbort:", isAbort);
       setLastFailedMessage(text);
       setMessages((prev) => [
         ...prev,

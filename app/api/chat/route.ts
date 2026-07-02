@@ -1,4 +1,4 @@
-import { streamText, createTextStreamResponse } from "ai";
+import { streamText } from "ai";
 import { createGateway } from "@ai-sdk/gateway";
 
 export const SYSTEM_PROMPT = `Du bist der freundliche Chat-Assistent der Autoklinik Reutlingen.
@@ -66,6 +66,8 @@ REGELN:
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
+    console.log("[v0] /api/chat called, messages:", messages?.length);
+
     const gw = createGateway({
       apiKey: process.env.AI_GATEWAY_API_KEY ?? process.env.VERCEL_AI_GATEWAY_KEY,
     });
@@ -76,8 +78,35 @@ export async function POST(req: Request) {
       messages,
     });
 
-    return createTextStreamResponse({ stream: result.textStream });
+    // Manual streaming via ReadableStream for maximum compatibility
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        try {
+          let totalChars = 0;
+          for await (const chunk of result.textStream) {
+            totalChars += chunk.length;
+            controller.enqueue(encoder.encode(chunk));
+          }
+          console.log("[v0] /api/chat stream done, total chars:", totalChars);
+          controller.close();
+        } catch (streamErr) {
+          console.log("[v0] /api/chat stream error:", streamErr);
+          controller.error(streamErr);
+        }
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Cache-Control": "no-cache",
+        "X-Accel-Buffering": "no",
+      },
+    });
   } catch (err) {
+    console.log("[v0] /api/chat error:", err);
     return new Response(JSON.stringify({ error: String(err) }), { status: 500 });
   }
 }
