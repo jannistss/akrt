@@ -131,7 +131,7 @@ export default async function BlogPostPage({ params }: Props) {
             {/* Author + meta */}
             <div className="flex items-center gap-4 pb-10">
               <div className="h-10 w-10 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0" style={{ backgroundColor: "#0074a2" }}>
-                IT
+                {post.author.split(" ").map((n) => n[0]).join("")}
               </div>
               <div>
                 <p className="text-sm font-semibold" style={{ color: "#ffffff" }}>{post.author}</p>
@@ -140,20 +140,23 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
           </div>
 
-          {/* Hero image */}
-          <div className="max-w-5xl mx-auto px-6 sm:px-10">
-            <div className="relative rounded-t-2xl overflow-hidden" style={{ height: "clamp(260px, 45vw, 480px)" }}>
+        </section>
+
+        {/* Hero image — sits between sections, fully rounded */}
+        <div style={{ backgroundColor: "#ffffff" }} className="pt-10">
+          <div className="max-w-4xl mx-auto px-6 sm:px-10">
+            <div className="relative rounded-2xl overflow-hidden w-full" style={{ height: "clamp(220px, 38vw, 420px)" }}>
               <Image
                 src={post.image}
                 alt={post.imageAlt}
                 fill
                 className="object-cover"
                 priority
-                sizes="(max-width: 768px) 100vw, 960px"
+                sizes="(max-width: 768px) 100vw, 896px"
               />
             </div>
           </div>
-        </section>
+        </div>
 
         {/* Content */}
         <section style={{ backgroundColor: "#ffffff" }} className="py-16">
