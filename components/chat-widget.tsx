@@ -478,13 +478,7 @@ export function ChatWidget() {
   }
 
   async function sendMessage(text: string, isRetry = false) {
-    if (!text.trim()) return;
-    // Force-reset aiLoading if stuck
-    if (aiLoading && !isRetry) {
-      console.log("[v0] sendMessage blocked by aiLoading, forcing reset for:", text);
-      setAiLoading(false);
-      return;
-    }
+    if (!text.trim() || aiLoading) return;
     if (!isRetry) setInput("");
     const userMsg: Message = { role: "user", text };
 

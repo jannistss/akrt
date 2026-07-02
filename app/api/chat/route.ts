@@ -63,77 +63,55 @@ REGELN:
 // Extend Vercel serverless function timeout to 60s (default is 10s)
 export const maxDuration = 60;
 
+const MODELS = [
+  "openai/gpt-4.1-nano",
+  "openai/gpt-4o-mini",
+];
+
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
-    console.log("[v0] /api/chat called, messages:", messages?.length);
 
     const gw = createGateway({
       apiKey: process.env.AI_GATEWAY_API_KEY ?? process.env.VERCEL_AI_GATEWAY_KEY,
     });
 
-    // Primary model + 1 fallback from a different provider
-    const MODELS = [
-      "openai/gpt-4.1-nano",    // Fast, cheap, reliable
-      "openai/gpt-4o-mini",     // Fallback if nano is rate-limited
-    ];
+    // Try each model until one succeeds
+    let lastError: unknown;
+    for (const modelId of MODELS) {
+      try {
+        const result = streamText({
+          model: gw(modelId),
+          system: SYSTEM_PROMPT,
+          messages,
+        });
 
-    const encoder = new TextEncoder();
-    const stream = new ReadableStream({
-      async start(controller) {
-        let success = false;
-        for (const modelId of MODELS) {
-          try {
-            console.log("[v0] trying model:", modelId);
-            let hadError: unknown = null;
-            const result = streamText({
-              model: gw(modelId),
-              system: SYSTEM_PROMPT,
-              messages,
-              onError: ({ error }) => {
-                hadError = error;
-                console.log("[v0] model", modelId, "onError:", String(error).slice(0, 120));
-              },
-            });
-            let totalChars = 0;
-            for await (const chunk of result.textStream) {
-              totalChars += chunk.length;
-              controller.enqueue(encoder.encode(chunk));
-            }
-            console.log("[v0] model", modelId, "stream done, chars:", totalChars, "hadError:", !!hadError);
-            if (totalChars === 0) {
-              // Empty stream — likely rate limited, try next model
-              console.log("[v0] model", modelId, "empty stream, trying next...");
-              continue;
-            }
-            success = true;
-            break;
-          } catch (modelErr: unknown) {
-            const msg = modelErr instanceof Error ? modelErr.message : String(modelErr);
-            console.log(`[v0] model ${modelId} caught error:`, msg.slice(0, 120));
-            // Try next model regardless of error type
-            continue;
-          }
+        // Return a proper streaming response using the AI SDK's built-in method
+        return result.toTextStreamResponse({
+          headers: {
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+          },
+        });
+      } catch (modelErr) {
+        lastError = modelErr;
+        const msg = modelErr instanceof Error ? modelErr.message : String(modelErr);
+        // Only fall through to next model on rate-limit errors
+        if (msg.includes("429") || msg.includes("rate") || msg.includes("Rate")) {
+          continue;
         }
-        if (!success) {
-          // All models rate-limited
-          controller.error(new Error("Alle Modelle gedrosselt"));
-        } else {
-          controller.close();
-        }
-      },
-    });
+        // Any other error — return 500 immediately
+        throw modelErr;
+      }
+    }
 
-    return new Response(stream, {
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Transfer-Encoding": "chunked",
-        "Cache-Control": "no-cache",
-        "X-Accel-Buffering": "no",
-      },
-    });
+    // All models rate-limited
+    throw lastError;
   } catch (err) {
-    console.log("[v0] /api/chat error:", err);
-    return new Response(JSON.stringify({ error: String(err) }), { status: 500 });
+    console.log("[v0] /api/chat error:", err instanceof Error ? err.message : String(err));
+    return new Response(JSON.stringify({ error: "Service temporarily unavailable" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
