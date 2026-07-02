@@ -764,11 +764,12 @@ export function ChatWidget() {
                 {/* Quick reply buttons — hidden when contextual chips are shown */}
                 {!typing && !aiLoading && currentFlow.options.length > 0 && chatStep === "idle" && (
                   <div className="px-4 pt-3 pb-2 flex flex-wrap gap-2">
-                    {currentFlow.options.map((opt) => (
-                      <button
-                        key={opt.label}
-                        onClick={() => handleOption(opt)}
-                        className="rounded-full px-3 py-1.5 text-xs font-medium border transition-all hover:scale-105 active:scale-95"
+                  {currentFlow.options.map((opt) => (
+                    <button
+                      key={opt.label}
+                      type="button"
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleOption(opt); }}
+                      className="rounded-full px-3 py-1.5 text-xs font-medium border transition-all hover:scale-105 active:scale-95"
                         style={{
                           borderColor: "rgba(0,116,162,0.4)",
                           color: "#7dd3fc",
@@ -814,21 +815,24 @@ export function ChatWidget() {
                 {!aiLoading && chatStep !== "idle" && chatStep !== "kennzeichen" && (
                   <div className="px-3 pt-2 flex flex-wrap gap-1.5">
                     {chatStep === "datum" && ["Nächste Woche", "Ich bin flexibel", "Montag", "Dienstag", "Mittwoch", "Donnerstag"].map((chip) => (
-                      <button key={chip} onClick={() => sendMessage(chip)}
+                      <button key={chip} type="button"
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setInput(""); sendMessage(chip); }}
                         className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
                         style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
                         {chip}
                       </button>
                     ))}
                     {chatStep === "upsell" && ["Nein danke", "Außenwäsche +13,99 €", "Innen & Außen +49,99 €"].map((chip) => (
-                      <button key={chip} onClick={() => sendMessage(chip)}
+                      <button key={chip} type="button"
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setInput(""); sendMessage(chip); }}
                         className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
                         style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
                         {chip}
                       </button>
                     ))}
                     {chatStep === "name" && ["Anonym / nicht angeben"].map((chip) => (
-                      <button key={chip} onClick={() => sendMessage(chip)}
+                      <button key={chip} type="button"
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setInput(""); sendMessage(chip); }}
                         className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
                         style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
                         {chip}
