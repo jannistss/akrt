@@ -48,7 +48,7 @@ export const blogPosts: BlogPost[] = [
 </ul>
 
 <h2>Was kostet die Hauptuntersuchung in Reutlingen?</h2>
-<p>Bei der Autoklinik Reutlingen kostet die HU inkl. AU <strong>ab 165,00 € zzgl. 19% MwSt.</strong> Darin enthalten sind die vollständige Hauptuntersuchung durch unsere Experten sowie der Abgastest. Bei bestandener Prüfung erhalten Sie direkt die neue Prüfplakette.</p>
+<p>Bei der Autoklinik Reutlingen kostet die HU inkl. AU <strong>165,00 € (Festpreis, keine MwSt.)</strong> Darin enthalten sind die vollständige Hauptuntersuchung durch unsere Experten sowie der Abgastest. Bei bestandener Prüfung erhalten Sie direkt die neue Prüfplakette.</p>
 
 <h2>Was passiert bei Mängeln?</h2>
 <p>Werden Mängel festgestellt, unterscheidet der TÜV zwischen geringen, erheblichen und gefährlichen Mängeln. Geringe Mängel müssen behoben werden, erlauben aber die weitere Nutzung. Bei erheblichen Mängeln haben Sie 4 Wochen Zeit zur Nachbesserung. Gefährliche Mängel bedeuten sofortiges Fahrverbot.</p>
@@ -59,7 +59,7 @@ export const blogPosts: BlogPost[] = [
     faqs: [
       { q: "Wie oft muss ich zur Hauptuntersuchung?", a: "In Deutschland ist die HU alle 24 Monate fällig. Bei Neuwagen erst nach 3 Jahren beim ersten Mal." },
       { q: "Kann ich den TÜV-Termin bei der Autoklinik buchen?", a: "Ja, wir führen die HU+AU direkt bei uns durch. Termin einfach online oder telefonisch vereinbaren." },
-      { q: "Was kostet der TÜV-Vorcheck?", a: "Der TÜV-Vorcheck kostet bei uns ab 30,00 € zzgl. 19% MwSt. und gibt Ihnen Sicherheit vor dem echten Prüftermin." },
+      { q: "Was kostet der TÜV-Vorcheck?", a: "Der TÜV-Vorcheck kostet bei uns ab 30,00 € (Festpreis, keine MwSt.) und gibt Ihnen Sicherheit vor dem echten Prüftermin." },
     ],
   },
   {
