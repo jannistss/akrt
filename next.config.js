@@ -38,11 +38,11 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://www.clarity.ms https://cdn.jsdelivr.net",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://www.clarity.ms https://cdn.jsdelivr.net https://va.vercel-scripts.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https://cdn.prod.website-files.com https://lh3.googleusercontent.com https://www.google-analytics.com https://www.googletagmanager.com",
-              "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://ai-gateway.vercel.sh",
+              "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://ai-gateway.vercel.sh https://va.vercel-scripts.com",
               "frame-src 'self' https://www.google.com https://maps.google.com https://booking.wscloud.io",
               "object-src 'none'",
               "base-uri 'self'",

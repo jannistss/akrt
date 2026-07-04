@@ -3,6 +3,7 @@ import "./globals.css";
 import { DM_Sans } from "next/font/google";
 import { ChatWidget } from "@/components/chat-widget";
 import { AnalyticsPlaceholders } from "@/components/analytics-placeholders";
+import { Analytics } from "@vercel/analytics/next";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -101,6 +102,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AnalyticsPlaceholders />
         {children}
         <ChatWidget />
+        <Analytics />
       </body>
     </html>
   );
