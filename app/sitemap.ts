@@ -1,9 +1,25 @@
 import type { MetadataRoute } from "next";
+import { blogPosts } from "@/lib/blog-data";
 
 const SITE_URL = "https://autoklinik-reutlingen.de";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString();
+
+  const blogEntries: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/blog`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...blogPosts.map((post) => ({
+      url: `${SITE_URL}/blog/${post.slug}`,
+      lastModified: new Date(post.date).toISOString(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
+  ];
 
   return [
     {
@@ -93,5 +109,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.2,
     },
+    // Blog & Ratgeber
+    ...blogEntries,
   ];
 }

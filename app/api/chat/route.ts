@@ -73,7 +73,7 @@ Schaue dir den GESAMTEN Chatverlauf nochmal durch. Schreibe dann:
 **Leistung:** {Leistung aus dem Chat}
 **Wunschtermin:** {Datum/Zeitraum aus dem Chat}
 **Extras:** {Wäsche aus dem Chat, oder "Keine"}
-**Geschätzter Preis:** {Passender Preis aus der Preisliste unten} zzgl. 19% MwSt.
+**Geschätzter Preis:** {Passender Preis aus der Preisliste unten — bei TÜV/HU KEIN MwSt.-Zusatz, bei allen anderen "zzgl. MwSt."}
 
 **Kontaktdaten:**
 Name: {Name aus dem Chat}
@@ -93,8 +93,8 @@ PREISE:
 - Ölwechsel: ab 90,00 € zzgl. MwSt.
 - Inspektion: ab 150,00 € zzgl. MwSt.
 - Räderwechsel (pro Satz): ab 20,00 € zzgl. MwSt.
-- TÜV-Vorcheck: ab 30,00 € zzgl. MwSt.
-- HU inkl. AU (TÜV): ab 165,00 € zzgl. MwSt.
+- TÜV-Vorcheck: ab 30,00 € (Festpreis, keine MwSt.)
+- HU inkl. AU (TÜV): 165,00 € (Festpreis, keine MwSt.)
 - Klima-Service: ab 115,00 € zzgl. MwSt.
 - Getriebespülung: ab 350,00 € zzgl. MwSt.
 - Achsvermessung: ab 110,00 € zzgl. MwSt.

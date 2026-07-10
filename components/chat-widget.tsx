@@ -107,7 +107,7 @@ const FLOWS: Record<
   },
   preise_tuev: {
     message:
-      "HU/TÜV Durchsicht (Vorcheck) ab 30,00 €. Haupt-/Abgasuntersuchung inkl. Abgasuntersuchung ab 165,00 €. Alle Preise sind Bruttopreise exkl. MwSt.",
+      "TÜV-Vorcheck ab 30,00 €. Hauptuntersuchung inkl. Abgasuntersuchung (HU+AU) 165,00 € (Festpreis, inkl. TÜV-Gebühr).",
     options: [
       { label: "Termin buchen", flow: "termin" },
       { label: "Weitere Preise", flow: "preise" },
@@ -903,16 +903,28 @@ export function ChatWidget() {
                         const fahrzeug = [clean(terminData.fahrzeug), terminData.kennzeichen ? `· ${terminData.kennzeichen}` : ""].filter(Boolean).join(" ");
                         const hasExtras = terminData.extras && terminData.extras !== "Nein danke" && terminData.extras !== "Keine" && terminData.extras !== "–";
                         // Estimate price from leistung string
-                        const priceMap: Record<string, string> = {
-                          "tüv": "ab 165,00 €", "hu": "ab 165,00 €", "hauptuntersuchung": "ab 165,00 €",
-                          "inspektion": "ab 150,00 €", "ölwechsel": "ab 90,00 €", "oelwechsel": "ab 90,00 €",
-                          "räderwechsel": "ab 20,00 €", "reifenwechsel": "ab 20,00 €",
-                          "klima": "ab 115,00 €", "bremsen": "auf Anfrage", "diagnose": "ab 20,00 €",
+                        // TÜV prices are fixed statutory fees (no MwSt.), all other workshop services + MwSt.
+                        const priceMap: Record<string, { price: string; isTuev: boolean }> = {
+                          "tüv":            { price: "165,00 €", isTuev: true },
+                          "hu":             { price: "165,00 €", isTuev: true },
+                          "hauptuntersuchung": { price: "165,00 €", isTuev: true },
+                          "vorcheck":       { price: "ab 30,00 €", isTuev: true },
+                          "inspektion":     { price: "ab 150,00 €", isTuev: false },
+                          "ölwechsel":      { price: "ab 90,00 €", isTuev: false },
+                          "oelwechsel":     { price: "ab 90,00 €", isTuev: false },
+                          "räderwechsel":   { price: "ab 20,00 €", isTuev: false },
+                          "reifenwechsel":  { price: "ab 20,00 €", isTuev: false },
+                          "klima":          { price: "ab 115,00 €", isTuev: false },
+                          "bremsen":        { price: "auf Anfrage", isTuev: false },
+                          "diagnose":       { price: "ab 20,00 €", isTuev: false },
                         };
                         const leistungLower = (terminData.leistung || "").toLowerCase();
-                        const basePrice = Object.entries(priceMap).find(([k]) => leistungLower.includes(k))?.[1] ?? "auf Anfrage";
+                        const matched = Object.entries(priceMap).find(([k]) => leistungLower.includes(k));
+                        const basePrice = matched?.[1].price ?? "auf Anfrage";
+                        const isTuev = matched?.[1].isTuev ?? false;
                         const extraPrice = hasExtras && terminData.extras?.includes("49,99") ? 49.99 : hasExtras && terminData.extras?.includes("13,99") ? 13.99 : 0;
-                        const priceStr = extraPrice > 0 ? `${basePrice} + ${extraPrice.toFixed(2).replace(".", ",")} € Wäsche (zzgl. 19% MwSt.)` : `${basePrice} zzgl. 19% MwSt.`;
+                        const extraStr = extraPrice > 0 ? ` + ${extraPrice.toFixed(2).replace(".", ",")} € Wäsche zzgl. MwSt.` : "";
+                        const priceStr = isTuev ? `${basePrice} (Festpreis inkl. TÜV-Gebühr)${extraStr}` : `${basePrice} zzgl. MwSt.${extraStr}`;
                         const rows = [
                           { label: "Fahrzeug", value: fahrzeug },
                           { label: "Leistung", value: clean(terminData.leistung) },
