@@ -43,8 +43,8 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Startseite", item: "https://akrt-iota.vercel.app" },
-      { "@type": "ListItem", position: 2, name: "Kfz-Gutachter Reutlingen", item: "https://akrt-iota.vercel.app/kfz-gutachter" },
+      { "@type": "ListItem", position: 1, name: "Startseite", item: "https://autoklinik-reutlingen.de" },
+      { "@type": "ListItem", position: 2, name: "Kfz-Gutachter Reutlingen", item: "https://autoklinik-reutlingen.de/kfz-gutachter" },
     ],
   },
 ];
