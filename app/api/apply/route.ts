@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
         ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
         : null) ??
       (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ??
-      "https://akrt-iota.vercel.app";
+      "https://autoklinik-reutlingen.de";
 
     const cvDownloadLink = cvUrl
       ? `${baseUrl}/api/cv-download?token=${encodeToken(cvUrl)}`
