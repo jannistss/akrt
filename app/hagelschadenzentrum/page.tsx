@@ -226,25 +226,17 @@ export default function HagelschadenzentrumPage() {
           <div className="relative w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-32 lg:py-40">
             <div className="max-w-2xl">
 
-              {/* Logo placeholder */}
-              <motion.div
-                className="inline-flex items-center gap-3 mb-8 rounded-xl px-4 py-2.5"
-                style={{ backgroundColor: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(8px)" }}
-                {...fadeUp(0)}
-              >
-                <div
-                  className="flex h-9 w-9 items-center justify-center rounded-lg shrink-0"
-                  style={{ backgroundColor: "#0074a2" }}
-                  aria-hidden="true"
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 3L2 8l10 5 10-5-10-5zM2 16l10 5 10-5M2 12l10 5 10-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.15em] text-white">Hagelschadenzentrum Reutlingen</p>
-                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>Logo-Platzhalter – wird ersetzt</p>
-                </div>
+              {/* HZ Logo */}
+              <motion.div className="mb-8" {...fadeUp(0)}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/www-hzzentrum-j6BpAueMwYKdcCO9DdOjnF07rCM9Ml.png"
+                  alt="Hagelschadenzentrum Reutlingen"
+                  width={320}
+                  height={72}
+                  className="h-14 w-auto object-contain"
+                  style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.4))" }}
+                />
               </motion.div>
 
               {/* Eyebrow */}
