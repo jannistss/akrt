@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Users, Car, Calendar, FileText,
-  Bell, Megaphone, Receipt, Settings, Briefcase, X, Menu,
+  Bell, Megaphone, Receipt, Settings, Briefcase, X, Menu, Database,
 } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
@@ -19,6 +19,7 @@ const navItems = [
   { href: "/admin/erinnerungen", label: "Erinnerungen", icon: Bell },
   { href: "/admin/kampagnen", label: "Kampagnen", icon: Megaphone },
   { href: "/admin/rechnungen", label: "Rechnungen", icon: Receipt },
+  { href: "/admin/repdoc", label: "Repdoc Import", icon: Database },
   { href: "/admin/einstellungen", label: "Einstellungen", icon: Settings },
 ];
 

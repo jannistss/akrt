@@ -1,8 +1,59 @@
 import { updateSession } from '@/lib/supabase/proxy'
-import { type NextRequest } from 'next/server'
+import { createServerClient } from '@supabase/ssr'
+import { type NextRequest, NextResponse } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request)
+  // First, refresh the session cookie via the proxy helper
+  const response = await updateSession(request)
+  const { pathname } = request.nextUrl
+
+  // Only run auth checks on admin/portal routes
+  if (!pathname.startsWith('/admin') && !pathname.startsWith('/portal')) {
+    return response
+  }
+
+  // Create a lightweight client to check user
+  let supabaseResponse = response
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() { return request.cookies.getAll() },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options)
+          )
+        },
+      },
+    }
+  )
+
+  const { data: { user } } = await supabase.auth.getUser()
+
+  // Protect /admin/* (except /admin/login)
+  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {
+    if (!user) {
+      return NextResponse.redirect(new URL('/admin/login', request.url))
+    }
+  }
+
+  // Protect /portal/* (except /portal/login)
+  if (pathname.startsWith('/portal') && !pathname.startsWith('/portal/login')) {
+    if (!user) {
+      return NextResponse.redirect(new URL('/portal/login', request.url))
+    }
+  }
+
+  // Redirect already-logged-in users away from login pages
+  if (user && pathname === '/admin/login') {
+    return NextResponse.redirect(new URL('/admin/dashboard', request.url))
+  }
+  if (user && pathname === '/portal/login') {
+    return NextResponse.redirect(new URL('/portal/dashboard', request.url))
+  }
+
+  return supabaseResponse
 }
 
 export const config = {
