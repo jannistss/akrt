@@ -21,7 +21,8 @@ export default function AdminLoginPage() {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
-      setError("E-Mail oder Passwort falsch.");
+      console.log("[v0] Supabase login error:", error.message, error.status, error.code);
+      setError(error.message);
       setLoading(false);
     } else {
       router.push("/admin/dashboard");
