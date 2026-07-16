@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { PortalNavClient } from "./portal-nav-client";
@@ -13,16 +12,14 @@ export default async function PortalLayout({ children }: { children: ReactNode }
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect("/portal/login");
-  }
-
   // Get linked customer
-  const { data: kunde } = await supabase
-    .from("kunden")
-    .select("vorname, nachname, email")
-    .eq("portal_user_id", user.id)
-    .single();
+  const { data: kunde } = user
+    ? await supabase
+        .from("kunden")
+        .select("vorname, nachname, email")
+        .eq("portal_user_id", user.id)
+        .single()
+    : { data: null };
 
   return (
     <div style={{ backgroundColor: "#f5f9fc", minHeight: "100vh" }}>
@@ -35,7 +32,7 @@ export default async function PortalLayout({ children }: { children: ReactNode }
             </div>
             <span style={{ fontSize: 12, color: "#94a3b8", fontWeight: 500 }}>Mein Bereich</span>
           </Link>
-          <PortalNavClient user={user} kundeName={kunde ? `${kunde.vorname} ${kunde.nachname}` : undefined} />
+          <PortalNavClient user={user ?? undefined} kundeName={kunde ? `${kunde.vorname} ${kunde.nachname}` : undefined} />
         </div>
       </header>
 

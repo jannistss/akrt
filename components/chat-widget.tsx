@@ -9,6 +9,11 @@ import { motion, AnimatePresence } from "framer-motion";
 type Message = { role: "bot" | "user"; text: string };
 type Flow =
   | "root"
+  | "hagel_root"
+  | "hagel_fotos"
+  | "hagel_ablauf"
+  | "hagel_termin"
+  | "hagel_versicherung"
   | "termin"
   | "preise"
   | "preise_inspektion"
@@ -54,6 +59,52 @@ const FLOWS: Record<
       { label: "Reifen", flow: "reifen" },
       { label: "Öffnungszeiten", flow: "oeffnungszeiten" },
       { label: "Mehr Optionen...", flow: "flotte" },
+    ],
+  },
+  hagel_root: {
+    message:
+      "Hallo! Ich bin der Assistent des Hagelschadenzentrums Reutlingen. Hast du einen Hagelschaden am Fahrzeug?",
+    options: [
+      { label: "Termin / Einschätzung", flow: "hagel_termin" },
+      { label: "Fotos einsenden", flow: "hagel_fotos" },
+      { label: "Ablauf erklären", flow: "hagel_ablauf" },
+      { label: "Versicherung & Kosten", flow: "hagel_versicherung" },
+      { label: "Anrufen", action: "call" },
+    ],
+  },
+  hagel_termin: {
+    message:
+      "Wir vereinbaren kurzfristig einen Termin zur Schadensbegutachtung. Am schnellsten geht es per WhatsApp oder Anruf.",
+    options: [
+      { label: "WhatsApp schreiben", action: "whatsapp" },
+      { label: "Anrufen", action: "call" },
+      { label: "Zurück", flow: "hagel_root" },
+    ],
+  },
+  hagel_fotos: {
+    message:
+      "Perfekt! Schick uns Fotos von: Motorhaube, Dach, Kofferraumdeckel, Scheiben und eine Gesamtansicht. Wir melden uns dann schnellstmöglich bei dir.",
+    options: [
+      { label: "Fotos per WhatsApp senden", action: "whatsapp" },
+      { label: "Zurück", flow: "hagel_root" },
+    ],
+  },
+  hagel_ablauf: {
+    message:
+      "Der Ablauf bei uns:\n1. Kontakt aufnehmen & Fotos senden\n2. Kurzfristiger Termin zur Schadensbegutachtung\n3. Reparaturlösung abstimmen (lackschadenfrei oder klassisch)\n4. Reparatur – schnell & professionell",
+    options: [
+      { label: "Termin vereinbaren", flow: "hagel_termin" },
+      { label: "Fotos einsenden", flow: "hagel_fotos" },
+      { label: "Zurück", flow: "hagel_root" },
+    ],
+  },
+  hagel_versicherung: {
+    message:
+      "Hagelschäden werden in der Regel von der Teilkaskoversicherung übernommen – ohne Hochstufung. Wir unterstützen dich bei der Dokumentation und Abstimmung.",
+    options: [
+      { label: "Termin vereinbaren", flow: "hagel_termin" },
+      { label: "Anrufen", action: "call" },
+      { label: "Zurück", flow: "hagel_root" },
     ],
   },
   termin: {
@@ -426,6 +477,8 @@ export function ChatWidget() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, typing]);
 
+  const isHagelPage = pathname?.startsWith("/hagelschadenzentrum") || pathname?.startsWith("/hagelschaden");
+
   /* open + first message */
   function openChat() {
     setShowProactive(false);
@@ -434,7 +487,9 @@ export function ChatWidget() {
     if (!open) {
       setOpen(true);
       if (messages.length === 0) {
-        addBotMessage(FLOWS.root.message);
+        const startFlow: Flow = isHagelPage ? "hagel_root" : "root";
+        if (isHagelPage) setFlow("hagel_root");
+        addBotMessage(FLOWS[startFlow].message);
       }
     }
   }
@@ -740,9 +795,13 @@ export function ChatWidget() {
             >
               x
             </button>
-            <p className="font-medium" style={{ color: "#fff" }}>Hallo! Kann ich helfen?</p>
+            <p className="font-medium" style={{ color: "#fff" }}>
+              {isHagelPage ? "Hagelschaden am Fahrzeug?" : "Hallo! Kann ich helfen?"}
+            </p>
             <p className="mt-0.5 text-xs" style={{ color: "#94a3b8" }}>
-              Termin, Preise, Fragen - ich bin hier.
+              {isHagelPage
+                ? "Termin, Fotos, Ablauf – ich bin hier."
+                : "Termin, Preise, Fragen - ich bin hier."}
             </p>
           </motion.div>
         )}

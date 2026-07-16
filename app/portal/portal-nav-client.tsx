@@ -13,7 +13,7 @@ const navLinks = [
   { href: "/portal/rechnungen", label: "Rechnungen", icon: FileText },
 ];
 
-export function PortalNavClient({ user, kundeName }: { user: User; kundeName?: string }) {
+export function PortalNavClient({ user, kundeName }: { user?: User; kundeName?: string }) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -24,7 +24,7 @@ export function PortalNavClient({ user, kundeName }: { user: User; kundeName?: s
     router.refresh();
   }
 
-  const displayName = kundeName ?? user.email?.split("@")[0] ?? "Kunde";
+  const displayName = kundeName ?? user?.email?.split("@")[0] ?? "Kunde";
   const initials = displayName.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
 
   return (
