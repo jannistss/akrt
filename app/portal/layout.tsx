@@ -32,7 +32,7 @@ export default async function PortalLayout({ children }: { children: ReactNode }
             </div>
             <span style={{ fontSize: 12, color: "#94a3b8", fontWeight: 500 }}>Mein Bereich</span>
           </Link>
-          <PortalNavClient user={user} kundeName={kunde ? `${kunde.vorname} ${kunde.nachname}` : undefined} />
+          <PortalNavClient user={user ?? undefined} kundeName={kunde ? `${kunde.vorname} ${kunde.nachname}` : undefined} />
         </div>
       </header>
 
