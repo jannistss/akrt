@@ -40,12 +40,9 @@ export async function POST(req: NextRequest) {
       cvUrl = blob.url;
     }
 
+    // Always use the production domain — never VERCEL_URL (which is the deployment URL like akrt-iota.vercel.app)
     const baseUrl =
       process.env.NEXT_PUBLIC_SITE_URL ??
-      (process.env.VERCEL_PROJECT_PRODUCTION_URL
-        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-        : null) ??
-      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ??
       "https://autoklinik-reutlingen.de";
 
     const cvDownloadLink = cvUrl

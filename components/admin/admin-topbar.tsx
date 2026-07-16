@@ -1,7 +1,9 @@
 "use client";
 
-import { Search, Bell, User } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { Search, Bell, LogOut } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import type { User } from "@supabase/supabase-js";
 
 const pageTitles: Record<string, string> = {
   "/admin/dashboard": "Dashboard",
@@ -16,10 +18,21 @@ const pageTitles: Record<string, string> = {
   "/admin/einstellungen": "Einstellungen",
 };
 
-export function AdminTopbar() {
+export function AdminTopbar({ user }: { user?: User }) {
   const pathname = usePathname();
+  const router = useRouter();
   const base = "/" + pathname.split("/").slice(1, 3).join("/");
   const title = pageTitles[base] ?? "Admin";
+
+  const displayName = user?.user_metadata?.name ?? user?.email?.split("@")[0] ?? "Admin";
+  const initials = displayName.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2);
+
+  async function handleLogout() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push("/admin/login");
+    router.refresh();
+  }
 
   return (
     <header
@@ -55,17 +68,22 @@ export function AdminTopbar() {
             style={{ backgroundColor: "#0074a2" }}
           />
         </button>
-        <div
-          className="flex items-center gap-2 px-3 py-1.5 rounded-lg cursor-pointer hover:bg-white/5 transition-colors"
-        >
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg" style={{ borderLeft: "1px solid rgba(255,255,255,0.07)" }}>
           <div
-            className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white"
+            className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
             style={{ backgroundColor: "#0074a2" }}
           >
-            A
+            {initials}
           </div>
-          <span className="text-sm text-white/60 hidden sm:block">Admin</span>
+          <span className="text-sm text-white/60 hidden sm:block max-w-[120px] truncate">{displayName}</span>
         </div>
+        <button
+          onClick={handleLogout}
+          title="Abmelden"
+          className="p-2 rounded-lg text-white/30 hover:text-red-400 hover:bg-red-400/10 transition-colors"
+        >
+          <LogOut size={15} />
+        </button>
       </div>
     </header>
   );
