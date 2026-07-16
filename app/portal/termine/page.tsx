@@ -11,13 +11,22 @@ export default async function PortalTerminePage() {
   const { data: kunde } = await supabase
     .from("kunden").select("id").eq("portal_user_id", user!.id).single();
 
-  const { data: termine } = kunde
+  type Termin = {
+    id: string;
+    datum: string;
+    leistung: string;
+    status: string;
+    notizen: string | null;
+    fahrzeuge: { marke: string; modell: string; kennzeichen: string }[] | null;
+  };
+
+  const { data: termine } = (kunde
     ? await supabase
         .from("termine")
         .select("id, datum, leistung, status, notizen, fahrzeuge(marke, modell, kennzeichen)")
         .eq("kunden_id", kunde.id)
         .order("datum", { ascending: false })
-    : { data: [] };
+    : { data: [] as Termin[] }) as { data: Termin[] | null };
 
   const statusColors: Record<string, { bg: string; text: string }> = {
     ausstehend:      { bg: "#fef9c3", text: "#92400e" },
@@ -32,7 +41,7 @@ export default async function PortalTerminePage() {
 
   const cardStyle = { backgroundColor: "#ffffff", borderRadius: 12, border: "1px solid #dde9f0", overflow: "hidden" };
 
-  function TerminRow({ t }: { t: typeof termine extends (infer U)[] | null ? U : never }) {
+  function TerminRow({ t }: { t: Termin }) {
     const st = statusColors[t.status] ?? { bg: "#f1f5f9", text: "#475569" };
     const fz = Array.isArray(t.fahrzeuge) ? t.fahrzeuge[0] : t.fahrzeuge;
     return (

@@ -150,8 +150,8 @@ export function KundenClient({ initialKunden }: { initialKunden: Kunde[] }) {
                   )}
                 </div>
               </AdminTd>
-              <AdminTd className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>
-                {fmtDate(k.letzter_besuch)}
+              <AdminTd className="text-xs">
+                <span style={{ color: "rgba(255,255,255,0.45)" }}>{fmtDate(k.letzter_besuch)}</span>
               </AdminTd>
               <AdminTd>
                 <StatusBadge status={k.status} />

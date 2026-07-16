@@ -27,7 +27,7 @@ export async function GET(request: Request) {
     .select(`
       id, leistung, datum,
       bewertungsanfrage_gesendet,
-      kunden!inner(vorname, nachname, email)
+      kunden!inner(id, vorname, nachname, email)
     `)
     .eq("status", "abgeschlossen")
     .eq("bewertungsanfrage_gesendet", false)
@@ -62,7 +62,7 @@ export async function GET(request: Request) {
         .eq("id", termin.id);
 
       await supabase.from("erinnerungen").insert({
-        kunden_id: termin.kunden?.id ?? null,
+        kunden_id: kunde?.id ?? null,
         typ: "bewertungsanfrage",
         status: "gesendet",
         geplant_am: new Date().toISOString(),
