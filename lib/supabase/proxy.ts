@@ -23,27 +23,8 @@ export async function updateSession(request: NextRequest) {
     },
   )
 
-  const { data: { user } } = await supabase.auth.getUser()
-
-  // Protect /admin/* — redirect to login if not authenticated
-  if (request.nextUrl.pathname.startsWith('/admin') &&
-      !request.nextUrl.pathname.startsWith('/admin/login')) {
-    if (!user) {
-      const url = request.nextUrl.clone()
-      url.pathname = '/admin/login'
-      return NextResponse.redirect(url)
-    }
-  }
-
-  // Protect /portal/* — redirect to portal login if not authenticated
-  if (request.nextUrl.pathname.startsWith('/portal') &&
-      !request.nextUrl.pathname.startsWith('/portal/login')) {
-    if (!user) {
-      const url = request.nextUrl.clone()
-      url.pathname = '/portal/login'
-      return NextResponse.redirect(url)
-    }
-  }
+  // Only refresh the session — auth redirects are handled in middleware.ts
+  await supabase.auth.getUser()
 
   return supabaseResponse
 }
