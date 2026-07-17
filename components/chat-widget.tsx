@@ -510,7 +510,7 @@ export function ChatWidget() {
       return;
     }
     if (opt.action === "whatsapp") {
-      window.open("https://wa.me/4971219886660", "_blank");
+      window.open("https://wa.me/4917661973298", "_blank");
       return;
     }
     if (opt.action === "route") {
