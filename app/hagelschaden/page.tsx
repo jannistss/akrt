@@ -230,7 +230,7 @@ export default function HagelschadenzentrumPage() {
               <motion.div className="mb-8" {...fadeUp(0)}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/www-hzzentrum-hp6NWfXvGD0iJi9nzEwFmOH77kFOGp.png"
+                  src="/assets/images/hz-logo-white.png"
                   alt="Hagelschadenzentrum Reutlingen"
                   width={320}
                   height={72}
