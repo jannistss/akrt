@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { getCLS, getFID, getFCP, getLCP, getTTFB } from "web-vitals";
+import { onCLS, onFID, onFCP, onLCP, onTTFB } from "web-vitals";
 
 export function VercelAnalytics() {
   useEffect(() => {
@@ -45,11 +45,11 @@ export function VercelAnalytics() {
       }
     };
 
-    getCLS(sendToVercelAnalytics);
-    getFID(sendToVercelAnalytics);
-    getFCP(sendToVercelAnalytics);
-    getLCP(sendToVercelAnalytics);
-    getTTFB(sendToVercelAnalytics);
+    onCLS(sendToVercelAnalytics);
+    onFID(sendToVercelAnalytics);
+    onFCP(sendToVercelAnalytics);
+    onLCP(sendToVercelAnalytics);
+    onTTFB(sendToVercelAnalytics);
   }, []);
 
   return null;
