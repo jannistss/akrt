@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { onCLS, onFID, onFCP, onLCP, onTTFB } from "web-vitals";
+import { onCLS, onINP, onFCP, onLCP, onTTFB } from "web-vitals";
 
 export function VercelAnalytics() {
   useEffect(() => {
@@ -46,7 +46,7 @@ export function VercelAnalytics() {
     };
 
     onCLS(sendToVercelAnalytics);
-    onFID(sendToVercelAnalytics);
+    onINP(sendToVercelAnalytics);
     onFCP(sendToVercelAnalytics);
     onLCP(sendToVercelAnalytics);
     onTTFB(sendToVercelAnalytics);
