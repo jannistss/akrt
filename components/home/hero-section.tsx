@@ -44,6 +44,7 @@ export function HeroSection() {
           poster="/assets/hero-poster.jpg"
         >
           <source src="/assets/hero.webm" type="video/webm" />
+          <source src="/assets/hero.mp4" type="video/mp4" />
         </video>
 
         {/* Base tint */}
