@@ -60,20 +60,20 @@ const nextConfig = {
       },
       // Images get longest cache (1 year immutable)
       {
-        source: "/assets/images/(.*)",
+        source: "/assets/images/:path*",
         headers: [
           { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
         ],
       },
-      // Media files (video, poster) get strong cache
+      // WebM video gets aggressive cache
       {
-        source: "/assets/(.*\\.(mp4|webm|jpg|jpeg|png|gif|svg)$)",
+        source: "/assets/:path*.webm",
         headers: [
           { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
         ],
       },
       {
-        source: "/assets/(.*)",
+        source: "/assets/:path*",
         headers: [
           { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
         ],

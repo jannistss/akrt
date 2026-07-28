@@ -43,7 +43,6 @@ export function HeroSection() {
           className="absolute inset-0 h-full w-full object-cover"
           poster="/assets/hero-poster.jpg"
         >
-          <source src="/assets/hero.mp4" type="video/mp4" />
           <source src="/assets/hero.webm" type="video/webm" />
         </video>
 
