@@ -35,24 +35,13 @@ export function HeroSection() {
         animate={{ scale: 1 }}
         transition={{ duration: 1.8, ease: EASE }}
       >
-        {/* Static poster on mobile — avoids loading 6.8 MB video on slow connections */}
-        <div
-          className="absolute inset-0 md:hidden"
-          style={{
-            backgroundImage: "url('/assets/hero-poster.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-          role="img"
-          aria-label="Autoklinik Reutlingen Werkstatt"
-        />
-        {/* Video only on md+ screens */}
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 h-full w-full object-cover hidden md:block"
+          preload="none"
+          className="absolute inset-0 h-full w-full object-cover"
           poster="/assets/hero-poster.jpg"
         >
           <source src="/assets/hero.webm" type="video/webm" />
