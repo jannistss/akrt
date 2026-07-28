@@ -83,7 +83,7 @@ export function AutoklinikFooter() {
             <a
               href="tel:+4907121155261990"
               className="inline-flex items-center gap-2 rounded-full border px-6 py-2.5 text-sm font-semibold transition-all hover:bg-white/10"
-              style={{ borderColor: "rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.7)" }}
+              style={{ borderColor: "rgba(255,255,255,0.45)", color: "#ffffff" }}
             >
               07121 15526199
             </a>
@@ -110,12 +110,12 @@ export function AutoklinikFooter() {
                 className="h-10 w-auto brightness-0 invert"
               />
             </Link>
-            <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.38)" }}>
+            <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.75)" }}>
               Deine Meisterwerkstatt in Reutlingen.<br />
               Ehrlich. Schnell. Zuverlässig.
             </p>
             {/* Address */}
-            <div className="flex items-start gap-3 text-sm" style={{ color: "rgba(255,255,255,0.38)" }}>
+            <div className="flex items-start gap-3 text-sm" style={{ color: "rgba(255,255,255,0.75)" }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="mt-0.5 shrink-0" aria-hidden="true">
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round"/>
                 <circle cx="12" cy="9" r="2.5" stroke="currentColor" strokeWidth="1.7"/>
@@ -163,7 +163,7 @@ export function AutoklinikFooter() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "rgba(255,255,255,0.25)" }}>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "#ffffff" }}>
               Kontakt
             </p>
             <ul className="flex flex-col gap-4">
@@ -197,7 +197,7 @@ export function AutoklinikFooter() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: EASE, delay: 0.3 }}
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "rgba(255,255,255,0.25)" }}>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "#ffffff" }}>
               Öffnungszeiten
             </p>
             <ul className="flex flex-col gap-3 text-sm">
@@ -207,8 +207,8 @@ export function AutoklinikFooter() {
                 { day: "Sonntag", time: "Geschlossen" },
               ].map(({ day, time }) => (
                 <li key={day} className="flex items-center justify-between gap-4">
-                  <span style={{ color: "rgba(255,255,255,0.38)" }}>{day}</span>
-                  <span className="font-medium" style={{ color: (time === "Geschlossen" || time === "Nur auf Anfrage") ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.65)" }}>
+                  <span style={{ color: "rgba(255,255,255,0.75)" }}>{day}</span>
+                  <span className="font-medium" style={{ color: (time === "Geschlossen" || time === "Nur auf Anfrage") ? "rgba(255,255,255,0.6)" : "#ffffff" }}>
                     {time}
                   </span>
                 </li>
