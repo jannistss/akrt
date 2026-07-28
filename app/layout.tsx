@@ -47,6 +47,17 @@ export const metadata: Metadata = {
   alternates: {
     canonical: SITE_URL,
   },
+  other: {
+    link: [
+      // Preload hero poster for LCP optimization
+      {
+        rel: "preload",
+        as: "image",
+        href: "/assets/hero-poster.jpg",
+        type: "image/jpeg",
+      },
+    ],
+  },
   openGraph: {
     type: "website",
     locale: "de_DE",

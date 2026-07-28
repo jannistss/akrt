@@ -58,6 +58,20 @@ const nextConfig = {
           { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
         ],
       },
+      // Images get longest cache (1 year immutable)
+      {
+        source: "/assets/images/(.*)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+      // Media files (video, poster) get strong cache
+      {
+        source: "/assets/(.*\\.(mp4|webm|jpg|jpeg|png|gif|svg)$)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
       {
         source: "/assets/(.*)",
         headers: [

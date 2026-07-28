@@ -67,7 +67,7 @@ export function AutoklinikFooter() {
         >
           <div>
             <p className="text-lg font-bold text-white mb-1">Bereit für einen Termin?</p>
-            <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>Schnell, unkompliziert, direkt in Reutlingen.</p>
+            <p className="text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>Schnell, unkompliziert, direkt in Reutlingen.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link
@@ -132,7 +132,7 @@ export function AutoklinikFooter() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "rgba(255,255,255,0.25)" }}>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "rgba(255,255,255,0.65)" }}>
               Leistungen
             </p>
             <ul className="flex flex-col gap-3">
@@ -141,7 +141,7 @@ export function AutoklinikFooter() {
                   <Link
                     href={l.href}
                     className="text-sm transition-colors hover:text-white flex items-center gap-2 group"
-                    style={{ color: "rgba(255,255,255,0.45)" }}
+                    style={{ color: "rgba(255,255,255,0.65)" }}
                   >
                     <span className="w-0 overflow-hidden group-hover:w-3 transition-all duration-200 opacity-0 group-hover:opacity-100" aria-hidden="true">
                       <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
@@ -174,7 +174,7 @@ export function AutoklinikFooter() {
                     target={c.external ? "_blank" : undefined}
                     rel={c.external ? "noopener noreferrer" : undefined}
                     className="flex items-center gap-3 text-sm transition-colors hover:text-white"
-                    style={{ color: "rgba(255,255,255,0.45)" }}
+                    style={{ color: "rgba(255,255,255,0.65)" }}
                   >
                     <span
                       className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
@@ -233,18 +233,18 @@ export function AutoklinikFooter() {
 
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-7">
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
+          <p className="text-xs" style={{ color: "rgba(255,255,255,0.6)" }}>
             © 2026 Autoklinik Reutlingen. Alle Rechte vorbehalten.
           </p>
           <div className="flex gap-6">
-            <Link href="/datenschutz" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.28)" }}>
+            <Link href="/datenschutz" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.65)" }}>
               Datenschutz
             </Link>
-            <Link href="/blog" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.28)" }}>
+            <Link href="/blog" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.65)" }}>
               Ratgeber
             </Link>
-            <span style={{ color: "rgba(255,255,255,0.15)" }}>·</span>
-            <Link href="/impressum" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.28)" }}>
+            <span style={{ color: "rgba(255,255,255,0.4)" }}>·</span>
+            <Link href="/impressum" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.65)" }}>
               Impressum
             </Link>
           </div>
