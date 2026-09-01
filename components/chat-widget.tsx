@@ -774,7 +774,7 @@ export function ChatWidget() {
             initial={{ opacity: 0, y: 12, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.95 }}
-            className="fixed bottom-24 right-6 z-50 max-w-xs rounded-2xl px-4 py-3 shadow-xl text-sm cursor-pointer"
+            className="fixed bottom-40 right-4 sm:bottom-24 sm:right-6 z-50 max-w-xs rounded-2xl px-4 py-3 shadow-xl text-sm cursor-pointer"
             style={{
               background: "rgba(0,46,64,0.97)",
               backdropFilter: "blur(16px)",
@@ -816,7 +816,7 @@ export function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.97 }}
             transition={{ duration: 0.22 }}
-            className="fixed bottom-24 right-6 z-50 w-[340px] rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-40 right-4 left-4 sm:left-auto sm:bottom-24 sm:right-6 sm:w-[340px] z-50 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
             style={{
               background: "rgba(5,15,25,0.97)",
               backdropFilter: "blur(20px)",
@@ -1165,7 +1165,7 @@ export function ChatWidget() {
         onClick={openChat}
         whileHover={{ scale: 1.07 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center"
+        className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center"
         style={{
           background: "linear-gradient(135deg, #002e40 0%, #0074a2 100%)",
         }}
