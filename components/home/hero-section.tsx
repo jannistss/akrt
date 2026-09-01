@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
+import { SITE } from "@/lib/site-config";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -136,7 +137,7 @@ export function HeroSection() {
 
               {/* Phone */}
               <Link
-                href="tel:+4907121155261990"
+                href={SITE.phone.href}
                 className="inline-flex items-center gap-2.5 rounded-full border px-6 py-3.5 text-sm font-semibold transition-all hover:bg-white/10 active:scale-[0.97]"
                 style={{ borderColor: "rgba(255,255,255,0.30)", color: "#ffffff" }}
               >
@@ -148,7 +149,7 @@ export function HeroSection() {
 
               {/* WhatsApp */}
               <Link
-                href="https://wa.me/4917661973298"
+                href={SITE.whatsapp.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 rounded-full border px-6 py-3.5 text-sm font-semibold transition-all hover:bg-white/10 active:scale-[0.97]"

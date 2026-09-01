@@ -18,8 +18,7 @@ import {
   FaqSchema,
   ReviewSchema,
 } from "@/components/structured-data";
-
-const SITE_URL = "https://autoklinik-reutlingen.de";
+import { SITE, SITE_URL } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Autoklinik Reutlingen | Meisterwerkstatt für Reparatur, Inspektion & TÜV",
@@ -43,7 +42,7 @@ const faqItems = [
   {
     question: "Wie kann ich einen Termin vereinbaren?",
     answer:
-      "Sie können uns telefonisch unter 07121 988 6660 oder per E-Mail unter info@autoklinik-reutlingen.de kontaktieren. Alternativ nutzen Sie unseren Online-Chat auf der Website, um rund um die Uhr einen Termin anzufragen.",
+      `Sie können uns telefonisch unter ${SITE.phone.display} oder per E-Mail unter ${SITE.email} kontaktieren. Alternativ nutzen Sie unseren Online-Chat auf der Website, um rund um die Uhr einen Termin anzufragen.`,
   },
   {
     question: "Bietet die Autoklinik Reutlingen TÜV-Hauptuntersuchungen an?",

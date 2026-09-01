@@ -7,11 +7,12 @@ import { motion } from "motion/react";
 import { fadeUp, slideLeft, slideRight, scaleUp, staggerContainer, staggerItem, EASE } from "@/lib/animation";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
+import { SITE } from "@/lib/site-config";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-const TEL_HREF = "tel:+4907121155261990";
-const TEL_DISPLAY = "07121 15526199";
+const TEL_HREF = SITE.phone.href;
+const TEL_DISPLAY = SITE.phone.display;
 const WA_HREF =
   "https://wa.me/4917661973298?text=Hallo%2C%20ich%20habe%20einen%20Hagelschaden%20an%20meinem%20Fahrzeug%20und%20m%C3%B6chte%20gerne%20einen%20Termin%20bzw.%20eine%20erste%20Einsch%C3%A4tzung%20anfragen.";
 const WA_PHOTOS_HREF =
@@ -26,14 +27,14 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "AutoRepair",
     name: "Hagelschadenzentrum Reutlingen – Autoklinik Reutlingen",
-    url: "https://autoklinik-reutlingen.de/hagelschaden",
-    telephone: "+4907121155261990",
+    url: `${SITE.url}/hagelschaden`,
+    telephone: SITE.phone.e164,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Haldenhaustraße 3",
-      addressLocality: "Reutlingen",
-      postalCode: "72770",
-      addressCountry: "DE",
+      streetAddress: SITE.address.street,
+      addressLocality: SITE.address.city,
+      postalCode: SITE.address.zip,
+      addressCountry: SITE.address.country,
     },
     openingHoursSpecification: [
       { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "08:00", closes: "18:00" },

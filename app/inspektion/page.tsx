@@ -7,20 +7,21 @@ import { fadeUp, fadeIn, slideLeft, slideRight, scaleUp, staggerContainer, stagg
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { ContactSection } from "@/components/contact-section";
+import { SITE } from "@/lib/site-config";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "AutoRepair",
-  name: "Autoklinik Reutlingen",
-  url: "https://autoklinik-reutlingen.de",
-  telephone: "+4907121155261990",
+  name: SITE.name,
+  url: SITE.url,
+  telephone: SITE.phone.e164,
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Haldenhaustraße 3",
-    addressLocality: "Reutlingen",
-    postalCode: "72770",
-    addressRegion: "BW",
-    addressCountry: "DE",
+    streetAddress: SITE.address.street,
+    addressLocality: SITE.address.city,
+    postalCode: SITE.address.zip,
+    addressRegion: SITE.address.region,
+    addressCountry: SITE.address.country,
   },
   hasOfferCatalog: {
     "@type": "OfferCatalog",
@@ -96,8 +97,8 @@ export default function InspektionPage() {
                     Termin online buchen
                     <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   </Link>
-                  <a href="tel:+4907121155261990" className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)", color: "rgba(255,255,255,0.85)" }}>
-                    07121 15526199
+                  <a href={SITE.phone.href} className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)", color: "rgba(255,255,255,0.85)" }}>
+                    {SITE.phone.display}
                   </a>
                 </motion.div>
                 <motion.div className="flex flex-wrap gap-3 mt-8" {...fadeUp(0.4)}>

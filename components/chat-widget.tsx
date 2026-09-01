@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { SITE } from "@/lib/site-config";
 
 /* ─── Types ─────────────────────────────────────────────── */
 type Message = { role: "bot" | "user"; text: string };
@@ -506,11 +507,11 @@ export function ChatWidget() {
     setMessages((prev) => [...prev, { role: "user", text: opt.label }]);
 
     if (opt.action === "call") {
-      window.location.href = "tel:+4971219886660";
+      window.location.href = SITE.phone.href;
       return;
     }
     if (opt.action === "whatsapp") {
-      window.open("https://wa.me/4917661973298", "_blank");
+      window.open(SITE.whatsapp.href, "_blank");
       return;
     }
     if (opt.action === "route") {
@@ -755,7 +756,7 @@ export function ChatWidget() {
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: "bot", text: "Leider gab es einen Fehler beim Senden. Ruf uns kurz an: 07121 988 6660" },
+        { role: "bot", text: `Leider gab es einen Fehler beim Senden. Ruf uns kurz an: ${SITE.phone.display}` },
       ]);
     } finally {
       setTerminSending(false);

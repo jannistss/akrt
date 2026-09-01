@@ -7,13 +7,14 @@ import { fadeUp, slideLeft, slideRight, scaleUp, staggerContainer, staggerItem }
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { ContactSection } from "@/components/contact-section";
+import { SITE } from "@/lib/site-config";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "AutoRepair",
-  name: "Autoklinik Reutlingen",
-  telephone: "+4907121155261990",
-  address: { "@type": "PostalAddress", streetAddress: "Haldenhaustraße 3", addressLocality: "Reutlingen", postalCode: "72770", addressCountry: "DE" },
+  name: SITE.name,
+  telephone: SITE.phone.e164,
+  address: { "@type": "PostalAddress", streetAddress: SITE.address.street, addressLocality: SITE.address.city, postalCode: SITE.address.zip, addressCountry: SITE.address.country },
 };
 
 const services = [
@@ -71,7 +72,7 @@ export default function ReifenservicePage() {
                     Termin buchen
                     <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   </Link>
-                  <a href="tel:+4907121155261990" className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all" style={{ borderColor: "#b0d4e4", color: "#002e40" }}>07121 15526199</a>
+                  <a href={SITE.phone.href} className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all" style={{ borderColor: "#b0d4e4", color: "#002e40" }}>{SITE.phone.display}</a>
                 </motion.div>
                 <motion.div className="flex flex-wrap gap-3" {...fadeUp(0.4)}>
                   {["Alle Marken", "Einlagerung möglich", "RDKS-Service", "Termin in 48h"].map((t) => (
