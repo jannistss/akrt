@@ -8,6 +8,7 @@ import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { ContactSection } from "@/components/contact-section";
 import { SITE } from "@/lib/site-config";
+import { FaqSchema } from "@/components/structured-data";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -47,6 +48,7 @@ export default function ReifenservicePage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <FaqSchema items={faqs.map((f) => ({ question: f.q, answer: f.a }))} />
       <AutoklinikNavbar />
       <main>
 

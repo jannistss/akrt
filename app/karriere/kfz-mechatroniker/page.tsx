@@ -17,6 +17,12 @@ export const metadata: Metadata = {
 };
 
 export default function KfzMechatronikerPage() {
+  // Evergreen posting: keep validThrough rolling ~1 year ahead so Google Jobs
+  // never treats the listing as expired and drops the rich result.
+  const oneYearFromNow = new Date();
+  oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+  const validThrough = oneYearFromNow.toISOString().split("T")[0];
+
   return (
     <>
       <JobPostingSchema
@@ -45,8 +51,8 @@ export default function KfzMechatronikerPage() {
           - Führerschein Klasse B
           - Deutschkenntnisse mindestens B2
         `}
-        datePosted="2025-01-01"
-        validThrough="2025-12-31"
+        datePosted="2026-01-01"
+        validThrough="2026-12-31"
         employmentType="FULL_TIME"
         baseSalary={{ min: 2800, max: 3800, currency: "EUR" }}
       />

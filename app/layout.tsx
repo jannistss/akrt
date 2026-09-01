@@ -4,6 +4,8 @@ import { DM_Sans } from "next/font/google";
 import { ChatWidget } from "@/components/chat-widget";
 import { AnalyticsPlaceholders } from "@/components/analytics-placeholders";
 import { VercelAnalytics } from "@/components/vercel-analytics";
+import { LocalBusinessSchema, OrganizationSchema, WebSiteSchema } from "@/components/structured-data";
+import { SITE_URL, SITE } from "@/lib/site-config";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -12,8 +14,7 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
-const SITE_URL = "https://autoklinik-reutlingen.de";
-const SITE_NAME = "Autoklinik Reutlingen";
+const SITE_NAME = SITE.name;
 const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 
 export const metadata: Metadata = {
@@ -93,6 +94,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="dns-prefetch" href="https://maps.googleapis.com" />
       </head>
       <body>
+        {/* Site-wide business identity schemas — present on every page so */}
+        {/* Google can resolve NAP data and site search regardless of entry URL. */}
+        <LocalBusinessSchema />
+        <OrganizationSchema />
+        <WebSiteSchema />
         <AnalyticsPlaceholders />
         <VercelAnalytics />
         {children}

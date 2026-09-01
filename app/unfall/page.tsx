@@ -9,7 +9,7 @@ import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { ContactSection } from "@/components/contact-section";
 import { WorkshopServices } from "@/components/workshop-services";
 import { SITE } from "@/lib/site-config";
-import { FaqSchema, BreadcrumbSchema } from "@/components/structured-data";
+import { FaqSchema } from "@/components/structured-data";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -55,6 +55,7 @@ export default function UnfallPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <FaqSchema items={faqs.map((f) => ({ question: f.q, answer: f.a }))} />
       <AutoklinikNavbar />
       <main>
 

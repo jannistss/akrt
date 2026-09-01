@@ -11,13 +11,7 @@ import { CtaBanner } from "@/components/home/cta-banner";
 import { HowItWorks } from "@/components/home/how-it-works";
 import { ContactSection } from "@/components/contact-section";
 import GoogleReviews from "@/components/google-reviews";
-import {
-  LocalBusinessSchema,
-  OrganizationSchema,
-  WebSiteSchema,
-  FaqSchema,
-  ReviewSchema,
-} from "@/components/structured-data";
+import { FaqSchema, ReviewSchema } from "@/components/structured-data";
 import { SITE, SITE_URL } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -88,9 +82,7 @@ const reviews = [
 export default function HomePage() {
   return (
     <>
-      <LocalBusinessSchema reviewCount={37} ratingValue={5.0} />
-      <OrganizationSchema />
-      <WebSiteSchema />
+      {/* LocalBusiness/Organization/WebSite schemas are rendered site-wide in the root layout. */}
       <FaqSchema items={faqItems} />
       <ReviewSchema reviews={reviews} />
       <AutoklinikNavbar />

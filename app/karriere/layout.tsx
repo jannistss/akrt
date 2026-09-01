@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
+import { BreadcrumbSchema } from "@/components/structured-data";
 
 export const metadata: Metadata = {
   // Broader employer-branding title — the specific job posting owns the
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
 export default function KarriereLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      <BreadcrumbSchema items={[{ name: "Startseite", url: "/" }, { name: "Karriere", url: "/karriere" }]} />
       <AutoklinikNavbar />
       {children}
       <AutoklinikFooter />
