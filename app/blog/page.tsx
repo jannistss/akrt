@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { blogPosts } from "@/lib/blog-data";
+import { BreadcrumbSchema } from "@/components/structured-data";
 
 export const metadata: Metadata = {
   title: "Ratgeber & Blog | Autoklinik Reutlingen",
@@ -41,6 +42,7 @@ export default function BlogPage() {
 
   return (
     <>
+      <BreadcrumbSchema items={[{ name: "Startseite", url: "/" }, { name: "Ratgeber & Blog", url: "/blog" }]} />
       <AutoklinikNavbar />
       <main>
         {/* Hero */}

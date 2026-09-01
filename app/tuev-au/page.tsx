@@ -8,7 +8,8 @@ import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { ContactSection } from "@/components/contact-section";
 import { SITE } from "@/lib/site-config";
-import { FaqSchema, BreadcrumbSchema } from "@/components/structured-data";
+import { FaqSchema } from "@/components/structured-data";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -56,7 +57,6 @@ export default function TuevAuPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <FaqSchema items={faqs.map((f) => ({ question: f.q, answer: f.a }))} />
-      <BreadcrumbSchema items={[{ name: "Startseite", url: "/" }, { name: "TÜV & AU", url: "/tuev-au" }]} />
       <AutoklinikNavbar />
       <main>
 
@@ -65,6 +65,10 @@ export default function TuevAuPage() {
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
               <div className="flex-1">
+                <Breadcrumbs
+                  variant="dark"
+                  items={[{ name: "Startseite", url: "/" }, { name: "TÜV & AU", url: "/tuev-au" }]}
+                />
                 <motion.div {...fadeUp(0)}>
                   <Link href="/#leistungen" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest mb-8 hover:opacity-80 transition-opacity" style={{ color: "rgba(255,255,255,0.7)" }}>
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>

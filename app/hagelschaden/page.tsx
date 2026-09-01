@@ -8,6 +8,7 @@ import { fadeUp, slideLeft, slideRight, scaleUp, staggerContainer, staggerItem, 
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { SITE } from "@/lib/site-config";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
@@ -226,6 +227,11 @@ export default function HagelschadenzentrumPage() {
 
           <div className="relative w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-32 lg:py-40">
             <div className="max-w-2xl">
+
+              <Breadcrumbs
+                variant="dark"
+                items={[{ name: "Startseite", url: "/" }, { name: "Hagelschaden", url: "/hagelschaden" }]}
+              />
 
               {/* HZ Logo */}
               <motion.div className="mb-8" {...fadeUp(0)}>

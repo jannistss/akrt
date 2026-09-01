@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HagelschadenzentrumLayout({
+export default function HagelschadenLayout({
   children,
 }: {
   children: React.ReactNode;

@@ -52,7 +52,7 @@ export default function KfzMechatronikerPage() {
           - Deutschkenntnisse mindestens B2
         `}
         datePosted="2026-01-01"
-        validThrough="2026-12-31"
+        validThrough={validThrough}
         employmentType="FULL_TIME"
         baseSalary={{ min: 2800, max: 3800, currency: "EUR" }}
       />
