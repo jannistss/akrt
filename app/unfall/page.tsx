@@ -9,7 +9,7 @@ import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { ContactSection } from "@/components/contact-section";
 import { WorkshopServices } from "@/components/workshop-services";
 import { SITE } from "@/lib/site-config";
-import { FaqSchema } from "@/components/structured-data";
+import { FaqSchema, ServiceSchema } from "@/components/structured-data";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 
 const jsonLd = {
@@ -44,6 +44,8 @@ const faqs = [
 ];
 
 const related = [
+  { name: "Kfz-Gutachter", href: "/kfz-gutachter" },
+  { name: "Bremsenservice", href: "/bremsen-reutlingen" },
   { name: "Inspektion & Wartung", href: "/inspektion" },
   { name: "TÜV & AU", href: "/tuev-au" },
   { name: "Reifenservice", href: "/reifenservice" },
@@ -57,6 +59,11 @@ export default function UnfallPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <ServiceSchema
+        name="Unfallreparatur Reutlingen"
+        description="Unfallinstandsetzung, Karosserie- und Lackreparatur sowie unabhängiges Kfz-Gutachten direkt im Haus - für alle Fahrzeugmarken in Reutlingen."
+        url="/unfall"
+      />
       <FaqSchema items={faqs.map((f) => ({ question: f.q, answer: f.a }))} />
       <AutoklinikNavbar />
       <main>
@@ -220,6 +227,16 @@ export default function UnfallPage() {
                 </motion.div>
               </motion.div>
             </div>
+          </div>
+        </section>
+
+        {/* ── Lokal ── */}
+        <section style={{ backgroundColor: "#f5f9fc" }}>
+          <div className="max-w-3xl mx-auto px-6 sm:px-10 py-20 text-center">
+            <motion.h2 className="font-bold tracking-tight text-balance mb-4" style={{ color: "#002e40", fontSize: "clamp(1.5rem, 2.4vw, 2rem)" }} {...fadeUp(0)}>Unfallreparatur direkt in Reutlingen</motion.h2>
+            <motion.p className="text-sm leading-relaxed" style={{ color: "#4a6272" }} {...fadeUp(0.1)}>
+              In unserer Werkstatt in der Haldenhaustraße kümmern wir uns um Gutachten, Karosserie- und Lackreparatur direkt in Reutlingen - ohne Umweg zu einem externen Sachverständigen. Rufen Sie an oder buchen Sie online.
+            </motion.p>
           </div>
         </section>
 

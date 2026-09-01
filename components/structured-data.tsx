@@ -222,6 +222,42 @@ export function ReviewSchema({ reviews }: { reviews: ReviewItem[] }) {
   );
 }
 
+// ── Service ───────────────────────────────────────────────────────────────────
+// Reusable Service schema for Money-Pages. Provider always references the
+// site-wide LocalBusiness entity (rendered once in the root layout) via @id,
+// so this never duplicates the business data — it just links to it.
+
+export function ServiceSchema({
+  name,
+  description,
+  url,
+}: {
+  name: string;
+  description: string;
+  url: string;
+}) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: name,
+    name,
+    description,
+    url: url.startsWith("http") ? url : `${SITE_URL}${url}`,
+    provider: { "@id": `${SITE_URL}/#localbusiness` },
+    areaServed: {
+      "@type": "City",
+      name: BUSINESS.address.addressLocality,
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
 // ── Breadcrumb ────────────────────────────────────────────────────────────────
 
 export type BreadcrumbItem = { name: string; url: string };
@@ -246,7 +282,7 @@ export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
   );
 }
 
-// ── JobPosting ────────────────────────────────────────────────────────────────
+// ���─ JobPosting ────────────────────────────────────────────────────────────────
 
 export function JobPostingSchema({
   title,

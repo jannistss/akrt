@@ -8,7 +8,7 @@ import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { ContactSection } from "@/components/contact-section";
 import { SITE } from "@/lib/site-config";
-import { FaqSchema } from "@/components/structured-data";
+import { FaqSchema, ServiceSchema } from "@/components/structured-data";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 
 const jsonLd = {
@@ -59,9 +59,17 @@ const faqs = [
   { q: "Was kostet eine Inspektion bei der Autoklinik?", a: "Der Preis hängt vom Fahrzeug, Motoröl und Umfang ab. Wir nennen Ihnen vor der Arbeit immer einen verbindlichen Festpreis - keine versteckten Nachträge." },
   { q: "Kann ich während der Inspektion warten?", a: "Ja. Für Wartungsarbeiten können Sie in unserem Wartebereich bleiben. Bei umfangreicheren Arbeiten holen wir Sie gerne mit einem Kostenvoranschlag ab." },
   { q: "Wie lange dauert eine Inspektion?", a: "Eine kleine Inspektion (Ölwechsel + Filtercheck) dauert ca. 1 Stunde. Die große Inspektion je nach Fahrzeug 2–3 Stunden." },
+  { q: "Was passiert, wenn ich die Inspektion überziehe?", a: "Eine überzogene Inspektion kann dazu führen, dass Verschleiß später erkannt wird und sich Folgeschäden entwickeln. Bei einigen Herstellern kann ein deutlich überzogenes Intervall zudem Auswirkungen auf Garantieansprüche haben - im Zweifel lohnt sich ein zeitnaher Termin." },
+  { q: "Darf eine freie Werkstatt eine Inspektion durchführen?", a: "Ja. Seit dem EU-Gruppenfreistellungsgesetz dürfen freie Werkstätten wie die Autoklinik herstellerkonforme Inspektionen durchführen, ohne dass dadurch die Herstellergarantie erlischt - solange Original- oder gleichwertige Teile verwendet werden." },
+  { q: "Was ist der Unterschied zwischen kleiner und großer Inspektion?", a: "Die kleine Inspektion umfasst im Kern Ölwechsel und Filtercheck sowie eine Sichtprüfung wichtiger Verschleißteile. Die große Inspektion geht darüber hinaus und prüft nach Herstellervorgabe zusätzlich Bremsen, Fahrwerk, Zündkerzen, Kühl- und Bremsflüssigkeit sowie weitere Komponenten - der genaue Umfang richtet sich nach Fahrzeug und Serviceplan." },
+  { q: "Wird mein Serviceheft bei der Inspektion gepflegt?", a: "Ja, wir tragen die durchgeführte Inspektion in Ihr Serviceheft bzw. digitales Scheckheft ein und setzen den Service-Intervallzähler im Bordcomputer zurück." },
 ];
 
 const related = [
+  { name: "Bremsenservice", href: "/bremsen-reutlingen" },
+  { name: "Motordiagnose", href: "/motordiagnose-reutlingen" },
+  { name: "Ölwechsel", href: "/oelwechsel-reutlingen" },
+  { name: "Getriebespülung", href: "/getriebespuelung-reutlingen" },
   { name: "TÜV & AU", href: "/tuev-au" },
   { name: "Reifenservice", href: "/reifenservice" },
   { name: "Glasservice", href: "/glasservice" },
@@ -76,6 +84,11 @@ export default function InspektionPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <ServiceSchema
+        name="Inspektion & Wartung Reutlingen"
+        description="Fahrzeuginspektion und Wartung nach Herstellervorgabe - Ölwechsel, Filterwechsel, Zahnriemen, Bremsflüssigkeit und mehr für alle Fahrzeugmarken in Reutlingen."
+        url="/inspektion"
+      />
       <FaqSchema items={faqs.map((f) => ({ question: f.q, answer: f.a }))} />
       <AutoklinikNavbar />
       <main>
@@ -99,7 +112,7 @@ export default function InspektionPage() {
                   Inspektion &amp; Wartung<br /><span style={{ color: "#4db8d8" }}>in Reutlingen</span>
                 </motion.h1>
                 <motion.p className="text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "rgba(255,255,255,0.75)" }} {...fadeUp(0.2)}>
-                  Herstellerkonformer Inspektionsservice für alle Marken - transparent, termingerecht und ohne versteckte Kosten. Ihre Herstellergarantie bleibt erhalten.
+                  <strong style={{ color: "#ffffff" }}>Die Autoklinik Reutlingen führt Inspektionen nach Herstellervorgabe für alle Fahrzeugmarken durch</strong> - der genaue Umfang richtet sich nach Fahrzeug, Alter und Laufleistung. Als freie Werkstatt dürfen wir das ohne Verlust Ihrer Herstellergarantie erledigen: transparent, termingerecht und mit Festpreis vor Arbeitsbeginn.
                 </motion.p>
                 <motion.div className="flex flex-wrap gap-3" {...fadeUp(0.3)}>
                   <Link href="/terminbuchung" className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110" style={{ backgroundColor: "#0074a2" }}>
@@ -143,8 +156,30 @@ export default function InspektionPage() {
           </div>
         </section>
 
-        {/* ── Why Autoklinik ── */}
+        {/* ── Kleine vs. große Inspektion ── */}
         <section style={{ backgroundColor: "#f5f9fc" }}>
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+              <div>
+                <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>Kleine Inspektion</motion.p>
+                <motion.h2 className="font-bold tracking-tight leading-[1.1] text-balance mb-5" style={{ color: "#002e40", fontSize: "clamp(1.6rem, 2.4vw, 2rem)" }} {...fadeUp(0.1)}>Was gehört zur kleinen Inspektion?</motion.h2>
+                <motion.p className="text-sm leading-relaxed" style={{ color: "#4a6272" }} {...fadeUp(0.15)}>
+                  <strong>Im Kern umfasst die kleine Inspektion den Ölwechsel inklusive Filterwechsel sowie eine Sichtprüfung wichtiger Verschleißteile</strong> - etwa Reifenzustand, Beleuchtung, Flüssigkeitsstände und sichtbare Undichtigkeiten. Sie eignet sich für die Wartung zwischen zwei großen Inspektionsterminen.
+                </motion.p>
+              </div>
+              <div>
+                <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>Große Inspektion</motion.p>
+                <motion.h2 className="font-bold tracking-tight leading-[1.1] text-balance mb-5" style={{ color: "#002e40", fontSize: "clamp(1.6rem, 2.4vw, 2rem)" }} {...fadeUp(0.1)}>Was gehört zur großen Inspektion?</motion.h2>
+                <motion.p className="text-sm leading-relaxed" style={{ color: "#4a6272" }} {...fadeUp(0.15)}>
+                  <strong>Die große Inspektion umfasst zusätzlich alle Punkte, die der Hersteller für das jeweilige Serviceintervall vorschreibt</strong> - etwa Zündkerzen, Bremsflüssigkeit, Kühlflüssigkeit, Fahrwerkskomponenten und weitere Verschleißteile. Welche Punkte konkret anfallen, hängt vom Fahrzeugmodell und Kilometerstand ab und wird bei uns vorab transparent aufgelistet.
+                </motion.p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Why Autoklinik ── */}
+        <section style={{ backgroundColor: "#ffffff" }}>
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
@@ -171,8 +206,18 @@ export default function InspektionPage() {
           </div>
         </section>
 
+        {/* ── Lokal ── */}
+        <section style={{ backgroundColor: "#f5f9fc" }}>
+          <div className="max-w-3xl mx-auto px-6 sm:px-10 py-20 text-center">
+            <motion.h2 className="font-bold tracking-tight text-balance mb-4" style={{ color: "#002e40", fontSize: "clamp(1.5rem, 2.4vw, 2rem)" }} {...fadeUp(0)}>Inspektion direkt in Reutlingen</motion.h2>
+            <motion.p className="text-sm leading-relaxed" style={{ color: "#4a6272" }} {...fadeUp(0.1)}>
+              In unserer Werkstatt in der Haldenhaustraße führen wir Ihre Inspektion vor Ort in Reutlingen durch. Rufen Sie an oder buchen Sie online - wir finden zeitnah einen passenden Termin.
+            </motion.p>
+          </div>
+        </section>
+
         {/* ── FAQ ── */}
-        <section style={{ backgroundColor: "#ffffff" }}>
+        <section style={{ backgroundColor: "#f5f9fc" }}>
           <div className="max-w-3xl mx-auto px-6 sm:px-10 py-24">
             <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>FAQ</motion.p>
             <motion.h2 className="font-bold tracking-tight mb-12" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }} {...fadeUp(0.1)}>Häufige Fragen zur Inspektion</motion.h2>

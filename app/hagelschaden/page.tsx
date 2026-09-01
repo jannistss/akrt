@@ -658,12 +658,13 @@ export default function HagelschadenzentrumPage() {
             <motion.p className="text-sm font-semibold mb-8" style={{ color: "#4a6272" }} {...fadeUp(0)}>Weitere Leistungen der Autoklinik</motion.p>
             <motion.div className="flex flex-wrap gap-3" variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true }}>
               {[
-                { name: "Unfallservice & Gutachten", href: "/unfall" },
-                { name: "Kfz-Gutachter", href: "/kfz-gutachter" },
-                { name: "Glasservice", href: "/glasservice" },
-                { name: "Inspektion & Wartung", href: "/inspektion" },
-                { name: "TÜV & AU", href: "/tuev-au" },
-                { name: "Flottenbetreuung", href: "/flottenbetreuung" },
+              { name: "Unfallservice & Gutachten", href: "/unfall" },
+              { name: "Kfz-Gutachter", href: "/kfz-gutachter" },
+              { name: "Glasservice", href: "/glasservice" },
+              { name: "Inspektion & Wartung", href: "/inspektion" },
+              { name: "Bremsenservice", href: "/bremsen-reutlingen" },
+              { name: "TÜV & AU", href: "/tuev-au" },
+              { name: "Flottenbetreuung", href: "/flottenbetreuung" },
               ].map((s) => (
                 <motion.div key={s.name} variants={staggerItem}>
                   <Link href={s.href} className="inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-medium transition-all hover:border-[#0074a2] hover:text-[#0074a2]" style={{ borderColor: "#c5dde8", color: "#002e40" }}>

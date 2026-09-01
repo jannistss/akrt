@@ -17,12 +17,6 @@ export const metadata: Metadata = {
 };
 
 export default function KfzMechatronikerPage() {
-  // Evergreen posting: keep validThrough rolling ~1 year ahead so Google Jobs
-  // never treats the listing as expired and drops the rich result.
-  const oneYearFromNow = new Date();
-  oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
-  const validThrough = oneYearFromNow.toISOString().split("T")[0];
-
   return (
     <>
       <JobPostingSchema
@@ -52,7 +46,10 @@ export default function KfzMechatronikerPage() {
           - Deutschkenntnisse mindestens B2
         `}
         datePosted="2026-01-01"
-        validThrough={validThrough}
+        // Update this date manually whenever the posting is confirmed to still be
+        // active/reposted. Do not compute it automatically — Google requires the
+        // date to reflect the real closing date of the listing, not a rolling window.
+        validThrough="2026-06-30"
         employmentType="FULL_TIME"
         baseSalary={{ min: 2800, max: 3800, currency: "EUR" }}
       />

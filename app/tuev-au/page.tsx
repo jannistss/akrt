@@ -45,6 +45,10 @@ const faqs = [
 
 const related = [
   { name: "Inspektion & Wartung", href: "/inspektion" },
+  { name: "Bremsenservice", href: "/bremsen-reutlingen" },
+  { name: "Motordiagnose", href: "/motordiagnose-reutlingen" },
+  { name: "Ölwechsel", href: "/oelwechsel-reutlingen" },
+  { name: "Getriebespülung", href: "/getriebespuelung-reutlingen" },
   { name: "Reifenservice", href: "/reifenservice" },
   { name: "Glasservice", href: "/glasservice" },
   { name: "Klimaservice", href: "/klimaservice" },
