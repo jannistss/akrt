@@ -21,15 +21,15 @@ import {
 import { SITE, SITE_URL } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Autoklinik Reutlingen | Meisterwerkstatt für Reparatur, Inspektion & TÜV",
+  title: "Autoklinik Reutlingen | Autowerkstatt für Reparatur, Inspektion & TÜV",
   description:
-    "Autoklinik Reutlingen – Reparatur, Inspektion, TÜV, Unfallinstandsetzung und Wartung aller Marken. Faire Preise, moderne Diagnosetechnik und schnelle Termine in Reutlingen.",
+    "Autoklinik Reutlingen – Ihre Autowerkstatt für Reparatur, Inspektion, TÜV, Unfallinstandsetzung und Wartung aller Marken. Faire Preise, moderne Diagnosetechnik und schnelle Termine in Reutlingen.",
   alternates: { canonical: SITE_URL },
   openGraph: {
     url: SITE_URL,
-    title: "Autoklinik Reutlingen | Meisterwerkstatt für Reparatur, Inspektion & TÜV",
+    title: "Autoklinik Reutlingen | Autowerkstatt für Reparatur, Inspektion & TÜV",
     description:
-      "Faire Preise, moderne Diagnosetechnik und schnelle Termine. Ihre Meisterwerkstatt in Reutlingen.",
+      "Faire Preise, moderne Diagnosetechnik und schnelle Termine. Ihre Autowerkstatt in Reutlingen.",
   },
 };
 

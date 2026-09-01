@@ -9,6 +9,7 @@ import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { ContactSection } from "@/components/contact-section";
 import { WorkshopServices } from "@/components/workshop-services";
 import { SITE } from "@/lib/site-config";
+import { FaqSchema, BreadcrumbSchema } from "@/components/structured-data";
 
 const jsonLd = {
   "@context": "https://schema.org",

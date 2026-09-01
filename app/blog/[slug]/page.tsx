@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { blogPosts, getBlogPost, getRelatedPosts } from "@/lib/blog-data";
+import { SITE, SITE_URL } from "@/lib/site-config";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -25,13 +26,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `https://autoklinik-reutlingen.de/blog/${post.slug}`,
+      url: `${SITE_URL}/blog/${post.slug}`,
       type: "article",
       publishedTime: post.date,
       authors: [post.author],
-      images: [{ url: `https://autoklinik-reutlingen.de${post.image}`, alt: post.imageAlt }],
+      images: [{ url: `${SITE_URL}${post.image}`, alt: post.imageAlt }],
     },
-    alternates: { canonical: `https://autoklinik-reutlingen.de/blog/${post.slug}` },
+    alternates: { canonical: `${SITE_URL}/blog/${post.slug}` },
   };
 }
 
@@ -48,7 +49,7 @@ export default async function BlogPostPage({ params }: Props) {
     "@type": "Article",
     headline: post.title,
     description: post.excerpt,
-    image: `https://autoklinik-reutlingen.de${post.image}`,
+    image: `${SITE_URL}${post.image}`,
     datePublished: post.date,
     dateModified: post.date,
     author: {
@@ -58,16 +59,16 @@ export default async function BlogPostPage({ params }: Props) {
     },
     publisher: {
       "@type": "Organization",
-      name: "Autoklinik Reutlingen",
-      url: "https://autoklinik-reutlingen.de",
+      name: SITE.name,
+      url: SITE_URL,
       logo: {
         "@type": "ImageObject",
-        url: "https://autoklinik-reutlingen.de/assets/images/logo.png",
+        url: `${SITE_URL}/assets/images/logo.png`,
       },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://autoklinik-reutlingen.de/blog/${post.slug}`,
+      "@id": `${SITE_URL}/blog/${post.slug}`,
     },
   };
 
@@ -92,9 +93,9 @@ export default async function BlogPostPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Startseite", item: "https://autoklinik-reutlingen.de" },
-      { "@type": "ListItem", position: 2, name: "Ratgeber", item: "https://autoklinik-reutlingen.de/blog" },
-      { "@type": "ListItem", position: 3, name: post.title, item: `https://autoklinik-reutlingen.de/blog/${post.slug}` },
+      { "@type": "ListItem", position: 1, name: "Startseite", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Ratgeber", item: `${SITE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: post.title, item: `${SITE_URL}/blog/${post.slug}` },
     ],
   };
 
@@ -209,11 +210,11 @@ export default async function BlogPostPage({ params }: Props) {
                     Termin online buchen
                   </Link>
                   <a
-                    href="tel:071219886660"
+                    href={SITE.phone.href}
                     className="block text-center rounded-xl py-3 text-sm font-medium mt-2 transition-all hover:bg-white/10"
                     style={{ color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.15)" }}
                   >
-                    07121 988 6660
+                    {SITE.phone.display}
                   </a>
                 </div>
 

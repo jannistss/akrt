@@ -1,21 +1,14 @@
 import type { Metadata } from "next";
 
+// This route only issues a permanent redirect to /hagelschaden (the canonical
+// URL for this content) — it never renders, so metadata stays minimal and
+// points crawlers straight to the real page instead of duplicating its tags.
 export const metadata: Metadata = {
-  title: "Hagelschadenzentrum Reutlingen | Gutachten & Reparatur",
-  description:
-    "Hagelschaden am Auto? Das Hagelschadenzentrum der Autoklinik Reutlingen hilft bei Gutachten, Reparatur und Windschutzscheibentausch. Jetzt per Telefon oder WhatsApp Kontakt aufnehmen.",
+  title: "Hagelschadenzentrum Reutlingen",
   alternates: {
-    canonical: "/hagelschadenzentrum",
+    canonical: "/hagelschaden",
   },
-  openGraph: {
-    title: "Hagelschadenzentrum Reutlingen",
-    description:
-      "Gutachten, Hagelschadenreparatur und Autoglas-Service aus einer Hand. Jetzt schnell Kontakt aufnehmen.",
-    url: "https://autoklinik-reutlingen.de/hagelschadenzentrum",
-    siteName: "Autoklinik Reutlingen",
-    locale: "de_DE",
-    type: "website",
-  },
+  robots: { index: false, follow: true },
 };
 
 export default function HagelschadenzentrumLayout({

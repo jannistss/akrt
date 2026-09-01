@@ -3,13 +3,16 @@ import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
 
 export const metadata: Metadata = {
-  title: "Karriere | Kfz-Mechatroniker gesucht",
+  // Broader employer-branding title — the specific job posting owns the
+  // "Kfz-Mechatroniker Stelle" keyword at /karriere/kfz-mechatroniker to
+  // avoid both pages competing for the same search query.
+  title: "Karriere bei der Autoklinik Reutlingen | Offene Stellen",
   description:
-    "Wir suchen einen Kfz-Mechatroniker (m/w/d) für unsere Werkstatt in Reutlingen. Faire Bezahlung, geregelte Arbeitszeiten, familiäres Team. Jetzt bewerben.",
+    "Werde Teil der Autoklinik Reutlingen: faire Bezahlung, geregelte Arbeitszeiten und ein familiäres Team. Hier findest du unsere aktuellen Stellenangebote in der Werkstatt.",
   alternates: { canonical: "https://autoklinik-reutlingen.de/karriere" },
   openGraph: {
     url: "https://autoklinik-reutlingen.de/karriere",
-    title: "Karriere bei der Autoklinik Reutlingen | Kfz-Mechatroniker gesucht",
+    title: "Karriere bei der Autoklinik Reutlingen | Offene Stellen",
     description:
       "Faire Bezahlung, geregelte Arbeitszeiten Mo–Fr, moderner Maschinenpark. Komm in unser Team.",
   },

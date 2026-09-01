@@ -6,6 +6,7 @@ import { PortalNavClient } from "./portal-nav-client";
 export const metadata = {
   title: "Mein Bereich | Autoklinik Reutlingen",
   description: "Ihr persönliches Kundenportal bei der Autoklinik Reutlingen.",
+  robots: { index: false, follow: false, nocache: true },
 };
 
 export default async function PortalLayout({ children }: { children: ReactNode }) {

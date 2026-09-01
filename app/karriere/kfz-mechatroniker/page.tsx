@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { JobPostingSchema, BreadcrumbSchema } from "@/components/structured-data";
 import KfzMechatronikerClient from "./kfz-mechatroniker-client";
-
-const SITE_URL = "https://autoklinik-reutlingen.de";
+import { SITE_URL } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Kfz-Mechatroniker (m/w/d) | Stelle in Reutlingen",
