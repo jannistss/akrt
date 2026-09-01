@@ -11,26 +11,19 @@ import { CtaBanner } from "@/components/home/cta-banner";
 import { HowItWorks } from "@/components/home/how-it-works";
 import { ContactSection } from "@/components/contact-section";
 import GoogleReviews from "@/components/google-reviews";
-import {
-  LocalBusinessSchema,
-  OrganizationSchema,
-  WebSiteSchema,
-  FaqSchema,
-  ReviewSchema,
-} from "@/components/structured-data";
-
-const SITE_URL = "https://autoklinik-reutlingen.de";
+import { FaqSchema, ReviewSchema } from "@/components/structured-data";
+import { SITE, SITE_URL } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Autoklinik Reutlingen | Meisterwerkstatt für Reparatur, Inspektion & TÜV",
+  title: "Autoklinik Reutlingen | Autowerkstatt für Reparatur, Inspektion & TÜV",
   description:
-    "Autoklinik Reutlingen – Reparatur, Inspektion, TÜV, Unfallinstandsetzung und Wartung aller Marken. Faire Preise, moderne Diagnosetechnik und schnelle Termine in Reutlingen.",
+    "Autoklinik Reutlingen – Ihre Autowerkstatt für Reparatur, Inspektion, TÜV, Unfallinstandsetzung und Wartung aller Marken. Faire Preise, moderne Diagnosetechnik und schnelle Termine in Reutlingen.",
   alternates: { canonical: SITE_URL },
   openGraph: {
     url: SITE_URL,
-    title: "Autoklinik Reutlingen | Meisterwerkstatt für Reparatur, Inspektion & TÜV",
+    title: "Autoklinik Reutlingen | Autowerkstatt für Reparatur, Inspektion & TÜV",
     description:
-      "Faire Preise, moderne Diagnosetechnik und schnelle Termine. Ihre Meisterwerkstatt in Reutlingen.",
+      "Faire Preise, moderne Diagnosetechnik und schnelle Termine. Ihre Autowerkstatt in Reutlingen.",
   },
 };
 
@@ -43,7 +36,7 @@ const faqItems = [
   {
     question: "Wie kann ich einen Termin vereinbaren?",
     answer:
-      "Sie können uns telefonisch unter 07121 988 6660 oder per E-Mail unter info@autoklinik-reutlingen.de kontaktieren. Alternativ nutzen Sie unseren Online-Chat auf der Website, um rund um die Uhr einen Termin anzufragen.",
+      `Sie können uns telefonisch unter ${SITE.phone.display} oder per E-Mail unter ${SITE.email} kontaktieren. Alternativ nutzen Sie unseren Online-Chat auf der Website, um rund um die Uhr einen Termin anzufragen.`,
   },
   {
     question: "Bietet die Autoklinik Reutlingen TÜV-Hauptuntersuchungen an?",
@@ -89,9 +82,7 @@ const reviews = [
 export default function HomePage() {
   return (
     <>
-      <LocalBusinessSchema reviewCount={37} ratingValue={5.0} />
-      <OrganizationSchema />
-      <WebSiteSchema />
+      {/* LocalBusiness/Organization/WebSite schemas are rendered site-wide in the root layout. */}
       <FaqSchema items={faqItems} />
       <ReviewSchema reviews={reviews} />
       <AutoklinikNavbar />

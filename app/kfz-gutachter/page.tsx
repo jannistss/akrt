@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { fadeUp, slideLeft, slideRight, scaleUp, staggerContainer, staggerItem } from "@/lib/animation";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 const jsonLd = [
   {
@@ -13,7 +14,7 @@ const jsonLd = [
     "@type": "AutomotiveBusiness",
     name: "Kfz-Sachverständigenbüro Najami",
     description: "Unabhängiger Kfz-Sachverständiger in Reutlingen - Express-Gutachten, kostenlos bei Fremdverschulden",
-    telephone: "+491556314 6679",
+    telephone: "+4915563146679",
     email: "info@sv-najami.de",
     url: "https://www.sv-najami.de",
     address: { "@type": "PostalAddress", streetAddress: "Haldenhaustraße 3", addressLocality: "Reutlingen", postalCode: "72770", addressCountry: "DE" },
@@ -37,14 +38,6 @@ const jsonLd = [
       { "@type": "Question", name: "Wie schnell bekomme ich einen Termin?", acceptedAnswer: { "@type": "Answer", text: "In der Regel innerhalb von 24 Stunden. Da Kfz-Gutachter Najami direkt in unserer Werkstatt ansässig ist, ist eine schnelle Koordination möglich - auch kurzfristig." } },
       { "@type": "Question", name: "Was kostet ein Gutachten als Selbstzahler?", acceptedAnswer: { "@type": "Answer", text: "Die Honorare richten sich nach der BVSK-Tabelle, ab ca. 220 EUR bei 1.000 EUR Schaden." } },
       { "@type": "Question", name: "Was ist der Vorteil eines unabhängigen Gutachters?", acceptedAnswer: { "@type": "Answer", text: "Ein unabhängiger Sachverständiger arbeitet nur für den Geschädigten, nicht für die Versicherung - das verhindert eine Unter-Bewertung des Schadens und sichert den vollen Anspruch." } },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Startseite", item: "https://autoklinik-reutlingen.de" },
-      { "@type": "ListItem", position: 2, name: "Kfz-Gutachter Reutlingen", item: "https://autoklinik-reutlingen.de/kfz-gutachter" },
     ],
   },
 ];
@@ -96,6 +89,10 @@ export default function KfzGutachterPage() {
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-36 w-full">
             <div className="max-w-2xl">
+              <Breadcrumbs
+                variant="dark"
+                items={[{ name: "Startseite", url: "/" }, { name: "Kfz-Gutachter", url: "/kfz-gutachter" }]}
+              />
               <motion.div className="flex items-center gap-2 mb-6" {...fadeUp(0)}>
                 <Image
                   src="/assets/images/najami/logo-white.png"
@@ -426,6 +423,24 @@ export default function KfzGutachterPage() {
               </Link>
               <Link href="/unfall" className="inline-flex items-center gap-2 text-sm font-semibold hover:text-[#0074a2] transition-colors" style={{ color: "#002e40" }}>
                 Unfallservice
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
+              <Link href="/hagelschaden" className="inline-flex items-center gap-2 text-sm font-semibold hover:text-[#0074a2] transition-colors" style={{ color: "#002e40" }}>
+                Hagelschaden
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
+              <Link href="/glasservice" className="inline-flex items-center gap-2 text-sm font-semibold hover:text-[#0074a2] transition-colors" style={{ color: "#002e40" }}>
+                Glasservice
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
+              <Link href="/flottenbetreuung" className="inline-flex items-center gap-2 text-sm font-semibold hover:text-[#0074a2] transition-colors" style={{ color: "#002e40" }}>
+                Flottenbetreuung
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

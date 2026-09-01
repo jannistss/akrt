@@ -7,11 +7,13 @@ import { motion } from "motion/react";
 import { fadeUp, slideLeft, slideRight, scaleUp, staggerContainer, staggerItem, EASE } from "@/lib/animation";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
+import { SITE } from "@/lib/site-config";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-const TEL_HREF = "tel:+4907121155261990";
-const TEL_DISPLAY = "07121 15526199";
+const TEL_HREF = SITE.phone.href;
+const TEL_DISPLAY = SITE.phone.display;
 const WA_HREF =
   "https://wa.me/4917661973298?text=Hallo%2C%20ich%20habe%20einen%20Hagelschaden%20an%20meinem%20Fahrzeug%20und%20m%C3%B6chte%20gerne%20einen%20Termin%20bzw.%20eine%20erste%20Einsch%C3%A4tzung%20anfragen.";
 const WA_PHOTOS_HREF =
@@ -26,14 +28,14 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "AutoRepair",
     name: "Hagelschadenzentrum Reutlingen – Autoklinik Reutlingen",
-    url: "https://autoklinik-reutlingen.de/hagelschaden",
-    telephone: "+4907121155261990",
+    url: `${SITE.url}/hagelschaden`,
+    telephone: SITE.phone.e164,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Haldenhaustraße 3",
-      addressLocality: "Reutlingen",
-      postalCode: "72770",
-      addressCountry: "DE",
+      streetAddress: SITE.address.street,
+      addressLocality: SITE.address.city,
+      postalCode: SITE.address.zip,
+      addressCountry: SITE.address.country,
     },
     openingHoursSpecification: [
       { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "08:00", closes: "18:00" },
@@ -225,6 +227,11 @@ export default function HagelschadenzentrumPage() {
 
           <div className="relative w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-32 lg:py-40">
             <div className="max-w-2xl">
+
+              <Breadcrumbs
+                variant="dark"
+                items={[{ name: "Startseite", url: "/" }, { name: "Hagelschaden", url: "/hagelschaden" }]}
+              />
 
               {/* HZ Logo */}
               <motion.div className="mb-8" {...fadeUp(0)}>
@@ -642,6 +649,30 @@ export default function HagelschadenzentrumPage() {
                 </a>
               </motion.div>
             </div>
+          </div>
+        </section>
+
+        {/* ── Other services ── */}
+        <section style={{ backgroundColor: "#f5f9fc" }}>
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-20">
+            <motion.p className="text-sm font-semibold mb-8" style={{ color: "#4a6272" }} {...fadeUp(0)}>Weitere Leistungen der Autoklinik</motion.p>
+            <motion.div className="flex flex-wrap gap-3" variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true }}>
+              {[
+                { name: "Unfallservice & Gutachten", href: "/unfall" },
+                { name: "Kfz-Gutachter", href: "/kfz-gutachter" },
+                { name: "Glasservice", href: "/glasservice" },
+                { name: "Inspektion & Wartung", href: "/inspektion" },
+                { name: "TÜV & AU", href: "/tuev-au" },
+                { name: "Flottenbetreuung", href: "/flottenbetreuung" },
+              ].map((s) => (
+                <motion.div key={s.name} variants={staggerItem}>
+                  <Link href={s.href} className="inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-medium transition-all hover:border-[#0074a2] hover:text-[#0074a2]" style={{ borderColor: "#c5dde8", color: "#002e40" }}>
+                    {s.name}
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
         </section>
 

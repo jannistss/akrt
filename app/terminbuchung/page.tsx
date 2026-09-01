@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
+import { SITE } from "@/lib/site-config";
 
 export default function TerminbuchungPage() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -77,18 +78,18 @@ export default function TerminbuchungPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a
-                href="tel:+4971211452619"
+                href={SITE.phone.href}
                 className="rounded-xl px-6 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
                 style={{ backgroundColor: "#0074a2" }}
               >
-                07121 14526199
+                {SITE.phone.display}
               </a>
               <a
-                href="mailto:info@autoklinik-reutlingen.de"
+                href={`mailto:${SITE.email}`}
                 className="rounded-xl border px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-[#f4f8fb]"
                 style={{ borderColor: "#b8d0dc", color: "#0d1b2a" }}
               >
-                info@autoklinik-reutlingen.de
+                {SITE.email}
               </a>
             </div>
             <p className="mt-10 text-xs" style={{ color: "#8aa0ae" }}>

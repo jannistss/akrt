@@ -2,41 +2,41 @@
  * Structured Data (Schema.org JSON-LD)
  * All schemas for Autoklinik Reutlingen.
  * Import and render in page.tsx / layout.tsx as needed.
+ *
+ * Contact data (phone, address, etc.) comes from the single
+ * source of truth in `lib/site-config.ts` — do not hardcode it here.
  */
 
-const SITE_URL = "https://autoklinik-reutlingen.de";
+import { SITE, SITE_URL } from "@/lib/site-config";
 
 // ── Shared Business Info ──────────────────────────────────────────────────────
 
 export const BUSINESS = {
-  name: "Autoklinik Reutlingen",
-  legalName: "Autoklinik Reutlingen GmbH",
-  url: SITE_URL,
+  name: SITE.name,
+  legalName: SITE.legalName,
+  url: SITE.url,
   logo: `${SITE_URL}/assets/images/6937e76d5753525e801ff711_logo-autoklinik2.png`,
   image: `${SITE_URL}/og-image.jpg`,
-  telephone: "+4907121988666",
-  email: "info@autoklinik-reutlingen.de",
+  telephone: SITE.phone.e164,
+  email: SITE.email,
   priceRange: "€€",
   address: {
-    streetAddress: "Haldenhaustraße 3",
-    addressLocality: "Reutlingen",
-    postalCode: "72770",
-    addressCountry: "DE",
-    addressRegion: "Baden-Württemberg",
+    streetAddress: SITE.address.street,
+    addressLocality: SITE.address.city,
+    postalCode: SITE.address.zip,
+    addressCountry: SITE.address.country,
+    addressRegion: SITE.address.region,
   },
-  geo: { latitude: 48.481, longitude: 9.204 },
-  googleMapsUrl: "https://maps.google.com/?cid=autoklinik-reutlingen",
+  geo: { latitude: SITE.geo.latitude, longitude: SITE.geo.longitude },
+  googleMapsUrl: SITE.googleMapsUrl,
   openingHours: [
     "Mo 08:00-18:00",
     "Tu 08:00-18:00",
     "We 08:00-18:00",
     "Th 08:00-18:00",
-    "Fr 08:00-17:00",
+    "Fr 08:00-18:00",
   ],
-  sameAs: [
-    "https://www.google.com/maps/place/Autoklinik+Reutlingen",
-    "https://www.instagram.com/autoklinik.reutlingen",
-  ],
+  sameAs: SITE.sameAs,
 } as const;
 
 // ── LocalBusiness + AutoRepair ────────────────────────────────────────────────
@@ -76,8 +76,7 @@ export function LocalBusinessSchema({
     },
     hasMap: BUSINESS.googleMapsUrl,
     openingHoursSpecification: [
-      { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday"], opens: "08:00", closes: "18:00" },
-      { "@type": "OpeningHoursSpecification", dayOfWeek: ["Friday"], opens: "08:00", closes: "17:00" },
+      { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "18:00" },
     ],
     aggregateRating: {
       "@type": "AggregateRating",

@@ -33,7 +33,7 @@ export function AutoklinikNavbar() {
         { name: "Klimaservice", link: "/klimaservice" },
         { name: "Unfallservice", link: "/unfall" },
         { name: "Flottenbetreuung", link: "/flottenbetreuung" },
-        { name: "Hagelschadenzentrum", link: "/hagelschadenzentrum" },
+        { name: "Hagelschadenzentrum", link: "/hagelschaden" },
       ],
     },
     { name: "Flotte", link: "/flottenbetreuung" },

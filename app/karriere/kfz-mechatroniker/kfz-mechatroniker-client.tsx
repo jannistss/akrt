@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import { fadeUp, staggerContainer, staggerItem, EASE } from "@/lib/animation";
+import { SITE } from "@/lib/site-config";
 
 // ── Wizard Step Types ────────────────────────────────────────────────────────
 
@@ -275,7 +276,7 @@ function SuccessScreen({ name }: { name: string }) {
           Zurück zur Startseite
         </Link>
         <a
-          href="tel:+4907121155261990"
+          href={SITE.phone.href}
           className="inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-semibold transition-all hover:border-[#0074a2] hover:text-[#0074a2]"
           style={{ borderColor: "#d5e8f0", color: "#475569" }}
         >
@@ -643,8 +644,8 @@ export default function KfzMechatronikerPage() {
           <motion.div className="mt-10 text-center" {...fadeUp(0.3)}>
             <p className="text-sm" style={{ color: "#94a3b8" }}>
               Lieber persönlich?{" "}
-              <a href="tel:+4907121155261990" className="font-semibold hover:underline" style={{ color: "#0074a2" }}>
-                07121 15526199
+              <a href={SITE.phone.href} className="font-semibold hover:underline" style={{ color: "#0074a2" }}>
+                {SITE.phone.display}
               </a>
               {" "}oder{" "}
               <a href="https://wa.me/4917661973298" target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline" style={{ color: "#0074a2" }}>

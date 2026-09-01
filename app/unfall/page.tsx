@@ -8,13 +8,16 @@ import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { ContactSection } from "@/components/contact-section";
 import { WorkshopServices } from "@/components/workshop-services";
+import { SITE } from "@/lib/site-config";
+import { FaqSchema } from "@/components/structured-data";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "AutoRepair",
-  name: "Autoklinik Reutlingen",
-  telephone: "+4907121155261990",
-  address: { "@type": "PostalAddress", streetAddress: "Haldenhaustraße 3", addressLocality: "Reutlingen", postalCode: "72770", addressCountry: "DE" },
+  name: SITE.name,
+  telephone: SITE.phone.e164,
+  address: { "@type": "PostalAddress", streetAddress: SITE.address.street, addressLocality: SITE.address.city, postalCode: SITE.address.zip, addressCountry: SITE.address.country },
 };
 
 const highlights = ["Kostenlos bei Fremdverschulden", "Unabhängiger Gutachter im Haus", "Alle Marken", "Meisterbetrieb", "Versicherungsabwicklung", "TÜV in 48 Stunden"];
@@ -47,12 +50,14 @@ const related = [
   { name: "Glasservice", href: "/glasservice" },
   { name: "Klimaservice", href: "/klimaservice" },
   { name: "Flottenbetreuung", href: "/flottenbetreuung" },
-];
+  { name: "Hagelschaden", href: "/hagelschaden" },
+  ];
 
 export default function UnfallPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <FaqSchema items={faqs.map((f) => ({ question: f.q, answer: f.a }))} />
       <AutoklinikNavbar />
       <main>
 
@@ -61,6 +66,10 @@ export default function UnfallPage() {
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
               <div className="flex-1">
+                <Breadcrumbs
+                  variant="dark"
+                  items={[{ name: "Startseite", url: "/" }, { name: "Unfallinstandsetzung", url: "/unfall" }]}
+                />
                 <motion.div {...fadeUp(0)}>
                   <Link href="/#leistungen" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest mb-8 hover:opacity-80 transition-opacity" style={{ color: "#4db8d8" }}>
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -78,7 +87,7 @@ export default function UnfallPage() {
                     Jetzt Termin buchen
                     <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   </Link>
-                  <a href="tel:+4907121155261990" className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)", color: "rgba(255,255,255,0.85)" }}>07121 15526199</a>
+                  <a href={SITE.phone.href} className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)", color: "rgba(255,255,255,0.85)" }}>{SITE.phone.display}</a>
                 </motion.div>
                 <motion.div className="flex flex-wrap gap-3 mt-8" {...fadeUp(0.4)}>
                   {highlights.map((t) => (
@@ -247,7 +256,7 @@ export default function UnfallPage() {
                   Termin buchen
                   <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </Link>
-                <a href="tel:+4907121155261990" className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)", color: "rgba(255,255,255,0.85)" }}>07121 15526199</a>
+                <a href={SITE.phone.href} className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)", color: "rgba(255,255,255,0.85)" }}>{SITE.phone.display}</a>
               </motion.div>
             </div>
           </div>

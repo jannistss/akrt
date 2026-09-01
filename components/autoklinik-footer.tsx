@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { fadeUp, staggerContainer, staggerItem, EASE } from "@/lib/animation";
+import { SITE } from "@/lib/site-config";
 
 const services = [
   { label: "Inspektion & Wartung", href: "/inspektion" },
@@ -22,8 +23,8 @@ const contacts = [
         <path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
-    label: "07121 15526199",
-    href: "tel:+4907121155261990",
+    label: SITE.phone.display,
+    href: SITE.phone.href,
   },
   {
     icon: (
@@ -31,8 +32,8 @@ const contacts = [
         <path d="M20.52 3.48A11.93 11.93 0 0012 0C5.37 0 0 5.37 0 12c0 2.11.55 4.17 1.59 5.99L0 24l6.18-1.62A11.93 11.93 0 0012 24c6.63 0 12-5.37 12-12 0-3.21-1.25-6.23-3.48-8.52z" fill="#25D366"/>
       </svg>
     ),
-    label: "0176 61973298 (WhatsApp)",
-    href: "https://wa.me/4917661973298",
+    label: `${SITE.whatsapp.display} (WhatsApp)`,
+    href: SITE.whatsapp.href,
     external: true,
   },
   {
@@ -42,8 +43,8 @@ const contacts = [
         <path d="M2 7l10 7 10-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
       </svg>
     ),
-    label: "info@autoklinik-reutlingen.de",
-    href: "mailto:info@autoklinik-reutlingen.de",
+    label: SITE.email,
+    href: `mailto:${SITE.email}`,
   },
 ];
 
@@ -67,7 +68,7 @@ export function AutoklinikFooter() {
         >
           <div>
             <p className="text-lg font-bold text-white mb-1">Bereit für einen Termin?</p>
-            <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>Schnell, unkompliziert, direkt in Reutlingen.</p>
+            <p className="text-sm" style={{ color: "#ffffff" }}>Schnell, unkompliziert, direkt in Reutlingen.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link
@@ -81,11 +82,11 @@ export function AutoklinikFooter() {
               </svg>
             </Link>
             <a
-              href="tel:+4907121155261990"
+              href={SITE.phone.href}
               className="inline-flex items-center gap-2 rounded-full border px-6 py-2.5 text-sm font-semibold transition-all hover:bg-white/10"
-              style={{ borderColor: "rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.7)" }}
+              style={{ borderColor: "rgba(255,255,255,0.45)", color: "#ffffff" }}
             >
-              07121 15526199
+              {SITE.phone.display}
             </a>
           </div>
         </motion.div>
@@ -110,17 +111,17 @@ export function AutoklinikFooter() {
                 className="h-10 w-auto brightness-0 invert"
               />
             </Link>
-            <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.38)" }}>
+            <p className="text-sm leading-relaxed" style={{ color: "#ffffff" }}>
               Deine Meisterwerkstatt in Reutlingen.<br />
               Ehrlich. Schnell. Zuverlässig.
             </p>
             {/* Address */}
-            <div className="flex items-start gap-3 text-sm" style={{ color: "rgba(255,255,255,0.38)" }}>
+            <div className="flex items-start gap-3 text-sm" style={{ color: "#ffffff" }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="mt-0.5 shrink-0" aria-hidden="true">
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round"/>
                 <circle cx="12" cy="9" r="2.5" stroke="currentColor" strokeWidth="1.7"/>
               </svg>
-              <span>Haldenhaustraße 3<br />72770 Reutlingen</span>
+              <span>{SITE.address.street}<br />{SITE.address.zip} {SITE.address.city}</span>
             </div>
           </motion.div>
 
@@ -132,7 +133,7 @@ export function AutoklinikFooter() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "rgba(255,255,255,0.25)" }}>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "#ffffff" }}>
               Leistungen
             </p>
             <ul className="flex flex-col gap-3">
@@ -141,7 +142,7 @@ export function AutoklinikFooter() {
                   <Link
                     href={l.href}
                     className="text-sm transition-colors hover:text-white flex items-center gap-2 group"
-                    style={{ color: "rgba(255,255,255,0.45)" }}
+                    style={{ color: "#ffffff" }}
                   >
                     <span className="w-0 overflow-hidden group-hover:w-3 transition-all duration-200 opacity-0 group-hover:opacity-100" aria-hidden="true">
                       <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
@@ -163,7 +164,7 @@ export function AutoklinikFooter() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "rgba(255,255,255,0.25)" }}>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "#ffffff" }}>
               Kontakt
             </p>
             <ul className="flex flex-col gap-4">
@@ -174,7 +175,7 @@ export function AutoklinikFooter() {
                     target={c.external ? "_blank" : undefined}
                     rel={c.external ? "noopener noreferrer" : undefined}
                     className="flex items-center gap-3 text-sm transition-colors hover:text-white"
-                    style={{ color: "rgba(255,255,255,0.45)" }}
+                    style={{ color: "#ffffff" }}
                   >
                     <span
                       className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
@@ -197,18 +198,14 @@ export function AutoklinikFooter() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: EASE, delay: 0.3 }}
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "rgba(255,255,255,0.25)" }}>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "#ffffff" }}>
               Öffnungszeiten
             </p>
             <ul className="flex flex-col gap-3 text-sm">
-              {[
-                { day: "Mo – Fr", time: "08:00 – 18:00" },
-                { day: "Samstag", time: "Nur auf Anfrage" },
-                { day: "Sonntag", time: "Geschlossen" },
-              ].map(({ day, time }) => (
+              {SITE.openingHours.map(({ day, time }) => (
                 <li key={day} className="flex items-center justify-between gap-4">
-                  <span style={{ color: "rgba(255,255,255,0.38)" }}>{day}</span>
-                  <span className="font-medium" style={{ color: (time === "Geschlossen" || time === "Nur auf Anfrage") ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.65)" }}>
+                  <span style={{ color: "#ffffff" }}>{day}</span>
+                  <span className="font-medium" style={{ color: "#ffffff" }}>
                     {time}
                   </span>
                 </li>
@@ -216,7 +213,7 @@ export function AutoklinikFooter() {
             </ul>
             {/* Google maps link */}
             <a
-              href="https://maps.google.com/?q=Haldenhaustraße+3,+72770+Reutlingen"
+              href={SITE.googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 inline-flex items-center gap-2 text-xs transition-colors hover:text-white"
@@ -233,18 +230,18 @@ export function AutoklinikFooter() {
 
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-7">
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
+          <p className="text-xs" style={{ color: "#ffffff" }}>
             © 2026 Autoklinik Reutlingen. Alle Rechte vorbehalten.
           </p>
           <div className="flex gap-6">
-            <Link href="/datenschutz" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.28)" }}>
+            <Link href="/datenschutz" className="text-xs transition-colors hover:text-white" style={{ color: "#ffffff" }}>
               Datenschutz
             </Link>
-            <Link href="/blog" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.28)" }}>
+            <Link href="/blog" className="text-xs transition-colors hover:text-white" style={{ color: "#ffffff" }}>
               Ratgeber
             </Link>
-            <span style={{ color: "rgba(255,255,255,0.15)" }}>·</span>
-            <Link href="/impressum" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.28)" }}>
+            <span style={{ color: "#ffffff" }}>·</span>
+            <Link href="/impressum" className="text-xs transition-colors hover:text-white" style={{ color: "#ffffff" }}>
               Impressum
             </Link>
           </div>

@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 export const metadata = {
   title: "Autoklinik CRM",
   description: "Internes CRM-System der Autoklinik Reutlingen",
+  robots: { index: false, follow: false, nocache: true },
 };
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {

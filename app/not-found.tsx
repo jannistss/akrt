@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
+import { SITE } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Seite nicht gefunden (404)",
@@ -48,7 +49,7 @@ export default function NotFound() {
               Zur Startseite
             </Link>
             <a
-              href="tel:+4907121988666"
+              href={SITE.phone.href}
               className="inline-flex items-center gap-2.5 rounded-full border px-8 py-4 text-sm font-semibold transition-all hover:border-[#0074a2] hover:text-[#0074a2]"
               style={{ borderColor: "#d5e8f0", color: "#475569" }}
             >
