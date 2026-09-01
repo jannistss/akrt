@@ -51,6 +51,52 @@ const services = [
     ),
   },
   {
+    title: "Ölwechsel",
+    description: "Motoröl und Ölfilter nach Herstellervorgabe – für alle Marken, meist am selben Tag erledigt.",
+    href: "/oelwechsel-reutlingen",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 3c2 2.5 4 5.5 4 8a4 4 0 0 1-8 0c0-2.5 2-5.5 4-8z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+        <path d="M10.3 12.5a1.8 1.8 0 0 0 1.7 2.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    title: "Bremsenservice",
+    description: "Prüfung und Wechsel von Bremsbelägen, Bremsscheiben und Bremsflüssigkeit – für sicheren Bremsweg.",
+    href: "/bremsen-reutlingen",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.7" />
+        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.7" />
+        <path d="M12 4v3M12 17v3M4 12h3M17 12h3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    title: "Motordiagnose",
+    description: "Fehlerspeicher auslesen und Ursachen finden – von der Kontrollleuchte bis zur klaren Diagnose.",
+    href: "/motordiagnose-reutlingen",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="4" y="7" width="16" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.7" />
+        <path d="M8 3.5v3.5M16 3.5v3.5M8 12h3M8 15h5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    title: "Getriebespülung",
+    description: "Freigabekonforme Getriebeflüssigkeit für Automatik- und Doppelkupplungsgetriebe.",
+    href: "/getriebespuelung-reutlingen",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="9" cy="9" r="3.2" stroke="currentColor" strokeWidth="1.7" />
+        <circle cx="17" cy="16" r="2.2" stroke="currentColor" strokeWidth="1.7" />
+        <path d="M9 12.2V17M12.2 9H17M6.5 6.5l-1 1M11.5 6.5l1 1" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
     title: "Unfallservice",
     description: "Von der Schadensaufnahme bis zur Instandsetzung – schnelle Hilfe und klare Kommunikation.",
     href: "/unfall",

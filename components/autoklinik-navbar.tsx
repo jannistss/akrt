@@ -27,6 +27,10 @@ export function AutoklinikNavbar() {
       link: "#leistungen",
       children: [
         { name: "Inspektion & Wartung", link: "/inspektion" },
+        { name: "Ölwechsel", link: "/oelwechsel-reutlingen" },
+        { name: "Bremsenservice", link: "/bremsen-reutlingen" },
+        { name: "Motordiagnose", link: "/motordiagnose-reutlingen" },
+        { name: "Getriebespülung", link: "/getriebespuelung-reutlingen" },
         { name: "TÜV & AU", link: "/tuev-au" },
         { name: "Reifenservice", link: "/reifenservice" },
         { name: "Glasservice", link: "/glasservice" },
