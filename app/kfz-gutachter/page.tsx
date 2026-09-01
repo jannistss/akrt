@@ -445,6 +445,18 @@ export default function KfzGutachterPage() {
                   <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </Link>
+              <Link href="/bremsen-reutlingen" className="inline-flex items-center gap-2 text-sm font-semibold hover:text-[#0074a2] transition-colors" style={{ color: "#002e40" }}>
+                Bremsenservice
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
+              <Link href="/motordiagnose-reutlingen" className="inline-flex items-center gap-2 text-sm font-semibold hover:text-[#0074a2] transition-colors" style={{ color: "#002e40" }}>
+                Motordiagnose
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </motion.div>
           </div>
         </section>

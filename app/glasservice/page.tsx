@@ -38,6 +38,10 @@ const faqs = [
 
 const related = [
   { name: "Inspektion & Wartung", href: "/inspektion" },
+  { name: "Bremsenservice", href: "/bremsen-reutlingen" },
+  { name: "Motordiagnose", href: "/motordiagnose-reutlingen" },
+  { name: "Ölwechsel", href: "/oelwechsel-reutlingen" },
+  { name: "Getriebespülung", href: "/getriebespuelung-reutlingen" },
   { name: "TÜV & AU", href: "/tuev-au" },
   { name: "Reifenservice", href: "/reifenservice" },
   { name: "Klimaservice", href: "/klimaservice" },

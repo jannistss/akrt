@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Unfallinstandsetzung Reutlingen | Karosserie & Lackierung",
   description:
     "Professionelle Unfallreparatur und Karosserieinstandsetzung in Reutlingen. Alle Fahrzeugmarken, Versicherungsabwicklung, Mietwagen möglich. Faire Preise.",
-  keywords: ["Unfallreparatur Reutlingen", "Karosserie Reutlingen", "Unfallschaden Reutlingen", "Unfall Werkstatt Reutlingen"],
+  keywords: ["Unfallreparatur Reutlingen", "Unfallinstandsetzung Reutlingen", "Unfallschaden Reutlingen", "Karosserieschaden Reutlingen", "Karosserie Reutlingen", "Unfall Werkstatt Reutlingen"],
   alternates: { canonical: `${SITE_URL}/unfall` },
   openGraph: {
     url: `${SITE_URL}/unfall`,
