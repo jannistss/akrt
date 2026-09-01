@@ -17,12 +17,21 @@ const CATEGORY_SERVICE_MAP: Record<string, { name: string; href: string }> = {
   Klimaservice: { name: "Klimaservice", href: "/klimaservice" },
   Reifenservice: { name: "Reifenservice", href: "/reifenservice" },
   "Motor & Wartung": { name: "Inspektion & Wartung", href: "/inspektion" },
-  "Sicherheit & Bremsen": { name: "Inspektion & Wartung", href: "/inspektion" },
+  "Sicherheit & Bremsen": { name: "Bremsenservice", href: "/bremsen-reutlingen" },
   "Saisonaler Service": { name: "Inspektion & Wartung", href: "/inspektion" },
   "Unfall & Karosserie": { name: "Unfallservice", href: "/unfall" },
   Glasservice: { name: "Glasservice", href: "/glasservice" },
-  "Diagnose & Technik": { name: "Inspektion & Wartung", href: "/inspektion" },
+  "Diagnose & Technik": { name: "Motordiagnose", href: "/motordiagnose-reutlingen" },
   "Gutachten & Bewertung": { name: "Kfz-Gutachter", href: "/kfz-gutachter" },
+};
+
+// Per-article overrides take priority over the category mapping above - some
+// categories contain multiple articles that each point to a different, more
+// specific money page (e.g. "Motor & Wartung" covers both Ölwechsel and Zahnriemen).
+const SLUG_SERVICE_MAP: Record<string, { name: string; href: string }> = {
+  "oelwechsel-wie-oft-welches-oel": { name: "Ölwechsel", href: "/oelwechsel-reutlingen" },
+  "bremsen-pruefen-wechseln": { name: "Bremsenservice", href: "/bremsen-reutlingen" },
+  "fehlerdiagnose-motorlampe": { name: "Motordiagnose", href: "/motordiagnose-reutlingen" },
 };
 
 export async function generateStaticParams() {
@@ -56,7 +65,7 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound();
 
   const related = getRelatedPosts(slug, 3);
-  const relatedService = CATEGORY_SERVICE_MAP[post.category];
+  const relatedService = SLUG_SERVICE_MAP[post.slug] ?? CATEGORY_SERVICE_MAP[post.category];
 
   // Article structured data
   const articleJsonLd = {

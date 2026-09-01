@@ -59,9 +59,15 @@ const faqs = [
   { q: "Was kostet eine Inspektion bei der Autoklinik?", a: "Der Preis hängt vom Fahrzeug, Motoröl und Umfang ab. Wir nennen Ihnen vor der Arbeit immer einen verbindlichen Festpreis - keine versteckten Nachträge." },
   { q: "Kann ich während der Inspektion warten?", a: "Ja. Für Wartungsarbeiten können Sie in unserem Wartebereich bleiben. Bei umfangreicheren Arbeiten holen wir Sie gerne mit einem Kostenvoranschlag ab." },
   { q: "Wie lange dauert eine Inspektion?", a: "Eine kleine Inspektion (Ölwechsel + Filtercheck) dauert ca. 1 Stunde. Die große Inspektion je nach Fahrzeug 2–3 Stunden." },
+  { q: "Was passiert, wenn ich die Inspektion überziehe?", a: "Eine überzogene Inspektion kann dazu führen, dass Verschleiß später erkannt wird und sich Folgeschäden entwickeln. Bei einigen Herstellern kann ein deutlich überzogenes Intervall zudem Auswirkungen auf Garantieansprüche haben - im Zweifel lohnt sich ein zeitnaher Termin." },
+  { q: "Darf eine freie Werkstatt eine Inspektion durchführen?", a: "Ja. Seit dem EU-Gruppenfreistellungsgesetz dürfen freie Werkstätten wie die Autoklinik herstellerkonforme Inspektionen durchführen, ohne dass dadurch die Herstellergarantie erlischt - solange Original- oder gleichwertige Teile verwendet werden." },
 ];
 
 const related = [
+  { name: "Bremsenservice", href: "/bremsen-reutlingen" },
+  { name: "Motordiagnose", href: "/motordiagnose-reutlingen" },
+  { name: "Ölwechsel", href: "/oelwechsel-reutlingen" },
+  { name: "Getriebespülung", href: "/getriebespuelung-reutlingen" },
   { name: "TÜV & AU", href: "/tuev-au" },
   { name: "Reifenservice", href: "/reifenservice" },
   { name: "Glasservice", href: "/glasservice" },
@@ -99,7 +105,7 @@ export default function InspektionPage() {
                   Inspektion &amp; Wartung<br /><span style={{ color: "#4db8d8" }}>in Reutlingen</span>
                 </motion.h1>
                 <motion.p className="text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "rgba(255,255,255,0.75)" }} {...fadeUp(0.2)}>
-                  Herstellerkonformer Inspektionsservice für alle Marken - transparent, termingerecht und ohne versteckte Kosten. Ihre Herstellergarantie bleibt erhalten.
+                  Die Autoklinik Reutlingen führt Inspektionen nach Herstellervorgabe für alle Fahrzeugmarken durch - der genaue Umfang richtet sich nach Fahrzeug, Alter und Laufleistung. Transparent, termingerecht und ohne versteckte Kosten.
                 </motion.p>
                 <motion.div className="flex flex-wrap gap-3" {...fadeUp(0.3)}>
                   <Link href="/terminbuchung" className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110" style={{ backgroundColor: "#0074a2" }}>
@@ -171,8 +177,18 @@ export default function InspektionPage() {
           </div>
         </section>
 
-        {/* ── FAQ ── */}
+        {/* ── Lokal ── */}
         <section style={{ backgroundColor: "#ffffff" }}>
+          <div className="max-w-3xl mx-auto px-6 sm:px-10 py-20 text-center">
+            <motion.h2 className="font-bold tracking-tight text-balance mb-4" style={{ color: "#002e40", fontSize: "clamp(1.5rem, 2.4vw, 2rem)" }} {...fadeUp(0)}>Inspektion direkt in Reutlingen</motion.h2>
+            <motion.p className="text-sm leading-relaxed" style={{ color: "#4a6272" }} {...fadeUp(0.1)}>
+              In unserer Werkstatt in der Haldenhaustraße führen wir Ihre Inspektion vor Ort in Reutlingen durch. Rufen Sie an oder buchen Sie online - wir finden zeitnah einen passenden Termin.
+            </motion.p>
+          </div>
+        </section>
+
+        {/* ── FAQ ── */}
+        <section style={{ backgroundColor: "#f5f9fc" }}>
           <div className="max-w-3xl mx-auto px-6 sm:px-10 py-24">
             <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>FAQ</motion.p>
             <motion.h2 className="font-bold tracking-tight mb-12" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }} {...fadeUp(0.1)}>Häufige Fragen zur Inspektion</motion.h2>
