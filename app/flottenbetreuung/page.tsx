@@ -46,6 +46,7 @@ const related = [
   { name: "Glasservice", href: "/glasservice" },
   { name: "Klimaservice", href: "/klimaservice" },
   { name: "Unfallservice", href: "/unfall" },
+  { name: "Kfz-Gutachter", href: "/kfz-gutachter" },
 ];
 
 export default function FlottenbetreuungPage() {

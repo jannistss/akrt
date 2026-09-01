@@ -11,6 +11,20 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+// Maps blog categories to the most relevant service page for contextual internal linking.
+const CATEGORY_SERVICE_MAP: Record<string, { name: string; href: string }> = {
+  "TÜV & Hauptuntersuchung": { name: "TÜV & AU", href: "/tuev-au" },
+  Klimaservice: { name: "Klimaservice", href: "/klimaservice" },
+  Reifenservice: { name: "Reifenservice", href: "/reifenservice" },
+  "Motor & Wartung": { name: "Inspektion & Wartung", href: "/inspektion" },
+  "Sicherheit & Bremsen": { name: "Inspektion & Wartung", href: "/inspektion" },
+  "Saisonaler Service": { name: "Inspektion & Wartung", href: "/inspektion" },
+  "Unfall & Karosserie": { name: "Unfallservice", href: "/unfall" },
+  Glasservice: { name: "Glasservice", href: "/glasservice" },
+  "Diagnose & Technik": { name: "Inspektion & Wartung", href: "/inspektion" },
+  "Gutachten & Bewertung": { name: "Kfz-Gutachter", href: "/kfz-gutachter" },
+};
+
 export async function generateStaticParams() {
   return blogPosts.map((post) => ({ slug: post.slug }));
 }
@@ -42,6 +56,7 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound();
 
   const related = getRelatedPosts(slug, 3);
+  const relatedService = CATEGORY_SERVICE_MAP[post.category];
 
   // Article structured data
   const articleJsonLd = {
@@ -229,6 +244,23 @@ export default async function BlogPostPage({ params }: Props) {
                     ))}
                   </div>
                 </div>
+
+                {/* Related service */}
+                {relatedService && (
+                  <div className="rounded-2xl p-5" style={{ backgroundColor: "#f5f9fc" }}>
+                    <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#4a6272" }}>Passender Service</p>
+                    <Link
+                      href={relatedService.href}
+                      className="flex items-center justify-between gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition-all hover:border-[#0074a2] hover:text-[#0074a2]"
+                      style={{ border: "1px solid #c5dde8", color: "#002e40" }}
+                    >
+                      {relatedService.name}
+                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="shrink-0">
+                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </Link>
+                  </div>
+                )}
 
                 {/* Related posts */}
                 {related.length > 0 && (

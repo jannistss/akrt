@@ -50,7 +50,8 @@ const related = [
   { name: "Glasservice", href: "/glasservice" },
   { name: "Klimaservice", href: "/klimaservice" },
   { name: "Flottenbetreuung", href: "/flottenbetreuung" },
-];
+  { name: "Hagelschaden", href: "/hagelschaden" },
+  ];
 
 export default function UnfallPage() {
   return (

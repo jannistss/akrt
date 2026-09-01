@@ -43,6 +43,7 @@ const related = [
   { name: "Klimaservice", href: "/klimaservice" },
   { name: "Unfallservice", href: "/unfall" },
   { name: "Flottenbetreuung", href: "/flottenbetreuung" },
+  { name: "Hagelschaden", href: "/hagelschaden" },
 ];
 
 export default function GlasservicePage() {

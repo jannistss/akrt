@@ -652,6 +652,30 @@ export default function HagelschadenzentrumPage() {
           </div>
         </section>
 
+        {/* ── Other services ── */}
+        <section style={{ backgroundColor: "#f5f9fc" }}>
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-20">
+            <motion.p className="text-sm font-semibold mb-8" style={{ color: "#4a6272" }} {...fadeUp(0)}>Weitere Leistungen der Autoklinik</motion.p>
+            <motion.div className="flex flex-wrap gap-3" variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true }}>
+              {[
+                { name: "Unfallservice & Gutachten", href: "/unfall" },
+                { name: "Kfz-Gutachter", href: "/kfz-gutachter" },
+                { name: "Glasservice", href: "/glasservice" },
+                { name: "Inspektion & Wartung", href: "/inspektion" },
+                { name: "TÜV & AU", href: "/tuev-au" },
+                { name: "Flottenbetreuung", href: "/flottenbetreuung" },
+              ].map((s) => (
+                <motion.div key={s.name} variants={staggerItem}>
+                  <Link href={s.href} className="inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-medium transition-all hover:border-[#0074a2] hover:text-[#0074a2]" style={{ borderColor: "#c5dde8", color: "#002e40" }}>
+                    {s.name}
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
       </main>
 
       <AutoklinikFooter />

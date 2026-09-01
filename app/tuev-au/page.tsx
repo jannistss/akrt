@@ -50,6 +50,7 @@ const related = [
   { name: "Klimaservice", href: "/klimaservice" },
   { name: "Unfallservice", href: "/unfall" },
   { name: "Flottenbetreuung", href: "/flottenbetreuung" },
+  { name: "Kfz-Gutachter", href: "/kfz-gutachter" },
 ];
 
 export default function TuevAuPage() {
