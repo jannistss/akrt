@@ -633,10 +633,17 @@ export function ChatWidget() {
     }, 55000);
 
     try {
+      // Send the client-tracked bookingState alongside the conversation.
+      // This state is merge-only (mergeBookingState never lets a real value
+      // regress to empty), so it's a far more reliable ground truth than
+      // asking the model to re-derive every field from raw chat text on
+      // every turn — that re-derivation is what previously caused already
+      // confirmed fields (e.g. "leistung") to get re-asked later in long
+      // conversations.
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: history }),
+        body: JSON.stringify({ messages: history, knownState: bookingState }),
         signal: controller.signal,
       });
       console.log("[v0] fetch response status:", res.status);
