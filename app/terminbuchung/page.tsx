@@ -8,20 +8,25 @@ import { SITE } from "@/lib/site-config";
 
 export default function TerminbuchungPage() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [iframeHeight, setIframeHeight] = useState(1200);
+  // Generous fallback height (used until/unless wscloud sends a real postMessage size).
+  // The embed is cross-origin, so we can't read its true content height directly —
+  // this only covers the common case; the iframe itself stays scrollable (see below)
+  // so nothing is ever unreachable even if this guess is too small.
+  const [iframeHeight, setIframeHeight] = useState(1600);
 
   useEffect(() => {
-    // Listen for postMessage height updates from wscloud
+    // Listen for postMessage height updates from wscloud (if/when it sends any).
     function handleMessage(e: MessageEvent) {
-      if (typeof e.data === "number" && e.data > 200) {
-        setIframeHeight(e.data + 40);
+      let h: number | undefined;
+      if (typeof e.data === "number") {
+        h = e.data;
+      } else if (e.data && typeof e.data === "object") {
+        // Some booking tools send {height: ...} or {type: "resize", height: ...}
+        h = e.data.height ?? e.data.iframeHeight ?? e.data.frameHeight;
       }
-      // Some booking tools send {height: ...} or {type: "resize", height: ...}
-      if (e.data && typeof e.data === "object") {
-        const h = e.data.height ?? e.data.iframeHeight ?? e.data.frameHeight;
-        if (typeof h === "number" && h > 200) {
-          setIframeHeight(h + 40);
-        }
+      if (typeof h === "number" && h > 200) {
+        // Clamp so a malformed/unexpected message can't break the page layout.
+        setIframeHeight(Math.min(Math.max(h + 40, 600), 4000));
       }
     }
     window.addEventListener("message", handleMessage);
@@ -54,13 +59,16 @@ export default function TerminbuchungPage() {
             ref={iframeRef}
             src="https://booking.wscloud.io/WM1592874/Step1aServiceSelection"
             title="Online-Terminbuchung Autoklinik Reutlingen"
-            scrolling="no"
             className="w-full block"
             style={{
               height: iframeHeight,
               border: "none",
               display: "block",
-              overflow: "hidden",
+              // Never hide overflow: if our height guess/postMessage value is too
+              // small, the iframe gets its own scrollbar so every service below
+              // "Klima-Service" (or anything else) stays reachable.
+              overflow: "auto",
+              WebkitOverflowScrolling: "touch",
             }}
             loading="lazy"
             allow="payment"

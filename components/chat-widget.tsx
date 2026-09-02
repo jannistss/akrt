@@ -413,6 +413,7 @@ export function ChatWidget() {
   const [flow, setFlow] = useState<Flow>("root");
   const [messages, setMessages] = useState<Message[]>([]);
   const [showProactive, setShowProactive] = useState(false);
+  const [isTerminProactive, setIsTerminProactive] = useState(false);
   const [proactiveDismissed, setProactiveDismissed] = useState(false);
   const [typing, setTyping] = useState(false);
   const [input, setInput] = useState("");
@@ -426,52 +427,37 @@ export function ChatWidget() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  /* proactive bubble after 4s, once */
+  /* proactive bubble after 4s, once — skipped on /terminbuchung, which has its own (more subtle) trigger below */
   useEffect(() => {
+    if (pathname === "/terminbuchung") return;
     const dismissed = localStorage.getItem("ak_chat_dismissed");
     if (dismissed) return;
     const t = setTimeout(() => setShowProactive(true), 4000);
     return () => clearTimeout(t);
-  }, []);
+  }, [pathname]);
 
-  /* on /terminbuchung: open chat after 3s with booking-specific message */
+  /* on /terminbuchung: never auto-open the full chat window (it would cover the booking flow).
+     Instead, show only a small, dismissible proactive bubble above the chat button after a short
+     delay, and let it disappear on its own if the user ignores it. */
   useEffect(() => {
     if (pathname !== "/terminbuchung") return;
+    if (localStorage.getItem("ak_chat_dismissed")) return;
     const alreadyShown = sessionStorage.getItem("ak_termin_chat");
     if (alreadyShown) return;
     const t = setTimeout(() => {
       sessionStorage.setItem("ak_termin_chat", "1");
-      setShowProactive(false);
-      setOpen(true);
-      setMessages([]);
-      setTyping(true);
-      setTimeout(() => {
-        setTyping(false);
-        setMessages([
-          {
-            role: "bot",
-            text: "Brauchst du Hilfe bei der Terminbuchung? Ich bin gleich da - einfach fragen! 👋",
-          },
-        ]);
-        // follow-up after 2s
-        setTimeout(() => {
-          setTyping(true);
-          setTimeout(() => {
-            setTyping(false);
-            setMessages((prev) => [
-              ...prev,
-              {
-                role: "bot",
-                text: "Falls du unsicher bist welche Leistung du buchen sollst, oder lieber direkt anrufen möchtest - ich helfe dir weiter.",
-              },
-            ]);
-            setFlow("termin_help");
-          }, 800);
-        }, 2000);
-      }, 700);
-    }, 3000);
+      setIsTerminProactive(true);
+      setShowProactive(true);
+    }, 2500);
     return () => clearTimeout(t);
   }, [pathname]);
+
+  /* auto-dismiss the booking-page bubble after a few seconds if the user doesn't interact with it */
+  useEffect(() => {
+    if (!showProactive || !isTerminProactive) return;
+    const t = setTimeout(() => setShowProactive(false), 9000);
+    return () => clearTimeout(t);
+  }, [showProactive, isTerminProactive]);
 
   /* scroll to bottom */
   useEffect(() => {
@@ -479,6 +465,7 @@ export function ChatWidget() {
   }, [messages, typing]);
 
   const isHagelPage = pathname?.startsWith("/hagelschadenzentrum") || pathname?.startsWith("/hagelschaden");
+  const isTerminPage = pathname === "/terminbuchung";
 
   /* open + first message */
   function openChat() {
@@ -488,8 +475,9 @@ export function ChatWidget() {
     if (!open) {
       setOpen(true);
       if (messages.length === 0) {
-        const startFlow: Flow = isHagelPage ? "hagel_root" : "root";
+        const startFlow: Flow = isHagelPage ? "hagel_root" : isTerminPage ? "termin_help" : "root";
         if (isHagelPage) setFlow("hagel_root");
+        else if (isTerminPage) setFlow("termin_help");
         addBotMessage(FLOWS[startFlow].message);
       }
     }
@@ -797,10 +785,16 @@ export function ChatWidget() {
               x
             </button>
             <p className="font-medium" style={{ color: "#fff" }}>
-              {isHagelPage ? "Hagelschaden am Fahrzeug?" : "Hallo! Kann ich helfen?"}
+              {isTerminPage
+                ? "Fragen zur Buchung?"
+                : isHagelPage
+                ? "Hagelschaden am Fahrzeug?"
+                : "Hallo! Kann ich helfen?"}
             </p>
             <p className="mt-0.5 text-xs" style={{ color: "#94a3b8" }}>
-              {isHagelPage
+              {isTerminPage
+                ? "Ich helfe dir gerne."
+                : isHagelPage
                 ? "Termin, Fotos, Ablauf – ich bin hier."
                 : "Termin, Preise, Fragen - ich bin hier."}
             </p>
