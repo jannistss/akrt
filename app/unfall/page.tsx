@@ -46,6 +46,7 @@ const faqs = [
 const related = [
   { name: "Kfz-Gutachter", href: "/kfz-gutachter" },
   { name: "Bremsenservice", href: "/bremsen-reutlingen" },
+  { name: "Achsvermessung", href: "/achsvermessung-reutlingen" },
   { name: "Inspektion & Wartung", href: "/inspektion" },
   { name: "TÜV & AU", href: "/tuev-au" },
   { name: "Reifenservice", href: "/reifenservice" },

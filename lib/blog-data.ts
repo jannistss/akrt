@@ -647,6 +647,59 @@ export const blogPosts: BlogPost[] = [
       { q: "Wie lange dauert ein Gebrauchtwagenkauf-Check?", a: "Bei uns ca. 45–90 Minuten. Sie bekommen danach eine schriftliche Bewertung der festgestellten Mängel." },
     ],
   },
+  {
+    slug: "achsvermessung-spur-einstellen",
+    title: "Achsvermessung: Wann muss die Spur eingestellt werden?",
+    excerpt: "Schiefes Lenkrad, einseitiger Reifenverschleiß oder das Fahrzeug zieht zur Seite – wir erklären, welche Symptome auf eine verstellte Fahrwerksgeometrie hindeuten und wie eine Achsvermessung abläuft.",
+    image: "/assets/images/blog-achsvermessung-spur.png",
+    imageAlt: "Mechaniker prüft Reifenverschleiß an einem Fahrzeugrad",
+    author: "Alessio Piccione",
+    authorRole: "Werkstattleiter",
+    date: "2026-07-16",
+    dateDisplay: "16. Juli 2026",
+    category: "Fahrwerk & Achsvermessung",
+    readingTime: "6 Min. Lesezeit",
+    tags: ["Achsvermessung", "Spureinstellung", "Fahrwerk", "Reifenverschleiß", "Reutlingen"],
+    content: `
+<h2>Woran erkennt man eine verstellte Fahrwerksgeometrie?</h2>
+<p>Die Fahrwerksgeometrie – vor allem die Spur und der Sturz der Räder – bestimmt, wie ein Fahrzeug auf der Straße liegt und wie sich die Reifen abnutzen. Verschiebt sich diese Geometrie, macht sich das meist durch eines oder mehrere der folgenden Symptome bemerkbar:</p>
+<ul>
+  <li><strong>Schief stehendes Lenkrad:</strong> Fährt das Fahrzeug bei losgelassenem Lenkrad geradeaus, das Lenkrad selbst steht dabei aber nicht mittig, ist das ein klassisches Anzeichen für eine verstellte Spur.</li>
+  <li><strong>Einseitiger oder ungleichmäßiger Reifenverschleiß:</strong> Nutzt sich ein Reifen deutlich schneller ab als die anderen, oder zeigt er ein ungewöhnliches Verschleißmuster an der Innen- oder Außenkante, rollt er wahrscheinlich nicht mehr im korrekten Winkel ab.</li>
+  <li><strong>Das Fahrzeug zieht zur Seite:</strong> Zieht das Auto auf einer geraden, ebenen Strecke ohne Lenkeingriff merklich zu einer Seite, deutet das häufig auf eine Abweichung an einer Achse hin.</li>
+  <li><strong>Verändertes Fahrverhalten:</strong> Ein unruhiges Lenkgefühl oder ein "schwimmendes" Verhalten bei höherem Tempo kann ebenfalls mit der Fahrwerksgeometrie zusammenhängen.</li>
+</ul>
+<p>Keines dieser Symptome beweist für sich allein eine verstellte Achse – erst eine Messung mit entsprechendem Equipment zeigt zuverlässig, ob und wie stark die Werte von der Herstellervorgabe abweichen.</p>
+
+<h2>Bordstein- und Schlaglochkontakt als häufige Ursache</h2>
+<p>Ein harter Kontakt mit einem Bordstein beim Einparken oder ein tiefes Schlagloch bei höherer Geschwindigkeit kann die Spureinstellung verändern, ohne dass äußerlich ein Schaden erkennbar ist. Die Stoßenergie wirkt dabei direkt auf Spurstangen und Lenkgestänge. Wer nach einem solchen Ereignis ein verändertes Fahrverhalten bemerkt, sollte die Geometrie zeitnah prüfen lassen.</p>
+
+<h2>Weitere Ursachen für eine verstellte Geometrie</h2>
+<ul>
+  <li>Verschlissene Fahrwerksbauteile wie Spurstangenköpfe, Querlenker oder Gummilager</li>
+  <li>Kleinere Unfälle oder Rangierschäden, bei denen das Fahrwerk beansprucht wurde</li>
+  <li>Der Austausch von Stoßdämpfern, Federn, Spurstangen oder anderen Fahrwerksteilen, nach dem die Geometrie grundsätzlich kontrolliert werden sollte</li>
+  <li>Allgemeiner Verschleiß über einen längeren Zeitraum und viele gefahrene Kilometer</li>
+</ul>
+
+<h2>Achsvermessung und Spureinstellung – wo liegt der Unterschied?</h2>
+<p>Die Achsvermessung ist der Messvorgang: Dabei werden die relevanten Fahrwerkswinkel erfasst und mit den Vorgaben des Fahrzeugherstellers verglichen. Erst dieses Messergebnis zeigt, ob überhaupt eine Abweichung vorliegt und an welcher Achse. Die Spureinstellung ist der anschließende Korrekturschritt, bei dem die Spurstangen entsprechend nachjustiert werden, bis die Werte wieder im vorgegebenen Toleranzbereich liegen. Eine Spureinstellung ohne vorherige Messung liefert daher kein verlässliches Ergebnis.</p>
+
+<h2>Warum eine verstellte Achse den Reifenverschleiß beschleunigt</h2>
+<p>Rollt ein Reifen nicht mehr im vorgesehenen Winkel ab, entsteht zusätzliche Reibung an einer Reifenseite. Dadurch nutzt sich dieser Bereich schneller ab als der Rest der Lauffläche – ein Effekt, der sich über die Zeit verstärkt und im ungünstigsten Fall zu einem deutlich verkürzten Reifenleben führt. Wer wiederkehrend einseitigen Verschleiß feststellt, sollte deshalb nicht nur die Reifen wechseln, sondern auch die Ursache an der Fahrwerksgeometrie prüfen lassen.</p>
+
+<h2>Wie läuft eine Achsvermessung grundsätzlich ab?</h2>
+<p>Das Fahrzeug wird auf eine Hebebühne bzw. einen Messplatz gefahren. Ein Messsystem erfasst die Fahrwerkswinkel an Vorder- und ggf. Hinterachse und vergleicht sie mit den Herstellerwerten für das jeweilige Fahrzeugmodell. Liegt eine Abweichung vor, wird im nächsten Schritt die Spur an den entsprechenden Bauteilen korrigiert. Abschließend wird kontrolliert, ob die Werte wieder im zulässigen Bereich liegen.</p>
+
+<h2>Achsvermessung bei der Autoklinik Reutlingen</h2>
+<p>Bei Anzeichen wie schiefem Lenkrad, einseitigem Reifenverschleiß oder verändertem Fahrverhalten führen wir eine Achsvermessung durch und stellen die Spur bei Bedarf nach Herstellervorgabe neu ein. Mehr zum Ablauf und den möglichen Kostenfaktoren finden Sie auf unserer Service-Seite zur <a href="/achsvermessung-reutlingen">Achsvermessung in Reutlingen</a>.</p>
+    `,
+    faqs: [
+      { q: "Muss ich bei schiefem Lenkrad sofort zur Werkstatt?", a: "Ein dauerhaft schief stehendes Lenkrad bei Geradeausfahrt sollte zeitnah geprüft werden, ist aber in der Regel kein akutes Sicherheitsrisiko wie beispielsweise ein Bremsenproblem." },
+      { q: "Reicht es, nur die Reifen zu wechseln, wenn sie einseitig verschlissen sind?", a: "Ein reiner Reifenwechsel behebt nur das Symptom. Liegt die Ursache an der Fahrwerksgeometrie, nutzt sich der neue Reifen unter Umständen genauso einseitig ab, wenn die Spur nicht mitkorrigiert wird." },
+      { q: "Wie oft sollte die Achsvermessung kontrolliert werden?", a: "Eine feste Wartungsvorgabe gibt es dafür in der Regel nicht. Sinnvoll ist eine Kontrolle bei den genannten Anzeichen, nach Bordstein- oder Schlaglochkontakt sowie nach Arbeiten am Fahrwerk." },
+    ],
+  },
 ];
 
 export function getBlogPost(slug: string): BlogPost | undefined {
