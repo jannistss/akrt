@@ -591,6 +591,8 @@ export function ChatWidget() {
         setChatStep("kennzeichen");
       } else if ((lower.includes("marke") && lower.includes("modell")) || lower.includes("fahrzeugmarke")) {
         setChatStep("idle");
+      } else if (lower.includes("aufbereitung") && (lower.includes("139") || lower.includes("innenraum basic") || lower.includes("außen basic"))) {
+        setChatStep("upsell");
       } else if (lower.includes("für wann") || lower.includes("wann wünschst") || lower.includes("zeitraum")) {
         setChatStep("datum");
       } else if (lower.includes("auf welchen namen") || lower.includes("welchen namen")) {
@@ -1025,6 +1027,14 @@ export function ChatWidget() {
                 {!aiLoading && chatStep !== "idle" && chatStep !== "kennzeichen" && (
                   <div className="px-3 pt-2 flex flex-wrap gap-1.5">
                     {chatStep === "datum" && ["Nächste Woche", "Ich bin flexibel", "Montag", "Dienstag", "Mittwoch", "Donnerstag"].map((chip) => (
+                      <button key={chip} type="button"
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setInput(""); sendMessage(chip); }}
+                        className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
+                        style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
+                        {chip}
+                      </button>
+                    ))}
+                    {chatStep === "upsell" && ["Komplettaufbereitung – 139 €", "Innenraum Basic – 59 €", "Außen Basic – 25 €", "Nein, nur den Termin"].map((chip) => (
                       <button key={chip} type="button"
                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); setInput(""); sendMessage(chip); }}
                         className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
