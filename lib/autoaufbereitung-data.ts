@@ -5,7 +5,7 @@ export const autoaufbereitungPackages = [
   { name: "Außen Basic", price: "25 €", description: "Für leicht bis normal verschmutzte Fahrzeuge.", includes: ["Schonende Lackreinigung", "Außenscheiben und Spiegel", "Scheinwerfer und Rückleuchten", "Leichte Insektenverschmutzungen und Ablagerungen", "Finishkontrolle"] },
   { name: "Außen Premium", price: "39 €", description: "Gründlichere Außenreinigung mit Felgen-, Reifen- und Frontpartie-Fokus.", includes: ["Alles aus Außen Basic", "Gründlichere Felgenreinigung", "Zugängliche Bereiche zwischen Speichen und Felgenbett", "Reifenflanken", "Intensivere Insektenentfernung", "Frontpartie, Spiegelgehäuse und äußere Schweller", "Abschließendes Lackfinish"] },
   { name: "Außen Versiegelung", price: "49 €", description: "Empfohlenes Außenpaket mit transparenter Ceramic-Sprühversiegelung.", includes: ["Alles aus Außen Premium", "Vorbereitung für die Versiegelung", "Ceramic-Sprühversiegelung", "Finish und hydrophober Abperleffekt", "Verbesserter Glanz und erleichterte spätere Fahrzeugpflege"] },
-  { name: "Komplettaufbereitung", price: "139 €", description: "Innenraum Premium plus Außen Versiegelung – 148 € einzeln, als Paket 139 €.", includes: ["Innenraum Premium", "Außen Versiegelung inklusive Ceramic-Sprühversiegelung", "9 € Paketvorteil gegenüber den Einzelpreisen"] },
+  { name: "Komplettaufbereitung", price: "139 €", originalPrice: "148 €", savings: "9 €", description: "Innenraum Premium plus Außen Versiegelung – der stärkste Preisvorteil für Innen & Außen komplett.", includes: ["Innenraum Premium komplett", "Außen Versiegelung inkl. Ceramic-Sprühversiegelung", "9 € Paketvorteil gegenüber Einzelbuchung"] },
 ] as const;
 
 export const autoaufbereitungExtras = [
