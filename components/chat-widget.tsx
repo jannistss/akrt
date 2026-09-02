@@ -1190,8 +1190,9 @@ export function ChatWidget() {
                   </div>
                 )}
 
-                {/* Free text input — hidden during kennzeichen step */}
-                {chatStep !== "kennzeichen" && (
+                {/* Free text input — hidden during kennzeichen step and while the
+                    dedicated "Angaben ändern" field in the confirmation card is active */}
+                {chatStep !== "kennzeichen" && !(bookingState?.status === "ready" && !terminSent && editingBooking) && (
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
