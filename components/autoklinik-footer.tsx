@@ -8,12 +8,18 @@ import { SITE } from "@/lib/site-config";
 
 const services = [
   { label: "Inspektion & Wartung", href: "/inspektion" },
+  { label: "Ölwechsel", href: "/oelwechsel-reutlingen" },
+  { label: "Bremsenservice", href: "/bremsen-reutlingen" },
+  { label: "Motordiagnose", href: "/motordiagnose-reutlingen" },
+  { label: "Getriebespülung", href: "/getriebespuelung-reutlingen" },
+  { label: "Achsvermessung", href: "/achsvermessung-reutlingen" },
   { label: "TÜV & AU", href: "/tuev-au" },
   { label: "Reifenservice", href: "/reifenservice" },
   { label: "Glasservice", href: "/glasservice" },
   { label: "Klimaservice", href: "/klimaservice" },
   { label: "Unfallservice", href: "/unfall" },
   { label: "Flottenbetreuung", href: "/flottenbetreuung" },
+  { label: "Hagelschadenzentrum", href: "/hagelschaden" },
 ];
 
 const contacts = [
