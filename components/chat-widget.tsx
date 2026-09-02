@@ -45,6 +45,81 @@ interface Option {
   action?: "call" | "whatsapp" | "karriere" | "rueckruf" | "online" | "route";
 }
 
+/* ─── Structured booking state — single source of truth ────
+   Parsed from the ###STATE### block the AI emits after every turn.
+   This is the only object used to render the confirmation card and
+   to build the appointment request / e-mail — never rebuilt separately
+   from raw chat text elsewhere. */
+type BookingState = {
+  leistung: string;
+  paket: string;
+  preis: string;
+  fahrzeug: string;
+  kennzeichen: string;
+  datum: string;
+  extras: string;
+  name: string;
+  telefon: string;
+  email: string;
+  status: "in_progress" | "ready";
+};
+
+const EMPTY_BOOKING_STATE: BookingState = {
+  leistung: "",
+  paket: "",
+  preis: "",
+  fahrzeug: "",
+  kennzeichen: "",
+  datum: "",
+  extras: "",
+  name: "",
+  telefon: "",
+  email: "",
+  status: "in_progress",
+};
+
+/** Treats placeholder text the model might slip in as "no value". */
+function isPlaceholder(value: unknown): boolean {
+  if (typeof value !== "string") return true;
+  const v = value.trim();
+  if (v === "") return true;
+  const low = v.toLowerCase();
+  return (
+    low === "..." || low === "n/a" || low === "tbd" || v.startsWith("[") ||
+    low.includes("nicht angegeben") || low.includes("nicht genannt") ||
+    low.includes("keine angabe") || low.includes("unbekannt") || low.includes("noch nicht")
+  );
+}
+
+/**
+ * Merge a freshly-parsed STATE block into the persisted booking state.
+ * A field is only ever overwritten when the new value is meaningful
+ * (non-placeholder) OR the customer is explicitly correcting a field that
+ * already had a value — both cases arrive as a non-placeholder value from
+ * the model, so the rule is simply: never let a real value regress to empty.
+ * "kein Kennzeichen" is a valid, deliberate value and is kept as-is.
+ */
+function mergeBookingState(prev: BookingState | null, next: Partial<BookingState>): BookingState {
+  const base = prev ?? EMPTY_BOOKING_STATE;
+  const merged: BookingState = { ...base };
+  for (const key of Object.keys(EMPTY_BOOKING_STATE) as (keyof BookingState)[]) {
+    if (key === "status") continue;
+    const incoming = next[key];
+    if (typeof incoming === "string" && !isPlaceholder(incoming)) {
+      merged[key] = incoming;
+    }
+  }
+  merged.status = next.status === "ready" ? "ready" : merged.status === "ready" ? "ready" : "in_progress";
+  return merged;
+}
+
+/** Required fields before an appointment request may actually be sent. */
+function missingRequiredFields(state: BookingState | null): string[] {
+  if (!state) return ["leistung", "fahrzeug", "kennzeichen", "datum", "name", "telefon"];
+  const required: (keyof BookingState)[] = ["leistung", "fahrzeug", "kennzeichen", "datum", "name", "telefon"];
+  return required.filter((key) => isPlaceholder(state[key]));
+}
+
 /* ─── Flow definitions ──────────────────────────────────── */
 const FLOWS: Record<
   Flow,
@@ -418,9 +493,11 @@ export function ChatWidget() {
   const [typing, setTyping] = useState(false);
   const [input, setInput] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
-  const [terminData, setTerminData] = useState<null | { leistung: string; fahrzeug: string; kennzeichen: string; datum: string; extras: string; name: string; telefon: string; email: string }>(null);
+  const [bookingState, setBookingState] = useState<BookingState | null>(null);
   const [terminSent, setTerminSent] = useState(false);
   const [terminSending, setTerminSending] = useState(false);
+  const [terminError, setTerminError] = useState<string | null>(null);
+  const [editingBooking, setEditingBooking] = useState(false);
   const [chatStep, setChatStep] = useState<"idle"|"datum"|"kennzeichen"|"upsell"|"name"|"telefon"|"email">("idle");
   const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(null);
   const [conversationStarted, setConversationStarted] = useState(false);
@@ -538,10 +615,13 @@ export function ChatWidget() {
     setLastFailedMessage(null);
     setConversationStarted(true);
 
-    // Build conversation history for the AI (last 10 messages)
-    const history = [...messages, userMsg].slice(-10).map((m) => ({
+    // Build conversation history for the AI. We send the FULL conversation
+    // (bounded generously, not to the last handful of messages) — truncating
+    // history was the root cause of the model losing already-confirmed
+    // fields (Leistung/Fahrzeug etc.) by the time it wrote the summary.
+    const history = [...messages, userMsg].slice(-60).map((m) => ({
       role: m.role === "bot" ? "assistant" : "user",
-      content: m.text,
+      content: m.text.replace(/###STATE###[\s\S]*?###ENDSTATE###/, "").trim(),
     }));
 
     console.log("[v0] sendMessage start:", text, "history length:", history.length);
@@ -586,7 +666,10 @@ export function ChatWidget() {
       if (!botText.trim()) throw new Error("RATE_LIMIT");
 
       // Detect chat step from bot text to show contextual chips/inputs
-      const lower = botText.toLowerCase();
+      // (checked against the text with the hidden STATE block stripped out,
+      // so keys like "email" inside the JSON can't trigger false matches)
+      const visibleBotText = botText.replace(/###STATE###[\s\S]*?###ENDSTATE###/, "").trim();
+      const lower = visibleBotText.toLowerCase();
       if (lower.includes("was ist dein kennzeichen") || lower.includes("dein kennzeichen")) {
         setChatStep("kennzeichen");
       } else if ((lower.includes("marke") && lower.includes("modell")) || lower.includes("fahrzeugmarke")) {
@@ -605,100 +688,42 @@ export function ChatWidget() {
         setChatStep("idle");
       }
 
-      // Detect TERMIN_BEREIT signal from AI (delimited format)
-      const terminMatch = botText.match(/###TERMIN_BEREIT###\s*([\s\S]*?)\s*###ENDE###/);
-      if (terminMatch) {
+      // Parse the hidden ###STATE### block the AI emits after every turn and
+      // merge it into the persisted booking state (single source of truth
+      // for the confirmation card, validation and e-mail — see
+      // mergeBookingState for the "never regress a known value" rule).
+      const stateMatch = botText.match(/###STATE###\s*([\s\S]*?)\s*###ENDSTATE###/);
+      if (stateMatch) {
         try {
-          const data = JSON.parse(terminMatch[1]);
+          const data = JSON.parse(stateMatch[1]) as Partial<BookingState>;
 
-          // Helper: catch ANY placeholder the AI might write
-          const isEmpty = (v: string) => {
-            if (!v) return true;
-            const low = v.toLowerCase().trim();
-            // Catch: "", "...", "[...]", anything containing "nicht genannt", "nicht angegeben", "kein", "keine", "unbekannt", "n/a"
-            return (
-              low === "" || low === "..." || low === "n/a" || low === "tbd" ||
-              v.startsWith("[") ||
-              low.includes("nicht genannt") || low.includes("nicht angegeben") ||
-              low.includes("kein kennzeichen") || low.includes("keine angabe") ||
-              low.includes("unbekannt") || low.includes("noch nicht")
-            );
-          };
-
-          // Always scan the full chat history and override bad JSON values
-          const userMsgs = messages.filter((m) => m.role === "user").map((m) => m.text.trim());
-
-          // Normalize map: keyword → clean label
-          const LEISTUNG_MAP: Record<string, string> = {
-            "tüv-vorcheck": "TÜV-Vorcheck",
-            "vorcheck": "TÜV-Vorcheck",
-            "hu+au": "TÜV / HU+AU",
-            "hauptuntersuchung": "TÜV / HU+AU",
-            "tüv": "TÜV / HU+AU",
-            "ölwechsel": "Ölwechsel",
-            "oelwechsel": "Ölwechsel",
-            "inspektion": "Inspektion",
-            "räderwechsel": "Räderwechsel",
-            "reifenwechsel": "Räderwechsel",
-            "bremsen": "Bremsservice",
-            "klima": "Klima-Service",
-            "diagnose": "Fehlerdiagnose",
-            "unfall": "Unfallinstandsetzung",
-            "glasservice": "Glasservice",
-            "achsvermessung": "Achsvermessung",
-          };
-
-          // Extract ALL leistungen from the entire chat history (user can name multiple)
-          {
-            const found = new Set<string>();
-            // Scan every user message for any leistung keyword
-            for (const msg of userMsgs) {
-              const lower = msg.toLowerCase();
-              for (const [key, label] of Object.entries(LEISTUNG_MAP)) {
-                if (lower.includes(key)) found.add(label);
-              }
-            }
-            // Also check AI's JSON value if it has real content
-            if (!isEmpty(data.leistung)) {
-              const lower = data.leistung.toLowerCase();
-              for (const [key, label] of Object.entries(LEISTUNG_MAP)) {
-                if (lower.includes(key)) found.add(label);
-              }
-            }
-            if (found.size > 0) data.leistung = Array.from(found).join(", ");
+          // Lightweight, purely defensive fallback: if the model missed an
+          // obvious license plate in the very latest message, pick it up.
+          // This never overrides a value the model (or a prior turn) already set.
+          if (isPlaceholder(data.kennzeichen)) {
+            const plateRegex = /\b[A-ZÄÖÜ]{1,3}[\s-][A-ZÄÖÜ]{1,2}[\s-]?\d{1,4}[EH]?\b/i;
+            const match = text.match(plateRegex);
+            if (match) data.kennzeichen = match[0].toUpperCase().replace(/\s+/g, " ");
           }
 
-          // Extract Fahrzeug from chat
-          if (isEmpty(data.fahrzeug)) {
-            const MARKEN = ["vw", "volkswagen", "bmw", "mercedes", "benz", "audi", "opel", "ford", "toyota", "hyundai", "kia", "seat", "skoda", "renault", "peugeot", "citroen", "fiat", "honda", "mazda", "nissan", "volvo", "porsche", "mini", "smart", "tesla", "golf", "polo", "passat", "a3", "a4", "3er", "5er", "c-klasse", "e-klasse"];
-            for (const msg of userMsgs) {
-              const lower = msg.toLowerCase();
-              if (MARKEN.some((m) => lower.includes(m))) { data.fahrzeug = msg.trim(); break; }
-            }
-          }
-
-          // Extract Kennzeichen from chat (always rescan — AI often gets this wrong)
-          const plateRegex = /\b[A-ZÄÖÜ]{1,3}[\s-][A-ZÄÖÜ]{1,2}[\s-]?\d{1,4}[EH]?\b/i;
-          for (const msg of userMsgs) {
-            const match = msg.match(plateRegex);
-            if (match) { data.kennzeichen = match[0].toUpperCase().replace(/\s+/g, " "); break; }
-          }
-
-          console.log("[v0] TERMIN_BEREIT detected:", data);
-          setTerminData(data);
-          setChatStep("idle");
-          setMessages((prev) => {
-            const updated = [...prev];
-            updated[updated.length - 1] = {
-              role: "bot",
-              text: botText.replace(/###TERMIN_BEREIT###[\s\S]*?###ENDE###/, "").trim(),
-            };
-            return updated;
-          });
+          console.log("[v0] STATE parsed:", data);
+          setBookingState((prev) => mergeBookingState(prev, data));
+          if (data.status === "ready") setChatStep("idle");
         } catch (parseErr) {
-          console.log("[v0] TERMIN_BEREIT JSON parse failed:", parseErr, "raw:", terminMatch[1]);
+          console.log("[v0] STATE JSON parse failed:", parseErr, "raw:", stateMatch[1]);
         }
       }
+
+      // Always strip the hidden STATE block from what's actually shown to the customer
+      // (chatStep was already set above from the visible text).
+      setMessages((prev) => {
+        const updated = [...prev];
+        updated[updated.length - 1] = {
+          role: "bot",
+          text: visibleBotText,
+        };
+        return updated;
+      });
     } catch (err: unknown) {
       const isAbort = err instanceof Error && err.name === "AbortError";
       const errMsg = err instanceof Error ? err.message : String(err);
@@ -719,28 +744,45 @@ export function ChatWidget() {
   }
 
   async function sendTermin() {
-    if (!terminData || terminSending) return;
+    if (!bookingState || terminSending) return;
+
+    // Client-side safety net: never send a request that's missing a field the
+    // conversation already made clear — re-prompt instead of sending "Nicht angegeben".
+    const missing = missingRequiredFields(bookingState);
+    if (missing.length > 0) {
+      const FIELD_LABELS: Record<string, string> = {
+        leistung: "die gewünschte Leistung", fahrzeug: "dein Fahrzeug (Marke + Modell)",
+        kennzeichen: "dein Kennzeichen (oder sag mir, dass du keins hast)", datum: "deinen Wunschtermin",
+        name: "deinen Namen", telefon: "deine Telefonnummer",
+      };
+      setTerminError(`Mir fehlt noch ${FIELD_LABELS[missing[0]] ?? missing[0]}. Bitte kurz ergänzen.`);
+      return;
+    }
+    setTerminError(null);
     setTerminSending(true);
+    // Secondary, de-emphasized reference for support/traceability only —
+    // the e-mail itself is built exclusively from the confirmed bookingState below.
     const chatSummary = messages
-      .filter((m) => m.text && !m.text.includes("###TERMIN_BEREIT###"))
+      .filter((m) => m.text && !m.text.includes("###STATE###"))
       .map((m, i) => `[${i + 1}] ${m.role === "user" ? "Kunde" : "Assistent"}: ${m.text.replace(/<[^>]*>/g, "")}`)
       .join("\n");
     try {
       const res = await fetch("/api/chat-termin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...terminData, chatSummary }),
+        body: JSON.stringify({ ...bookingState, chatSummary }),
       });
       if (!res.ok) throw new Error("Fehler");
       setTerminSent(true);
-      setTerminData(null);
       setMessages((prev) => [
         ...prev,
         {
           role: "bot",
-          text: `Super ${terminData.name}! Deine Terminanfrage wurde erfolgreich gesendet. Wir melden uns so schnell wie möglich unter ${terminData.telefon}. Bis bald!`,
+          text: `Super ${bookingState.name}! Deine Terminanfrage wurde erfolgreich gesendet. Wir melden uns so schnell wie möglich unter ${bookingState.telefon}. Bis bald!`,
         },
       ]);
+      setBookingState(null);
+      setEditingBooking(false);
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -880,8 +922,8 @@ export function ChatWidget() {
                         let text = msg.text;
                         const summaryStart = text.indexOf("**Deine Terminanfrage");
                         if (summaryStart !== -1) {
-                          // Keep only the closing sentence after the summary
-                          const closingMatch = text.match(/Wir melden uns[^<]*/);
+                          // Keep only the closing question after the summary
+                          const closingMatch = text.match(/Passt das so\?[^<]*/);
                           text = closingMatch ? closingMatch[0] : "";
                         }
                         return text;
@@ -940,23 +982,19 @@ export function ChatWidget() {
                     ))}
                   </div>
                 )}
-                {/* Booking confirmation card */}
-                {terminData && !terminSent && (
+                {/* Booking confirmation card — driven entirely by bookingState,
+                    the single structured source of truth for this request */}
+                {bookingState && bookingState.status === "ready" && !terminSent && (
                   <div className="px-3 pb-3 pt-1">
                     {/* Summary card */}
                     <div className="rounded-xl p-3 mb-2 text-xs space-y-1.5" style={{ background: "rgba(0,116,162,0.10)", border: "1px solid rgba(0,116,162,0.25)" }}>
                       <p className="font-semibold text-[11px] uppercase tracking-wide mb-2" style={{ color: "#7dd3fc" }}>Zusammenfassung</p>
                       {(() => {
-                        // Clean up any placeholder the AI might write
-                        const clean = (v: string) => {
-                          if (!v) return "–";
-                          const low = v.toLowerCase().trim();
-                          if (v.startsWith("[") || low === "..." || low === "n/a" || low.includes("nicht genannt") || low.includes("nicht angegeben") || low.includes("kein") || low.includes("unbekannt") || low.includes("noch nicht")) return "–";
-                          return v;
-                        };
-                        const fahrzeug = [clean(terminData.fahrzeug), terminData.kennzeichen ? `· ${terminData.kennzeichen}` : ""].filter(Boolean).join(" ");
-                        const hasExtras = terminData.extras && terminData.extras !== "Nein danke" && terminData.extras !== "Keine" && terminData.extras !== "–";
-                        // Estimate price from leistung string
+                        const clean = (v: string) => (isPlaceholder(v) ? "–" : v);
+                        const fahrzeug = [clean(bookingState.fahrzeug), bookingState.kennzeichen ? `· ${bookingState.kennzeichen}` : ""].filter(Boolean).join(" ");
+                        const leistungValue = [clean(bookingState.leistung), bookingState.paket ? `— ${bookingState.paket}` : ""].filter(Boolean).join(" ");
+                        const hasExtras = bookingState.extras && !isPlaceholder(bookingState.extras) && bookingState.extras !== "Nein danke";
+                        // Fallback price estimate only used when the AI didn't already provide one.
                         // TÜV prices are fixed statutory fees (no MwSt.), all other workshop services + MwSt.
                         const priceMap: Record<string, { price: string; isTuev: boolean }> = {
                           "tüv":            { price: "165,00 €", isTuev: true },
@@ -972,21 +1010,23 @@ export function ChatWidget() {
                           "bremsen":        { price: "auf Anfrage", isTuev: false },
                           "diagnose":       { price: "ab 20,00 €", isTuev: false },
                         };
-                        const leistungLower = (terminData.leistung || "").toLowerCase();
-                        const matched = Object.entries(priceMap).find(([k]) => leistungLower.includes(k));
-                        const basePrice = matched?.[1].price ?? "auf Anfrage";
-                        const isTuev = matched?.[1].isTuev ?? false;
-                        const extraStr = hasExtras ? ` + ${terminData.extras}` : "";
-                        const priceStr = isTuev ? `${basePrice} (Festpreis inkl. TÜV-Gebühr)${extraStr}` : `${basePrice} zzgl. MwSt.${extraStr}`;
+                        let priceStr = bookingState.preis && !isPlaceholder(bookingState.preis) ? bookingState.preis : "";
+                        if (!priceStr) {
+                          const leistungLower = (bookingState.leistung || "").toLowerCase();
+                          const matched = Object.entries(priceMap).find(([k]) => leistungLower.includes(k));
+                          const basePrice = matched?.[1].price ?? "auf Anfrage";
+                          const isTuev = matched?.[1].isTuev ?? false;
+                          priceStr = isTuev ? `${basePrice} (Festpreis inkl. TÜV-Gebühr)` : `${basePrice} zzgl. MwSt.`;
+                        }
                         const rows = [
                           { label: "Fahrzeug", value: fahrzeug },
-                          { label: "Leistung", value: clean(terminData.leistung) },
-                          { label: "Wunschtermin", value: clean(terminData.datum) },
-                          ...(hasExtras ? [{ label: "Extras", value: terminData.extras }] : []),
+                          { label: "Leistung", value: leistungValue },
+                          { label: "Wunschtermin", value: clean(bookingState.datum) },
+                          ...(hasExtras ? [{ label: "Extras", value: bookingState.extras }] : []),
                           { label: "Preis", value: priceStr },
-                          { label: "Name", value: clean(terminData.name) },
-                          { label: "Telefon", value: clean(terminData.telefon) },
-                          ...(terminData.email && terminData.email !== "–" ? [{ label: "E-Mail", value: terminData.email }] : []),
+                          { label: "Name", value: clean(bookingState.name) },
+                          { label: "Telefon", value: clean(bookingState.telefon) },
+                          ...(bookingState.email && !isPlaceholder(bookingState.email) ? [{ label: "E-Mail", value: bookingState.email }] : []),
                         ];
                         return rows.map(({ label, value }) => (
                           <div key={label} className="flex gap-2">
@@ -996,14 +1036,61 @@ export function ChatWidget() {
                         ));
                       })()}
                     </div>
-                    <button
-                      onClick={sendTermin}
-                      disabled={terminSending}
-                      className="w-full rounded-xl py-2.5 text-sm font-semibold transition-opacity disabled:opacity-60"
-                      style={{ background: "#0074a2", color: "#fff" }}
-                    >
-                      {terminSending ? "Wird gesendet..." : "Terminanfrage jetzt absenden"}
-                    </button>
+
+                    {terminError && (
+                      <p className="text-xs mb-2 px-1" style={{ color: "#fca5a5" }}>{terminError}</p>
+                    )}
+
+                    {editingBooking ? (
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          const val = input.trim();
+                          if (!val) return;
+                          setInput("");
+                          setEditingBooking(false);
+                          sendMessage(val);
+                        }}
+                        className="flex items-center gap-2"
+                      >
+                        <input
+                          type="text"
+                          autoFocus
+                          value={input}
+                          onChange={(e) => setInput(e.target.value)}
+                          placeholder="z.B. Kennzeichen ist RT TT 992"
+                          className="flex-1 rounded-xl px-3 py-2 text-sm outline-none"
+                          style={{ background: "rgba(255,255,255,0.07)", color: "#e2e8f0", border: "1px solid rgba(255,255,255,0.1)" }}
+                        />
+                        <button
+                          type="submit"
+                          disabled={!input.trim()}
+                          className="rounded-xl px-3 py-2 text-xs font-semibold shrink-0 disabled:opacity-40"
+                          style={{ background: "#0074a2", color: "#fff" }}
+                        >
+                          Ändern
+                        </button>
+                      </form>
+                    ) : (
+                      <div className="flex gap-2">
+                        <button
+                          onClick={sendTermin}
+                          disabled={terminSending}
+                          className="flex-1 rounded-xl py-2.5 text-sm font-semibold transition-opacity disabled:opacity-60"
+                          style={{ background: "#0074a2", color: "#fff" }}
+                        >
+                          {terminSending ? "Wird gesendet..." : "Anfrage absenden"}
+                        </button>
+                        <button
+                          onClick={() => { setTerminError(null); setEditingBooking(true); }}
+                          disabled={terminSending}
+                          className="rounded-xl px-3 py-2.5 text-xs font-medium border transition-all disabled:opacity-40"
+                          style={{ borderColor: "rgba(255,255,255,0.15)", color: "#94a3b8" }}
+                        >
+                          Angaben ändern
+                        </button>
+                      </div>
+                    )}
                     <p className="text-center text-xs mt-1.5" style={{ color: "#64748b" }}>
                       Wir melden uns telefonisch & per E-Mail zur Bestätigung
                     </p>
