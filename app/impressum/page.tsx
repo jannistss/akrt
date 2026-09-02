@@ -64,7 +64,7 @@ export default function ImpressumPage() {
                 <h2 className="text-lg font-bold mb-3" style={{ color: "#0d1b2a" }}>Kontakt</h2>
                 <p className="text-sm leading-relaxed" style={{ color: "#4a6070" }}>
                   Telefon:{" "}
-                  <a href="tel:+491761973298" className="hover:underline" style={{ color: "#0074a2" }}>
+                  <a href="tel:+4917661973298" className="hover:underline" style={{ color: "#0074a2" }}>
                     0176 / 61973298
                   </a>
                   <br />

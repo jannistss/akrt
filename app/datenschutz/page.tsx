@@ -40,7 +40,7 @@ export default function DatenschutzPage() {
               </div>
 
               <Section title="1. Verantwortliche Stelle">
-                <p>Verantwortlich im Sinne der DSGVO ist:<br /><strong style={{ color: "#0d1b2a" }}>Autoklinik Reutlingen GmbH</strong><br />Haldenhaustraße 3<br />72770 Reutlingen<br />E-Mail: <a className="underline" style={{ color: "#0074a2" }} href="mailto:info@autoklinik-reutlingen.de">info@autoklinik-reutlingen.de</a><br />Telefon: <a className="underline" style={{ color: "#0074a2" }} href="tel:+491761973298">0176 / 61973298</a></p>
+                <p>Verantwortlich im Sinne der DSGVO ist:<br /><strong style={{ color: "#0d1b2a" }}>Autoklinik Reutlingen GmbH</strong><br />Haldenhaustraße 3<br />72770 Reutlingen<br />E-Mail: <a className="underline" style={{ color: "#0074a2" }} href="mailto:info@autoklinik-reutlingen.de">info@autoklinik-reutlingen.de</a><br />Telefon: <a className="underline" style={{ color: "#0074a2" }} href="tel:+4917661973298">0176 / 61973298</a></p>
                 <p>Die Website wird technisch durch Ioannis Tsannis, 741SVE Digitalagentur, Im Wengle 1, 72770 Reutlingen, verwaltet und entwickelt. Die Agentur ist damit technischer Dienstleister und nicht automatisch Verantwortlicher für die Zwecke der Datenverarbeitung durch die Autoklinik.</p>
               </Section>
 

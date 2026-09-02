@@ -1,6 +1,7 @@
 import { streamText } from "ai";
 import { createGateway } from "@ai-sdk/gateway";
 import { autoaufbereitungChatKnowledge } from "@/lib/autoaufbereitung-data";
+import { SITE } from "@/lib/site-config";
 
 export const SYSTEM_PROMPT = `Du bist der freundliche Chat-Assistent der Autoklinik Reutlingen. Deine einzige Aufgabe: Termine buchen.
 
@@ -110,7 +111,7 @@ INFOS:
 ═══════════════
 - Adresse: Haldenhausstraße 3, 72770 Reutlingen
 - Öffnungszeiten: Mo-Fr 08:00-18:00 Uhr, Sa nur auf Anfrage, So geschlossen
-- Telefon: 07121 988 6660
+- Telefon: ${SITE.phone.display}
 
 REGELN:
 - Immer nur EINE Frage auf einmal

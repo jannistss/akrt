@@ -2,6 +2,7 @@
 
 import { SectionHeader } from "@/components/admin/admin-ui";
 import { Building2, Mail, Phone, MapPin, Clock, Bell, Shield, Palette } from "lucide-react";
+import { SITE } from "@/lib/site-config";
 
 function SettingSection({ title, icon, children }: { title: string; icon: React.ReactNode; children: React.ReactNode }) {
   return (
@@ -49,7 +50,7 @@ export default function EinstellungenPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <SettingSection title="Werkstatt" icon={<Building2 size={18} />}>
           <SettingRow label="Name" value="Autoklinik Reutlingen" />
-          <SettingRow label="Telefon" value="+49 7121 000000" />
+          <SettingRow label="Telefon" value={SITE.phone.display} />
           <SettingRow label="E-Mail" value="info@autoklinik-reutlingen.de" />
           <SettingRow label="Adresse" value="Haldenhaustrasse 3, 72770 Reutlingen" />
         </SettingSection>

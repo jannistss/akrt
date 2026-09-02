@@ -282,7 +282,7 @@ export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
   );
 }
 
-// ���─ JobPosting ────────────────────────────────────────────────────────────────
+// ── JobPosting ────────────────────────────────────────────────────────────────
 
 export function JobPostingSchema({
   title,

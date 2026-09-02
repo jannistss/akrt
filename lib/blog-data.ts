@@ -1,3 +1,5 @@
+import { SITE } from "@/lib/site-config";
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -639,7 +641,7 @@ export const blogPosts: BlogPost[] = [
 </ul>
 
 <h2>Gebrauchtwagen-Check bei der Autoklinik Reutlingen</h2>
-<p>Wir bieten professionelle Gebrauchtwagenchecks an. Bringen Sie das Fahrzeug einfach zu uns – wir prüfen es auf Herz und Nieren und geben Ihnen eine ehrliche Einschätzung. Termin unter 07121 988 6660 oder online buchen.</p>
+<p>Wir bieten professionelle Gebrauchtwagenchecks an. Bringen Sie das Fahrzeug einfach zu uns – wir prüfen es auf Herz und Nieren und geben Ihnen eine ehrliche Einschätzung. Termin unter ${SITE.phone.display} oder online buchen.</p>
     `,
     faqs: [
       { q: "Lohnt sich ein professioneller Gebrauchtwagencheck?", a: "Fast immer. Ein Check kostet ca. 100–200 €. Er kann Sie vor Käufen schützen, die später tausende Euro Reparaturkosten verursachen." },
