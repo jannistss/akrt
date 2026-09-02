@@ -5,10 +5,12 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   try {
-    const { leistung, fahrzeug, kennzeichen, datum, extras, name, telefon, email, chatSummary } = await req.json();
+    const { leistung, paket, preis, fahrzeug, kennzeichen, datum, extras, name, telefon, email, chatSummary } = await req.json();
 
-    if (!telefon || !name) {
-      return NextResponse.json({ error: "Name und Telefon fehlen" }, { status: 400 });
+    // Structured booking fields are the authoritative source for this e-mail —
+    // chatSummary below is only a secondary, de-emphasized reference for support.
+    if (!telefon || !name || !leistung || !fahrzeug || !kennzeichen || !datum) {
+      return NextResponse.json({ error: "Pflichtangaben fehlen" }, { status: 400 });
     }
 
     const to = process.env.APPLICATION_EMAIL ?? "info@autoklinik-reutlingen.de";
@@ -44,7 +46,7 @@ export async function POST(req: NextRequest) {
               </tr>` : ""}
               <tr style="border-bottom: 1px solid #f0f7fb;">
                 <td style="padding: 16px 0; font-size: 13px; font-weight: 600; color: #64748b;">Gewünschte Leistung</td>
-                <td style="padding: 16px 0; font-size: 14px; color: #002e40;">${leistung || "-"}</td>
+                <td style="padding: 16px 0; font-size: 14px; color: #002e40;">${leistung || "-"}${paket ? ` — ${paket}` : ""}</td>
               </tr>
               <tr style="border-bottom: 1px solid #f0f7fb;">
                 <td style="padding: 16px 0; font-size: 13px; font-weight: 600; color: #64748b;">Fahrzeug</td>
@@ -58,6 +60,11 @@ export async function POST(req: NextRequest) {
                 <td style="padding: 16px 0; font-size: 13px; font-weight: 600; color: #64748b;">Wunschtermin</td>
                 <td style="padding: 16px 0; font-size: 14px; color: #002e40;">${datum || "-"}</td>
               </tr>
+              ${preis ? `
+              <tr style="border-bottom: 1px solid #f0f7fb;">
+                <td style="padding: 16px 0; font-size: 13px; font-weight: 600; color: #64748b;">Preis</td>
+                <td style="padding: 16px 0; font-size: 14px; color: #002e40;">${preis}</td>
+              </tr>` : ""}
               ${extras && extras !== "Nein danke" ? `
               <tr style="border-bottom: 1px solid #f0f7fb;">
                 <td style="padding: 16px 0; font-size: 13px; font-weight: 600; color: #64748b;">Extras</td>
