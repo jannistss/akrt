@@ -112,6 +112,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: `${SITE_URL}/autoaufbereitung-reutlingen`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/ratgeber/autoaufbereitung-was-wird-gemacht`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
     // Unternehmen
     {
       url: `${SITE_URL}/karriere`,

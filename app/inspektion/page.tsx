@@ -79,6 +79,7 @@ const related = [
   { name: "Flottenbetreuung", href: "/flottenbetreuung" },
   { name: "Hagelschaden", href: "/hagelschaden" },
   { name: "Kfz-Gutachter", href: "/kfz-gutachter" },
+  { name: "Autoaufbereitung", href: "/autoaufbereitung-reutlingen" },
 ];
 
 export default function InspektionPage() {

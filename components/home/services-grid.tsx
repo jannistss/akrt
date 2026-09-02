@@ -109,6 +109,16 @@ const services = [
     ),
   },
   {
+    title: "Autoaufbereitung",
+    description: "Professionelle Innenraumreinigung und Außenpflege für einen sauberen, natürlichen OEM-Look.",
+    href: "/autoaufbereitung-reutlingen",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M5 16h14M7 16l1-5h8l1 5M9 11l1.5-3h3L15 11M8 19h.01M16 19h.01" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
     title: "Unfallservice",
     description: "Von der Schadensaufnahme bis zur Instandsetzung – schnelle Hilfe und klare Kommunikation.",
     href: "/unfall",
