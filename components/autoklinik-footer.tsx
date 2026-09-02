@@ -237,6 +237,9 @@ export function AutoklinikFooter() {
             <Link href="/datenschutz" className="text-xs transition-colors hover:text-white" style={{ color: "#ffffff" }}>
               Datenschutz
             </Link>
+            <Link href="/agb" className="text-xs transition-colors hover:text-white" style={{ color: "#ffffff" }}>
+              AGB
+            </Link>
             <Link href="/blog" className="text-xs transition-colors hover:text-white" style={{ color: "#ffffff" }}>
               Ratgeber
             </Link>
