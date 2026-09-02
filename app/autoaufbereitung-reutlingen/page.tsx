@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
+import { CheckCircle2 } from "lucide-react";
 import { fadeUp, slideLeft, slideRight, scaleUp, staggerContainer, staggerItem } from "@/lib/animation";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
@@ -90,38 +91,134 @@ export default function AutoaufbereitungPage() {
         {/* ── Pakete ── */}
         <section style={{ backgroundColor: "#ffffff" }}>
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24">
-            <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>Pakete</motion.p>
-            <motion.h2 className="font-bold tracking-tight mb-6 text-balance" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }} {...fadeUp(0.1)}>Die passende Fahrzeugaufbereitung auf einen Blick</motion.h2>
-            <motion.p className="text-base leading-relaxed mb-12 max-w-2xl" style={{ color: "#4a6272" }} {...fadeUp(0.15)}>
-              Innenraumreinigung und Außenreinigung lassen sich einzeln buchen. Nicht sicher, was Sie brauchen? Das Kombipaket unten deckt beides ab und ist der stärkste Preisvorteil.
-            </motion.p>
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14">
+              <div className="max-w-2xl">
+                <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>Pakete</motion.p>
+                <motion.h2 className="font-bold tracking-tight mb-5 text-balance" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }} {...fadeUp(0.1)}>Die passende Fahrzeugaufbereitung auf einen Blick</motion.h2>
+                <motion.p className="text-base leading-relaxed" style={{ color: "#4a6272" }} {...fadeUp(0.15)}>
+                  Innenraum und Außen lassen sich einzeln buchen, mit klar gestuften Paketen. Unsicher? Unser Kombipaket unten deckt beides mit dem stärksten Preisvorteil ab.
+                </motion.p>
+              </div>
+              <motion.a href={SITE.phone.href} className="inline-flex items-center gap-2.5 rounded-full border px-6 py-3 text-sm font-semibold shrink-0 transition-all hover:border-[#0074a2] hover:text-[#0074a2]" style={{ borderColor: "#c5dde8", color: "#002e40" }} {...fadeUp(0.2)}>
+                Unsicher? Kostenlos beraten lassen
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </motion.a>
+            </div>
+
+            {/* Innenraum / Außen pricing tables */}
+            <div className="flex flex-col gap-16">
+              {(
+                [
+                  { label: "Innenraumreinigung", filterName: "Innenraum", featured: "Innenraum Premium" },
+                  { label: "Außenreinigung", filterName: "Außen", featured: "Außen Versiegelung" },
+                ] as const
+              ).map((group) => (
+                <div key={group.label}>
+                  <h3 className="text-lg font-bold mb-6" style={{ color: "#002e40" }}>{group.label}</h3>
+                  <motion.div
+                    className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-stretch"
+                    variants={staggerContainer}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-60px" }}
+                  >
+                    {autoaufbereitungPackages
+                      .filter((p) => p.name.startsWith(group.filterName))
+                      .map((pack) => {
+                        const isFeatured = pack.name === group.featured;
+                        const visibleItems = pack.includes.slice(0, 4);
+                        const moreItems = pack.includes.slice(4);
+                        return (
+                          <motion.article
+                            key={pack.name}
+                            className="relative flex flex-col h-full rounded-2xl p-7"
+                            style={{
+                              backgroundColor: isFeatured ? "#002e40" : "#f5f9fc",
+                              border: isFeatured ? "none" : "1px solid #e4edf3",
+                              boxShadow: isFeatured ? "0 20px 40px -12px rgba(0,46,64,0.35)" : "none",
+                            }}
+                            variants={staggerItem}
+                            whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                          >
+                            {isFeatured && (
+                              <span className="absolute -top-3 left-7 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ backgroundColor: "#4db8d8", color: "#002e40" }}>
+                                Empfehlung
+                              </span>
+                            )}
+                            <h4 className="text-base font-bold mt-1" style={{ color: isFeatured ? "#ffffff" : "#002e40" }}>{pack.name}</h4>
+                            <strong className="text-3xl font-bold mt-3 mb-3" style={{ color: isFeatured ? "#ffffff" : "#0074a2" }}>{pack.price}</strong>
+                            <p className="text-sm leading-relaxed mb-5" style={{ color: isFeatured ? "rgba(255,255,255,0.65)" : "#4a6272" }}>{pack.description}</p>
+                            <ul className="flex flex-col gap-2.5 mb-1 flex-1">
+                              {visibleItems.map((item) => (
+                                <li key={item} className="flex gap-2 text-sm leading-snug" style={{ color: isFeatured ? "rgba(255,255,255,0.85)" : "#16394a" }}>
+                                  <CheckCircle2 size={16} strokeWidth={2} className="shrink-0 mt-0.5" style={{ color: isFeatured ? "#4db8d8" : "#0074a2" }} />
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                            {moreItems.length > 0 && (
+                              <details className="group mb-5">
+                                <summary className="cursor-pointer list-none text-xs font-semibold inline-flex items-center gap-1 mt-2" style={{ color: isFeatured ? "#4db8d8" : "#0074a2" }}>
+                                  +{moreItems.length} weitere Leistungen
+                                  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="transition-transform group-open:rotate-180"><path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                                </summary>
+                                <ul className="flex flex-col gap-2.5 mt-3">
+                                  {moreItems.map((item) => (
+                                    <li key={item} className="flex gap-2 text-sm leading-snug" style={{ color: isFeatured ? "rgba(255,255,255,0.85)" : "#16394a" }}>
+                                      <CheckCircle2 size={16} strokeWidth={2} className="shrink-0 mt-0.5" style={{ color: isFeatured ? "#4db8d8" : "#0074a2" }} />
+                                      {item}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </details>
+                            )}
+                            <Link
+                              href="/terminbuchung"
+                              className="mt-auto inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:brightness-110"
+                              style={
+                                isFeatured
+                                  ? { backgroundColor: "#0074a2", color: "#ffffff" }
+                                  : { backgroundColor: "transparent", color: "#002e40", border: "1px solid #c5dde8" }
+                              }
+                            >
+                              Jetzt anfragen
+                              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                            </Link>
+                          </motion.article>
+                        );
+                      })}
+                  </motion.div>
+                </div>
+              ))}
+            </div>
 
             {/* Featured combo package */}
             {(() => {
               const combo = autoaufbereitungPackages.find((p) => p.name === "Komplettaufbereitung")!;
               return (
                 <motion.article
-                  className="relative overflow-hidden rounded-2xl mb-14"
+                  className="relative overflow-hidden rounded-2xl mt-16"
                   style={{ backgroundColor: "#002e40" }}
                   {...scaleUp(0.1)}
                 >
                   <div className="absolute inset-0 opacity-[0.08]" style={{ background: "radial-gradient(circle at 85% 20%, #4db8d8, transparent 55%)" }} />
-                  <div className="relative flex flex-col md:flex-row items-start md:items-center gap-8 p-8 md:p-10">
+                  <div className="relative flex flex-col md:flex-row md:items-center gap-8 p-8 md:p-10">
                     <div className="flex-1">
                       <span className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider mb-4" style={{ backgroundColor: "#4db8d8", color: "#002e40" }}>
                         Bestpreis · Innen &amp; Außen komplett
                       </span>
                       <h3 className="text-2xl font-bold mb-2" style={{ color: "#ffffff" }}>{combo.name}</h3>
                       <p className="text-sm leading-relaxed mb-5 max-w-md" style={{ color: "rgba(255,255,255,0.7)" }}>{combo.description}</p>
-                      <ul className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 max-w-xl">
+                      <ul className="flex flex-col gap-2.5">
                         {combo.includes.map((item) => (
                           <li key={item} className="flex gap-2 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.85)" }}>
-                            <span className="shrink-0" style={{ color: "#4db8d8" }}>✓</span>{item}
+                            <CheckCircle2 size={17} strokeWidth={2} className="shrink-0 mt-0.5" style={{ color: "#4db8d8" }} />
+                            {item}
                           </li>
                         ))}
                       </ul>
                     </div>
-                    <div className="shrink-0 flex flex-col items-start md:items-end gap-4 md:pl-8 md:border-l" style={{ borderColor: "rgba(255,255,255,0.15)" }}>
+                    <div className="shrink-0 flex flex-col items-start md:items-end gap-4 md:pl-10 md:border-l" style={{ borderColor: "rgba(255,255,255,0.15)" }}>
                       <div className="flex items-baseline gap-2.5">
                         <span className="text-base line-through" style={{ color: "rgba(255,255,255,0.4)" }}>{combo.originalPrice}</span>
                         <strong className="text-4xl font-bold" style={{ color: "#ffffff" }}>{combo.price}</strong>
@@ -137,88 +234,7 @@ export default function AutoaufbereitungPage() {
               );
             })()}
 
-            {/* Innenraum / Außen comparison */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              {(
-                [
-                  { label: "Innenraumreinigung", note: "Einzeln buchbar", filterName: "Innenraum", popular: "Innenraum Premium" },
-                  { label: "Außenreinigung", note: "Einzeln buchbar", filterName: "Außen", popular: "Außen Versiegelung" },
-                ] as const
-              ).map((group) => (
-                <div key={group.label}>
-                  <div className="flex items-baseline justify-between mb-5">
-                    <h3 className="text-lg font-bold" style={{ color: "#002e40" }}>{group.label}</h3>
-                    <span className="text-xs font-medium" style={{ color: "#7893a0" }}>{group.note}</span>
-                  </div>
-                  <motion.div
-                    className="flex flex-col gap-4"
-                    variants={staggerContainer}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true, margin: "-60px" }}
-                  >
-                    {autoaufbereitungPackages
-                      .filter((p) => p.name.startsWith(group.filterName))
-                      .map((pack) => {
-                        const isPopular = pack.name === group.popular;
-                        const visibleItems = pack.includes.slice(0, 4);
-                        const moreItems = pack.includes.slice(4);
-                        return (
-                          <motion.article
-                            key={pack.name}
-                            className="flex flex-col rounded-2xl p-6"
-                            style={{
-                              backgroundColor: isPopular ? "#eaf6fa" : "#f5f9fc",
-                              border: isPopular ? "1.5px solid #0074a2" : "1px solid #e4edf3",
-                            }}
-                            variants={staggerItem}
-                            whileHover={{ y: -3, transition: { duration: 0.2 } }}
-                          >
-                            <div className="flex items-start justify-between gap-3 mb-2">
-                              <div className="flex items-center gap-2 flex-wrap">
-                                <h4 className="text-base font-bold" style={{ color: "#002e40" }}>{pack.name}</h4>
-                                {isPopular && (
-                                  <span className="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider whitespace-nowrap" style={{ backgroundColor: "#0074a2", color: "#fff" }}>Beliebt</span>
-                                )}
-                              </div>
-                              <strong className="text-xl font-bold whitespace-nowrap shrink-0" style={{ color: "#0074a2" }}>{pack.price}</strong>
-                            </div>
-                            <p className="text-sm leading-relaxed mb-4" style={{ color: "#4a6272" }}>{pack.description}</p>
-                            <ul className="flex flex-col gap-1.5 mb-1">
-                              {visibleItems.map((item) => (
-                                <li key={item} className="flex gap-2 text-sm leading-relaxed" style={{ color: "#16394a" }}>
-                                  <span className="shrink-0" style={{ color: "#0074a2" }}>✓</span>{item}
-                                </li>
-                              ))}
-                            </ul>
-                            {moreItems.length > 0 && (
-                              <details className="group mb-4">
-                                <summary className="cursor-pointer list-none text-xs font-semibold inline-flex items-center gap-1 mt-1" style={{ color: "#0074a2" }}>
-                                  +{moreItems.length} weitere Leistungen
-                                  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="transition-transform group-open:rotate-180"><path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                                </summary>
-                                <ul className="flex flex-col gap-1.5 mt-2">
-                                  {moreItems.map((item) => (
-                                    <li key={item} className="flex gap-2 text-sm leading-relaxed" style={{ color: "#16394a" }}>
-                                      <span className="shrink-0" style={{ color: "#0074a2" }}>✓</span>{item}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </details>
-                            )}
-                            <Link href="/terminbuchung" className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold hover:underline pt-3" style={{ color: "#002e40" }}>
-                              Jetzt anfragen
-                              <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                            </Link>
-                          </motion.article>
-                        );
-                      })}
-                  </motion.div>
-                </div>
-              ))}
-            </div>
-
-            <motion.p className="mt-10 text-sm leading-relaxed" style={{ color: "#4a6272" }} {...fadeUp(0.1)}>
+            <motion.p className="mt-8 text-sm leading-relaxed" style={{ color: "#4a6272" }} {...fadeUp(0.1)}>
               Alle Preise verstehen sich für Fahrzeuge mit üblicher Verschmutzung. Details zu Zuschlägen finden Sie unten bei den Zusatzleistungen. Nicht sicher, welches Paket passt? <a href={SITE.phone.href} className="font-semibold hover:underline" style={{ color: "#0074a2" }}>Rufen Sie uns an</a> – wir beraten Sie kostenlos.
             </motion.p>
           </div>
