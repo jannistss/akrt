@@ -13,8 +13,8 @@ export const SITE = {
   url: SITE_URL,
   phone: {
     display: "07121 14526199",
-    href: "tel:+4907121145261990",
-    e164: "+4907121145261990",
+    href: "tel:+49712114526199",
+    e164: "+49712114526199",
   },
   whatsapp: {
     display: "0176 61973298",

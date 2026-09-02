@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { SITE } from "@/lib/site-config";
 
 const categories = [
   {
@@ -112,7 +113,7 @@ export function WorkshopServices() {
             Termin online buchen
           </Link>
           <a
-            href="tel:+4971211452619"
+            href={SITE.phone.href}
             className="rounded-xl border px-6 py-3 text-sm font-semibold transition-colors hover:bg-[#e5f1f5]"
             style={{ borderColor: "#b8d0dc", color: "#0d1b2a" }}
           >

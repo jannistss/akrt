@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "check:phone": "node scripts/check-phone-numbers.mjs",
+    "prebuild": "npm run check:phone",
     "build": "next build",
     "start": "next start"
   },
