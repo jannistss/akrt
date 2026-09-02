@@ -126,7 +126,7 @@ const gw = createGateway();
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const { messages, knownState } = await req.json();
 
     // IMPORTANT: send the full conversation, not a truncated window.
     // Truncating history was the root cause of the model "forgetting" already
@@ -136,9 +136,22 @@ export async function POST(req: Request) {
     // guards against pathological/abusive session lengths.
     const boundedMessages = Array.isArray(messages) ? messages.slice(-60) : messages;
 
+    // The client tracks a merge-only bookingState across turns (a field, once
+    // set to a real value, is never reset back to empty client-side). We pass
+    // it in as ground truth so the model doesn't have to re-derive every
+    // field from raw chat text on every single turn — that full re-derivation
+    // is what previously let already-confirmed fields silently regress to ""
+    // deep into long conversations. The model may still ADD newly mentioned
+    // fields or apply explicit corrections; it must never drop a field that's
+    // already non-empty here without an explicit correction from the user.
+    let system = SYSTEM_PROMPT;
+    if (knownState && typeof knownState === "object") {
+      system += `\n\n═══════════════════════════════════════\nBEKANNTER ZUSTAND (bereits vom Client bestätigt — NIEMALS auf "" zurücksetzen, nur ergänzen oder bei ausdrücklicher Korrektur ändern):\n${JSON.stringify(knownState)}\n═══════════════════════════════════════`;
+    }
+
     const result = streamText({
       model: gw("openai/gpt-4o"),
-      system: SYSTEM_PROMPT,
+      system,
       messages: boundedMessages,
     });
 
