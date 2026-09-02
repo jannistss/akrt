@@ -50,6 +50,17 @@ export default function ImpressumPage() {
               </div>
 
               <div style={{ borderTop: "1px solid #e4edf3", paddingTop: "2rem" }}>
+                <h2 className="text-lg font-bold mb-3" style={{ color: "#0d1b2a" }}>Technische Betreuung der Website</h2>
+                <p className="text-sm leading-relaxed" style={{ color: "#4a6070" }}>
+                  Ioannis Tsannis<br />
+                  741SVE Digitalagentur<br />
+                  Im Wengle 1<br />
+                  72770 Reutlingen<br />
+                  Verwaltung und Entwicklung der Website
+                </p>
+              </div>
+
+              <div style={{ borderTop: "1px solid #e4edf3", paddingTop: "2rem" }}>
                 <h2 className="text-lg font-bold mb-3" style={{ color: "#0d1b2a" }}>Kontakt</h2>
                 <p className="text-sm leading-relaxed" style={{ color: "#4a6070" }}>
                   Telefon:{" "}

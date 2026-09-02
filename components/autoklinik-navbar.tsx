@@ -32,6 +32,7 @@ export function AutoklinikNavbar() {
         { name: "Motordiagnose", link: "/motordiagnose-reutlingen" },
         { name: "Getriebespülung", link: "/getriebespuelung-reutlingen" },
         { name: "Achsvermessung", link: "/achsvermessung-reutlingen" },
+        { name: "Autoaufbereitung", link: "/autoaufbereitung-reutlingen" },
         { name: "TÜV & AU", link: "/tuev-au" },
         { name: "Reifenservice", link: "/reifenservice" },
         { name: "Glasservice", link: "/glasservice" },

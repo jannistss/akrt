@@ -8,12 +8,18 @@ import { SITE } from "@/lib/site-config";
 
 const services = [
   { label: "Inspektion & Wartung", href: "/inspektion" },
+  { label: "Ölwechsel", href: "/oelwechsel-reutlingen" },
+  { label: "Bremsenservice", href: "/bremsen-reutlingen" },
+  { label: "Motordiagnose", href: "/motordiagnose-reutlingen" },
+  { label: "Getriebespülung", href: "/getriebespuelung-reutlingen" },
+  { label: "Achsvermessung", href: "/achsvermessung-reutlingen" },
   { label: "TÜV & AU", href: "/tuev-au" },
   { label: "Reifenservice", href: "/reifenservice" },
   { label: "Glasservice", href: "/glasservice" },
   { label: "Klimaservice", href: "/klimaservice" },
   { label: "Unfallservice", href: "/unfall" },
   { label: "Flottenbetreuung", href: "/flottenbetreuung" },
+  { label: "Hagelschadenzentrum", href: "/hagelschaden" },
 ];
 
 const contacts = [
@@ -92,7 +98,7 @@ export function AutoklinikFooter() {
         </motion.div>
 
         {/* Main columns */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 py-16" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-x-10 gap-y-10 py-12" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
 
           {/* Brand */}
           <motion.div
@@ -127,16 +133,16 @@ export function AutoklinikFooter() {
 
           {/* Services */}
           <motion.div
-            className="md:col-span-1"
+            className="md:col-span-2"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-6" style={{ color: "#ffffff" }}>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] mb-4" style={{ color: "#ffffff" }}>
               Leistungen
             </p>
-            <ul className="flex flex-col gap-3">
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-2">
               {services.map((l) => (
                 <li key={l.label}>
                   <Link
@@ -236,6 +242,9 @@ export function AutoklinikFooter() {
           <div className="flex gap-6">
             <Link href="/datenschutz" className="text-xs transition-colors hover:text-white" style={{ color: "#ffffff" }}>
               Datenschutz
+            </Link>
+            <Link href="/agb" className="text-xs transition-colors hover:text-white" style={{ color: "#ffffff" }}>
+              AGB
             </Link>
             <Link href="/blog" className="text-xs transition-colors hover:text-white" style={{ color: "#ffffff" }}>
               Ratgeber
