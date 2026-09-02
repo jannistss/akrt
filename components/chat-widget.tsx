@@ -593,8 +593,6 @@ export function ChatWidget() {
         setChatStep("idle");
       } else if (lower.includes("für wann") || lower.includes("wann wünschst") || lower.includes("zeitraum")) {
         setChatStep("datum");
-      } else if (lower.includes("wäsche dazubuchen") || lower.includes("fahrzeugwäsche") || lower.includes("autowäsche")) {
-        setChatStep("upsell");
       } else if (lower.includes("auf welchen namen") || lower.includes("welchen namen")) {
         setChatStep("name");
       } else if (lower.includes("telefonnummer") || lower.includes("rufnummer") || lower.includes("erreichen")) {
@@ -976,8 +974,7 @@ export function ChatWidget() {
                         const matched = Object.entries(priceMap).find(([k]) => leistungLower.includes(k));
                         const basePrice = matched?.[1].price ?? "auf Anfrage";
                         const isTuev = matched?.[1].isTuev ?? false;
-                        const extraPrice = hasExtras && terminData.extras?.includes("49,99") ? 49.99 : hasExtras && terminData.extras?.includes("13,99") ? 13.99 : 0;
-                        const extraStr = extraPrice > 0 ? ` + ${extraPrice.toFixed(2).replace(".", ",")} € Wäsche zzgl. MwSt.` : "";
+                        const extraStr = hasExtras ? ` + ${terminData.extras}` : "";
                         const priceStr = isTuev ? `${basePrice} (Festpreis inkl. TÜV-Gebühr)${extraStr}` : `${basePrice} zzgl. MwSt.${extraStr}`;
                         const rows = [
                           { label: "Fahrzeug", value: fahrzeug },
@@ -1028,14 +1025,6 @@ export function ChatWidget() {
                 {!aiLoading && chatStep !== "idle" && chatStep !== "kennzeichen" && (
                   <div className="px-3 pt-2 flex flex-wrap gap-1.5">
                     {chatStep === "datum" && ["Nächste Woche", "Ich bin flexibel", "Montag", "Dienstag", "Mittwoch", "Donnerstag"].map((chip) => (
-                      <button key={chip} type="button"
-                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setInput(""); sendMessage(chip); }}
-                        className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
-                        style={{ borderColor: "rgba(0,116,162,0.4)", color: "#7dd3fc", background: "rgba(0,116,162,0.08)" }}>
-                        {chip}
-                      </button>
-                    ))}
-                    {chatStep === "upsell" && ["Nein danke", "Außenwäsche +13,99 €", "Innen & Außen +49,99 €"].map((chip) => (
                       <button key={chip} type="button"
                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); setInput(""); sendMessage(chip); }}
                         className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
