@@ -40,6 +40,7 @@ const related = [
   { name: "Motordiagnose", href: "/motordiagnose-reutlingen" },
   { name: "Getriebespülung", href: "/getriebespuelung-reutlingen" },
   { name: "TÜV & AU", href: "/tuev-au" },
+  { name: "Achsvermessung", href: "/achsvermessung-reutlingen" },
 ];
 
 export default function OelwechselPage() {

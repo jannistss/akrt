@@ -23,6 +23,7 @@ const CATEGORY_SERVICE_MAP: Record<string, { name: string; href: string }> = {
   Glasservice: { name: "Glasservice", href: "/glasservice" },
   "Diagnose & Technik": { name: "Motordiagnose", href: "/motordiagnose-reutlingen" },
   "Gutachten & Bewertung": { name: "Kfz-Gutachter", href: "/kfz-gutachter" },
+  "Fahrwerk & Achsvermessung": { name: "Achsvermessung", href: "/achsvermessung-reutlingen" },
 };
 
 // Per-article overrides take priority over the category mapping above - some

@@ -49,6 +49,7 @@ const related = [
   { name: "Motordiagnose", href: "/motordiagnose-reutlingen" },
   { name: "Ölwechsel", href: "/oelwechsel-reutlingen" },
   { name: "Getriebespülung", href: "/getriebespuelung-reutlingen" },
+  { name: "Achsvermessung", href: "/achsvermessung-reutlingen" },
   { name: "Reifenservice", href: "/reifenservice" },
   { name: "Glasservice", href: "/glasservice" },
   { name: "Klimaservice", href: "/klimaservice" },

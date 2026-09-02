@@ -97,6 +97,18 @@ const services = [
     ),
   },
   {
+    title: "Achsvermessung",
+    description: "Fahrwerksgeometrie prüfen und Spur nach Herstellervorgabe einstellen – bei schiefem Lenkrad oder einseitigem Reifenverschleiß.",
+    href: "/achsvermessung-reutlingen",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.7" />
+        <path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+        <path d="M8.5 8.5l1.8 1.8M13.7 13.7l1.8 1.8M15.5 8.5l-1.8 1.8M10.3 13.7l-1.8 1.8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
     title: "Unfallservice",
     description: "Von der Schadensaufnahme bis zur Instandsetzung – schnelle Hilfe und klare Kommunikation.",
     href: "/unfall",
