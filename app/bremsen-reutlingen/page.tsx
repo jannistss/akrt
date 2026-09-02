@@ -41,6 +41,7 @@ const related = [
   { name: "Inspektion & Wartung", href: "/inspektion" },
   { name: "TÜV & AU", href: "/tuev-au" },
   { name: "Motordiagnose", href: "/motordiagnose-reutlingen" },
+  { name: "Achsvermessung", href: "/achsvermessung-reutlingen" },
   { name: "Unfallservice", href: "/unfall" },
   { name: "Reifenservice", href: "/reifenservice" },
 ];
