@@ -22,8 +22,8 @@ export const SITE = {
     href: "https://wa.me/4917661973298",
   },
   instagram: {
-    handle: "@autoklinik.reutlingen",
-    url: "https://www.instagram.com/autoklinik.reutlingen",
+    handle: "@autoklinik_reutlingen",
+    url: "https://www.instagram.com/autoklinik_reutlingen",
   },
   googleReviewUrl: "https://g.page/r/CTkakRV7d20NEBM/review",
   email: "info@autoklinik-reutlingen.de",

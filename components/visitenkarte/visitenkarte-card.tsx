@@ -174,41 +174,69 @@ export function VisitenkarteCard() {
             ))}
           </div>
 
-          {/* Rating */}
-          <motion.div variants={item} className="mt-8 border-t pt-7" style={{ borderColor: "rgba(0,46,64,0.08)" }}>
-            <p className="text-center text-sm font-semibold" style={{ color: AK_DEEP }}>
-              Wie war dein Besuch bei uns?
+          {/* Rating spotlight */}
+          <motion.section
+            variants={item}
+            aria-labelledby="review-heading"
+            className="mt-8 overflow-hidden rounded-[1.5rem] border p-5 sm:p-6"
+            style={{
+              borderColor: "rgba(0,116,162,0.24)",
+              background: "linear-gradient(145deg, #eef8fc 0%, #ffffff 100%)",
+              boxShadow: "0 12px 28px rgba(0,46,64,0.08)",
+            }}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.16em]" style={{ color: AK_BLUE }}>
+                  Google Bewertung
+                </p>
+                <h2 id="review-heading" className="mt-1 text-base font-bold text-balance" style={{ color: AK_DEEP }}>
+                  Hilf uns mit deiner Bewertung
+                </h2>
+              </div>
+              <div className="flex shrink-0 items-center gap-1 rounded-full bg-white px-2.5 py-1.5 shadow-sm" aria-hidden="true">
+                <Star size={15} color="#f4b400" fill="#f4b400" strokeWidth={1.5} />
+                <span className="text-xs font-bold" style={{ color: AK_DEEP }}>Google</span>
+              </div>
+            </div>
+            <p className="mt-2 max-w-[32ch] text-xs leading-relaxed" style={{ color: "#4a6272" }}>
+              Deine Rückmeldung hilft anderen bei der Werkstattwahl und uns bei unserer Arbeit.
             </p>
 
             <AnimatePresence mode="wait">
               {rating === null ? (
                 <motion.div
                   key="stars"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="mt-4 flex justify-center gap-1.5"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  className="mt-5"
                   onMouseLeave={() => setHovered(null)}
                 >
-                  {[1, 2, 3, 4, 5].map((n) => (
-                    <button
-                      key={n}
-                      type="button"
-                      aria-label={`${n} von 5 Sternen`}
-                      onMouseEnter={() => setHovered(n)}
-                      onClick={() => handleRate(n)}
-                      className="p-1"
-                    >
-                      <motion.span whileTap={{ scale: 0.85 }} whileHover={{ scale: 1.15 }} className="block">
+                  <div className="flex justify-center gap-1 sm:gap-2" role="group" aria-label="Bewertung auswählen">
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <button
+                        key={n}
+                        type="button"
+                        aria-label={`${n} von 5 Sternen`}
+                        onMouseEnter={() => setHovered(n)}
+                        onFocus={() => setHovered(n)}
+                        onBlur={() => setHovered(null)}
+                        onClick={() => handleRate(n)}
+                        className="rounded-xl p-1.5 transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0074a2] focus-visible:ring-offset-2 active:scale-95"
+                      >
                         <Star
-                          size={34}
+                          size={38}
                           strokeWidth={1.5}
                           fill={displayRating >= n ? "#f4b400" : "transparent"}
-                          color={displayRating >= n ? "#f4b400" : "#c7d5db"}
+                          color={displayRating >= n ? "#f4b400" : "#b5c9d2"}
                         />
-                      </motion.span>
-                    </button>
-                  ))}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="mt-2 text-center text-[11px]" style={{ color: "#607987" }}>
+                    Tippe auf die Sterne und teile deine Erfahrung.
+                  </p>
                 </motion.div>
               ) : (
                 <motion.div
@@ -216,27 +244,25 @@ export function VisitenkarteCard() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35 }}
-                  className="mt-4 flex flex-col items-center gap-2 text-center"
+                  className="mt-5 flex flex-col items-center gap-2 text-center"
+                  role="status"
                 >
-                  <div className="mb-1 flex gap-1">
+                  <div className="mb-1 flex gap-1" aria-label={`${rating} von 5 Sternen ausgewählt`}>
                     {[1, 2, 3, 4, 5].map((n) => (
                       <Star
                         key={n}
-                        size={20}
+                        size={22}
                         strokeWidth={1.5}
                         fill={rating >= n ? "#f4b400" : "transparent"}
-                        color={rating >= n ? "#f4b400" : "#c7d5db"}
+                        color={rating >= n ? "#f4b400" : "#b5c9d2"}
                       />
                     ))}
                   </div>
 
                   {isNegative && (
                     <>
-                      <span
-                        className="flex h-9 w-9 items-center justify-center rounded-full"
-                        style={{ backgroundColor: "#eef6fa" }}
-                      >
-                        <Check size={18} color={AK_BLUE} strokeWidth={2.5} />
+                      <span className="flex h-10 w-10 items-center justify-center rounded-full" style={{ backgroundColor: "#dff1f7" }}>
+                        <Check size={19} color={AK_BLUE} strokeWidth={2.5} />
                       </span>
                       <p className="text-sm font-semibold" style={{ color: AK_DEEP }}>
                         Danke für dein Feedback!
@@ -249,31 +275,31 @@ export function VisitenkarteCard() {
 
                   {isPositive && (
                     <>
-                      <span
-                        className="flex h-9 w-9 items-center justify-center rounded-full"
-                        style={{ backgroundColor: "#eef6fa" }}
-                      >
-                        <Star size={18} color="#f4b400" fill="#f4b400" strokeWidth={1.5} />
+                      <span className="flex h-10 w-10 items-center justify-center rounded-full" style={{ backgroundColor: "#fff4d6" }}>
+                        <Star size={19} color="#f4b400" fill="#f4b400" strokeWidth={1.5} />
                       </span>
                       <p className="text-sm font-semibold" style={{ color: AK_DEEP }}>
-                        Vielen Dank! Du wirst zu Google weitergeleitet …
+                        Danke für deine tolle Bewertung!
+                      </p>
+                      <p className="text-xs" style={{ color: "#4a6272" }}>
+                        Teile sie jetzt direkt mit anderen auf Google.
                       </p>
                       <a
                         href={SITE.googleReviewUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-2 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold text-white"
+                        className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white shadow-sm transition-transform hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0074a2] focus-visible:ring-offset-2 active:scale-[0.98]"
                         style={{ backgroundColor: AK_BLUE }}
                       >
-                        Öffnet sich nicht? Hier klicken
-                        <ExternalLink size={13} strokeWidth={2.5} />
+                        Jetzt bei Google bewerten
+                        <ExternalLink size={15} strokeWidth={2.5} />
                       </a>
                     </>
                   )}
                 </motion.div>
               )}
             </AnimatePresence>
-          </motion.div>
+          </motion.section>
         </div>
 
         {/* Footer */}
