@@ -103,8 +103,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AnalyticsPlaceholders />
         <VercelAnalytics />
         {children}
-        {/* Reserves space so the fixed mobile CTA bar never covers footer content. */}
-        <div className="sm:hidden" style={{ height: "calc(3.5rem + env(safe-area-inset-bottom))" }} aria-hidden="true" />
         <MobileCtaBar />
         <ChatWidget />
       </body>

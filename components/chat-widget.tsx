@@ -802,6 +802,10 @@ export function ChatWidget() {
 
   const currentFlow = FLOWS[flow];
 
+  // The digital business card is a standalone, self-contained share link —
+  // it must not be cluttered by the site-wide chat bubble.
+  if (pathname?.startsWith("/visitenkarte")) return null;
+
   return (
     <>
       {/* Proactive bubble */}
