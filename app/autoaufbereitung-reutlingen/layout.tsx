@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Autoaufbereitung Reutlingen | Innenraum & Außenreinigung",
-  description: "Professionelle Auto- und Fahrzeugaufbereitung in Reutlingen. Innenraumreinigung, Außenreinigung und Komplettaufbereitung mit transparenten Preisen.",
+  title: "Autoaufbereitung Reutlingen | Innenraumreinigung",
+  description: "Professionelle Innenraum-Aufbereitung in Reutlingen mit transparenten Preisen und optionaler Waschanlagenfahrt für 15 €.",
   alternates: { canonical: `${SITE.url}/autoaufbereitung-reutlingen` },
 };
 

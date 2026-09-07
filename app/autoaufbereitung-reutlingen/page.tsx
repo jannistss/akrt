@@ -35,7 +35,7 @@ export default function AutoaufbereitungPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ServiceSchema
         name="Autoaufbereitung Reutlingen"
-        description="Professionelle Fahrzeugaufbereitung innen und außen in Reutlingen – transparente Pakete für Innenraumreinigung, Autopflege und Außenreinigung."
+        description="Professionelle Innenraum-Aufbereitung in Reutlingen mit transparenten Paketen und optionaler Waschanlagenfahrt für 15 €."
         url="/autoaufbereitung-reutlingen"
       />
       <FaqSchema items={autoaufbereitungFaqs.map((f) => ({ question: f.q, answer: f.a }))} />
@@ -61,7 +61,7 @@ export default function AutoaufbereitungPage() {
                   Autoaufbereitung<br /><span style={{ color: "#4db8d8" }}>in Reutlingen</span>
                 </motion.h1>
                 <motion.p className="text-lg leading-relaxed mb-10 max-w-xl" style={{ color: "rgba(255,255,255,0.75)" }} {...fadeUp(0.2)}>
-                  Wir reinigen und pflegen Ihr Fahrzeug materialgerecht – vom gepflegten Innenraum bis zum sauberen Außenfinish. Transparente Paketpreise, faire Zuschläge und zusätzliche Kosten immer nach Absprache.
+                  Wir kümmern uns materialgerecht um den Innenraum Ihres Fahrzeugs. Transparent kalkuliert, sauber ausgeführt und mit optionaler Waschanlagenfahrt für 15 €.
                 </motion.p>
                 <motion.div className="flex flex-wrap gap-3" {...fadeUp(0.3)}>
                   <Link href="/terminbuchung" className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110" style={{ backgroundColor: "#0074a2" }}>
@@ -71,7 +71,7 @@ export default function AutoaufbereitungPage() {
                   <a href={SITE.phone.href} className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/10" style={{ borderColor: "rgba(255,255,255,0.25)", color: "rgba(255,255,255,0.85)" }}>{SITE.phone.display}</a>
                 </motion.div>
                 <motion.div className="flex flex-wrap gap-3 mt-8" {...fadeUp(0.4)}>
-                  {["Innen & Außen", "Materialgerechte Pflege", "Transparente Paketpreise", "Kombipaket mit Preisvorteil"].map((t) => (
+                  {["Innenraum im Fokus", "Materialgerechte Pflege", "Transparente Paketpreise", "Waschanlage optional 15 €"].map((t) => (
                     <span key={t} className="rounded-full px-4 py-1.5 text-xs font-medium" style={{ backgroundColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.7)" }}>{t}</span>
                   ))}
                 </motion.div>
@@ -81,7 +81,7 @@ export default function AutoaufbereitungPage() {
                 <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, rgba(0,20,32,0.6) 100%)" }} />
                 <motion.div className="absolute bottom-6 left-6 rounded-xl px-5 py-4" style={{ backgroundColor: "rgba(0,46,64,0.88)", backdropFilter: "blur(10px)", border: "1px solid rgba(77,184,216,0.25)" }} {...scaleUp(0.4)}>
                   <p className="text-sm font-bold text-white">Autoaufbereitung</p>
-                  <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.6)" }}>Innenraum & Außenpflege, materialgerecht</p>
+                  <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.6)" }}>Innenraum-Aufbereitung, materialgerecht</p>
                 </motion.div>
               </motion.div>
             </div>
@@ -96,7 +96,7 @@ export default function AutoaufbereitungPage() {
                 <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>Pakete</motion.p>
                 <motion.h2 className="font-bold tracking-tight mb-5 text-balance" style={{ color: "#002e40", fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)" }} {...fadeUp(0.1)}>Die passende Fahrzeugaufbereitung auf einen Blick</motion.h2>
                 <motion.p className="text-base leading-relaxed" style={{ color: "#4a6272" }} {...fadeUp(0.15)}>
-                  Innenraum und Außen lassen sich einzeln buchen, mit klar gestuften Paketen. Unsicher? Unser Kombipaket unten deckt beides mit dem stärksten Preisvorteil ab.
+                  Wählen Sie das passende Innenraum-Paket für den Pflegezustand Ihres Fahrzeugs. Eine Außenreinigung ist nicht enthalten; auf Wunsch fahren wir Ihr Auto für 15 € durch die Waschanlage.
                 </motion.p>
               </div>
               <motion.a href={SITE.phone.href} className="inline-flex items-center gap-2.5 rounded-full border px-6 py-3 text-sm font-semibold shrink-0 transition-all hover:border-[#0074a2] hover:text-[#0074a2]" style={{ borderColor: "#c5dde8", color: "#002e40" }} {...fadeUp(0.2)}>
@@ -105,134 +105,81 @@ export default function AutoaufbereitungPage() {
               </motion.a>
             </div>
 
-            {/* Innenraum / Außen pricing tables */}
-            <div className="flex flex-col gap-16">
-              {(
-                [
-                  { label: "Innenraumreinigung", filterName: "Innenraum", featured: "Innenraum Premium" },
-                  { label: "Außenreinigung", filterName: "Außen", featured: "Außen Versiegelung" },
-                ] as const
-              ).map((group) => (
-                <div key={group.label}>
-                  <h3 className="text-lg font-bold mb-6" style={{ color: "#002e40" }}>{group.label}</h3>
-                  <motion.div
-                    className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-stretch"
-                    variants={staggerContainer}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true, margin: "-60px" }}
-                  >
-                    {autoaufbereitungPackages
-                      .filter((p) => p.name.startsWith(group.filterName))
-                      .map((pack) => {
-                        const isFeatured = pack.name === group.featured;
-                        const visibleItems = pack.includes.slice(0, 4);
-                        const moreItems = pack.includes.slice(4);
-                        return (
-                          <motion.article
-                            key={pack.name}
-                            className="relative flex flex-col h-full rounded-2xl p-7"
-                            style={{
-                              backgroundColor: isFeatured ? "#002e40" : "#f5f9fc",
-                              border: isFeatured ? "none" : "1px solid #e4edf3",
-                              boxShadow: isFeatured ? "0 20px 40px -12px rgba(0,46,64,0.35)" : "none",
-                            }}
-                            variants={staggerItem}
-                            whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                          >
-                            {isFeatured && (
-                              <span className="absolute -top-3 left-7 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ backgroundColor: "#4db8d8", color: "#002e40" }}>
-                                Empfehlung
-                              </span>
-                            )}
-                            <h4 className="text-base font-bold mt-1" style={{ color: isFeatured ? "#ffffff" : "#002e40" }}>{pack.name}</h4>
-                            <strong className="text-3xl font-bold mt-3 mb-3" style={{ color: isFeatured ? "#ffffff" : "#0074a2" }}>{pack.price}</strong>
-                            <p className="text-sm leading-relaxed mb-5" style={{ color: isFeatured ? "rgba(255,255,255,0.65)" : "#4a6272" }}>{pack.description}</p>
-                            <ul className="flex flex-col gap-2.5 mb-1 flex-1">
-                              {visibleItems.map((item) => (
-                                <li key={item} className="flex gap-2 text-sm leading-snug" style={{ color: isFeatured ? "rgba(255,255,255,0.85)" : "#16394a" }}>
-                                  <CheckCircle2 size={16} strokeWidth={2} className="shrink-0 mt-0.5" style={{ color: isFeatured ? "#4db8d8" : "#0074a2" }} />
-                                  {item}
-                                </li>
-                              ))}
-                            </ul>
-                            {moreItems.length > 0 && (
-                              <details className="group mb-5">
-                                <summary className="cursor-pointer list-none text-xs font-semibold inline-flex items-center gap-1 mt-2" style={{ color: isFeatured ? "#4db8d8" : "#0074a2" }}>
-                                  +{moreItems.length} weitere Leistungen
-                                  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="transition-transform group-open:rotate-180"><path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                                </summary>
-                                <ul className="flex flex-col gap-2.5 mt-3">
-                                  {moreItems.map((item) => (
-                                    <li key={item} className="flex gap-2 text-sm leading-snug" style={{ color: isFeatured ? "rgba(255,255,255,0.85)" : "#16394a" }}>
-                                      <CheckCircle2 size={16} strokeWidth={2} className="shrink-0 mt-0.5" style={{ color: isFeatured ? "#4db8d8" : "#0074a2" }} />
-                                      {item}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </details>
-                            )}
-                            <Link
-                              href="/terminbuchung"
-                              className="mt-auto inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:brightness-110"
-                              style={
-                                isFeatured
-                                  ? { backgroundColor: "#0074a2", color: "#ffffff" }
-                                  : { backgroundColor: "transparent", color: "#002e40", border: "1px solid #c5dde8" }
-                              }
-                            >
-                              Jetzt anfragen
-                              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                            </Link>
-                          </motion.article>
-                        );
-                      })}
-                  </motion.div>
-                </div>
-              ))}
-            </div>
-
-            {/* Featured combo package */}
-            {(() => {
-              const combo = autoaufbereitungPackages.find((p) => p.name === "Komplettaufbereitung")!;
-              return (
-                <motion.article
-                  className="relative overflow-hidden rounded-2xl mt-16"
-                  style={{ backgroundColor: "#002e40" }}
-                  {...scaleUp(0.1)}
-                >
-                  <div className="absolute inset-0 opacity-[0.08]" style={{ background: "radial-gradient(circle at 85% 20%, #4db8d8, transparent 55%)" }} />
-                  <div className="relative flex flex-col md:flex-row md:items-center gap-8 p-8 md:p-10">
-                    <div className="flex-1">
-                      <span className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider mb-4" style={{ backgroundColor: "#4db8d8", color: "#002e40" }}>
-                        Bestpreis · Innen &amp; Außen komplett
-                      </span>
-                      <h3 className="text-2xl font-bold mb-2" style={{ color: "#ffffff" }}>{combo.name}</h3>
-                      <p className="text-sm leading-relaxed mb-5 max-w-md" style={{ color: "rgba(255,255,255,0.7)" }}>{combo.description}</p>
-                      <ul className="flex flex-col gap-2.5">
-                        {combo.includes.map((item) => (
-                          <li key={item} className="flex gap-2 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.85)" }}>
-                            <CheckCircle2 size={17} strokeWidth={2} className="shrink-0 mt-0.5" style={{ color: "#4db8d8" }} />
+            {/* Innenraum pricing tables */}
+            <div>
+              <h3 className="text-lg font-bold mb-6" style={{ color: "#002e40" }}>Innenraumreinigung</h3>
+              <motion.div
+                className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-stretch"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-60px" }}
+              >
+                {autoaufbereitungPackages.map((pack) => {
+                  const isFeatured = pack.name === "Innenraum Premium";
+                  const visibleItems = pack.includes.slice(0, 4);
+                  const moreItems = pack.includes.slice(4);
+                  return (
+                    <motion.article
+                      key={pack.name}
+                      className="relative flex flex-col h-full rounded-2xl p-7"
+                      style={{
+                        backgroundColor: isFeatured ? "#002e40" : "#f5f9fc",
+                        border: isFeatured ? "none" : "1px solid #e4edf3",
+                        boxShadow: isFeatured ? "0 20px 40px -12px rgba(0,46,64,0.35)" : "none",
+                      }}
+                      variants={staggerItem}
+                      whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                    >
+                      {isFeatured && (
+                        <span className="absolute -top-3 left-7 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ backgroundColor: "#4db8d8", color: "#002e40" }}>
+                          Empfehlung
+                        </span>
+                      )}
+                      <h4 className="text-base font-bold mt-1" style={{ color: isFeatured ? "#ffffff" : "#002e40" }}>{pack.name}</h4>
+                      <strong className="text-3xl font-bold mt-3 mb-3" style={{ color: isFeatured ? "#ffffff" : "#0074a2" }}>{pack.price}</strong>
+                      <p className="text-sm leading-relaxed mb-5" style={{ color: isFeatured ? "rgba(255,255,255,0.65)" : "#4a6272" }}>{pack.description}</p>
+                      <ul className="flex flex-col gap-2.5 mb-1 flex-1">
+                        {visibleItems.map((item) => (
+                          <li key={item} className="flex gap-2 text-sm leading-snug" style={{ color: isFeatured ? "rgba(255,255,255,0.85)" : "#16394a" }}>
+                            <CheckCircle2 size={16} strokeWidth={2} className="shrink-0 mt-0.5" style={{ color: isFeatured ? "#4db8d8" : "#0074a2" }} />
                             {item}
                           </li>
                         ))}
                       </ul>
-                    </div>
-                    <div className="shrink-0 flex flex-col items-start md:items-end gap-4 md:pl-10 md:border-l" style={{ borderColor: "rgba(255,255,255,0.15)" }}>
-                      <div className="flex items-baseline gap-2.5">
-                        <span className="text-base line-through" style={{ color: "rgba(255,255,255,0.4)" }}>{combo.originalPrice}</span>
-                        <strong className="text-4xl font-bold" style={{ color: "#ffffff" }}>{combo.price}</strong>
-                      </div>
-                      <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: "rgba(77,184,216,0.15)", color: "#4db8d8" }}>Sie sparen {combo.savings}</span>
-                      <Link href="/terminbuchung" className="inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110 w-full md:w-auto" style={{ backgroundColor: "#0074a2" }}>
-                        Komplettaufbereitung anfragen
-                        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                      {moreItems.length > 0 && (
+                        <details className="group mb-5">
+                          <summary className="cursor-pointer list-none text-xs font-semibold inline-flex items-center gap-1 mt-2" style={{ color: isFeatured ? "#4db8d8" : "#0074a2" }}>
+                            +{moreItems.length} weitere Leistungen
+                            <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="transition-transform group-open:rotate-180"><path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                          </summary>
+                          <ul className="flex flex-col gap-2.5 mt-3">
+                            {moreItems.map((item) => (
+                              <li key={item} className="flex gap-2 text-sm leading-snug" style={{ color: isFeatured ? "rgba(255,255,255,0.85)" : "#16394a" }}>
+                                <CheckCircle2 size={16} strokeWidth={2} className="shrink-0 mt-0.5" style={{ color: isFeatured ? "#4db8d8" : "#0074a2" }} />
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </details>
+                      )}
+                      <Link
+                        href="/terminbuchung"
+                        className="mt-auto inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:brightness-110"
+                        style={
+                          isFeatured
+                            ? { backgroundColor: "#0074a2", color: "#ffffff" }
+                            : { backgroundColor: "transparent", color: "#002e40", border: "1px solid #c5dde8" }
+                        }
+                      >
+                        Jetzt anfragen
+                        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
                       </Link>
-                    </div>
-                  </div>
-                </motion.article>
-              );
-            })()}
+                    </motion.article>
+                  );
+                })}
+              </motion.div>
+            </div>
 
             <motion.p className="mt-8 text-sm leading-relaxed" style={{ color: "#4a6272" }} {...fadeUp(0.1)}>
               Alle Preise verstehen sich für Fahrzeuge mit üblicher Verschmutzung. Details zu Zuschlägen finden Sie unten bei den Zusatzleistungen. Nicht sicher, welches Paket passt? <a href={SITE.phone.href} className="font-semibold hover:underline" style={{ color: "#0074a2" }}>Rufen Sie uns an</a> – wir beraten Sie kostenlos.
@@ -247,7 +194,7 @@ export default function AutoaufbereitungPage() {
               <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>Zusatzleistungen</motion.p>
               <motion.h2 className="font-bold tracking-tight mb-5 text-balance" style={{ color: "#002e40", fontSize: "clamp(1.6rem, 2.4vw, 2rem)" }} {...fadeUp(0.1)}>Für besonderen Aufwand transparent ergänzt</motion.h2>
               <motion.p className="leading-relaxed mb-10" style={{ color: "#4a6272" }} {...fadeUp(0.15)}>
-                Zusatzkosten gelten nur für außergewöhnlichen zusätzlichen Aufwand oder eine gesonderte Intensiv-/Tiefenbehandlung – nicht automatisch zusätzlich zu jeder Premium-Leistung.
+                Die Außenreinigung ist nicht Bestandteil der Aufbereitung. Auf Wunsch fahren wir das Fahrzeug optional für 15 € durch die Waschanlage; weitere Zusatzkosten gelten nur für außergewöhnlichen zusätzlichen Aufwand oder eine gesonderte Intensiv-/Tiefenbehandlung.
               </motion.p>
             </div>
             <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3" variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-60px" }}>
@@ -268,7 +215,7 @@ export default function AutoaufbereitungPage() {
                 <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>Leistungsumfang</motion.p>
                 <motion.h2 className="font-bold tracking-tight leading-[1.1] text-balance mb-5" style={{ color: "#002e40", fontSize: "clamp(1.6rem, 2.4vw, 2rem)" }} {...fadeUp(0.1)}>Was gehört zu einer professionellen Autoaufbereitung?</motion.h2>
                 <motion.div className="space-y-4 text-sm leading-relaxed" style={{ color: "#4a6272" }} {...fadeUp(0.15)}>
-                  <p>Eine Fahrzeugaufbereitung geht über eine normale schnelle Reinigung hinaus. Innenraum und Außenflächen werden systematisch betrachtet, materialgerecht behandelt und am Ende kontrolliert.</p>
+                  <p>Eine Fahrzeugaufbereitung geht über eine normale schnelle Reinigung hinaus. Der Innenraum wird systematisch betrachtet, materialgerecht behandelt und am Ende kontrolliert.</p>
                   <p>Bei Leder, Stoff und Alcantara gelten unterschiedliche Anforderungen. Ziel ist ein sauberer, natürlicher OEM-Look – keine speckig glänzenden Oberflächen und keine pauschalen Versprechen bei starken Flecken oder extremem Schmutz.</p>
                   <p>Eine professionelle Aufbereitung lohnt sich vor längeren Fahrten, nach Tierhaar- oder Fleckenbelastung, vor einer Leasingrückgabe oder wenn das Fahrzeug wieder gepflegt wirken soll. Eine Wertsteigerung wird dabei nicht versprochen.</p>
                 </motion.div>
@@ -297,7 +244,7 @@ export default function AutoaufbereitungPage() {
           <div className="max-w-3xl mx-auto px-6 sm:px-10 py-20 text-center">
             <motion.h2 className="font-bold tracking-tight text-balance mb-4" style={{ color: "#002e40", fontSize: "clamp(1.5rem, 2.4vw, 2rem)" }} {...fadeUp(0)}>Autoaufbereitung direkt in Reutlingen</motion.h2>
             <motion.p className="text-sm leading-relaxed" style={{ color: "#4a6272" }} {...fadeUp(0.1)}>
-              Als Meisterbetrieb in der Haldenhaustraße reinigen und pflegen wir Ihr Fahrzeug vor Ort in Reutlingen – innen wie außen. Rufen Sie an oder buchen Sie online, wir finden zeitnah einen Termin.
+              Als Meisterbetrieb in der Haldenhaustraße bereiten wir den Innenraum Ihres Fahrzeugs vor Ort in Reutlingen gründlich und materialgerecht auf. Auf Wunsch fahren wir Ihr Auto zusätzlich für 15 € durch die Waschanlage. Rufen Sie an oder buchen Sie online, wir finden zeitnah einen Termin.
             </motion.p>
           </div>
         </section>
