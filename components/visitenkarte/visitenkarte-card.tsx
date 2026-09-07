@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
-import { Globe, Phone, Star, Check, ExternalLink } from "lucide-react";
+import { CalendarDays, Globe, Phone, Star, Check, ExternalLink } from "lucide-react";
 import { SITE } from "@/lib/site-config";
 
 /* ─── Brand glyphs (lucide ships no platform/brand icons; keep them in
@@ -37,9 +37,18 @@ type LinkItem = {
   sub: string;
   icon: React.ReactNode;
   external: boolean;
+  featured?: boolean;
 };
 
 const links: LinkItem[] = [
+  {
+    href: "/terminbuchung",
+    label: "Termin online buchen",
+    sub: "Passenden Werkstatttermin auswählen",
+    icon: <CalendarDays size={21} strokeWidth={2} />,
+    external: false,
+    featured: true,
+  },
   {
     href: "/",
     label: "Zur Website",
@@ -153,23 +162,28 @@ export function VisitenkarteCard() {
                 href={l.href}
                 target={l.external ? "_blank" : undefined}
                 rel={l.external ? "noopener noreferrer" : undefined}
-                className="flex items-center gap-3.5 rounded-2xl bg-white px-4 py-3.5 shadow-sm ring-1 ring-black/[0.03] transition-shadow hover:shadow-md"
+                className="flex items-center gap-3.5 rounded-2xl px-4 py-3.5 shadow-sm ring-1 transition-all hover:-translate-y-0.5 hover:shadow-md"
+                style={
+                  l.featured
+                    ? { backgroundColor: AK_BLUE, color: "#ffffff", boxShadow: "0 10px 24px rgba(0,116,162,0.24)", outline: "1px solid rgba(255,255,255,0.16)" }
+                    : { backgroundColor: "#ffffff", boxShadow: undefined }
+                }
               >
                 <span
                   className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
-                  style={{ backgroundColor: "#eef6fa" }}
+                  style={{ backgroundColor: l.featured ? "rgba(255,255,255,0.16)" : "#eef6fa", color: l.featured ? "#ffffff" : AK_BLUE }}
                 >
                   {l.icon}
                 </span>
                 <span className="flex-1 text-left">
-                  <span className="block text-sm font-semibold" style={{ color: AK_DEEP }}>
+                  <span className="block text-sm font-semibold" style={{ color: l.featured ? "#ffffff" : AK_DEEP }}>
                     {l.label}
                   </span>
-                  <span className="block text-xs" style={{ color: "#4a6272" }}>
+                  <span className="block text-xs" style={{ color: l.featured ? "rgba(255,255,255,0.78)" : "#4a6272" }}>
                     {l.sub}
                   </span>
                 </span>
-                {l.external && <ExternalLink size={15} strokeWidth={2} style={{ color: "#4a6272" }} />}
+                {l.external && <ExternalLink size={15} strokeWidth={2} style={{ color: l.featured ? "#ffffff" : "#4a6272" }} />}
               </motion.a>
             ))}
           </div>
