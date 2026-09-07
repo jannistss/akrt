@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { SITE } from "@/lib/site-config";
 
 /**
@@ -8,16 +11,24 @@ import { SITE } from "@/lib/site-config";
  * layout shift or covers page content.
  */
 export function MobileCtaBar() {
+  const pathname = usePathname();
+  // The digital business card already has its own full-width action
+  // buttons — a second, fixed CTA bar would just duplicate them.
+  if (pathname?.startsWith("/visitenkarte")) return null;
+
   return (
-    <nav
-      aria-label="Schnellkontakt"
-      className="sm:hidden fixed inset-x-0 bottom-0 z-40 grid grid-cols-3"
-      style={{
-        backgroundColor: "#002e40",
-        borderTop: "1px solid rgba(255,255,255,0.08)",
-        paddingBottom: "env(safe-area-inset-bottom)",
-      }}
-    >
+    <>
+      {/* Reserves space so this fixed bar never covers footer content. */}
+      <div className="sm:hidden" style={{ height: "calc(3.5rem + env(safe-area-inset-bottom))" }} aria-hidden="true" />
+      <nav
+        aria-label="Schnellkontakt"
+        className="sm:hidden fixed inset-x-0 bottom-0 z-40 grid grid-cols-3"
+        style={{
+          backgroundColor: "#002e40",
+          borderTop: "1px solid rgba(255,255,255,0.08)",
+          paddingBottom: "env(safe-area-inset-bottom)",
+        }}
+      >
       <a
         href={SITE.phone.href}
         className="flex flex-col items-center justify-center gap-1 py-2.5 text-[11px] font-semibold active:bg-white/5"
@@ -54,6 +65,7 @@ export function MobileCtaBar() {
         </svg>
         Termin
       </Link>
-    </nav>
+      </nav>
+    </>
   );
 }

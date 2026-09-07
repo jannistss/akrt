@@ -21,6 +21,11 @@ export const SITE = {
     number: "4917661973298",
     href: "https://wa.me/4917661973298",
   },
+  instagram: {
+    handle: "@autoklinik.reutlingen",
+    url: "https://www.instagram.com/autoklinik.reutlingen",
+  },
+  googleReviewUrl: "https://g.page/r/CTkakRV7d20NEBM/review",
   email: "info@autoklinik-reutlingen.de",
   address: {
     street: "Haldenhaustraße 3",
