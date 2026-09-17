@@ -1132,7 +1132,7 @@ export function ChatWidget() {
                         {chip}
                       </button>
                     ))}
-                    {chatStep === "upsell" && ["Innenraum Basic – 59 €", "Waschanlagenfahrt – 15 €", "Nein, nur den Termin"].map((chip) => (
+                    {chatStep === "upsell" && ["Innenraum Basic – 59 €", "Fahrzeug außen polieren – auf Anfrage", "Waschanlagenfahrt – 15 €", "Nein, nur den Termin"].map((chip) => (
                       <button key={chip} type="button"
                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); setInput(""); sendMessage(chip); }}
                         className="rounded-full px-3 py-1 text-xs font-medium border transition-all hover:scale-105"
