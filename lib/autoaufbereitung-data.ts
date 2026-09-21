@@ -5,7 +5,7 @@ export const autoaufbereitungPackages = [
 ] as const;
 
 export const autoaufbereitungExtras = [
-  "Waschanlagenfahrt außen 15 €", "Tierhaarentfernung leicht +15 €", "Tierhaarentfernung stark +30 €", "Extreme Tierhaarbelastung ab +50 €", "Starke Innenraumverschmutzung +20 €", "Extreme Innenraumverschmutzung ab +40 €", "Intensive Fleckenbehandlung ab +10 €", "Einzelner Sitz Intensivreinigung 15 €", "Komplette Leder-Sitzanlage Intensivreinigung 49 €", "Komplette Stoff-Sitzanlage Intensivreinigung 49 €", "Alcantara-Intensivreinigung ab 29 €", "Kofferraum Intensivreinigung +20 €", "Kindersitz-Reinigung 15 € / Stück",
+  "Fahrzeug außen polieren – auf Anfrage", "Waschanlagenfahrt außen 15 €", "Tierhaarentfernung leicht +15 €", "Tierhaarentfernung stark +30 €", "Extreme Tierhaarbelastung ab +50 €", "Starke Innenraumverschmutzung +20 €", "Extreme Innenraumverschmutzung ab +40 €", "Intensive Fleckenbehandlung ab +10 €", "Einzelner Sitz Intensivreinigung 15 €", "Komplette Leder-Sitzanlage Intensivreinigung 49 €", "Komplette Stoff-Sitzanlage Intensivreinigung 49 €", "Alcantara-Intensivreinigung ab 29 €", "Kofferraum Intensivreinigung +20 €", "Kindersitz-Reinigung 15 € / Stück",
 ] as const;
 
 export const autoaufbereitungPricingNote = "Die Paketpreise gelten für Fahrzeuge mit üblicher Verschmutzung. Bei außergewöhnlich starker Verschmutzung, Tierhaaren, starken Flecken oder erheblichem zusätzlichem Arbeitsaufwand können Zuschläge entstehen. Zusätzliche Kosten werden immer vor Beginn der Aufbereitung abgestimmt. Für besonders große Fahrzeuge, 7-Sitzer und Transporter kann wegen des erhöhten Arbeitsaufwands ein Zuschlag anfallen; dieser wird vorher vereinbart.";
@@ -14,11 +14,12 @@ export const autoaufbereitungChatKnowledge = `AUTOAUFBEREITUNG / FAHRZEUGAUFBERE
 ${autoaufbereitungPackages.map((p) => `- ${p.name}: ${p.price}. ${p.description} Enthalten: ${p.includes.join("; ")}`).join("\n")}
 Zusatzleistungen: ${autoaufbereitungExtras.join("; ")}
 Preisbedingungen: ${autoaufbereitungPricingNote}
-Wichtig: Eine Außenreinigung ist nicht Bestandteil der Autoaufbereitung. Auf Wunsch wird das Fahrzeug optional für 15 € durch die Waschanlage gefahren. Außergewöhnliche Tiefenreinigung, massive Flecken und extreme Verschmutzungen sind nicht pauschal in den Paketpreisen enthalten.`;
+Wichtig: Eine Außenreinigung ist nicht Bestandteil der Autoaufbereitung. Das Polieren des Fahrzeugs außen ist auf Anfrage möglich. Auf Wunsch wird das Fahrzeug optional für 15 € durch die Waschanlage gefahren. Außergewöhnliche Tiefenreinigung, massive Flecken und extreme Verschmutzungen sind nicht pauschal in den Paketpreisen enthalten.`;
 
 export const autoaufbereitungFaqs = [
   { q: "Was kostet eine Innenraumreinigung?", a: "Innenraum Basic kostet 59 €, Intensiv 79 € und Premium 99 € bei normaler Verschmutzung. Außergewöhnlicher Zusatzaufwand wird vorher abgestimmt." },
   { q: "Gibt es eine Außenreinigung dazu?", a: "Eine Außenreinigung ist nicht Bestandteil der Autoaufbereitung. Auf Wunsch fahren wir das Fahrzeug optional für 15 € durch die Waschanlage." },
+  { q: "Kann das Fahrzeug außen poliert werden?", a: "Das Polieren des Fahrzeugs außen ist auf Anfrage möglich. Der Umfang wird individuell abgestimmt." },
   { q: "Was kostet Tierhaarentfernung?", a: "Leichte Tierhaarentfernung kostet 15 €, starke 30 € und extreme Tierhaarbelastung ab 50 €. Der konkrete Aufwand wird vor Beginn abgestimmt." },
 ];
 

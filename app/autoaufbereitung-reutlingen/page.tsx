@@ -194,7 +194,7 @@ export default function AutoaufbereitungPage() {
               <motion.p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: "#0074a2" }} {...fadeUp(0)}>Zusatzleistungen</motion.p>
               <motion.h2 className="font-bold tracking-tight mb-5 text-balance" style={{ color: "#002e40", fontSize: "clamp(1.6rem, 2.4vw, 2rem)" }} {...fadeUp(0.1)}>Für besonderen Aufwand transparent ergänzt</motion.h2>
               <motion.p className="leading-relaxed mb-10" style={{ color: "#4a6272" }} {...fadeUp(0.15)}>
-                Die Außenreinigung ist nicht Bestandteil der Aufbereitung. Auf Wunsch fahren wir das Fahrzeug optional für 15 € durch die Waschanlage; weitere Zusatzkosten gelten nur für außergewöhnlichen zusätzlichen Aufwand oder eine gesonderte Intensiv-/Tiefenbehandlung.
+                Die Außenreinigung ist nicht Bestandteil der Aufbereitung. Das Polieren des Fahrzeugs außen ist auf Anfrage möglich. Auf Wunsch fahren wir das Fahrzeug optional für 15 € durch die Waschanlage; weitere Zusatzkosten gelten nur für außergewöhnlichen zusätzlichen Aufwand oder eine gesonderte Intensiv-/Tiefenbehandlung.
               </motion.p>
             </div>
             <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3" variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-60px" }}>
