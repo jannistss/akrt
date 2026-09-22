@@ -175,17 +175,17 @@ export function WinterangebotPage() {
       <AutoklinikNavbar />
       <main>
         {/* ── Hero ── */}
-        <section style={{ backgroundColor: "#0074a2" }} className="pt-32 pb-20 overflow-hidden">
+        <section style={{ backgroundColor: "#0074a2" }} className="pt-28 sm:pt-32 pb-14 sm:pb-20 overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-            <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
-              <div className="flex-1">
+            <div className="flex flex-col lg:flex-row gap-10 lg:gap-20 items-center">
+              <div className="flex-1 w-full">
                 <Breadcrumbs
                   variant="dark"
                   items={[{ name: "Startseite", url: "/" }, { name: "Winteraktion", url: "/winterangebot" }]}
                 />
                 <motion.div {...fadeUp(0)}>
                   <span
-                    className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest mb-8"
+                    className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest mb-6 sm:mb-8"
                     style={{ backgroundColor: "rgba(255,255,255,0.15)", color: "#ffffff" }}
                   >
                     <SnowflakeIcon />
@@ -193,14 +193,14 @@ export function WinterangebotPage() {
                   </span>
                 </motion.div>
                 <motion.h1
-                  className="font-bold tracking-tight leading-[1.08] text-balance mb-6"
-                  style={{ color: "#ffffff", fontSize: "clamp(2.4rem, 5vw, 3.8rem)" }}
+                  className="font-bold tracking-tight leading-[1.08] text-balance mb-5 sm:mb-6"
+                  style={{ color: "#ffffff", fontSize: "clamp(2.2rem, 5vw, 3.8rem)" }}
                   {...fadeUp(0.1)}
                 >
                   Dein Auto bereit<br />für den Winter
                 </motion.h1>
                 <motion.p
-                  className="text-lg leading-relaxed mb-4 max-w-xl"
+                  className="text-base sm:text-lg leading-relaxed mb-2 max-w-xl"
                   style={{ color: "rgba(255,255,255,0.75)" }}
                   {...fadeUp(0.2)}
                 >
@@ -210,39 +210,47 @@ export function WinterangebotPage() {
                   </span>
                   . Gültig vom {OFFER_START} bis {OFFER_END}.
                 </motion.p>
-                <motion.div className="flex flex-wrap gap-3 mt-8" {...fadeUp(0.3)}>
+                <motion.div {...fadeUp(0.25)}>
+                  <span
+                    className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold mt-3"
+                    style={{ backgroundColor: "rgba(255,255,255,0.9)", color: "#0074a2" }}
+                  >
+                    Nur begrenzt verfügbar - jetzt Termin sichern
+                  </span>
+                </motion.div>
+                <motion.div className="flex flex-col sm:flex-row flex-wrap gap-3 mt-8 w-full" {...fadeUp(0.3)}>
                   <Link
                     href="/terminbuchung"
-                    className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold transition-all hover:brightness-110"
+                    className="inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-4 sm:py-3.5 text-base sm:text-sm font-semibold transition-all hover:brightness-110 w-full sm:w-auto"
                     style={{ backgroundColor: "#002e40", color: "#ffffff" }}
                   >
                     Termin buchen
                     <ArrowIcon />
                   </Link>
                   <a
-                    href={SITE.phone.href}
-                    className="inline-flex items-center gap-2.5 rounded-full border px-7 py-3.5 text-sm font-semibold transition-all hover:bg-white/10"
-                    style={{ borderColor: "rgba(255,255,255,0.35)", color: "#ffffff" }}
-                  >
-                    {SITE.phone.display}
-                  </a>
-                  <a
                     href={SITE.whatsapp.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold transition-all hover:brightness-110"
+                    className="inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-4 sm:py-3.5 text-base sm:text-sm font-semibold transition-all hover:brightness-110 w-full sm:w-auto"
                     style={{ backgroundColor: "#25d366", color: "#ffffff" }}
                   >
                     <WhatsAppIcon />
                     WhatsApp
                   </a>
+                  <a
+                    href={SITE.phone.href}
+                    className="inline-flex items-center justify-center gap-2.5 rounded-full border px-7 py-4 sm:py-3.5 text-base sm:text-sm font-semibold transition-all hover:bg-white/10 w-full sm:w-auto"
+                    style={{ borderColor: "rgba(255,255,255,0.35)", color: "#ffffff" }}
+                  >
+                    {SITE.phone.display}
+                  </a>
                 </motion.div>
-                <motion.div className="flex flex-wrap gap-3 mt-8" {...fadeUp(0.4)}>
+                <motion.div className="flex flex-wrap gap-2.5 mt-7" {...fadeUp(0.4)}>
                   {["Räderwechsel & Wuchten", "Frostschutz-Check", "Fahrzeugzustandscheck", "Feste Aktionspreise"].map(
                     (t) => (
                       <span
                         key={t}
-                        className="rounded-full px-4 py-1.5 text-xs font-medium"
+                        className="rounded-full px-3.5 py-1.5 text-xs font-medium"
                         style={{ backgroundColor: "rgba(255,255,255,0.15)", color: "#ffffff" }}
                       >
                         {t}
@@ -251,7 +259,11 @@ export function WinterangebotPage() {
                   )}
                 </motion.div>
               </div>
-              <motion.div className="relative w-full lg:w-[400px] shrink-0" style={{ height: 380 }} {...slideRight(0.2)}>
+              <motion.div
+                className="relative w-full lg:w-[400px] shrink-0 mt-2"
+                style={{ height: 300 }}
+                {...slideRight(0.2)}
+              >
                 <div className="relative w-full h-full rounded-2xl overflow-hidden">
                   <Image
                     src="/assets/images/hero-reifenservice.png"
@@ -263,17 +275,50 @@ export function WinterangebotPage() {
                   />
                 </div>
                 <motion.div
-                  className="absolute -bottom-4 -right-4 rounded-2xl px-6 py-5 shadow-xl text-center"
+                  className="absolute -bottom-5 right-4 sm:-right-4 rounded-2xl px-5 sm:px-6 py-4 sm:py-5 shadow-xl text-center"
                   style={{ backgroundColor: "#ffffff" }}
                   {...scaleUp(0.4)}
                 >
-                  <p className="text-2xl font-bold leading-none" style={{ color: "#0074a2" }}>
+                  <p className="text-xl sm:text-2xl font-bold leading-none" style={{ color: "#0074a2" }}>
                     {WINTER_PRICE}
                   </p>
                   <p className="text-xs font-medium mt-1" style={{ color: "#4a6272" }}>
                     Räderwechsel & Wintercheck
                   </p>
                 </motion.div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── HU/TÜV callout ── */}
+        <section style={{ backgroundColor: "#002e40" }}>
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
+              <motion.div {...slideLeft(0)}>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-3" style={{ color: "rgba(255,255,255,0.6)" }}>
+                  Immer im Blick
+                </p>
+                <h2
+                  className="font-bold tracking-tight text-balance"
+                  style={{ color: "#ffffff", fontSize: "clamp(1.4rem, 2.5vw, 2rem)" }}
+                >
+                  HU fällig? Wir behalten den Termin für dich im Blick.
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed max-w-xl" style={{ color: "rgba(255,255,255,0.65)" }}>
+                  Auf Wunsch unterstützen wir dich bei der Vorbereitung und der kompletten Terminabwicklung zur
+                  nächsten Hauptuntersuchung.
+                </p>
+              </motion.div>
+              <motion.div className="w-full sm:w-auto" {...scaleUp(0.15)}>
+                <Link
+                  href="/tuev-au"
+                  className="inline-flex w-full sm:w-auto shrink-0 items-center justify-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold transition-all hover:brightness-110"
+                  style={{ backgroundColor: "#0074a2", color: "#ffffff" }}
+                >
+                  Mehr zur HU & AU
+                  <ArrowIcon />
+                </Link>
               </motion.div>
             </div>
           </div>
@@ -398,39 +443,6 @@ export function WinterangebotPage() {
                 </motion.div>
               ))}
             </motion.div>
-          </div>
-        </section>
-
-        {/* ── HU/TÜV callout ── */}
-        <section style={{ backgroundColor: "#002e40" }}>
-          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-16">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-              <motion.div {...slideLeft(0)}>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-3" style={{ color: "rgba(255,255,255,0.6)" }}>
-                  Immer im Blick
-                </p>
-                <h2
-                  className="font-bold tracking-tight text-balance"
-                  style={{ color: "#ffffff", fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}
-                >
-                  HU fällig? Wir behalten den Termin für dich im Blick.
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed max-w-xl" style={{ color: "rgba(255,255,255,0.65)" }}>
-                  Auf Wunsch unterstützen wir dich bei der Vorbereitung und der kompletten Terminabwicklung zur
-                  nächsten Hauptuntersuchung.
-                </p>
-              </motion.div>
-              <motion.div {...scaleUp(0.15)}>
-                <Link
-                  href="/tuev-au"
-                  className="inline-flex shrink-0 items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold transition-all hover:brightness-110"
-                  style={{ backgroundColor: "#0074a2", color: "#ffffff" }}
-                >
-                  Mehr zur HU & AU
-                  <ArrowIcon />
-                </Link>
-              </motion.div>
-            </div>
           </div>
         </section>
 
