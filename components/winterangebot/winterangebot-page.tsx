@@ -159,6 +159,27 @@ function SnowflakeIcon() {
   );
 }
 
+function ShieldIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"
+        stroke="#0074a2"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.5 12l1.8 1.8L14.5 10"
+        stroke="#0074a2"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function WhatsAppIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -217,6 +238,26 @@ export function WinterangebotPage() {
                   >
                     Nur begrenzt verfügbar - jetzt Termin sichern
                   </span>
+                </motion.div>
+                <motion.div {...fadeUp(0.28)}>
+                  <Link
+                    href="/tuev-au"
+                    className="group inline-flex items-center gap-3 rounded-2xl px-4 sm:px-5 py-3 mt-5 w-full sm:w-auto transition-all hover:brightness-110"
+                    style={{ backgroundColor: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)" }}
+                  >
+                    <span
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
+                      style={{ backgroundColor: "rgba(255,255,255,0.9)" }}
+                    >
+                      <ShieldIcon />
+                    </span>
+                    <span className="text-sm leading-snug" style={{ color: "#ffffff" }}>
+                      <span className="font-semibold">HU fällig?</span> Wir behalten den Termin für dich im Blick.
+                    </span>
+                    <span className="ml-auto shrink-0 hidden sm:inline-flex" style={{ color: "rgba(255,255,255,0.85)" }}>
+                      <ArrowIcon />
+                    </span>
+                  </Link>
                 </motion.div>
                 <motion.div className="flex flex-col sm:flex-row flex-wrap gap-3 mt-8 w-full" {...fadeUp(0.3)}>
                   <Link
