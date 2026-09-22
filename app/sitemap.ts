@@ -143,6 +143,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      url: `${SITE_URL}/winterangebot`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.95,
+    },
     // Rechtliches
     {
       url: `${SITE_URL}/impressum`,
