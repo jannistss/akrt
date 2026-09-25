@@ -18,7 +18,7 @@ import { SITE } from "@/lib/site-config";
 import { FaqSchema } from "@/components/structured-data";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 
-const WINTER_PRICE = "44,44 €";
+const WINTER_PRICE = "44,44 € netto";
 const OFFER_START = "15.09.2026";
 const OFFER_END = "31.12.2026";
 const GOOGLE_REVIEW_URL = "https://autoklinik-reutlingen.de/whubrief2026";
@@ -87,7 +87,7 @@ const trustPoints = [
 
 const faqs = [
   {
-    q: "Was ist im Winterangebot für 44,44 € enthalten?",
+    q: "Was ist im Winterangebot für 44,44 € netto enthalten?",
     a: "Der Räderwechsel von Sommer- auf Winterreifen inklusive Wuchten, die Prüfung des Frostschutzes in Kühlflüssigkeit und Scheibenwaschwasser sowie ein kurzer Fahrzeugzustandscheck, um typische Winterprobleme früh zu erkennen.",
   },
   {
@@ -328,6 +328,29 @@ export function WinterangebotPage() {
                   </p>
                 </motion.div>
               </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Price transparency ── */}
+        <section style={{ backgroundColor: "#e8f4fa" }} aria-label="Wichtiger Preishinweis">
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-6 sm:py-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-8">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.14em]" style={{ color: "#002e40" }}>
+                  Wichtig: Alle Preise exkl. MwSt.
+                </p>
+                <p className="mt-1 text-sm leading-relaxed" style={{ color: "#4a6272" }}>
+                  Das Winterangebot kostet <strong style={{ color: "#002e40" }}>44,44 € netto</strong> zzgl. 19 % MwSt.
+                  Das entspricht <strong style={{ color: "#002e40" }}>52,88 € brutto</strong>.
+                </p>
+              </div>
+              <span
+                className="inline-flex w-fit shrink-0 rounded-full px-4 py-2 text-xs font-bold"
+                style={{ backgroundColor: "#ffffff", color: "#0074a2" }}
+              >
+                44,44 € netto + 19 % MwSt.
+              </span>
             </div>
           </div>
         </section>
