@@ -232,6 +232,9 @@ export function WinterangebotPage() {
                   . Gültig vom {OFFER_START} bis {OFFER_END}.
                 </motion.p>
                 <motion.div {...fadeUp(0.25)}>
+                  <p className="text-xs leading-relaxed mt-3" style={{ color: "rgba(255,255,255,0.68)" }}>
+                    Alle Preise zzgl. 19 % MwSt. · 44,44 € netto / 52,88 € brutto
+                  </p>
                   <span
                     className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold mt-3"
                     style={{ backgroundColor: "rgba(255,255,255,0.9)", color: "#0074a2" }}
@@ -328,29 +331,6 @@ export function WinterangebotPage() {
                   </p>
                 </motion.div>
               </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Price transparency ── */}
-        <section style={{ backgroundColor: "#e8f4fa" }} aria-label="Wichtiger Preishinweis">
-          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-6 sm:py-8">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-8">
-              <div>
-                <p className="text-sm font-bold uppercase tracking-[0.14em]" style={{ color: "#002e40" }}>
-                  Wichtig: Alle Preise exkl. MwSt.
-                </p>
-                <p className="mt-1 text-sm leading-relaxed" style={{ color: "#4a6272" }}>
-                  Das Winterangebot kostet <strong style={{ color: "#002e40" }}>44,44 € netto</strong> zzgl. 19 % MwSt.
-                  Das entspricht <strong style={{ color: "#002e40" }}>52,88 € brutto</strong>.
-                </p>
-              </div>
-              <span
-                className="inline-flex w-fit shrink-0 rounded-full px-4 py-2 text-xs font-bold"
-                style={{ backgroundColor: "#ffffff", color: "#0074a2" }}
-              >
-                44,44 € netto + 19 % MwSt.
-              </span>
             </div>
           </div>
         </section>
