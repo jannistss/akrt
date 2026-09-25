@@ -18,7 +18,7 @@ import { SITE } from "@/lib/site-config";
 import { FaqSchema } from "@/components/structured-data";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 
-const WINTER_PRICE = "44,44 €";
+const WINTER_PRICE = "44,44 € netto";
 const OFFER_START = "15.09.2026";
 const OFFER_END = "31.12.2026";
 const GOOGLE_REVIEW_URL = "https://autoklinik-reutlingen.de/whubrief2026";
@@ -87,7 +87,7 @@ const trustPoints = [
 
 const faqs = [
   {
-    q: "Was ist im Winterangebot für 44,44 € enthalten?",
+    q: "Was ist im Winterangebot für 44,44 € netto enthalten?",
     a: "Der Räderwechsel von Sommer- auf Winterreifen inklusive Wuchten, die Prüfung des Frostschutzes in Kühlflüssigkeit und Scheibenwaschwasser sowie ein kurzer Fahrzeugzustandscheck, um typische Winterprobleme früh zu erkennen.",
   },
   {
@@ -232,6 +232,9 @@ export function WinterangebotPage() {
                   . Gültig vom {OFFER_START} bis {OFFER_END}.
                 </motion.p>
                 <motion.div {...fadeUp(0.25)}>
+                  <p className="text-xs leading-relaxed mt-3" style={{ color: "rgba(255,255,255,0.68)" }}>
+                    Alle Preise zzgl. 19 % MwSt. · 44,44 € netto / 52,88 € brutto
+                  </p>
                   <span
                     className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold mt-3"
                     style={{ backgroundColor: "rgba(255,255,255,0.9)", color: "#0074a2" }}
