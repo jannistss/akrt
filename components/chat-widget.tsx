@@ -484,6 +484,12 @@ function CallbackForm({ onBack }: { onBack: () => void }) {
 /* ─── Main widget ───────────────────────────────────────── */
 export function ChatWidget() {
   const pathname = usePathname();
+  if (pathname?.startsWith("/visitenkarte") || pathname?.startsWith("/autoankauf-reutlingen/anfrage")) return null;
+  return <ActiveChatWidget />;
+}
+
+function ActiveChatWidget() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [flow, setFlow] = useState<Flow>("root");
   const [messages, setMessages] = useState<Message[]>([]);
@@ -801,10 +807,6 @@ export function ChatWidget() {
   }
 
   const currentFlow = FLOWS[flow];
-
-  // The digital business card is a standalone, self-contained share link —
-  // it must not be cluttered by the site-wide chat bubble.
-  if (pathname?.startsWith("/visitenkarte")) return null;
 
   return (
     <>
