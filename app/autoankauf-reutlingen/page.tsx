@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Check, ChevronDown, MapPin, Phone, ShieldCheck } from "lucide-react";
 import { AutoklinikFooter } from "@/components/autoklinik-footer";
 import { AutoklinikNavbar } from "@/components/autoklinik-navbar";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { BreadcrumbSchema, FaqSchema, ServiceSchema } from "@/components/structured-data";
-import { VehicleValuationWizard } from "@/components/autoankauf/vehicle-valuation-wizard";
+import { VehicleValuationWizard } from "@/components/autoankauf/vehicle-purchase-form";
 import { SITE, SITE_URL } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -35,7 +36,7 @@ const faqs = [
   { question: "In welchen Orten kann ich ein Fahrzeug anbieten?", answer: "Die Anfrage richtet sich an Fahrzeughalter aus Reutlingen und der Umgebung, zum Beispiel aus Tübingen, Metzingen, Pfullingen und Eningen unter Achalm. Entscheidend ist die individuelle Prüfung deines Fahrzeugs." },
 ];
 
-const trustPoints = ["Persönlicher Ansprechpartner vor Ort", "Kostenlose und unverbindliche Anfrage", "Fachgerechte Fahrzeugbewertung", "Direkter Kontakt zur Autoklinik Reutlingen"];
+const trustPoints = ["Kostenlos & unverbindlich", "Persönlich vor Ort"];
 const steps = [
   { title: "Daten übermitteln", text: "Fahrzeug auswählen, Zustand beschreiben und optional Fotos ergänzen." },
   { title: "Persönlich prüfen lassen", text: "Unser Team ordnet deine Angaben fachlich und transparent ein." },
@@ -51,26 +52,40 @@ export default function AutoankaufReutlingenPage() {
       <BreadcrumbSchema items={[{ name: "Startseite", url: "/" }, { name: "Autoankauf Reutlingen", url: "/autoankauf-reutlingen" }]} />
       <AutoklinikNavbar />
       <main>
-        <section className="overflow-hidden bg-ak-deep pt-28 text-ak-white sm:pt-36">
+        <section className="overflow-hidden bg-ak-deep pb-16 pt-32 font-sans text-ak-white lg:pb-20">
           <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
             <Breadcrumbs variant="dark" items={[{ name: "Startseite", url: "/" }, { name: "Autoankauf Reutlingen", url: "/autoankauf-reutlingen" }]} />
-            <div className="grid items-start gap-12 pb-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,1.05fr)] lg:gap-20 lg:pb-24">
-              <div className="pt-2 lg:pt-14">
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-ak-blue-light">Fahrzeugankauf in Reutlingen</p>
-                <h1 className="mt-5 max-w-2xl text-balance text-4xl font-bold leading-[1.07] tracking-tight sm:text-5xl lg:text-[3.75rem]">Auto verkaufen in Reutlingen – einfach &amp; unkompliziert.</h1>
-                <p className="mt-6 max-w-xl text-base leading-7 text-ak-white/75 sm:text-lg">Du möchtest dein Auto verkaufen? Übermittle uns in wenigen Schritten die Fahrzeugdaten und erhalte eine persönliche, unverbindliche Bewertung durch unser Team.</p>
-                <a href="#fahrzeugbewertung" className="mt-8 inline-flex min-h-12 items-center gap-2.5 rounded-full bg-ak-blue px-6 text-sm font-bold text-ak-white transition hover:bg-ak-blue-light hover:text-ak-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ak-blue-light focus-visible:ring-offset-2 focus-visible:ring-offset-ak-deep">Jetzt Fahrzeug bewerten lassen <ArrowRight size={17} aria-hidden="true" /></a>
-                <ul className="mt-10 grid gap-3 sm:grid-cols-2" aria-label="Ihre Vorteile">
+            <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+              <div className="flex flex-col items-start gap-6">
+                <Link href="/#leistungen" className="inline-flex items-center gap-2 text-sm font-semibold text-ak-blue-light transition hover:text-ak-white"><ArrowRight className="rotate-180" size={16} aria-hidden="true" /> Alle Leistungen</Link>
+                <h1 className="text-balance text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">Autoankauf<br /><span className="text-ak-blue-light">in Reutlingen.</span></h1>
+                <p className="max-w-lg text-lg leading-relaxed text-ak-white/75">Dein Auto verkaufen. Persönlich, fair und ohne Umwege. Sende uns deine Fahrzeugdaten – unser Team kümmert sich um die Einschätzung.</p>
+                <div className="flex flex-wrap gap-3"><a href="#fahrzeugbewertung" className="inline-flex min-h-12 items-center gap-2.5 rounded-full bg-ak-blue px-7 text-sm font-semibold text-ak-white transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ak-blue-light">Fahrzeug bewerten lassen <ArrowRight size={17} aria-hidden="true" /></a><a href={SITE.phone.href} className="inline-flex min-h-12 items-center gap-2 rounded-full border border-ak-white/25 px-6 text-sm font-semibold text-ak-white transition hover:bg-ak-white/10"><Phone size={16} aria-hidden="true" />{SITE.phone.display}</a></div>
+                <ul className="flex flex-wrap gap-x-5 gap-y-3" aria-label="Ihre Vorteile">
                   {trustPoints.map((point) => <li key={point} className="flex items-start gap-3 text-sm leading-5 text-ak-white/80"><span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ak-blue/20 text-ak-blue-light"><Check size={12} strokeWidth={3} aria-hidden="true" /></span>{point}</li>)}
                 </ul>
-                <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-ak-white/10 pt-5 text-sm text-ak-white/65"><a href={SITE.phone.href} className="inline-flex items-center gap-2 transition-colors hover:text-ak-white"><Phone size={15} aria-hidden="true" />{SITE.phone.display}</a><span className="hidden h-4 w-px bg-ak-white/20 sm:block" /><span className="inline-flex items-center gap-2"><MapPin size={15} aria-hidden="true" />Haldenhaustraße 3 · Reutlingen</span></div>
               </div>
-              <VehicleValuationWizard />
+              <div className="relative overflow-hidden rounded-2xl bg-ak-white/5">
+                <Image src="/assets/images/hero-autoankauf.png" alt="Fahrzeugübergabe vor einer Kfz-Werkstatt" width={1200} height={900} priority sizes="(max-width: 1024px) 100vw, 50vw" className="aspect-[4/3] w-full object-cover" />
+                <div className="flex items-center gap-3 bg-ak-white px-6 py-5 text-ak-deep"><MapPin size={20} className="shrink-0 text-ak-blue" aria-hidden="true" /><div><p className="text-base font-bold">Dein Ansprechpartner vor Ort</p><p className="text-sm text-ak-muted">Haldenhaustraße 3 · Reutlingen</p></div></div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="bg-background py-20 sm:py-24" aria-labelledby="ablauf-heading">
+        <section className="bg-background py-16 sm:py-24" aria-labelledby="bewertung-heading">
+          <div className="mx-auto grid max-w-7xl items-start gap-10 px-6 sm:px-10 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16 lg:px-16">
+            <div className="flex flex-col items-start gap-5 lg:pt-6">
+              <p className="text-sm font-semibold uppercase tracking-widest text-ak-blue">Kostenlose Fahrzeugbewertung</p>
+              <h2 id="bewertung-heading" className="text-balance text-3xl font-bold tracking-tight text-ak-deep sm:text-4xl">Ein paar Angaben.<br />Ein persönlicher Kontakt.</h2>
+              <p className="max-w-md text-base leading-relaxed text-ak-muted">Wir führen dich Schritt für Schritt durch die Anfrage. Du brauchst nur deine Fahrzeugdaten – Fotos kannst du freiwillig ergänzen.</p>
+              <ul className="flex flex-col gap-4 border-t border-ak-deep/10 pt-6">{["Kostenlos & unverbindlich", "Persönlich geprüft statt automatisch geschätzt", "Alle Marken willkommen"].map((point) => <li key={point} className="flex items-start gap-3 text-sm leading-6 text-ak-muted"><Check size={18} className="mt-0.5 shrink-0 text-ak-blue" aria-hidden="true" />{point}</li>)}</ul>
+            </div>
+            <VehicleValuationWizard />
+          </div>
+        </section>
+
+        <section className="bg-ak-white py-16 sm:py-20" aria-labelledby="ablauf-heading">
           <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
             <div className="max-w-2xl"><p className="text-xs font-bold uppercase tracking-[0.2em] text-ak-blue">So funktioniert es</p><h2 id="ablauf-heading" className="mt-3 text-balance text-3xl font-bold tracking-tight text-foreground sm:text-4xl">So einfach verkaufst du dein Auto</h2><p className="mt-4 text-base leading-7 text-ak-muted">Von der ersten Fahrzeugbeschreibung bis zum persönlichen Gespräch bleibt der Ablauf klar und nachvollziehbar.</p></div>
             <div className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-ak-surface-light bg-ak-surface-light md:grid-cols-3">{steps.map((item, index) => <article key={item.title} className="bg-ak-white p-7 sm:p-9"><div className="flex h-10 w-10 items-center justify-center rounded-full bg-ak-blue text-sm font-bold text-ak-white">{index + 1}</div><h3 className="mt-7 text-lg font-bold text-foreground">{item.title}</h3><p className="mt-3 text-sm leading-6 text-ak-muted">{item.text}</p></article>)}</div>
