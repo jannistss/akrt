@@ -151,6 +151,7 @@ export function VehicleValuationWizard() {
     }
     setError("");
     setStep((current) => Math.min(TOTAL_STEPS, current + 1));
+    document.getElementById("fahrzeugbewertung")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const goBack = () => {
@@ -228,29 +229,23 @@ export function VehicleValuationWizard() {
   }
 
   return (
-    <form id="fahrzeugbewertung" onSubmit={handleSubmit} className="scroll-mt-32 overflow-hidden rounded-2xl border border-ak-deep/10 bg-ak-white text-ak-deep shadow-lg shadow-ak-deep/5" noValidate>
-      <div className="border-b border-ak-surface-light px-5 pb-5 pt-5 sm:px-8 sm:pt-7">
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-ak-blue">Fahrzeug bewerten lassen</p>
-            <p className="mt-1 text-sm text-ak-muted">Schritt {step} von {TOTAL_STEPS}</p>
-          </div>
-          <span className="rounded-full bg-ak-surface-light px-3 py-1.5 text-xs font-semibold text-ak-muted">ca. 3 Minuten</span>
+    <form id="fahrzeugbewertung" onSubmit={handleSubmit} className="scroll-mt-28 overflow-hidden rounded-2xl border border-ak-deep/10 bg-ak-white font-sans text-ak-deep shadow-xl shadow-ak-deep/5 md:grid md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)]" noValidate>
+      <aside className="flex flex-col justify-between gap-10 bg-ak-deep p-5 text-ak-white sm:p-7 md:p-8">
+        <div className="flex flex-col gap-7">
+          <div className="hidden md:block"><p className="text-xl font-bold">Dein Weg zur Anfrage</p><p className="mt-2 text-sm leading-relaxed text-ak-white/60">Schritt für Schritt. Ganz einfach.</p></div>
+          <ol className="flex justify-between gap-2 md:flex-col md:gap-5" aria-label="Schritte deiner Fahrzeuganfrage">
+            {stepLabels.map((label, index) => {
+              const itemStep = index + 1;
+              const descriptions = ["Marke und Modell", "Die wichtigsten Angaben", "Deine Einschätzung", "Optional Bilder ergänzen", "So erreichen wir dich"];
+              return <li key={label} className="min-w-0"><button type="button" disabled={itemStep > step || isSubmitting} onClick={() => { setStep(itemStep); setError(""); }} aria-current={itemStep === step ? "step" : undefined} className={`flex w-full flex-col items-center gap-2 rounded-lg text-left transition focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ak-blue-light md:flex-row md:gap-4 ${itemStep > step ? "text-ak-white/55" : "text-ak-white"}`}><span className={`flex size-9 shrink-0 items-center justify-center rounded-full border text-sm font-semibold ${itemStep === step ? "border-ak-blue bg-ak-blue text-ak-white" : itemStep < step ? "border-ak-blue-light/40 bg-ak-blue-light/10 text-ak-blue-light" : "border-ak-white/25"}`}>{itemStep < step ? <Check size={17} aria-hidden="true" /> : itemStep}</span><span className="flex flex-col gap-1"><span className="text-sm font-semibold">{label}</span><span className="hidden text-sm leading-relaxed text-ak-white/60 md:block">{descriptions[index]}</span></span></button></li>;
+            })}
+          </ol>
         </div>
-        <div className="mt-5 flex gap-1.5" aria-label={`Fortschritt: Schritt ${step} von ${TOTAL_STEPS}`}>
-          {stepLabels.map((label, index) => {
-            const itemStep = index + 1;
-            return (
-              <div key={label} className="flex min-w-0 flex-1 flex-col gap-2">
-                <div className={`h-1.5 rounded-full transition-colors ${itemStep <= step ? "bg-ak-blue" : "bg-ak-surface-light"}`} />
-                <span className={`truncate text-sm font-medium ${itemStep <= step ? "text-ak-blue" : "text-ak-muted/70"}`}>{label}</span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+        <div className="hidden border-t border-ak-white/15 pt-6 md:block"><ShieldCheck size={22} className="text-ak-blue-light" aria-hidden="true" /><p className="mt-3 text-sm font-semibold">Nur für deine Anfrage.</p><p className="mt-2 text-sm leading-relaxed text-ak-white/60">Deine Daten gehen direkt an unser Team. Kostenlos und unverbindlich.</p></div>
+      </aside>
 
-      <div className="px-5 py-6 sm:px-8 sm:py-8">
+      <div className="flex min-w-0 flex-col px-6 py-8 sm:px-9 lg:px-12 lg:py-10">
+        <p className="mb-6 text-sm font-medium text-ak-muted">Schritt {step} von {TOTAL_STEPS} <span className="mx-2 text-ak-deep/25">/</span> {stepLabels[step - 1]}</p>
         <AnimatePresence mode="wait" initial={false}>
           <motion.div key={step} initial={{ opacity: 0, x: 18 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -18 }} transition={{ duration: 0.2 }}>
             {step === 1 && <StepVehicle form={form} update={update} modelOptions={modelOptions} />}
@@ -276,7 +271,7 @@ export function VehicleValuationWizard() {
           ) : <span aria-hidden="true" />}
           {step < TOTAL_STEPS ? (
             <button type="button" onClick={goNext} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-ak-blue px-6 text-sm font-bold text-ak-white transition hover:bg-ak-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ak-blue focus-visible:ring-offset-2">
-              Weiter <ChevronRight size={17} aria-hidden="true" />
+              Weiter zu {stepLabels[step]} <ChevronRight size={17} aria-hidden="true" />
             </button>
           ) : (
             <button type="submit" disabled={isSubmitting} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-ak-blue px-6 text-sm font-bold text-ak-white transition hover:bg-ak-deep disabled:cursor-wait disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ak-blue focus-visible:ring-offset-2">
@@ -292,8 +287,9 @@ export function VehicleValuationWizard() {
 function StepVehicle({ form, update, modelOptions }: { form: FormState; update: (key: keyof FormState, value: string | boolean) => void; modelOptions: string[] }) {
   return (
     <div>
-      <StepIntro eyebrow="Schritt 1" title="Um welches Fahrzeug geht es?" description="Wähle zuerst die Marke und das Modell deines Fahrzeugs." />
-      <div className="mt-6 grid gap-5 sm:grid-cols-2">
+      <StepIntro eyebrow="Schritt 1" title="Welches Auto möchtest du verkaufen?" description="Wähle deine Marke oder suche direkt nach deinem Fahrzeug." />
+      <fieldset className="mt-7"><legend className="mb-3 text-sm font-semibold text-ak-deep">Häufig gewählte Marken</legend><div className="grid grid-cols-3 gap-2">{["Volkswagen", "BMW", "Mercedes-Benz", "Audi", "Opel", "Ford"].map((brand) => <button key={brand} type="button" aria-pressed={form.vehicleBrand === brand} onClick={() => { update("vehicleBrand", brand); update("vehicleModel", ""); }} className={`min-h-14 rounded-lg border px-2 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ak-blue ${form.vehicleBrand === brand ? "border-ak-blue bg-ak-blue text-ak-white" : "border-ak-deep/10 bg-ak-white text-ak-deep hover:border-ak-blue hover:bg-background"}`}>{brand === "Volkswagen" ? "VW" : brand}</button>)}</div></fieldset>
+      <div className="mt-7 grid gap-5 sm:grid-cols-2">
         <SearchableCombobox id="vehicle-brand" label="Marke" value={form.vehicleBrand} options={VEHICLE_BRANDS.map((brand) => brand.name)} placeholder="Marke suchen …" onChange={(value) => { update("vehicleBrand", value); update("vehicleModel", ""); }} />
         {form.vehicleBrand ? <SearchableCombobox id="vehicle-model" label="Modell" value={form.vehicleModel} options={modelOptions} placeholder="Modell suchen …" onChange={(value) => update("vehicleModel", value)} /> : <TextField id="customVehicle" label="Fahrzeug frei beschreiben" value={form.customVehicle} onChange={(value) => update("customVehicle", value)} placeholder="z. B. Mazda 6 Kombi" />}
       </div>
@@ -390,11 +386,11 @@ function StepContact({ form, update }: { form: FormState; update: (key: keyof Fo
 }
 
 function StepIntro({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
-  return <div><p className="text-xs font-bold uppercase tracking-[0.18em] text-ak-blue">{eyebrow}</p><h2 className="mt-2 text-xl font-bold tracking-tight text-foreground sm:text-2xl">{title}</h2><p className="mt-2 max-w-xl text-sm leading-6 text-ak-muted">{description}</p></div>;
+  return <div><span className="sr-only">{eyebrow}</span><h3 className="text-balance text-2xl font-bold leading-tight tracking-tight text-ak-deep sm:text-3xl">{title}</h3><p className="mt-3 max-w-xl text-base leading-relaxed text-ak-muted">{description}</p></div>;
 }
 
 function TextField({ id, label, value, onChange, placeholder, type = "text", min, max, step, suffix, autoComplete }: { id: string; label: string; value: string; onChange: (value: string) => void; placeholder?: string; type?: string; min?: string; max?: string; step?: string; suffix?: string; autoComplete?: string }) {
-  return <div><label htmlFor={id} className="mb-2 block text-sm font-semibold text-foreground">{label}</label><div className="relative"><input id={id} type={type} min={min} max={max} step={step} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} autoComplete={autoComplete} className={`min-h-12 w-full rounded-xl border border-ak-deep/15 bg-ak-white px-4 text-sm text-foreground outline-none transition placeholder:text-ak-muted/60 focus:border-ak-blue focus:ring-2 focus:ring-ak-blue/15 ${suffix ? "pr-12" : ""}`} />{suffix && <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-ak-muted">{suffix}</span>}</div></div>;
+  return <div><label htmlFor={id} className="mb-2 block text-sm font-semibold text-foreground">{label}</label><div className="relative"><input id={id} type={type} min={min} max={max} step={step} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} autoComplete={autoComplete} className={`min-h-14 w-full rounded-lg border border-ak-deep/15 bg-background px-4 text-sm text-foreground outline-none transition placeholder:text-ak-muted/60 focus:border-ak-blue focus:ring-2 focus:ring-ak-blue/15 ${suffix ? "pr-12" : ""}`} />{suffix && <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-ak-muted">{suffix}</span>}</div></div>;
 }
 
 function TextAreaField({ id, label, value, onChange, placeholder }: { id: string; label: string; value: string; onChange: (value: string) => void; placeholder?: string }) {
@@ -402,7 +398,7 @@ function TextAreaField({ id, label, value, onChange, placeholder }: { id: string
 }
 
 function ChoiceSelect({ id, label, value, options, onChange, placeholder }: { id: string; label: string; value: string; options: SelectOption[]; onChange: (value: string) => void; placeholder: string }) {
-  return <div><label htmlFor={id} className="mb-2 block text-sm font-semibold text-foreground">{label}</label><div className="relative"><select id={id} value={value} onChange={(event) => onChange(event.target.value)} className="min-h-12 w-full appearance-none rounded-xl border border-ak-deep/15 bg-ak-white px-4 pr-10 text-sm text-foreground outline-none transition focus:border-ak-blue focus:ring-2 focus:ring-ak-blue/15"><option value="">{placeholder}</option>{options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select><ChevronDown className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ak-muted" size={17} aria-hidden="true" /></div></div>;
+  return <div><label htmlFor={id} className="mb-2 block text-sm font-semibold text-foreground">{label}</label><div className="relative"><select id={id} value={value} onChange={(event) => onChange(event.target.value)} className="min-h-14 w-full appearance-none rounded-lg border border-ak-deep/15 bg-background px-4 pr-10 text-sm text-foreground outline-none transition focus:border-ak-blue focus:ring-2 focus:ring-ak-blue/15"><option value="">{placeholder}</option>{options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select><ChevronDown className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ak-muted" size={17} aria-hidden="true" /></div></div>;
 }
 
 function ChoiceCards({ label, value, options, onChange }: { label: string; value: string; options: SelectOption[]; onChange: (value: string) => void }) {
@@ -422,5 +418,5 @@ function SearchableCombobox({ id, label, value, options, placeholder, onChange }
     return () => document.removeEventListener("mousedown", close);
   }, []);
 
-  return <div ref={rootRef} className="relative"><label htmlFor={id} className="mb-2 block text-sm font-semibold text-foreground">{label}</label><div className="relative"><input id={id} role="combobox" aria-expanded={open} aria-controls={`${id}-listbox`} aria-autocomplete="list" value={open ? query : value} onFocus={() => { setOpen(true); setQuery(value); }} onChange={(event) => { setQuery(event.target.value); onChange(""); setActiveIndex(0); setOpen(true); }} onKeyDown={(event) => { if (!open && (event.key === "ArrowDown" || event.key === "Enter")) { event.preventDefault(); setOpen(true); return; } if (event.key === "ArrowDown") { event.preventDefault(); setActiveIndex((current) => Math.min(current + 1, Math.max(filteredOptions.length - 1, 0))); } if (event.key === "ArrowUp") { event.preventDefault(); setActiveIndex((current) => Math.max(current - 1, 0)); } if (event.key === "Enter" && filteredOptions[activeIndex]) { event.preventDefault(); onChange(filteredOptions[activeIndex]); setQuery(filteredOptions[activeIndex]); setOpen(false); } if (event.key === "Escape") setOpen(false); }} placeholder={placeholder} className="min-h-12 w-full rounded-xl border border-ak-deep/15 bg-ak-white px-4 pr-10 text-sm text-foreground outline-none transition placeholder:text-ak-muted/60 focus:border-ak-blue focus:ring-2 focus:ring-ak-blue/15" /><ChevronDown className={`pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ak-muted transition-transform ${open ? "rotate-180" : ""}`} size={17} aria-hidden="true" /></div>{open && <div id={`${id}-listbox`} role="listbox" className="absolute z-20 mt-2 max-h-56 w-full overflow-auto rounded-xl border border-ak-deep/15 bg-ak-white p-1 shadow-xl">{filteredOptions.length ? filteredOptions.map((option, index) => <button type="button" role="option" aria-selected={value === option} key={option} onMouseDown={(event) => event.preventDefault()} onClick={() => { onChange(option); setQuery(option); setOpen(false); }} className={`flex min-h-11 w-full items-center rounded-lg px-3 text-left text-sm transition-colors ${index === activeIndex ? "bg-ak-surface-light text-foreground" : "text-ak-muted hover:bg-ak-surface-light hover:text-foreground"}`}>{option}</button>) : <p className="px-3 py-3 text-sm text-ak-muted">Keine passende Auswahl. Nutze die freie Eingabe.</p>}</div>}</div>;
+  return <div ref={rootRef} className="relative"><label htmlFor={id} className="mb-2 block text-sm font-semibold text-foreground">{label}</label><div className="relative"><input id={id} role="combobox" aria-expanded={open} aria-controls={`${id}-listbox`} aria-autocomplete="list" value={open ? query : value} onFocus={() => { setOpen(true); setQuery(value); }} onChange={(event) => { setQuery(event.target.value); onChange(""); setActiveIndex(0); setOpen(true); }} onKeyDown={(event) => { if (event.nativeEvent.isComposing || event.keyCode === 229) return; if (!open && (event.key === "ArrowDown" || event.key === "Enter")) { event.preventDefault(); setOpen(true); return; } if (event.key === "ArrowDown") { event.preventDefault(); setActiveIndex((current) => Math.min(current + 1, Math.max(filteredOptions.length - 1, 0))); } if (event.key === "ArrowUp") { event.preventDefault(); setActiveIndex((current) => Math.max(current - 1, 0)); } if (event.key === "Enter" && filteredOptions[activeIndex]) { event.preventDefault(); onChange(filteredOptions[activeIndex]); setQuery(filteredOptions[activeIndex]); setOpen(false); } if (event.key === "Escape") setOpen(false); }} placeholder={placeholder} className="min-h-14 w-full rounded-lg border border-ak-deep/15 bg-background px-4 pr-10 text-sm text-foreground outline-none transition placeholder:text-ak-muted/60 focus:border-ak-blue focus:ring-2 focus:ring-ak-blue/15" /><ChevronDown className={`pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ak-muted transition-transform ${open ? "rotate-180" : ""}`} size={17} aria-hidden="true" /></div>{open && <div id={`${id}-listbox`} role="listbox" className="absolute z-20 mt-2 max-h-56 w-full overflow-auto rounded-xl border border-ak-deep/15 bg-ak-white p-1 shadow-xl">{filteredOptions.length ? filteredOptions.map((option, index) => <button type="button" role="option" aria-selected={value === option} key={option} onMouseDown={(event) => event.preventDefault()} onClick={() => { onChange(option); setQuery(option); setOpen(false); }} className={`flex min-h-11 w-full items-center rounded-lg px-3 text-left text-sm transition-colors ${index === activeIndex ? "bg-ak-surface-light text-foreground" : "text-ak-muted hover:bg-ak-surface-light hover:text-foreground"}`}>{option}</button>) : <p className="px-3 py-3 text-sm text-ak-muted">Keine passende Auswahl. Nutze die freie Eingabe.</p>}</div>}</div>;
 }

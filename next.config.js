@@ -51,13 +51,6 @@ const nextConfig = {
           },
         ],
       },
-      // Cache static assets aggressively
-      {
-        source: "/_next/static/(.*)",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-        ],
-      },
       // Images get longest cache (1 year immutable)
       {
         source: "/assets/images/:path*",
