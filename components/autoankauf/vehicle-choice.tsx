@@ -24,7 +24,11 @@ export function VehicleChoice({ options, value, onSelect, kind }: { options: str
           setActive(next);
           document.getElementById(`${id}-${next}`)?.scrollIntoView({ block: "nearest" });
         }
-        if (event.key === "Enter") { event.preventDefault(); if (active >= 0 && choices[active]) onSelect(choices[active]); }
+        if (event.key === "Enter") {
+          event.preventDefault();
+          const selection = active >= 0 ? choices[active] : query.trim() ? choices.find(option => option.toLocaleLowerCase("de") === query.trim().toLocaleLowerCase("de")) || query.trim() : undefined;
+          if (selection) onSelect(selection);
+        }
         if (event.key === "Escape") { setQuery(""); setActive(-1); }
       }} />
     </div>
