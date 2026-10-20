@@ -119,12 +119,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
-      url: `${SITE_URL}/autoankauf-reutlingen`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.95,
-    },
-    {
       url: `${SITE_URL}/ratgeber/autoaufbereitung-was-wird-gemacht`,
       lastModified: now,
       changeFrequency: "monthly",
