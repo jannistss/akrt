@@ -43,6 +43,7 @@ export function AutoklinikNavbar() {
         { name: "Hagelschadenzentrum", link: "/hagelschaden" },
       ],
     },
+    { name: "Autoankauf", link: "/autoankauf-reutlingen" },
     { name: "Flotte", link: "/flottenbetreuung" },
     { name: "Kfz-Gutachter", link: "/kfz-gutachter" },
     { name: "Ratgeber", link: "/blog" },
@@ -143,6 +144,10 @@ export function AutoklinikNavbar() {
               )}
             </AnimatePresence>
           </motion.div>
+
+          <MobileNavLink href="/autoankauf-reutlingen" onClick={() => setIsMobileMenuOpen(false)} delay={0.10}>
+            Autoankauf
+          </MobileNavLink>
 
           {/* Flotte */}
           <MobileNavLink href="/flottenbetreuung" onClick={() => setIsMobileMenuOpen(false)} delay={0.12}>
