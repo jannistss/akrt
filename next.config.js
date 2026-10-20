@@ -22,6 +22,10 @@ const nextConfig = {
   // ── Security & Performance Headers ────────────────────────────────────────
   async headers() {
     return [
+      // Development chunk URLs may be reused after edits; never retain old code.
+      ...(process.env.NODE_ENV === "development"
+        ? [{ source: "/_next/:path*", headers: [{ key: "Cache-Control", value: "no-store, max-age=0" }] }]
+        : []),
       {
         source: "/(.*)",
         headers: [
