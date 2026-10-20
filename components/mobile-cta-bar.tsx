@@ -14,7 +14,7 @@ export function MobileCtaBar() {
   const pathname = usePathname();
   // The digital business card already has its own full-width action
   // buttons — a second, fixed CTA bar would just duplicate them.
-  if (pathname?.startsWith("/visitenkarte")) return null;
+  if (pathname?.startsWith("/visitenkarte") || pathname?.startsWith("/autoankauf-reutlingen/anfrage")) return null;
 
   return (
     <>

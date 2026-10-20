@@ -1,6 +1,10 @@
 {
   "crons": [
     {
+      "path": "/api/cron/autoankauf-cleanup",
+      "schedule": "0 3 * * *"
+    },
+    {
       "path": "/api/cron/tuev-erinnerung",
       "schedule": "0 8 * * *"
     },

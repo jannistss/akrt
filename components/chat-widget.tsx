@@ -804,7 +804,7 @@ export function ChatWidget() {
 
   // The digital business card is a standalone, self-contained share link —
   // it must not be cluttered by the site-wide chat bubble.
-  if (pathname?.startsWith("/visitenkarte")) return null;
+  if (pathname?.startsWith("/visitenkarte") || pathname?.startsWith("/autoankauf-reutlingen/anfrage")) return null;
 
   return (
     <>
