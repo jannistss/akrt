@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     const rows = vehicleSummary(data).map(([label, value]) => `<tr><th style="text-align:left;padding:12px;border-bottom:1px solid #eef6fa;vertical-align:top">${escapeHtml(label)}</th><td style="padding:12px;border-bottom:1px solid #eef6fa;white-space:pre-wrap">${escapeHtml(value)}</td></tr>`).join("");
     const result = await new Resend(process.env.RESEND_API_KEY).emails.send({
       from: "Autoklinik Fahrzeugankauf <onboarding@resend.dev>",
-      to: "ak@741sve.de",
+      to: process.env.APPLICATION_EMAIL ?? "info@autoklinik-reutlingen.de",
       replyTo: data.email.trim(),
       subject: `Neue Autoankauf-Anfrage – ${data.brand} ${data.model} – ${data.year}`.replace(/[\r\n]/g, " "),
       text: `${vehicleSummary(data).map(([label, value]) => `${label}: ${value}`).join("\n")}\nFotos: ${links.length}\n${links.map(link => `${link.name}: ${link.url}`).join("\n")}\nDatenschutzhinweise bestätigt. Bildlinks sind 30 Tage gültig.`,
